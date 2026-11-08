@@ -24,6 +24,7 @@ import org.mpc.domain.model.PortalAuthenticationMode
 import org.mpc.domain.model.TimetableColorMode
 import org.mpc.domain.repository.AppSettingsRepository
 import org.mpc.domain.repository.CourseRepository
+import org.mpc.domain.repository.EeclassCourseRepository
 import org.mpc.domain.repository.PortalFavoritesRepository
 import org.mpc.domain.session.CampusSessions
 import org.mpc.presentation.state.CoursePlanDraftStore
@@ -122,6 +123,7 @@ private class HostTestGraph(
     override val courseRepository: CourseRepository get() = detailRepository ?: error("No course request expected")
     override val coursePlanDraftStore: CoursePlanDraftStore get() = error("No Compose controller expected")
     override val campusSessions: CampusSessions get() = error("No campus session expected")
+    override val eeclassCourseRepository: EeclassCourseRepository get() = error("No ee-class request expected")
     override val portalFavoritesRepository: PortalFavoritesRepository get() = error("No Portal favorites expected")
     override val metroViewModelFactory: MetroViewModelFactory get() = error("No Compose controller expected")
     override val viewModelProviders: Map<KClass<out ViewModel>, () -> ViewModel> = emptyMap()

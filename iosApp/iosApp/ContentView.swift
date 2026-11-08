@@ -11,7 +11,13 @@ struct ContentView: View {
         TabView {
             Tab("首頁", systemImage: "house") {
                 NavigationStack {
-                    HomeView(onOpenSettings: openSettings)
+                    HomeView(
+                        loadCourses: { try await sharedHost.loadEeclassCourses() },
+                        courseDestination: { course in
+                            EeclassCourseView(sharedHost: sharedHost, course: course)
+                        },
+                        onOpenSettings: openSettings
+                    )
                 }
                 .ignoresSafeArea(.container, edges: bottomSafeAreaEdges)
             }

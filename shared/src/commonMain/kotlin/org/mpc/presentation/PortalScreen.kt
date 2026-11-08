@@ -44,7 +44,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -73,6 +72,7 @@ import org.mpc.domain.model.PortalShortcutIcon
 import org.mpc.domain.model.PortalShortcutItem
 import org.mpc.domain.model.PortalShortcutSection
 import org.mpc.presentation.theme.MpcSpacing
+import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.theme.platformTimetablePalette
 import org.mpc.presentation.viewModel.PortalViewModel
 
@@ -108,7 +108,7 @@ fun PortalScreen(
                     text = "找不到「${query.trim()}」相關的服務",
                     modifier = Modifier.fillMaxWidth().padding(top = MpcSpacing.space8),
                     textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = MpcTheme.colors.labelSecondary,
                 )
             }
         }
@@ -155,8 +155,8 @@ private fun LazyListScope.favoritesSection(
             Text(
                 text = "點「編輯」後按 ＋，即可把服務加入常用",
                 modifier = Modifier.padding(horizontal = MpcSpacing.space4),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MpcTheme.typography.supporting,
+                color = MpcTheme.colors.labelSecondary,
             )
         }
     }
@@ -228,7 +228,7 @@ private fun AddFavoriteButton(
         Icon(
             imageVector = if (isFavorite) Icons.Default.CheckCircle else Icons.Default.AddCircle,
             contentDescription = if (isFavorite) "已在常用：$label" else "加入常用：$label",
-            tint = if (isFavorite) MaterialTheme.colorScheme.outline else MaterialTheme.colorScheme.primary,
+            tint = if (isFavorite) MpcTheme.colors.labelTertiary else MpcTheme.colors.accent,
         )
     }
 }
@@ -256,8 +256,8 @@ private fun PortalSearchField(
         singleLine = true,
         shape = CircleShape,
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            focusedContainerColor = MpcTheme.colors.surfaceSelected,
+            unfocusedContainerColor = MpcTheme.colors.surfaceSelected,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
         ),
@@ -279,8 +279,8 @@ private fun PortalSectionHeader(
         Text(
             text = title,
             modifier = Modifier.weight(1f),
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.primary,
+            style = MpcTheme.typography.label,
+            color = MpcTheme.colors.accent,
         )
         trailingContent()
     }
@@ -299,7 +299,7 @@ private fun PortalShortcutRow(
         headlineContent = { Text(item.label, maxLines = 1, overflow = TextOverflow.Ellipsis) },
         leadingContent = { PortalShortcutBadge(item) },
         trailingContent = trailingContent,
-        colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+        colors = ListItemDefaults.colors(containerColor = MpcTheme.colors.surface),
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = if (index == 0) 0.dp else SEGMENT_GAP)
@@ -312,7 +312,7 @@ private fun PortalShortcutRow(
 @Composable
 private fun PortalShortcutBadge(item: PortalShortcutItem) {
     val palette = platformTimetablePalette(
-        MaterialTheme.colorScheme.background.luminance() < DARK_SURFACE_LUMINANCE_THRESHOLD,
+        MpcTheme.colors.background.luminance() < DARK_SURFACE_LUMINANCE_THRESHOLD,
     )
     // The palette lists BLUE, GREEN, ORANGE, PURPLE, TEAL first, matching the tint order.
     val colors = palette[item.tint.ordinal % palette.size]
@@ -352,7 +352,7 @@ private fun FavoriteEditControls(
             Icon(
                 imageVector = Icons.Default.RemoveCircleOutline,
                 contentDescription = "從常用移除$label",
-                tint = MaterialTheme.colorScheme.error,
+                tint = MpcTheme.colors.destructive,
             )
         }
     }

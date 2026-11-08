@@ -78,11 +78,22 @@ interface CampusSessions {
      */
     suspend fun <T> fetch(site: CampusSite, path: SitePath, parse: (String) -> T): SiteResult<T>
 
+    /**
+     * Loads [path] like [fetch], then loads the link [pick] chooses from its HTML and parses that page. The link must
+     * be https on [site]. It may carry a one-time token, so it is used once inside this call and never returned.
+     */
+    suspend fun <T> fetchFollowing(
+        site: CampusSite,
+        path: SitePath,
+        pick: (String) -> String?,
+        parse: (String) -> T,
+    ): SiteResult<T>
+
     /** Checks [site]'s session without recovering it. */
     suspend fun refresh(site: CampusSite)
 
-    /** The URL the WebView loads for [path]: the page itself when signed in, otherwise the Portal handoff. */
-    fun browserEntry(site: CampusSite, path: SitePath): String
+    /** The URL the WebView loads for [url]: the page itself when its site is signed in, otherwise the Portal handoff. Null when no managed site serves it. */
+    fun browserEntry(url: String): String?
 
     /** The WebView reports each page as it starts and finishes loading. Other hosts are ignored. */
     suspend fun browserPage(url: String, loading: Boolean)
@@ -99,3 +110,6 @@ interface CampusSessions {
      */
     suspend fun signOutEverywhere()
 }
+
+/** The URL the WebView loads for [path] on [site], as [CampusSessions.browserEntry] describes. */
+fun CampusSessions.browserEntry(site: CampusSite, path: SitePath): String = requireNotNull(browserEntry(site.url(path))) { "${site.id} is not a managed site" }

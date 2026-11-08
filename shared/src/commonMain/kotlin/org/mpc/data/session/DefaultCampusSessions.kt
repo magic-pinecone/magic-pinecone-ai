@@ -56,29 +56,151 @@ internal class CampusSessionsProvider {
     )
 }
 
-/** One site's lock and status. The status is written only while holding the lock. */
-private class SiteState {
-    val lock = Mutex()
-    val status = MutableStateFlow<SiteStatus>(SiteStatus.Unknown)
-}
-
 /**
- * State ownership: cookies live in the [SessionTransport]'s jar, each site's status in its [SiteState], and Portal's
- * status and block in [PortalState]. Sites recover in parallel.
+ * One campus site's session: its lock, status, and page loads. Each site recovers on its own; Portal's status and
+ * block in [PortalState] are shared by all of them. The status is written only while holding the lock, except for the
+ * WebView's loading signal.
  */
-internal class DefaultCampusSessions(
+private class SiteSession(
+    val site: CampusSite,
     private val settings: AppSettingsRepository,
     private val portalState: PortalState,
     private val transport: SessionTransport,
     private val parser: HtmlParser,
+    private val now: () -> Instant,
+) {
+    private val lock = Mutex()
+    val status = MutableStateFlow<SiteStatus>(SiteStatus.Unknown)
+
+    suspend fun <T> fetch(path: SitePath, parse: (String) -> T): SiteResult<T> = lock.withLock {
+        when (val loaded = load(path)) {
+            is Loaded.Page -> SiteResult.Page(parse(loaded.html))
+            is Loaded.Stopped -> loaded.result
+        }
+    }
+
+    suspend fun <T> fetchFollowing(path: SitePath, pick: (String) -> String?, parse: (String) -> T): SiteResult<T> = lock.withLock {
+        when (val loaded = load(path)) {
+            is Loaded.Stopped -> loaded.result
+
+            is Loaded.Page -> when (val url = pick(loaded.html)?.let { followableUrl(site, it) }) {
+                null -> SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE)
+                else -> follow(url, parse)
+            }
+        }
+    }
+
+    suspend fun refresh() {
+        lock.withLock {
+            portalState.load()
+            val previous = status.value
+            status.value = SiteStatus.Checking
+            try {
+                status.value = when (val result = transport.get(site.url(site.probePath))) {
+                    is TransportResult.Failed -> SiteStatus.Unavailable(result.reason)
+
+                    is TransportResult.Response -> when (site.signals.classify(result.response, parser)) {
+                        SiteVerdict.SIGNED_IN -> SiteStatus.SignedIn
+                        SiteVerdict.SIGNED_OUT -> SiteStatus.SignedOut(renewal())
+                        SiteVerdict.UNRECOGNIZED -> SiteStatus.Unavailable(Unavailability.UNEXPECTED_RESPONSE)
+                    }
+                }
+            } catch (cancellation: CancellationException) {
+                status.value = previous
+                throw cancellation
+            }
+        }
+    }
+
+    /** The WebView started loading a page on this site. */
+    fun markChecking() {
+        status.value = SiteStatus.Checking
+    }
+
+    fun browserEntry(url: String): String = if (status.value == SiteStatus.SignedIn) url else site.portalEntryUrl
+
+    /** Removes this site's cookies. [comeback] says what getting back in costs; null asks Portal's current state. */
+    suspend fun signOut(comeback: Renewal? = null) {
+        lock.withLock {
+            transport.clearCookies(site.baseUrl)
+            status.value = SiteStatus.SignedOut(comeback ?: renewal())
+        }
+    }
+
+    /** Loads [path], recovering the session as [CampusSessions.fetch] describes, and records the status. Holds the lock. */
+    private suspend fun load(path: SitePath): Loaded {
+        portalState.load()
+        var attempt = Attempt(portalState.automaticSignIn(mode(), now()))
+        var step: Step = Step.FetchPage
+        var html = ""
+        while (step !is Step.Finish) {
+            val observation = when (step) {
+                Step.FetchPage -> observePage(transport, parser, site, path).also { html = it.html }.observation
+
+                Step.Handoff -> observeHandoff(transport, portalState, site)
+
+                // Secure-mode Portal sign-in arrives with the credential vault; until then it needs the user.
+                Step.SignInToPortal -> Observation.PortalSignInStopped(PortalNeed.NO_CREDENTIALS)
+
+                is Step.Finish -> error("finished steps exit the loop")
+            }
+            val (nextAttempt, nextStep) = next(attempt, observation)
+            attempt = nextAttempt
+            step = nextStep
+        }
+        return when (val outcome = step.outcome) {
+            FetchOutcome.Page -> Loaded.Page(html).also { status.value = SiteStatus.SignedIn }
+
+            is FetchOutcome.NeedsPortal -> Loaded.Stopped(SiteResult.NeedsPortal(outcome.need)).also {
+                status.value = SiteStatus.SignedOut(renewal())
+            }
+
+            is FetchOutcome.Unavailable -> Loaded.Stopped(SiteResult.Unavailable(outcome.reason)).also {
+                status.value = SiteStatus.Unavailable(outcome.reason)
+            }
+        }
+    }
+
+    /** Loads a link picked from a page just loaded. It is not recovered: a signed-out answer makes the next fetch hand off. */
+    private suspend fun <T> follow(url: String, parse: (String) -> T): SiteResult<T> = when (val result = transport.get(url)) {
+        is TransportResult.Failed -> SiteResult.Unavailable(result.reason)
+
+        is TransportResult.Response -> when {
+            site.signals.classify(result.response, parser) == SiteVerdict.SIGNED_OUT -> {
+                status.value = SiteStatus.SignedOut(renewal())
+                SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE)
+            }
+
+            result.response.status == HTTP_STATUS_OK -> SiteResult.Page(parse(result.response.html))
+
+            else -> SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE)
+        }
+    }
+
+    private suspend fun renewal(): Renewal = portalState.renewal(mode(), now())
+
+    private suspend fun mode(): PortalAuthenticationMode = settings.settings.first().portalAuthenticationMode
+}
+
+/**
+ * State ownership: cookies live in the [SessionTransport]'s jar, each site's lock and status in its [SiteSession], and
+ * Portal's status and block in [PortalState].
+ */
+internal class DefaultCampusSessions(
+    settings: AppSettingsRepository,
+    private val portalState: PortalState,
+    private val transport: SessionTransport,
+    parser: HtmlParser,
     private val sites: List<CampusSite> = CampusSites.all,
-    private val now: () -> Instant = { Clock.System.now() },
+    now: () -> Instant = { Clock.System.now() },
 ) : CampusSessions {
-    private val states = sites.associate { it.id to SiteState() }
+    private val sessions = sites.associate { site ->
+        site.id to SiteSession(site, settings, portalState, transport, parser, now)
+    }
 
     override val portal: StateFlow<PortalStatus> get() = portalState.status
 
-    override fun status(site: CampusSite): StateFlow<SiteStatus> = state(site).status
+    override fun status(site: CampusSite): StateFlow<SiteStatus> = session(site).status
 
     override suspend fun refreshPortal() {
         portalState.load()
@@ -94,73 +216,28 @@ internal class DefaultCampusSessions(
         }
     }
 
-    override suspend fun <T> fetch(site: CampusSite, path: SitePath, parse: (String) -> T): SiteResult<T> {
-        val state = state(site)
-        return state.lock.withLock {
-            portalState.load()
-            val mode = mode()
-            var attempt = Attempt(portalState.automaticSignIn(mode, now()))
-            var step: Step = Step.FetchPage
-            var html = ""
-            while (step !is Step.Finish) {
-                val observation = when (step) {
-                    Step.FetchPage -> observePage(transport, parser, site, path).also { html = it.html }.observation
+    override suspend fun <T> fetch(site: CampusSite, path: SitePath, parse: (String) -> T): SiteResult<T> = session(site).fetch(path, parse)
 
-                    Step.Handoff -> observeHandoff(transport, portalState, site)
+    override suspend fun <T> fetchFollowing(
+        site: CampusSite,
+        path: SitePath,
+        pick: (String) -> String?,
+        parse: (String) -> T,
+    ): SiteResult<T> = session(site).fetchFollowing(path, pick, parse)
 
-                    // Secure-mode Portal sign-in arrives with the credential vault; until then it needs the user.
-                    Step.SignInToPortal -> Observation.PortalSignInStopped(PortalNeed.NO_CREDENTIALS)
+    override suspend fun refresh(site: CampusSite) = session(site).refresh()
 
-                    is Step.Finish -> error("finished steps exit the loop")
-                }
-                val (nextAttempt, nextStep) = next(attempt, observation)
-                attempt = nextAttempt
-                step = nextStep
-            }
-            when (val outcome = step.outcome) {
-                FetchOutcome.Page -> SiteResult.Page(parse(html)).also { state.status.value = SiteStatus.SignedIn }
-
-                is FetchOutcome.NeedsPortal -> SiteResult.NeedsPortal(outcome.need).also {
-                    state.status.value = SiteStatus.SignedOut(portalState.renewal(mode, now()))
-                }
-
-                is FetchOutcome.Unavailable -> SiteResult.Unavailable(outcome.reason).also {
-                    state.status.value = SiteStatus.Unavailable(outcome.reason)
-                }
-            }
-        }
+    override fun browserEntry(url: String): String? {
+        val host = parseHttpsUrl(url)?.host ?: return null
+        val site = sites.firstOrNull { it.host.equals(host, ignoreCase = true) } ?: return null
+        return session(site).browserEntry(url)
     }
-
-    override suspend fun refresh(site: CampusSite) {
-        val state = state(site)
-        state.lock.withLock {
-            portalState.load()
-            val previous = state.status.value
-            state.status.value = SiteStatus.Checking
-            try {
-                state.status.value = when (val result = transport.get(site.url(site.probePath))) {
-                    is TransportResult.Failed -> SiteStatus.Unavailable(result.reason)
-
-                    is TransportResult.Response -> when (site.signals.classify(result.response, parser)) {
-                        SiteVerdict.SIGNED_IN -> SiteStatus.SignedIn
-                        SiteVerdict.SIGNED_OUT -> SiteStatus.SignedOut(portalState.renewal(mode(), now()))
-                        SiteVerdict.UNRECOGNIZED -> SiteStatus.Unavailable(Unavailability.UNEXPECTED_RESPONSE)
-                    }
-                }
-            } catch (cancellation: CancellationException) {
-                state.status.value = previous
-                throw cancellation
-            }
-        }
-    }
-
-    override fun browserEntry(site: CampusSite, path: SitePath): String = if (state(site).status.value == SiteStatus.SignedIn) site.url(path) else site.portalEntryUrl
 
     override suspend fun browserPage(url: String, loading: Boolean) {
         val site = CampusSites.forUrl(url)?.takeIf { it in sites }
         val portalUrl = parseHttpsUrl(url)?.takeIf(::isPortalUrl)
         when {
-            site != null && loading -> state(site).status.value = SiteStatus.Checking
+            site != null && loading -> session(site).markChecking()
 
             site != null -> refresh(site)
 
@@ -182,30 +259,29 @@ internal class DefaultCampusSessions(
         return PortalSignIn.OpenBrowser("$PORTAL_BASE_URL/login")
     }
 
-    override suspend fun signOut(site: CampusSite) {
-        val state = state(site)
-        state.lock.withLock {
-            transport.clearCookies(site.baseUrl)
-            state.status.value = SiteStatus.SignedOut(portalState.renewal(mode(), now()))
-        }
-    }
+    override suspend fun signOut(site: CampusSite) = session(site).signOut()
 
     override suspend fun signOutEverywhere() {
         // Block first: if the app stops partway, it still cannot sign back in by itself.
         portalState.block(PortalBlock.USER_SIGNED_OUT)
         transport.clearCookies(PORTAL_BASE_URL, keep = setOf(PORTAL_BROWSER_COOKIE))
-        sites.forEach { site ->
-            val state = state(site)
-            state.lock.withLock {
-                transport.clearCookies(site.baseUrl)
-                state.status.value = SiteStatus.SignedOut(Renewal.PORTAL_SIGN_IN_BY_USER)
-            }
-        }
+        sites.forEach { site -> session(site).signOut(Renewal.PORTAL_SIGN_IN_BY_USER) }
     }
 
-    private suspend fun mode(): PortalAuthenticationMode = settings.settings.first().portalAuthenticationMode
+    private fun session(site: CampusSite): SiteSession = requireNotNull(sessions[site.id]) { "Unknown campus site" }
+}
 
-    private fun state(site: CampusSite): SiteState = requireNotNull(states[site.id]) { "Unknown campus site" }
+private sealed interface Loaded {
+    class Page(val html: String) : Loaded
+
+    class Stopped(val result: SiteResult<Nothing>) : Loaded
+}
+
+/** [link] as an absolute URL when it is https on [site]'s host. A link picked from a page goes nowhere else. */
+private fun followableUrl(site: CampusSite, link: String): String? {
+    val absolute = if (link.startsWith("/") && !link.startsWith("//")) site.baseUrl + link else link
+    val url = parseHttpsUrl(absolute) ?: return null
+    return url.toString().takeIf { url.host.equals(site.host, ignoreCase = true) }
 }
 
 private class PageObservation(val observation: Observation, val html: String = "")

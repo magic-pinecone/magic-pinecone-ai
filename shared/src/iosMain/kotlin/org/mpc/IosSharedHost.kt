@@ -31,16 +31,27 @@ import org.mpc.domain.html.HtmlParser
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.CourseDetail
+import org.mpc.domain.model.EeclassBulletinNumber
+import org.mpc.domain.model.EeclassCourseNumber
+import org.mpc.domain.session.CampusSites
+import org.mpc.domain.session.SitePath
+import org.mpc.domain.session.browserEntry
 import org.mpc.presentation.CourseCatalogViewBinding
 import org.mpc.presentation.CoursePlanningTimetableViewBinding
 import org.mpc.presentation.PortalWebScreen
 import org.mpc.presentation.SettingsScreen
+import org.mpc.presentation.model.EeclassBulletinPage
+import org.mpc.presentation.model.EeclassCoursePage
+import org.mpc.presentation.model.EeclassCourses
+import org.mpc.presentation.model.toEeclassBulletinPage
+import org.mpc.presentation.model.toEeclassCoursePage
+import org.mpc.presentation.model.toEeclassCourses
 import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.viewModel.AppSettingsViewModel
 import platform.UIKit.UIViewController
 
 class IosSharedHost internal constructor(
-    private val appGraph: AppGraph,
+    internal val appGraph: AppGraph,
     settingsScope: CoroutineScope = MainScope(),
 ) {
     private val loadedSettings: StateFlow<AppSettings?> = appGraph.appSettingsRepository.settings.stateIn(
@@ -58,6 +69,20 @@ class IosSharedHost internal constructor(
         semester: String,
         serialNumber: String,
     ): CourseDetail = appGraph.courseRepository.fetchCourseDetail(semester, serialNumber)
+
+    @Throws(Exception::class)
+    suspend fun loadEeclassCourses(): EeclassCourses = appGraph.eeclassCourseRepository.fetchEnrolledCourses().toEeclassCourses()
+
+    @Throws(Exception::class)
+    suspend fun loadEeclassCourse(number: String): EeclassCoursePage = appGraph.eeclassCourseRepository.fetchCourseContent(EeclassCourseNumber(number)).toEeclassCoursePage()
+
+    @Throws(Exception::class)
+    suspend fun loadEeclassBulletin(course: String, bulletin: String): EeclassBulletinPage = appGraph.eeclassCourseRepository
+        .fetchBulletin(EeclassCourseNumber(course), EeclassBulletinNumber(bulletin))
+        .toEeclassBulletinPage()
+
+    /** The URL the in-app browser opens for an ee-class [path] from an [org.mpc.presentation.model.EeclassItemRow]. */
+    fun eeclassPageUrl(path: String): String = appGraph.campusSessions.browserEntry(CampusSites.Eeclass, SitePath.of(path))
 
     fun courseCatalogScreenController(
         bridge: CourseSearchBridge,
@@ -142,3 +167,6 @@ fun createIosSharedHost(htmlParser: HtmlParser): IosSharedHost {
         )
     return IosSharedHost(createAppGraph(dataStore, database, htmlParser))
 }
+
+/** The URL the in-app browser opens for a link in ee-class content, or null when the system should open it. */
+fun IosSharedHost.campusLinkUrl(url: String): String? = appGraph.campusSessions.browserEntry(url)

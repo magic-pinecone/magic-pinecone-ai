@@ -12,7 +12,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -37,7 +36,9 @@ import org.mpc.presentation.model.PortalAccount
 import org.mpc.presentation.model.PortalAccountAction
 import org.mpc.presentation.model.PortalAccountTone
 import org.mpc.presentation.model.toPortalAccount
+import org.mpc.presentation.theme.MpcShapes
 import org.mpc.presentation.theme.MpcSpacing
+import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.viewModel.CampusSessionViewModel
 
 @Composable
@@ -102,8 +103,8 @@ private fun PortalAccountRow(
                 }
             }
         },
-        colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
-        modifier = modifier.clip(MaterialTheme.shapes.extraLarge),
+        colors = ListItemDefaults.colors(containerColor = MpcTheme.colors.surface),
+        modifier = modifier.clip(MpcShapes.card),
     )
 }
 
@@ -114,13 +115,13 @@ private fun PortalAccountIcon(tone: PortalAccountTone) {
         PortalAccountTone.CHECKING -> CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.5.dp)
 
         PortalAccountTone.SIGNED_IN ->
-            Icon(Icons.Default.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = iconModifier)
+            Icon(Icons.Default.CheckCircle, contentDescription = null, tint = MpcTheme.colors.accent, modifier = iconModifier)
 
         PortalAccountTone.SIGNED_OUT ->
-            Icon(Icons.Default.AccountCircle, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = iconModifier)
+            Icon(Icons.Default.AccountCircle, contentDescription = null, tint = MpcTheme.colors.labelSecondary, modifier = iconModifier)
 
         PortalAccountTone.ATTENTION ->
-            Icon(Icons.Default.Error, contentDescription = null, tint = MaterialTheme.colorScheme.error, modifier = iconModifier)
+            Icon(Icons.Default.Error, contentDescription = null, tint = MpcTheme.colors.destructive, modifier = iconModifier)
     }
 }
 

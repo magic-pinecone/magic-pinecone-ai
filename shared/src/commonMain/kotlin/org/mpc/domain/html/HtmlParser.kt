@@ -15,4 +15,10 @@ interface HtmlElement {
     fun absUrl(name: String): String?
 
     fun text(): String
+
+    /** The element's inner HTML. */
+    fun html(): String
+
+    /** The element's inner HTML with every link resolved against the document's base URL. */
+    fun htmlWithAbsoluteLinks(): String
 }

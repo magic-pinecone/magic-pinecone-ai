@@ -39,7 +39,13 @@ private struct TabPreviewShell: View {
     var body: some View {
         TabView(selection: .constant(selectedTab)) {
             SwiftUI.Tab("首頁", systemImage: "house", value: .home) {
-                NavigationStack { HomeView(onOpenSettings: {}) }
+                NavigationStack {
+                    HomeView(
+                        loadCourses: { throw CancellationError() },
+                        courseDestination: { _ in EmptyView() },
+                        onOpenSettings: {}
+                    )
+                }
             }
             SwiftUI.Tab("選課", systemImage: "calendar", value: .coursePlanning) {
                 NavigationStack { CoursePlanningTabPreview(initialSection: courseSection) }

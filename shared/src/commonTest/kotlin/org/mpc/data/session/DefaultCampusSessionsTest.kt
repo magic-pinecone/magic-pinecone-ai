@@ -240,4 +240,79 @@ val defaultCampusSessionsTests by testSuite {
             assertEquals(PortalStatus.Unavailable(Unavailability.NETWORK), sessions.portal.value)
         }
     }
+
+    test("following loads the picked same-site link from the recovered page once") {
+        runTest {
+            val list = SiteResponse(status = 200, location = null, html = "list")
+            val detail = SiteResponse(status = 200, location = null, html = "detail")
+            val transport = ScriptedTransport(
+                pages = ArrayDeque(listOf(page(SIGNED_OUT_REDIRECT), page(list), page(detail))),
+                handoffs = ArrayDeque(listOf(HandoffResult.Done)),
+            )
+
+            val result = sessions(transport).fetchFollowing(
+                site = TEST_SITE,
+                path = TIMETABLE,
+                pick = { html -> "/content/?id=1&ajaxAuth=token".takeIf { html == "list" } },
+                parse = { html -> html },
+            )
+
+            assertEquals(SiteResult.Page("detail"), result)
+            assertEquals(
+                listOf(
+                    "get https://ncueeclass.ncu.edu.tw/dashboard/myTimeTable",
+                    "handoff test",
+                    "get https://ncueeclass.ncu.edu.tw/dashboard/myTimeTable",
+                    "get https://ncueeclass.ncu.edu.tw/content/?id=1&ajaxAuth=token",
+                ),
+                transport.events,
+            )
+        }
+    }
+
+    test("following refuses links off the site or without https, and a missing link") {
+        runTest {
+            val refused = listOf(
+                "https://evil.example/content/?ajaxAuth=token",
+                "//evil.example/content/",
+                "http://ncueeclass.ncu.edu.tw/content/",
+                "https://ncueeclass.ncu.edu.tw:8443/content/",
+                null,
+            )
+            refused.forEach { link ->
+                val transport = ScriptedTransport(pages = ArrayDeque(listOf(page(SIGNED_IN_DASHBOARD))))
+
+                val result = sessions(transport).fetchFollowing(TEST_SITE, TIMETABLE, pick = { link }, parse = { it })
+
+                assertEquals(SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE), result, "link $link")
+                assertEquals(listOf("get https://ncueeclass.ncu.edu.tw/dashboard/myTimeTable"), transport.events, "link $link")
+            }
+        }
+    }
+
+    test("a followed link that answers signed out marks the site signed out without recovering") {
+        runTest {
+            val transport = ScriptedTransport(pages = ArrayDeque(listOf(page(SIGNED_IN_DASHBOARD), page(SIGNED_OUT_REDIRECT))))
+            val sessions = sessions(transport)
+
+            val result = sessions.fetchFollowing(TEST_SITE, TIMETABLE, pick = { "/content/" }, parse = { it })
+
+            assertEquals(SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE), result)
+            assertEquals(0, transport.events.count { it.startsWith("handoff") })
+            assertEquals(SiteStatus.SignedOut(Renewal.PORTAL_SIGN_IN_BY_USER), sessions.status(TEST_SITE).value)
+        }
+    }
+
+    test("a link opens in the browser only on a managed site, through Portal until the site is signed in") {
+        runTest {
+            val sessions = sessions(ScriptedTransport(pages = ArrayDeque(listOf(page(SIGNED_IN_DASHBOARD)))))
+            val link = "https://ncueeclass.ncu.edu.tw/media/doc/1?page=2"
+
+            assertEquals(TEST_SITE.portalEntryUrl, sessions.browserEntry(link))
+            sessions.fetch(TEST_SITE, TIMETABLE) { it }
+            assertEquals(link, sessions.browserEntry(link))
+            assertEquals(null, sessions.browserEntry("https://example.com/"))
+            assertEquals(null, sessions.browserEntry("http://ncueeclass.ncu.edu.tw/media/doc/1"))
+        }
+    }
 }

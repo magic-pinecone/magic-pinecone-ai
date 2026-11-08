@@ -2,6 +2,7 @@ package org.mpc.navigation
 
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
+import org.mpc.presentation.EeclassCategory
 
 interface AndroidRoute : NavKey
 
@@ -24,6 +25,25 @@ data object PortalRoot : TopLevelRoute
 data class PortalWebRoute(
     val title: String,
     val url: String,
+) : AndroidRoute
+
+@Serializable
+data class EeclassCourseRoute(
+    val number: String,
+    val name: String,
+) : AndroidRoute
+
+@Serializable
+data class EeclassCategoryRoute(
+    val number: String,
+    val category: EeclassCategory,
+) : AndroidRoute
+
+@Serializable
+data class EeclassBulletinRoute(
+    val course: String,
+    val number: String,
+    val title: String,
 ) : AndroidRoute
 
 @Serializable
