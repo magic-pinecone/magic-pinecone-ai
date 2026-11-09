@@ -1,0 +1,33 @@
+<resources>
+    <string name="settings_write_failed">Couldn\'t save settings. Please try again later.</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_appearance_description">Choose whether the app uses the system, light, or dark color scheme.</string>
+    <string name="settings_theme_system">Follow system</string>
+    <string name="settings_theme_system_description">Use the device\'s current appearance setting</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_light_description">Always use the light color scheme</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_dark_description">Always use the dark color scheme</string>
+    <string name="settings_timetable_colors">Timetable colors</string>
+    <string name="settings_timetable_colors_description">Choose how courses are colored in the timetable.</string>
+    <string name="settings_timetable_category">By course category</string>
+    <string name="settings_timetable_category_description">Use the color assigned to each course category.</string>
+    <string name="settings_timetable_shuffled">Random colors</string>
+    <string name="settings_timetable_shuffled_description">Assign each course a consistent random color. The same course keeps its color across class meetings and screen redraws.</string>
+    <string name="settings_portal_login">Portal sign-in method</string>
+    <string name="settings_portal_login_description">You can sign in to the Portal manually in the app. Securely saving sign-in information is not available yet.</string>
+    <string name="settings_portal_secure">Securely save sign-in information (coming soon)</string>
+    <string name="settings_portal_secure_description">Platform credential storage and sign-in integration must be completed first.</string>
+    <string name="settings_portal_manual">Manual Portal sign-in</string>
+    <string name="settings_portal_manual_description">Sign in through the Portal WebView in the app.</string>
+    <string name="settings_course_source">Course data source</string>
+    <string name="settings_course_source_description">For development. Enter the Magic Pinecone backend address to load course data from the backend; leave blank to use the public static data.</string>
+    <string name="settings_source_static_current">Currently using: public static course data</string>
+    <string name="settings_source_current">Currently using: %1$s</string>
+    <string name="settings_backend_address">Backend address</string>
+    <string name="settings_connect_sync">Connect and sync</string>
+    <string name="settings_use_static">Use static data</string>
+    <string name="settings_syncing">Syncing course data…</string>
+    <string name="settings_invalid_address">Enter an address that starts with http:// or https://.</string>
+    <string name="settings_source_unavailable">Could not get course data from this source. The current data source has been kept.</string>
+</resources>

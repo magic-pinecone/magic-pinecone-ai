@@ -1,0 +1,33 @@
+<resources>
+    <string name="settings_write_failed">Không thể lưu cài đặt. Vui lòng thử lại sau.</string>
+    <string name="settings_appearance">Giao diện</string>
+    <string name="settings_appearance_description">Chọn giao diện theo hệ thống, sáng hoặc tối cho ứng dụng.</string>
+    <string name="settings_theme_system">Theo hệ thống</string>
+    <string name="settings_theme_system_description">Sử dụng cài đặt giao diện hiện tại của thiết bị</string>
+    <string name="settings_theme_light">Sáng</string>
+    <string name="settings_theme_light_description">Luôn dùng giao diện sáng</string>
+    <string name="settings_theme_dark">Tối</string>
+    <string name="settings_theme_dark_description">Luôn dùng giao diện tối</string>
+    <string name="settings_timetable_colors">Màu thời khóa biểu</string>
+    <string name="settings_timetable_colors_description">Chọn cách tô màu cho các môn học trong thời khóa biểu.</string>
+    <string name="settings_timetable_category">Theo danh mục môn học</string>
+    <string name="settings_timetable_category_description">Dùng màu tương ứng với danh mục của môn học.</string>
+    <string name="settings_timetable_shuffled">Màu ngẫu nhiên</string>
+    <string name="settings_timetable_shuffled_description">Gán một màu ngẫu nhiên cố định cho mỗi môn học. Cùng một môn sẽ giữ nguyên màu trong mọi buổi học và mỗi lần giao diện được vẽ lại.</string>
+    <string name="settings_portal_login">Cách đăng nhập Portal</string>
+    <string name="settings_portal_login_description">Hiện có thể đăng nhập Portal thủ công trong ứng dụng. Chưa hỗ trợ lưu an toàn thông tin đăng nhập.</string>
+    <string name="settings_portal_secure">Lưu an toàn thông tin đăng nhập (sắp ra mắt)</string>
+    <string name="settings_portal_secure_description">Cần hoàn tất lưu trữ thông tin xác thực trên nền tảng và tích hợp đăng nhập trước.</string>
+    <string name="settings_portal_manual">Đăng nhập Portal thủ công</string>
+    <string name="settings_portal_manual_description">Đăng nhập trong WebView Portal của ứng dụng.</string>
+    <string name="settings_course_source">Nguồn dữ liệu môn học</string>
+    <string name="settings_course_source_description">Dành cho phát triển. Nhập địa chỉ máy chủ Magic Pinecone để lấy dữ liệu môn học từ máy chủ; để trống để dùng dữ liệu tĩnh công khai.</string>
+    <string name="settings_source_static_current">Đang dùng: dữ liệu môn học tĩnh công khai</string>
+    <string name="settings_source_current">Đang dùng: %1$s</string>
+    <string name="settings_backend_address">Địa chỉ máy chủ</string>
+    <string name="settings_connect_sync">Kết nối và đồng bộ</string>
+    <string name="settings_use_static">Dùng dữ liệu tĩnh</string>
+    <string name="settings_syncing">Đang đồng bộ dữ liệu môn học…</string>
+    <string name="settings_invalid_address">Hãy nhập địa chỉ bắt đầu bằng http:// hoặc https://.</string>
+    <string name="settings_source_unavailable">Không thể lấy dữ liệu môn học từ nguồn này. Nguồn dữ liệu hiện tại vẫn được giữ nguyên.</string>
+</resources>

@@ -1,6 +1,9 @@
 package org.mpc.presentation.viewModel
 
 import de.infix.testBalloon.framework.core.testSuite
+import dev.icerock.moko.resources.desc.PluralFormatted
+import dev.icerock.moko.resources.desc.Resource
+import dev.icerock.moko.resources.desc.StringDesc
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +22,12 @@ import org.mpc.domain.repository.CourseRepository
 import org.mpc.presentation.state.BackendEndpointUiState
 import org.mpc.presentation.state.BackendSyncError
 import org.mpc.presentation.state.BackendSyncState
+import org.mpc.presentation.state.message
+import org.mpc.shared.MR
+import org.mpc.shared.settings_invalid_address
+import org.mpc.shared.settings_source_unavailable
+import org.mpc.shared.settings_synced
+import org.mpc.shared.settings_syncing
 import kotlin.test.assertEquals
 import kotlin.time.Instant
 
@@ -85,6 +94,23 @@ private fun backendEndpointTest(
 
 @OptIn(ExperimentalCoroutinesApi::class)
 val backendEndpointViewModelTests by testSuite {
+    test("sync states expose localized messages") {
+        assertEquals(null, BackendSyncState.Idle.message())
+        assertEquals(StringDesc.Resource(MR.strings.settings_syncing), BackendSyncState.Syncing.message())
+        assertEquals(
+            StringDesc.PluralFormatted(MR.plurals.settings_synced, 2, 2),
+            BackendSyncState.Synced(courseCount = 2).message(),
+        )
+        assertEquals(
+            StringDesc.Resource(MR.strings.settings_invalid_address),
+            BackendSyncState.Failed(BackendSyncError.INVALID_ADDRESS).message(),
+        )
+        assertEquals(
+            StringDesc.Resource(MR.strings.settings_source_unavailable),
+            BackendSyncState.Failed(BackendSyncError.SOURCE_UNAVAILABLE).message(),
+        )
+    }
+
     test("the stored backend is shown before anything is synced") {
         backendEndpointTest { viewModel, repository ->
             assertEquals(BackendEndpointUiState(baseUrl = OLD_BACKEND), viewModel.uiState.value)
