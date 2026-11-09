@@ -1,5 +1,85 @@
-# One command for the whole backend stack: PostgreSQL, Redis, the API, and the
-# Celery worker and beat that scrape NCU. The services are defined in
-# backend/compose.yaml; settings come from backend/.env (see backend/.env.example).
-include:
-  - path: backend/compose.yaml
+# The whole stack in one command: PostgreSQL, Redis, the API, the Celery worker and
+# beat that scrape NCU, and the browser preview of the shared Compose UI.
+# Override the variables below in a .env file next to this one or in your shell.
+name: magic-pinecone
+
+x-backend: &backend
+  build:
+    context: backend
+    dockerfile: Dockerfile
+  environment:
+    - POSTGRES_SERVER=db
+    - POSTGRES_PORT=5432
+    - POSTGRES_USER=${POSTGRES_USER:-postgres}
+    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+    - POSTGRES_DB=${POSTGRES_DB:-magic_pinecone}
+    - REDIS_HOST=redis
+    - REDIS_PORT=6379
+    - REDIS_DB=0
+  depends_on:
+    db:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+  volumes:
+    - ./backend:/app
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: magic-pinecone-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-magic_pinecone}
+    ports:
+      - "${POSTGRES_HOST_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-magic_pinecone}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: magic-pinecone-redis
+    ports:
+      - "${REDIS_HOST_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    <<: *backend
+    container_name: magic-pinecone-api
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+
+  worker:
+    <<: *backend
+    container_name: magic-pinecone-worker
+    command: celery -A app.core.celery_app worker --loglevel=info
+
+  beat:
+    <<: *backend
+    container_name: magic-pinecone-beat
+    command: celery -A app.core.celery_app beat --loglevel=info
+
+  web:
+    build:
+      context: app
+      dockerfile: web.Dockerfile
+    container_name: magic-pinecone-web
+    ports:
+      - "${WEB_HOST_PORT:-8080}:80"
+
+volumes:
+  postgres_data:
+  redis_data:

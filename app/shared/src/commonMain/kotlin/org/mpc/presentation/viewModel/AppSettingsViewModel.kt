@@ -1,6 +1,5 @@
 package org.mpc.presentation.viewModel
 
-import androidx.datastore.core.IOException
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.zacsweers.metro.AppScope
@@ -14,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.mpc.core.StorageIOException
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.PortalAuthenticationMode
@@ -61,7 +61,7 @@ class AppSettingsViewModel(
             try {
                 update()
                 _settingsWriteFailed.value = false
-            } catch (_: IOException) {
+            } catch (_: StorageIOException) {
                 _settingsWriteFailed.value = true
             }
         }

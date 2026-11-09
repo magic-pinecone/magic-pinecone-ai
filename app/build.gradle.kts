@@ -3,6 +3,8 @@ import org.gradle.kotlin.dsl.withType
 import kotlin.jvm.java
 
 plugins {
+    // The wasm target's Node.js setup applies the lifecycle tasks to the root project, so check comes from base.
+    base
     // this is necessary to avoid the plugins to be loaded multiple times
     // in each subproject's classloader
     alias(libs.plugins.androidApplication) apply false
@@ -55,8 +57,7 @@ val swiftLint by tasks.registering(Exec::class) {
     )
 }
 
-tasks.register("check") {
-    group = "verification"
+tasks.named("check") {
     description = "Runs all project verification checks."
 
     dependsOn(

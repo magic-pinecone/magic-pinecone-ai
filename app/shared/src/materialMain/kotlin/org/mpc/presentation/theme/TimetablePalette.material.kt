@@ -12,7 +12,7 @@ private data class MaterialTimetableSwatch(
 // Standard Material Design 2014 hues: shade 200 in light mode, shade 700 in dark mode.
 // Ordered by the stable timetable slots; Mint uses Material Light Green.
 // https://m2.material.io/design/color/the-color-system.html#tools-for-picking-colors
-private val AndroidTimetableSwatches = listOf(
+private val MaterialTimetableSwatches = listOf(
     MaterialTimetableSwatch(Color(0xFF90CAF9), Color(0xFF1976D2)), // Blue
     MaterialTimetableSwatch(Color(0xFFA5D6A7), Color(0xFF388E3C)), // Green
     MaterialTimetableSwatch(Color(0xFFFFCC80), Color(0xFFF57C00)), // Orange
@@ -27,7 +27,7 @@ private val AndroidTimetableSwatches = listOf(
 )
 
 @Composable
-actual fun platformTimetablePalette(darkTheme: Boolean): List<TimetableBlockColors> = AndroidTimetableSwatches.map { swatch ->
+actual fun platformTimetablePalette(darkTheme: Boolean): List<TimetableBlockColors> = MaterialTimetableSwatches.map { swatch ->
     val container = if (darkTheme) swatch.darkModeFill else swatch.lightModeFill
     val luminance = container.luminance()
     val blackContrast = (luminance + WCAG_LUMINANCE_OFFSET) / WCAG_LUMINANCE_OFFSET
