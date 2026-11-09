@@ -11,3 +11,9 @@ __pycache__/
 .venv/
 .pytest_cache/
 .ruff_cache/
+
+# Local agent tooling
+.claude/settings.local.json
+.codegraph/
+.gemini/
+GEMINI.md
