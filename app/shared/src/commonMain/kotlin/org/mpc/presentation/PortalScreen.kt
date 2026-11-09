@@ -80,6 +80,7 @@ import org.mpc.presentation.viewModel.PortalViewModel
 fun PortalScreen(
     onOpenDestination: (PortalShortcutDestination) -> Unit,
     modifier: Modifier = Modifier,
+    onOpenClubs: (() -> Unit)? = null,
     viewModel: PortalViewModel = metroViewModel(),
 ) {
     val favoriteIds by viewModel.favoriteIds.collectAsStateWithLifecycle()
@@ -101,6 +102,21 @@ fun PortalScreen(
                 onOpenDestination = onOpenDestination,
                 modifier = Modifier.fillMaxWidth().padding(top = MpcSpacing.space4),
             )
+        }
+        if (onOpenClubs != null && !isSearching) {
+            item(key = "clubs") {
+                ListItem(
+                    headlineContent = { Text("社團") },
+                    supportingContent = { Text("中央大學學生社團一覽") },
+                    leadingContent = { Icon(Icons.Default.Workspaces, contentDescription = null) },
+                    colors = ListItemDefaults.colors(containerColor = MpcTheme.colors.surface),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = MpcSpacing.space4)
+                        .clip(RoundedCornerShape(12.dp))
+                        .clickable(onClick = onOpenClubs),
+                )
+            }
         }
         if (isSearching && home.isEmpty) {
             item(key = "no-results") {

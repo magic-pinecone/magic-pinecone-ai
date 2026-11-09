@@ -2,10 +2,14 @@ package org.mpc.presentation.preview
 
 import androidx.lifecycle.ViewModel
 import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
+import kotlinx.browser.window
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import org.mpc.core.createHttpClient
+import org.mpc.data.repository.DefaultClubRepository
+import org.mpc.domain.repository.BackendEndpointRepository
 import org.mpc.domain.repository.PortalFavoritesRepository
 import org.mpc.domain.session.CampusSessions
 import org.mpc.domain.session.CampusSite
@@ -20,6 +24,7 @@ import org.mpc.domain.session.SiteStatus
 import org.mpc.domain.session.TransferProgress
 import org.mpc.domain.session.Unavailability
 import org.mpc.presentation.viewModel.CampusSessionViewModel
+import org.mpc.presentation.viewModel.ClubViewModel
 import org.mpc.presentation.viewModel.PortalViewModel
 import kotlin.reflect.KClass
 
@@ -28,7 +33,15 @@ internal object WebPreviewViewModelFactory : MetroViewModelFactory() {
     override val viewModelProviders: Map<KClass<out ViewModel>, () -> ViewModel> = mapOf(
         PortalViewModel::class to { PortalViewModel(InMemoryPortalFavoritesRepository()) },
         CampusSessionViewModel::class to { CampusSessionViewModel(SignedOutCampusSessions) },
+        ClubViewModel::class to { ClubViewModel(DefaultClubRepository(createHttpClient(), PreviewBackendEndpoint)) },
     )
+}
+
+/** The backend compose.yaml publishes on port 8000 of the host serving this page. */
+private object PreviewBackendEndpoint : BackendEndpointRepository {
+    override val baseUrl: Flow<String?> = MutableStateFlow("http://${window.location.hostname}:8000")
+
+    override suspend fun setBaseUrl(baseUrl: String?) = Unit
 }
 
 private class InMemoryPortalFavoritesRepository : PortalFavoritesRepository {

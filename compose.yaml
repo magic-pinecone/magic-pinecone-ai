@@ -16,6 +16,8 @@ x-backend: &backend
     - REDIS_HOST=redis
     - REDIS_PORT=6379
     - REDIS_DB=0
+    # The web preview calls the API from another port, so the browser needs CORS.
+    - BACKEND_CORS_ORIGINS=http://localhost:${WEB_HOST_PORT:-8080}
   depends_on:
     db:
       condition: service_healthy
