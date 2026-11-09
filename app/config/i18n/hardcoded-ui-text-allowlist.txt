@@ -23,8 +23,6 @@ app/shared/src/commonMain/kotlin/org/mpc/presentation/model/PortalAccount.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/model/TimetableColorAssignment.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/navigation/AppTab.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/preview/ComposePreviewScenarios.kt
-app/shared/src/commonMain/kotlin/org/mpc/presentation/views/courseDetails/CourseDetailsContent.kt
-app/shared/src/commonMain/kotlin/org/mpc/presentation/views/courseDetails/CourseDetailsView.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/views/courseFilters/CourseSlotPicker.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/views/coursePlanning/CoursePlanningTimetableSuccessView.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/views/coursePlanning/CourseSearchResultFailureView.kt
