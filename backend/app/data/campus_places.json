@@ -1,5 +1,5 @@
 {
-  "source": "Building codes and Chinese building names: NCU course system (cis.ncu.edu.tw/Course), retrieved 2026-11-09. Coordinates: OpenStreetMap (Nominatim), retrieved 2026-11-09.",
+  "source": "Building codes and Chinese building names: NCU course system (cis.ncu.edu.tw/Course), retrieved 2026-11-09. Coordinates: OpenStreetMap (Nominatim), retrieved 2026-11-09. Buildings S, E3 and LH were located by the team and matched to the OpenStreetMap building at that point.",
   "attribution": "© OpenStreetMap contributors, ODbL 1.0",
   "places": [
     {
@@ -75,6 +75,22 @@
         "工程三館(機械館)",
         "工三館",
         "工程三館"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "environmental-chemical-engineering-building",
+      "name_zh": "環工化工館",
+      "name_en": "Environmental and Chemical Engineering Building",
+      "code": "E3",
+      "category": "academic",
+      "latitude": 24.968336,
+      "longitude": 121.187679,
+      "osm_id": "way/268561422",
+      "aliases": [
+        "環工所",
+        "環工館",
+        "化工館"
       ],
       "note_en": null
     },
@@ -163,6 +179,21 @@
       "note_en": null
     },
     {
+      "id": "history-museum-lecture-hall",
+      "name_zh": "校史館大講堂",
+      "name_en": "History Museum Grand Lecture Hall",
+      "code": "LH",
+      "category": "academic",
+      "latitude": 24.967192,
+      "longitude": 121.195926,
+      "osm_id": "way/268824890",
+      "aliases": [
+        "大講堂",
+        "校史館"
+      ],
+      "note_en": null
+    },
+    {
       "id": "humanities-social-sciences-building",
       "name_zh": "人文社會科學大樓",
       "name_en": "Humanities and Social Sciences Building",
@@ -219,6 +250,21 @@
       "aliases": [
         "太遙中心",
         "CSRSR"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "science-building-1",
+      "name_zh": "科學一館",
+      "name_en": "Science Building 1",
+      "code": "S",
+      "category": "academic",
+      "latitude": 24.967344,
+      "longitude": 121.194549,
+      "osm_id": "way/268560615",
+      "aliases": [
+        "科一館",
+        "地球科學院"
       ],
       "note_en": null
     },
@@ -373,18 +419,6 @@
       "aliases": [
         "國鼎圖書館"
       ],
-      "note_en": null
-    },
-    {
-      "id": "grand-lecture-hall",
-      "name_zh": "大講堂",
-      "name_en": "Grand Lecture Hall",
-      "code": null,
-      "category": "academic",
-      "latitude": 24.967192,
-      "longitude": 121.195926,
-      "osm_id": "way/268824890",
-      "aliases": [],
       "note_en": null
     },
     {
