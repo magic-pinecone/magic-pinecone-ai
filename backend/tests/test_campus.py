@@ -54,6 +54,7 @@ def test_lists_every_place_with_attribution(client: TestClient):
         ("OIA", "teaching-research-building"),
         ("教學研究綜合大樓", "teaching-research-building"),
         ("i1", "management-building-2"),
+        ("R3", "research-center-building-phase-2"),
         ("大講堂", "history-museum-lecture-hall"),
         ("  國際事務處 ", "teaching-research-building"),
     ],

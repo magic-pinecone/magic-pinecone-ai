@@ -1,5 +1,5 @@
 {
-  "source": "Building codes and Chinese building names: NCU course system (cis.ncu.edu.tw/Course), retrieved 2026-11-09. Coordinates: OpenStreetMap (Nominatim), retrieved 2026-11-09. Buildings S, E3 and LH were located by the team and matched to the OpenStreetMap building at that point.",
+  "source": "Building codes and Chinese building names: NCU course system (cis.ncu.edu.tw/Course), retrieved 2026-11-09. Coordinates: OpenStreetMap (Nominatim), retrieved 2026-11-09. Buildings S, E3 and LH were located by the team and matched to the OpenStreetMap building at that point; R3 is the team's point itself, as OpenStreetMap has no building there.",
   "attribution": "© OpenStreetMap contributors, ODbL 1.0",
   "places": [
     {
@@ -250,6 +250,21 @@
       "aliases": [
         "太遙中心",
         "CSRSR"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "research-center-building-phase-2",
+      "name_zh": "研究中心大樓二期館",
+      "name_en": "Research Center Building, Phase 2",
+      "code": "R3",
+      "category": "academic",
+      "latitude": 24.967813,
+      "longitude": 121.187563,
+      "osm_id": null,
+      "aliases": [
+        "研究中心二期",
+        "二期館"
       ],
       "note_en": null
     },

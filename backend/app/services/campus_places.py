@@ -48,7 +48,8 @@ class CampusPlace(BaseModel):
     latitude: float = Field(ge=-90, le=90)
     longitude: float = Field(ge=-180, le=180)
     # "<type>/<id>" of the OpenStreetMap object the coordinates came from.
-    osm_id: str
+    # None when the point was located by hand.
+    osm_id: str | None
     aliases: list[str]
     note_en: str | None
 
