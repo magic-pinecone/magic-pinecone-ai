@@ -88,5 +88,8 @@ def find_rules(
             in {r["id"].casefold(), *(n.casefold() for n in r["college"].values())}
         ]
     if cohort is not None:
-        rules = [for_cohort(r, cohort) for r in rules]
+        # A rule whose every threshold belongs to other admission years is not
+        # this student's rule; one that never had thresholds still applies.
+        narrowed = [(r, for_cohort(r, cohort)) for r in rules]
+        rules = [n for r, n in narrowed if n["english"] or not r.get("english")]
     return rules

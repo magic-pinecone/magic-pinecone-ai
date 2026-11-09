@@ -12,7 +12,8 @@ has a `url`, extracts its text, and writes one Markdown file per source to
 changed or could not be fetched, so a scheduled job can flag that the curated
 requirements need a second look.
 
-PDF sources need `pdftotext` (poppler-utils) on PATH. Sources with
+PDF sources need `pdftotext` (poppler-utils) on PATH and Word sources
+(`"extract": "office"`) need `soffice` (LibreOffice). Sources with
 `"extract": "manual"` (images, scanned files) are never overwritten: their
 corpus file is transcribed by hand and only the hash of the original is tracked.
 """
@@ -23,6 +24,7 @@ import json
 import re
 import subprocess
 import sys
+import tempfile
 import time
 from datetime import date
 from pathlib import Path
@@ -93,10 +95,29 @@ def pdf_to_text(raw: bytes) -> str:
     return "\n".join(line for line in lines if line.strip())
 
 
+def office_to_text(raw: bytes) -> str:
+    """Convert a Word file (.doc, .docx, .odt) with LibreOffice."""
+    with tempfile.TemporaryDirectory() as folder:
+        source = Path(folder) / "source"
+        source.write_bytes(raw)
+        subprocess.run(
+            ["soffice", "--headless", "--convert-to", "txt:Text (encoded):UTF8"]
+            + ["--outdir", folder, str(source)],
+            capture_output=True,
+            check=True,
+            timeout=180,
+        )
+        text = (Path(folder) / "source.txt").read_text(encoding="utf-8-sig")
+    lines = [line.strip() for line in text.split("\n")]
+    return "\n".join(line for line in lines if line)
+
+
 def extract(source: dict, raw: bytes) -> str:
     kind = source.get("extract", "html")
     if kind == "pdf":
         return pdf_to_text(raw)
+    if kind == "office":
+        return office_to_text(raw)
     return html_to_text(raw, source.get("selector"))
 
 

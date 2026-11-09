@@ -102,6 +102,12 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
     "alternatives": ["…"],
     "international_students": ["…"],
     "legal_basis": ["…"],
+    "graduate": {
+      "summary": { "zh": "…", "en": "…" },
+      "international_students": ["…"],
+      "no_rule_found": ["…"],
+      "not_checked": ["…"]
+    },
     "sources": ["aa-study-regulations", "lc-threshold-page"]
   },
   "chinese": {
@@ -147,10 +153,13 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 - `english` 的鍵一定出現在 `tests` 裡；`rules[].sources`、`general.sources` 與 `chinese.sources` 的每個 id 一定出現在回應的 `sources` 裡，而 `sources` 只含這次回應引用到的來源。
 - `cohort_min`／`cohort_max` 為 `null` 表示該側沒有限制。
 - 找不到符合的學院時回 200 與空的 `rules`。
+- 給了 `cohort` 時，門檻全部屬於其他入學年度的規則會被略過（例如管理學院碩士班有 110–114 與 115 起兩個版本）；本來就沒有分數門檻的規則照常回傳。
+- 研究所規則不完整：`general.graduate.not_checked` 列出還沒查的系所。沒有回傳規則不代表沒有門檻。
+- `international_students` 裡用「」括起來的文字是官方條文原文。
 - 官方文件沒寫的事項不會出現推測值；`general.international_students` 與 `chinese.open_questions` 會明講哪些事需要向語言中心、教務處或院系確認。
 - `chinese.not_graduation_requirements` 列的是常被誤認為畢業條件的華語規定（獎助學金、獎勵金、招生語言證明）。
 
-更新資料：改 `sources.json` 後執行 `uv run python scripts/build_graduation_language_corpus.py` 重建語料，再對照語料修改 `requirements.json` 與 `verified_on`。加上 `--check` 只比對官方頁面是否變動，不寫檔。
+更新資料：改 `sources.json` 後執行 `uv run python scripts/build_graduation_language_corpus.py` 重建語料（PDF 需要 `pdftotext`，Word 檔需要 LibreOffice 的 `soffice`），再對照語料修改 `requirements.json` 與 `verified_on`。加上 `--check` 只比對官方頁面是否變動，不寫檔。
 
 ## `GET /intl/programs`
 

@@ -41,7 +41,7 @@ def test_graduation_language_matches_app_contract(client: TestClient):
 
 def test_cohort_selects_the_threshold_of_the_admission_year(client: TestClient):
     def toeic(cohort: int) -> list[str]:
-        params = {"college": "資訊電機學院", "cohort": cohort}
+        params = {"degree": "bachelor", "college": "資訊電機學院", "cohort": cohort}
         (rule,) = client.get(URL, params=params).json()["rules"]
         return [t["value"] for t in rule["english"]["toeic_lr"]]
 
@@ -51,6 +51,7 @@ def test_cohort_selects_the_threshold_of_the_admission_year(client: TestClient):
 
 def test_college_matches_id_and_either_name(client: TestClient):
     for college in ("bachelor-earth", "地球科學學院", "college of earth sciences"):
+        # No graduate rule was found for this college, so only one rule matches.
         rules = client.get(URL, params={"college": college}).json()["rules"]
         assert [r["id"] for r in rules] == ["bachelor-earth"]
 
@@ -61,7 +62,7 @@ def test_response_lists_only_the_sources_it_cites(client: TestClient):
     cited = {
         *body["general"]["sources"],
         *body["chinese"]["sources"],
-        *body["rules"][0]["sources"],
+        *(source for rule in body["rules"] for source in rule["sources"]),
     }
     assert {s["id"] for s in body["sources"]} == cited
 
@@ -129,3 +130,21 @@ def test_programs_filter_by_degree_language_and_name(client: TestClient):
         assert program["degree"] == "master"
         assert program["teaching_language"] == "english"
         assert "國際經營" in program["name"]["zh"]
+
+
+def test_cohort_drops_rules_written_for_other_admission_years(client: TestClient):
+    def management_master_rules(cohort: int) -> set[str]:
+        params = {"degree": "master", "college": "管理學院", "cohort": cohort}
+        rules = client.get(URL, params=params).json()["rules"]
+        return {r["id"] for r in rules if r["id"].startswith("master-management")}
+
+    assert management_master_rules(114) == {"master-management-110"}
+    assert management_master_rules(115) == {"master-management-115"}
+
+
+def test_graduate_rule_quotes_its_international_student_clause(client: TestClient):
+    rules = client.get(URL, params={"degree": "master"}).json()["rules"]
+
+    mechanical = next(r for r in rules if r["id"] == "master-mechanical")
+    assert "外籍學位生不受此條文限制" in mechanical["international_students"][0]
+    assert mechanical["english"] == {}
