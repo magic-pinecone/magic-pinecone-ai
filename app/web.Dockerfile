@@ -1,8 +1,8 @@
 # Builds the wasmJs preview of the shared Compose UI and serves it as static files.
 # The Gradle daemon asks for Amazon Corretto 21 (gradle/gradle-daemon-jvm.properties).
 FROM amazoncorretto:21-al2023 AS build
-# gradlew needs xargs, which the base image leaves out.
-RUN dnf install -y findutils && dnf clean all
+# gradlew needs xargs and the Node.js that Kotlin/Wasm downloads needs libatomic; the base image has neither.
+RUN dnf install -y findutils libatomic && dnf clean all
 WORKDIR /src
 COPY . .
 RUN --mount=type=cache,target=/root/.gradle \
