@@ -1,0 +1,17 @@
+<resources>
+    <string name="portal_no_results">Không tìm thấy dịch vụ liên quan đến “%1$s”</string>
+    <string name="portal_favorites">Yêu thích</string>
+    <string name="portal_done">Xong</string>
+    <string name="portal_edit">Chỉnh sửa</string>
+    <string name="portal_favorites_empty">Nhấn “Chỉnh sửa”, sau đó nhấn ＋ để thêm dịch vụ vào mục yêu thích</string>
+    <string name="portal_already_favorite">Đã có trong mục yêu thích: %1$s</string>
+    <string name="portal_add_favorite">Thêm vào mục yêu thích: %1$s</string>
+    <string name="portal_search">Tìm dịch vụ</string>
+    <string name="portal_clear_search">Xóa tìm kiếm</string>
+    <string name="portal_move_up">Di chuyển %1$s lên</string>
+    <string name="portal_move_down">Di chuyển %1$s xuống</string>
+    <string name="portal_remove_favorite">Xóa %1$s khỏi mục yêu thích</string>
+    <string name="portal_sign_in">Đăng nhập</string>
+    <string name="portal_sign_out">Đăng xuất</string>
+    <string name="portal_retry">Thử lại</string>
+</resources>
