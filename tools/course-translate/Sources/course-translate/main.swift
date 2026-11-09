@@ -8,7 +8,7 @@ import Translation
 
 struct Options {
     var liteRepo = URL(fileURLWithPath: "../../../magic-pinecone-lite")
-    var outDir = URL(fileURLWithPath: "out")
+    var outDir = URL(fileURLWithPath: "../../data/course-translations")
     var languages = ["en", "vi"]
     var scopes = Scope.allCases
     var strategy = TranslationSession.Strategy.highFidelity
