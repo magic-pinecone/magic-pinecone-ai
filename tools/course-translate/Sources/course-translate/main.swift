@@ -1,4 +1,5 @@
 import Foundation
+import FoundationModels
 import Translation
 
 // Translates the static course data in magic-pinecone-lite with Apple's on-device
@@ -152,6 +153,13 @@ func translate(_ scope: Scope, into language: String, options: Options) async th
 }
 
 let options = parseOptions()
+// highFidelity silently falls back to the traditional models when Apple Intelligence
+// isn't ready, which would label lowLatency output as highFidelity.
+if options.strategy == .highFidelity, case .unavailable(let reason) = SystemLanguageModel.default.availability {
+    print("Apple Intelligence is unavailable (\(reason)), so highFidelity would fall back to lowLatency.")
+    print("Wait for the model to finish downloading, or pass --fast.")
+    exit(1)
+}
 try FileManager.default.createDirectory(at: options.outDir, withIntermediateDirectories: true)
 for language in options.languages {
     for scope in options.scopes {
