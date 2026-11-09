@@ -1,0 +1,115 @@
+{
+  "sources": [
+    {
+      "id": "lc-threshold-page",
+      "title": "大學部英外文畢業門檻",
+      "url": "https://www.lc.ncu.edu.tw/zh-TW/article/2022-08-31 16:42:00",
+      "org": "語言中心",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "",
+      "extract": "html",
+      "selector": "main"
+    },
+    {
+      "id": "lc-threshold-chart",
+      "title": "大學部英文畢業門檻（圖表）",
+      "url": "https://www.lc.ncu.edu.tw/files/system/images/self-study/英文畢業門檻英檢成績_R_2061020.png",
+      "org": "語言中心",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "",
+      "extract": "manual"
+    },
+    {
+      "id": "lc-form-general",
+      "title": "國立中央大學大學部「英文能力鑑定」審核申請表",
+      "url": "https://www.lc.ncu.edu.tw/files/system/files/國立中央大學大學部英文畢業門檻審核申請表(1151學期起適用)_0827.pdf",
+      "org": "語言中心",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度第 1 學期起",
+      "extract": "pdf"
+    },
+    {
+      "id": "lc-form-engineering",
+      "title": "工學院「外文能力鑑定」暨「外文能力獎勵」審核申請表",
+      "url": "https://www.lc.ncu.edu.tw/files/system/files/國立中央大學工學院(109學年起適用)「外文能力鑑定」暨「外文能力獎勵」審核申請表_v20241226(2).pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "109 學年度起；2024-12-26 版",
+      "extract": "pdf"
+    },
+    {
+      "id": "lc-form-science",
+      "title": "理學院學生達到外文畢業門檻及獎勵金申請表",
+      "url": "https://www.lc.ncu.edu.tw/files/system/files/理學院學生達到外文畢業門檻及獎勵金申請表(1140610適用)(1).pdf",
+      "org": "理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "2025-06-10 起",
+      "extract": "pdf"
+    },
+    {
+      "id": "lc-form-earth",
+      "title": "地球科學學院大學部「外文能力鑑定」審核申請表",
+      "url": "https://www.lc.ncu.edu.tw/files/system/files/03國立中央大學地球科學學院大學部外文畢業門檻審核申請表1130619(1).pdf",
+      "org": "地球科學學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "2024-06-19 版",
+      "extract": "pdf"
+    },
+    {
+      "id": "lc-form-liberal-arts",
+      "title": "文學院大學部「外文能力鑑定」審核申請表",
+      "url": "https://www.lc.ncu.edu.tw/files/system/files/國立中央大學文學院大學部「外文能力鑑定」審核申請表(公告版).pdf",
+      "org": "文學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "",
+      "extract": "pdf"
+    },
+    {
+      "id": "lc-remedial-english",
+      "title": "大學部進修英文",
+      "url": "https://www.lc.ncu.edu.tw/zh-TW/article/2022-08-31 17:19:16",
+      "org": "語言中心",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "",
+      "extract": "html",
+      "selector": "main"
+    },
+    {
+      "id": "lc-freshman-english",
+      "title": "大一英文（分級、免修）",
+      "url": "https://www.lc.ncu.edu.tw/zh-TW/article/2022-08-31 17:01:08",
+      "org": "語言中心",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度",
+      "extract": "html",
+      "selector": "main"
+    }
+  ]
+}

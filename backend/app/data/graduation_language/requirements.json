@@ -1,0 +1,770 @@
+{
+  "verified_on": "2026-11-10",
+  "disclaimer": {
+    "zh": "本資料由人工自中央大學官方頁面整理，僅供參考；實際標準以語言中心與各院系公告為準。",
+    "en": "Transcribed by hand from official NCU pages for reference only. The Language Center's and your college's own announcements prevail."
+  },
+  "tests": {
+    "toefl_ibt": {
+      "zh": "托福網路測驗",
+      "en": "TOEFL iBT"
+    },
+    "toefl_itp": {
+      "zh": "托福紙筆測驗",
+      "en": "TOEFL ITP"
+    },
+    "toeic_lr": {
+      "zh": "多益（聽讀）測驗",
+      "en": "TOEIC Listening & Reading"
+    },
+    "gept_hi_first": {
+      "zh": "全民英檢中高級初試",
+      "en": "GEPT High-Intermediate (first stage)"
+    },
+    "ielts": {
+      "zh": "雅思",
+      "en": "IELTS"
+    },
+    "linguaskill_lr": {
+      "zh": "領思（聽讀）測驗",
+      "en": "Linguaskill (Listening & Reading)"
+    },
+    "bestep": {
+      "zh": "培力英檢",
+      "en": "BESTEP"
+    },
+    "englishscore_lr": {
+      "zh": "EnglishScore（聽讀測驗）",
+      "en": "EnglishScore (Listening & Reading)"
+    }
+  },
+  "general": {
+    "summary": {
+      "zh": "大學部學生畢業前須通過所屬學院訂定的英文（部分學院可用第二外語）檢定標準，並完成畢業門檻審核；標準以入學年度為準。",
+      "en": "Undergraduates must meet their college's English proficiency standard (some colleges also accept a second foreign language) and have it verified before graduating. The standard of your admission year applies."
+    },
+    "procedure": [
+      "英檢合格者填寫所屬學院的審核申請表，並檢附成績單正本（檢核後歸還；影本或網路成績不受理，托福、雅思、領思可出示電子成績單）。",
+      "資電、管理、生醫理工、客家學院學生到語言中心辦理；理學院、工學院學生洽院辦；地科學院、文學院學生洽系辦。",
+      "成績單需印有中文姓名；只有英文姓名者需另附證件（表單寫：本國生附護照、外籍生附身分證）。",
+      "審核需 7 個工作天，之後自行登入畢審系統查看結果。",
+      "「大一英文免修」與「英文畢業門檻」是兩件不同的申請，需分開送件。"
+    ],
+    "alternatives": [
+      "未通過英檢且符合資格者，可修讀「進修英文」（全學年、共 4 學分，上下學期各修一次），成績及格亦可畢業。",
+      "進修英文修課資格（符合其一）：學測英文成績小於或等於前標，且入學後參加過任一項本校認定的英文鑑定考試；沒有學測英文成績，且入學後參加過任一項英文鑑定考試；持系主任簽名信函證明有英文學習障礙且專業表現優秀。",
+      "第一次修進修英文前，須填「修課資格審核申請表」並附英檢成績單正本，到語言中心審核通過後才能選課。",
+      "進修英文是否列入畢業學分，由各系訂在「各學士班應修科目及畢業條件」的備註欄。",
+      "身心障礙生經專業評估確有英文學習障礙者，可個案處理或免予英文能力鑑定。"
+    ],
+    "international_students": [
+      "語言中心的畢業門檻頁面與各學院表單都沒有寫外籍生可免除畢業門檻；表單只提到外籍生成績單僅有英文姓名時要附的證件。是否適用或有其他處理方式，請直接向語言中心或所屬院系確認。",
+      "沒有學測成績的學生（多數外籍生）符合進修英文修課資格的第二款：入學後先參加過一次本校認定的英檢，即可申請修進修英文。",
+      "理、工、地科、文學院可用第二外語達成門檻，可採計的語言含越南文、泰文、日文、韓文、德文、法文、西班牙文。官方文件沒有說明母語是否可採計，請向院系確認。",
+      "「英語系國家之外籍生：個案審理」「接受以英文為主要授課語言之高中教育滿三年者：個案審理」這兩項寫在大一英文免修規定，不是畢業門檻規定。"
+    ],
+    "sources": [
+      "lc-threshold-page",
+      "lc-remedial-english",
+      "lc-freshman-english"
+    ]
+  },
+  "rules": [
+    {
+      "id": "bachelor-eecs",
+      "degree": "bachelor",
+      "college": {
+        "zh": "資訊電機學院",
+        "en": "College of Electrical Engineering and Computer Science"
+      },
+      "apply_at": {
+        "zh": "語言中心",
+        "en": "Language Center"
+      },
+      "english": {
+        "toefl_ibt": [
+          {
+            "value": "4 級"
+          }
+        ],
+        "toefl_itp": [
+          {
+            "value": "483",
+            "cohort_max": 114
+          },
+          {
+            "value": "543",
+            "cohort_min": 115
+          }
+        ],
+        "toeic_lr": [
+          {
+            "value": "600",
+            "cohort_max": 114
+          },
+          {
+            "value": "785（聽力 400、閱讀 385）",
+            "cohort_min": 115
+          }
+        ],
+        "gept_hi_first": [
+          {
+            "value": "143",
+            "cohort_max": 114
+          },
+          {
+            "value": "160",
+            "cohort_min": 115
+          }
+        ],
+        "ielts": [
+          {
+            "value": "5.0",
+            "cohort_max": 114
+          },
+          {
+            "value": "5.5",
+            "cohort_min": 115
+          }
+        ],
+        "linguaskill_lr": [
+          {
+            "value": "145",
+            "cohort_max": 114
+          },
+          {
+            "value": "150",
+            "cohort_min": 115
+          }
+        ],
+        "bestep": [
+          {
+            "value": "聽說讀寫總分 700，且聽力 90、閱讀 90、口說 260、寫作 260"
+          }
+        ]
+      },
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "notes": [
+        "表單寫「114 年前適用／115 年後適用」並註明「以入學年度標準為主」；這裡解讀為 114 學年度（含）以前入學與 115 學年度（含）以後入學，送件前請向語言中心確認。"
+      ],
+      "sources": [
+        "lc-threshold-chart",
+        "lc-form-general"
+      ]
+    },
+    {
+      "id": "bachelor-hakka",
+      "degree": "bachelor",
+      "college": {
+        "zh": "客家學院",
+        "en": "College of Hakka Studies"
+      },
+      "apply_at": {
+        "zh": "語言中心",
+        "en": "Language Center"
+      },
+      "english": {
+        "toefl_ibt": [
+          {
+            "value": "4 級"
+          }
+        ],
+        "toefl_itp": [
+          {
+            "value": "543"
+          }
+        ],
+        "toeic_lr": [
+          {
+            "value": "670"
+          }
+        ],
+        "gept_hi_first": [
+          {
+            "value": "160"
+          }
+        ],
+        "ielts": [
+          {
+            "value": "5.5"
+          }
+        ],
+        "linguaskill_lr": [
+          {
+            "value": "150"
+          }
+        ],
+        "bestep": [
+          {
+            "value": "聽說讀寫總分 700"
+          }
+        ]
+      },
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "notes": [],
+      "sources": [
+        "lc-threshold-chart",
+        "lc-form-general"
+      ]
+    },
+    {
+      "id": "bachelor-management",
+      "degree": "bachelor",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "apply_at": {
+        "zh": "語言中心",
+        "en": "Language Center"
+      },
+      "english": {
+        "toefl_ibt": [
+          {
+            "value": "3.5 級"
+          }
+        ],
+        "toefl_itp": [
+          {
+            "value": "543"
+          }
+        ],
+        "toeic_lr": [
+          {
+            "value": "700"
+          }
+        ],
+        "gept_hi_first": [
+          {
+            "value": "160"
+          }
+        ],
+        "ielts": [
+          {
+            "value": "5.5"
+          }
+        ],
+        "linguaskill_lr": [
+          {
+            "value": "150"
+          }
+        ],
+        "bestep": [
+          {
+            "value": "聽說讀寫總分 700"
+          }
+        ]
+      },
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "notes": [],
+      "sources": [
+        "lc-threshold-chart",
+        "lc-form-general"
+      ]
+    },
+    {
+      "id": "bachelor-health",
+      "degree": "bachelor",
+      "college": {
+        "zh": "生醫理工學院",
+        "en": "College of Health Sciences and Technology"
+      },
+      "apply_at": {
+        "zh": "語言中心",
+        "en": "Language Center"
+      },
+      "english": {
+        "toefl_ibt": [
+          {
+            "value": "3.5 級"
+          }
+        ],
+        "toefl_itp": [
+          {
+            "value": "483"
+          }
+        ],
+        "toeic_lr": [
+          {
+            "value": "600"
+          }
+        ],
+        "gept_hi_first": [
+          {
+            "value": "143"
+          }
+        ],
+        "ielts": [
+          {
+            "value": "5.0"
+          }
+        ],
+        "linguaskill_lr": [
+          {
+            "value": "145"
+          }
+        ],
+        "bestep": [
+          {
+            "value": "聽力 85、閱讀 85、口說 260、寫作 260"
+          }
+        ]
+      },
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "notes": [],
+      "sources": [
+        "lc-threshold-chart",
+        "lc-form-general"
+      ]
+    },
+    {
+      "id": "bachelor-university-program",
+      "degree": "bachelor",
+      "college": {
+        "zh": "校學士",
+        "en": "University-level bachelor's program (listed as 校學士)"
+      },
+      "apply_at": {
+        "zh": "語言中心",
+        "en": "Language Center"
+      },
+      "english": {
+        "toefl_ibt": [
+          {
+            "value": "3.5 級"
+          }
+        ],
+        "toefl_itp": [
+          {
+            "value": "483"
+          }
+        ],
+        "toeic_lr": [
+          {
+            "value": "600"
+          }
+        ],
+        "gept_hi_first": [
+          {
+            "value": "143"
+          }
+        ],
+        "ielts": [
+          {
+            "value": "5.0"
+          }
+        ],
+        "linguaskill_lr": [
+          {
+            "value": "145"
+          }
+        ],
+        "bestep": [
+          {
+            "value": "聽說讀寫總分 690，且聽力 85、閱讀 85、口說 260、寫作 260"
+          }
+        ]
+      },
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "notes": [
+        "「校學士」是語言中心表單上的欄位名稱，官方頁面沒有進一步定義適用的班別。"
+      ],
+      "sources": [
+        "lc-threshold-chart",
+        "lc-form-general"
+      ]
+    },
+    {
+      "id": "bachelor-engineering",
+      "degree": "bachelor",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "apply_at": {
+        "zh": "工學院辦公室",
+        "en": "College of Engineering office"
+      },
+      "english": {
+        "toefl_ibt": [
+          {
+            "value": "3.5 級"
+          }
+        ],
+        "toefl_itp": [
+          {
+            "value": "483"
+          }
+        ],
+        "toeic_lr": [
+          {
+            "value": "600"
+          }
+        ],
+        "gept_hi_first": [
+          {
+            "value": "143"
+          }
+        ],
+        "ielts": [
+          {
+            "value": "5.0"
+          }
+        ],
+        "linguaskill_lr": [
+          {
+            "value": "145"
+          }
+        ],
+        "bestep": [
+          {
+            "value": "聽說讀寫總分 690，且聽力 85、閱讀 85、口說 260、寫作 260",
+            "cohort_min": 114,
+            "note": "114 學年度起入學適用聽讀說寫測驗"
+          },
+          {
+            "value": "113 學年度（含）以前入學適用聽讀測驗；分數未列在表單或語言中心圖表上",
+            "cohort_max": 113
+          }
+        ]
+      },
+      "other_languages": [],
+      "other_languages_without_threshold": [
+        "日文：日本語能力試驗、實用日本語運用能力試驗",
+        "德文：歌德學院德語檢定測驗、德福考試",
+        "韓文：韓國語文能力測驗",
+        "法文：法語鑑定文憑、法語能力測驗",
+        "西班牙文：西班牙語檢定考試、西語職場能力檢定",
+        "泰文：泰語能力檢定、泰國語文檢定測驗",
+        "越南文：國際越南語認證",
+        "英文另接受 EnglishScore（聽讀測驗）"
+      ],
+      "notes": [
+        "工學院表單只列出可採計的檢定名稱；第二外語與 EnglishScore 的合格分數不在表單上，請洽工學院辦公室。"
+      ],
+      "sources": [
+        "lc-threshold-chart",
+        "lc-form-engineering"
+      ]
+    },
+    {
+      "id": "bachelor-science",
+      "degree": "bachelor",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "apply_at": {
+        "zh": "理學院辦公室",
+        "en": "College of Science office"
+      },
+      "english": {
+        "toefl_ibt": [
+          {
+            "value": "3.5 級"
+          }
+        ],
+        "toefl_itp": [
+          {
+            "value": "483"
+          }
+        ],
+        "toeic_lr": [
+          {
+            "value": "600"
+          }
+        ],
+        "gept_hi_first": [
+          {
+            "value": "143"
+          }
+        ],
+        "ielts": [
+          {
+            "value": "5.0"
+          }
+        ],
+        "linguaskill_lr": [
+          {
+            "value": "145"
+          }
+        ],
+        "bestep": [
+          {
+            "value": "聽讀總分 170、說寫總分 510",
+            "cohort_min": 114,
+            "note": "114 學年度（含）後入學適用聽說讀寫測驗"
+          },
+          {
+            "value": "113 學年度（含）前入學適用聽讀測驗；語言中心圖表列聽讀總分 170",
+            "cohort_max": 113
+          }
+        ]
+      },
+      "other_languages": [],
+      "other_languages_without_threshold": [
+        "日文：日本語能力試驗、實用日本語運用能力試驗",
+        "德文：歌德學院德語檢定測驗、德福考試",
+        "韓文：韓國語文能力測驗",
+        "法文：法語鑑定文憑、法語能力測驗",
+        "西班牙文：西班牙語檢定考試、西語職場能力檢定",
+        "泰文：泰語能力檢定、泰國語文檢定測驗",
+        "越南文：國際越南語認證",
+        "英文另接受 English Score"
+      ],
+      "notes": [
+        "理學院表單只列出可採計的檢定名稱；第二外語與 English Score 的合格分數不在表單上，請洽理學院辦公室。"
+      ],
+      "sources": [
+        "lc-threshold-chart",
+        "lc-form-science"
+      ]
+    },
+    {
+      "id": "bachelor-earth",
+      "degree": "bachelor",
+      "college": {
+        "zh": "地球科學學院",
+        "en": "College of Earth Sciences"
+      },
+      "apply_at": {
+        "zh": "各系辦公室",
+        "en": "Your department office"
+      },
+      "english": {
+        "toefl_ibt": [
+          {
+            "value": "3.5 級（語言中心圖表）；學院表單仍寫舊制 64 分"
+          }
+        ],
+        "toefl_itp": [
+          {
+            "value": "483"
+          }
+        ],
+        "toeic_lr": [
+          {
+            "value": "600"
+          }
+        ],
+        "gept_hi_first": [
+          {
+            "value": "143"
+          }
+        ],
+        "ielts": [
+          {
+            "value": "5.0"
+          }
+        ],
+        "linguaskill_lr": [
+          {
+            "value": "145"
+          }
+        ],
+        "englishscore_lr": [
+          {
+            "value": "330"
+          }
+        ],
+        "bestep": [
+          {
+            "value": "聽說讀寫總分至少 700"
+          }
+        ]
+      },
+      "other_languages": [
+        {
+          "language": "日文",
+          "test": "日本語能力試驗 JLPT",
+          "requirement": "N4–N5（80 分合格）"
+        },
+        {
+          "language": "日文",
+          "test": "實用日本語運用能力試驗 TOP J",
+          "requirement": "初級 A（A4–A5）"
+        },
+        {
+          "language": "德文",
+          "test": "歌德學院德語檢定測驗 Goethe-Zertifikat",
+          "requirement": "CEFR A1"
+        },
+        {
+          "language": "德文",
+          "test": "德福考試 TestDaF",
+          "requirement": "第三級 TDN 3"
+        },
+        {
+          "language": "韓文",
+          "test": "韓國語文能力測驗 TOPIK",
+          "requirement": "TOPIK I 1 級"
+        },
+        {
+          "language": "法文",
+          "test": "法語鑑定文憑 DELF／DELF Pro",
+          "requirement": "A1"
+        },
+        {
+          "language": "法文",
+          "test": "法語能力測驗 TCF／TCF DAP",
+          "requirement": "CEFR A1"
+        },
+        {
+          "language": "西班牙文",
+          "test": "西班牙語檢定考試 DELE",
+          "requirement": "CEFR A1"
+        },
+        {
+          "language": "西班牙文",
+          "test": "西語職場能力檢定 esPro BULATS",
+          "requirement": "CEFR A1"
+        },
+        {
+          "language": "泰文",
+          "test": "泰語能力檢定 CUTFL",
+          "requirement": "Chula Novice"
+        },
+        {
+          "language": "泰文",
+          "test": "泰國語文檢定測驗 TLPT",
+          "requirement": "T5（70 分以上）"
+        },
+        {
+          "language": "越南文",
+          "test": "國際越南語認證 IVPT",
+          "requirement": "A1 基礎（60≦總分≦79）"
+        }
+      ],
+      "other_languages_without_threshold": [],
+      "notes": [],
+      "sources": [
+        "lc-threshold-chart",
+        "lc-form-earth"
+      ]
+    },
+    {
+      "id": "bachelor-liberal-arts",
+      "degree": "bachelor",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "apply_at": {
+        "zh": "各系辦公室",
+        "en": "Your department office"
+      },
+      "english": {
+        "toefl_ibt": [
+          {
+            "value": "4 級（語言中心圖表）；學院表單仍寫舊制 72 分"
+          }
+        ],
+        "toefl_itp": [
+          {
+            "value": "543"
+          }
+        ],
+        "toeic_lr": [
+          {
+            "value": "670"
+          }
+        ],
+        "gept_hi_first": [
+          {
+            "value": "160"
+          }
+        ],
+        "ielts": [
+          {
+            "value": "5.5"
+          }
+        ],
+        "linguaskill_lr": [
+          {
+            "value": "150"
+          }
+        ],
+        "bestep": [
+          {
+            "value": "聽說讀寫總分 700"
+          }
+        ]
+      },
+      "other_languages": [
+        {
+          "language": "日文",
+          "test": "日本語能力試驗 JLPT",
+          "requirement": "N5（80 分合格）"
+        },
+        {
+          "language": "日文",
+          "test": "實用日本語運用能力試驗 TOP J",
+          "requirement": "初級 A-5"
+        },
+        {
+          "language": "德文",
+          "test": "歌德學院德語檢定測驗 Goethe-Zertifikat",
+          "requirement": "CEFR A1"
+        },
+        {
+          "language": "德文",
+          "test": "德福考試 TestDaF",
+          "requirement": "第三級 TDN 3"
+        },
+        {
+          "language": "韓文",
+          "test": "韓國語文能力測驗 TOPIK",
+          "requirement": "TOPIK I 1 級"
+        },
+        {
+          "language": "法文",
+          "test": "法語鑑定文憑 DELF／DELF Pro",
+          "requirement": "A1"
+        },
+        {
+          "language": "法文",
+          "test": "法語能力測驗 TCF／TCF DAP",
+          "requirement": "CEFR A1"
+        },
+        {
+          "language": "西班牙文",
+          "test": "西班牙語檢定考試 DELE",
+          "requirement": "CEFR A1"
+        },
+        {
+          "language": "西班牙文",
+          "test": "西語職場能力檢定 esPro BULATS",
+          "requirement": "CEFR A1"
+        },
+        {
+          "language": "泰文",
+          "test": "泰語能力檢定 CUTFL",
+          "requirement": "Chula Novice"
+        },
+        {
+          "language": "泰文",
+          "test": "泰國語文檢定測驗 TLPT",
+          "requirement": "T5（70 分以上）"
+        },
+        {
+          "language": "越南文",
+          "test": "國際越南語認證 IVPT",
+          "requirement": "A1 基礎"
+        }
+      ],
+      "other_languages_without_threshold": [],
+      "notes": [
+        "語言中心圖表註 (1)：英文系學生不適用上述門檻。"
+      ],
+      "sources": [
+        "lc-threshold-chart",
+        "lc-form-liberal-arts"
+      ]
+    }
+  ]
+}
