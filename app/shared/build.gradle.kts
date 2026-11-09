@@ -7,6 +7,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 import org.jetbrains.kotlin.gradle.targets.js.webpack.WebpackDevtool
+import org.mpc.gradle.i18n.CheckHardcodedUiText
+import org.mpc.gradle.i18n.CheckI18nKeys
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -21,6 +23,7 @@ plugins {
     alias(libs.plugins.ktlint)
     alias(libs.plugins.testBalloon)
     alias(libs.plugins.skie)
+    alias(libs.plugins.moko.resources)
 }
 
 val ktorVersion: String by project
@@ -60,6 +63,7 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "Shared"
             isStatic = buildType != NativeBuildType.DEBUG
+            export(libs.moko.resources)
             export("com.mohamedrejeb.calf:calf-ui:${libs.versions.calf.get()}")
         }
     }
@@ -139,6 +143,8 @@ kotlin {
             implementation(libs.compose.material3AdaptiveNavigationSuite)
         }
         commonMain.dependencies {
+            api(libs.moko.resources)
+            implementation(libs.moko.resources.compose)
             api(libs.calf.ui)
             api(libs.calf.webview)
             implementation(libs.compose.runtime)
@@ -247,4 +253,27 @@ val checkDesignTokens = tasks.register("checkDesignTokens") {
     }
 }
 
-tasks.named("check") { dependsOn(checkDesignTokens) }
+val checkI18nKeys = tasks.register<CheckI18nKeys>("checkI18nKeys") {
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+    description = "Fails when moko string keys or format placeholders differ across locales."
+    resourceRoot.set(layout.projectDirectory.dir("src/commonMain/moko-resources"))
+}
+
+val appRoot = rootProject.layout.projectDirectory
+val repoRoot = appRoot.dir("..")
+val hardcodedUiAllowlist = repoRoot.file("app/config/i18n/hardcoded-ui-text-allowlist.txt")
+val checkHardcodedUiText = tasks.register<CheckHardcodedUiText>("checkHardcodedUiText") {
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+    description = "Fails when Chinese string literals are added to UI source outside the checked-in allowlist."
+    sharedUiRoot.set(layout.projectDirectory.dir("src/commonMain/kotlin/org/mpc/presentation"))
+    androidUiRoot.set(appRoot.dir("androidApp/src/main/kotlin"))
+    repositoryRoot.set(repoRoot)
+    allowlistFile.set(hardcodedUiAllowlist)
+}
+
+tasks.named("check") { dependsOn(checkDesignTokens, checkI18nKeys, checkHardcodedUiText) }
+
+multiplatformResources {
+    resourcesPackage.set("org.mpc.shared")
+    resourcesSourceSets.getByName("commonMain").srcDir("src/commonMain/moko-resources")
+}

@@ -18,6 +18,7 @@ kotlin {
 }
 dependencies {
     implementation(projects.shared)
+    implementation(libs.moko.resources.compose)
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
