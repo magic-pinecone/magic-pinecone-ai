@@ -77,6 +77,45 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 | 502 | NCU 連不上，而且沒有快取 |
 | 503 | 後端還沒同步過 |
 
+## `GET /transit/bus/{route}/arrivals`
+
+中大周邊公車的即時到站資訊，由後端向 [TDX](https://tdx.transportdata.tw) 查詢後轉送。App 目前還沒有使用。
+
+可查的路線由 `GET /transit/bus/routes` 列出。加上 `?campus_only=true` 只回傳校內與校門口的站牌。
+
+```json
+{
+  "route": "132",
+  "fetched_at": "2026-11-10T04:52:55Z",
+  "source": "TDX (tdx.transportdata.tw)",
+  "stops": [
+    {
+      "stop_uid": "TAO269",
+      "stop_name": { "zh": "中央大學正門", "en": "NCU Main Gate" },
+      "sequence": 14,
+      "direction": 0,
+      "on_campus": true,
+      "status": "NOT_DEPARTED",
+      "estimate_seconds": null,
+      "next_bus_time": "2026-11-10T07:18:00+08:00",
+      "plate_number": null,
+      "updated_at": "2026-11-10T04:52:51+08:00"
+    }
+  ]
+}
+```
+
+- `stops` 依 `direction`、`sequence` 排序。132 是循環線，整條都是 `direction` 0，同一個地點會以不同的 `stop_uid` 出現兩次（去程與回程），要靠 `sequence` 分辨。
+- `status`：`ARRIVING`（有車在路上，看 `estimate_seconds`）、`NOT_DEPARTED`（尚未發車，看 `next_bus_time`）、`SKIPPED`（交管不停靠）、`LAST_BUS_GONE`（末班車已過）、`NO_SERVICE`（今日未營運）、`UNKNOWN`。
+- 校內站牌的英文名稱由後端改寫（TDX 原本的譯名不一致）；其他站牌沿用 TDX 的英文名稱。
+- 同一路線的結果會重複使用 `TDX_ARRIVAL_CACHE_SECONDS` 秒（預設 30）。
+
+| 狀態碼 | 意義 |
+|---|---|
+| 404 | 不是可查的路線 |
+| 502 | TDX 連不上 |
+| 503 | 後端沒有設定 `TDX_CLIENT_ID`／`TDX_CLIENT_SECRET` |
+
 ## 既有端點
 
 上游原本的 `/courses`（伺服器端搜尋與分頁）、`/courses/colleges`、`/courses/departments`、`/scraper/*` 都保留不變；App 目前沒有使用搜尋端點。
