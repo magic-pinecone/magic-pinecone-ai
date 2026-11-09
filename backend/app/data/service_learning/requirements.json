@@ -1,0 +1,111 @@
+{
+  "contact": {
+    "name_zh": "學務處服務學習發展中心",
+    "name_en": "Center for Service Learning, Office of Student Affairs",
+    "website": "https://service-learning.ncu.edu.tw/",
+    "sources": [
+      {
+        "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/258/304301548.pdf",
+        "title": "教務處公告：114 學年度第 2 學期頒發學位證書相關注意事項（115 年 2 月 12 日）",
+        "fetched": "2026-11-10",
+        "quote": "如有疑問，請洽學務處服務學習發展中心。"
+      }
+    ]
+  },
+  "requirements": [
+    {
+      "id": "course",
+      "degrees": ["bachelor"],
+      "title_zh": "服務學習課程：零學分必修，修兩學期",
+      "title_en": "Service-learning course: required, zero credits, two semesters",
+      "summary_zh": "服務學習課程須修兩個學期，不計學分，兩學期的課號不得重複。",
+      "summary_en": "Take the student service-learning course in two different semesters. It carries no credits and the two course numbers must differ.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/1NationalCentralUniversityStudyRegulations.pdf",
+          "title": "National Central University Study Regulations, Article 13",
+          "fetched": "2026-11-10",
+          "quote": "Student service-learning is a zero-credit required course that must be taken in two semesters (the course numbers of both courses of student service-learning taken by a student shall not be identical)."
+        }
+      ]
+    },
+    {
+      "id": "graduation-condition",
+      "degrees": ["bachelor"],
+      "title_zh": "通過服務學習是學士班畢業條件",
+      "title_en": "Passing service learning is a condition for a bachelor's degree",
+      "summary_zh": "學士班學生須依本校學生服務學習相關規定通過服務學習，才能畢業。學則未列外籍生免修。",
+      "summary_en": "Undergraduates graduate only after passing service learning under the university's service-learning guidelines. The regulations list no exemption for foreign students.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/1NationalCentralUniversityStudyRegulations.pdf",
+          "title": "National Central University Study Regulations, Article 48",
+          "fetched": "2026-11-10",
+          "quote": "4. passed student service-learning per the University's Implementation Guidelines on student service-learning."
+        }
+      ]
+    },
+    {
+      "id": "passport-100-hours",
+      "degrees": ["bachelor"],
+      "title_zh": "中大護照 100 基本時數",
+      "title_en": "100 basic hours on the NCU passport",
+      "summary_zh": "學士班須完成中大護照 100 基本時數，否則無法領取學位證書。時數可在【服務學習網】或【畢業審核系統】查詢。",
+      "summary_en": "Undergraduates need at least 100 service hours on the NCU passport before they can receive the degree certificate. Check the hours on the Service Learning Website or in the Graduation System.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/258/304301548.pdf",
+          "title": "教務處公告：114 學年度第 2 學期頒發學位證書相關注意事項（115 年 2 月 12 日）",
+          "fetched": "2026-11-10",
+          "quote": "學士班中大護照 100 基本時數：請至【服務學習網】或【畢業審核系統】查詢。如有疑問，請洽學務處服務學習發展中心。請務必確認完成中大護照 100 基本時數，以免影響畢業證書之領取。"
+        },
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/258/304301548.pdf",
+          "title": "Announcement No. 1151100083 (February 12, 2026), English text",
+          "fetched": "2026-11-10",
+          "quote": "failing to complete the minimum of 100 service hours will prevent an undergraduate student from receiving the degree certificate."
+        }
+      ]
+    },
+    {
+      "id": "extended-study",
+      "degrees": ["bachelor"],
+      "title_zh": "延長修業期間不得只修服務學習",
+      "title_en": "Extended study: the service-learning course does not count as the one required course",
+      "summary_zh": "學士班延長修業期間每學期至少須修一門課，這門課不得是服務學習課程。",
+      "summary_en": "An undergraduate who extends their period of study must take at least one course each semester, and that course cannot be the service-learning course.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/1NationalCentralUniversityStudyRegulations.pdf",
+          "title": "National Central University Study Regulations, Article 51",
+          "fetched": "2026-11-10",
+          "quote": "but this course may not be a PE, military training, or student-service learning course."
+        }
+      ]
+    },
+    {
+      "id": "graduate-not-listed",
+      "degrees": ["graduate"],
+      "title_zh": "研究生畢業條件未列服務學習",
+      "title_en": "Graduate students: service learning is not among the graduation conditions",
+      "summary_zh": "碩、博士生的畢業條件為修畢課程與學分、通過學位考試、各學期操行成績及格，未列服務學習。各系所仍可能另有規定。",
+      "summary_en": "The graduation conditions for master's and doctoral students are courses and credits, the degree examination, and conduct grades. Service learning is not listed. Individual departments may still set their own requirements.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/1NationalCentralUniversityStudyRegulations.pdf",
+          "title": "National Central University Study Regulations, Article 64",
+          "fetched": "2026-11-10",
+          "quote": "Postgraduate students meeting the following requirements shall graduate immediately. 1. The student has completed all required courses, has earned all required course credits, and has met the graduation requirements of his or her department (graduate institute, division, in-service program, or degree program). 2. The student has passed his or her master's or doctoral degree examination at NCU. 3. The student has received a satisfactory conduct grade every semester."
+        }
+      ]
+    }
+  ],
+  "open_questions": [
+    "The regulations describe a two-semester course, and the 2026 graduation notice describes 100 hours on the NCU passport. No source read here says whether these are one requirement or two.",
+    "The dedicated rules, 國立中央大學學生服務學習施行辦法 and 實施細則, are listed on osa.ncu.edu.tw as amended 107-04-24, but their full text could not be read. Substitutes (clubs, volunteering), cohort differences, and exemptions are defined there.",
+    "Course codes SC0003 and SC0004 come from a search excerpt of the Service-Learning Center's FAQ, not a page read directly. The 110-1 course catalogue lists an SC0003E section; whether it is taught in English and still offered is not stated.",
+    "Exemptions for transfer students and students with disabilities appear only in a 2011 handbook that is no longer online.",
+    "No email or phone number for the Center for Service Learning was confirmed on an official page.",
+    "The English Study Regulations used here were last filed with the Ministry of Education on 2024-01-05; the Chinese original was not reachable."
+  ]
+}
