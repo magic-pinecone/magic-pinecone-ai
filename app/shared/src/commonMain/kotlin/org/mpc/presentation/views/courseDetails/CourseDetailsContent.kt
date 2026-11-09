@@ -13,6 +13,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.icerock.moko.resources.desc.Resource
+import dev.icerock.moko.resources.desc.StringDesc
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.coroutines.CancellationException
 import org.mpc.domain.model.CourseDetail
@@ -21,6 +23,9 @@ import org.mpc.domain.model.CourseSummary
 import org.mpc.domain.repository.CourseRepository
 import org.mpc.presentation.state.CoursePlanUiState
 import org.mpc.presentation.viewModel.CoursePlanViewModel
+import org.mpc.shared.MR
+import org.mpc.shared.coursedetail_detail_load_failed
+import org.mpc.shared.coursedetail_load_failed
 
 @Composable
 fun CourseDetailsContent(
@@ -59,8 +64,8 @@ fun CourseDetailsContent(
             isLoading = loadState is CourseDetailsLoadState.Loading || content?.isLoading == true,
             errorMessage =
             when {
-                loadState is CourseDetailsLoadState.Unavailable -> "無法載入這門課程。"
-                content?.supplementalLoadFailed == true -> "無法載入完整課程資訊。"
+                loadState is CourseDetailsLoadState.Unavailable -> StringDesc.Resource(MR.strings.coursedetail_load_failed)
+                content?.supplementalLoadFailed == true -> StringDesc.Resource(MR.strings.coursedetail_detail_load_failed)
                 else -> null
             },
             isSelected = isSelected,
