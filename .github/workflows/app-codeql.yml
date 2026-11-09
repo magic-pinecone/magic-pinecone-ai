@@ -18,6 +18,10 @@ concurrency:
   group: codeql-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    working-directory: app
+
 jobs:
   analyze-kotlin:
     name: Analyze Kotlin

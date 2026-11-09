@@ -7,11 +7,12 @@ from typing import Any
 
 import bs4
 import httpx
-from sqlmodel import Session
+from sqlmodel import Session, select
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 from app.core.celery_app import celery_app
 from app.core.db import engine
+from app.models.catalog import CATALOG_STATE_ID, CatalogState, CourseDetail
 from app.models.course import College, Course, Department
 
 logger = logging.getLogger(__name__)
@@ -49,6 +50,20 @@ def normalize_course_type(raw_type: str) -> str:
     return raw_type.strip()
 
 
+def parse_current_semester(html: bytes | str) -> str | None:
+    """Read the semester NCU's query form preselects, e.g. '115-1'."""
+    soup = bs4.BeautifulSoup(html, "html.parser")
+    values = []
+    for select_id in ("year", "fall_spring"):
+        select = soup.find("select", id=select_id)
+        option = select.find("option", selected=True) if select else None
+        value = (option.get("value") or "").strip() if option else ""
+        if not value.isdigit():
+            return None
+        values.append(value)
+    return "-".join(values)
+
+
 class NCUCourseFetcher:
     """Async engine for fetching NCU course data with high concurrency & resilience."""
 
@@ -68,6 +83,15 @@ class NCUCourseFetcher:
         )
         resp.raise_for_status()
         return resp
+
+    async def fetch_current_semester(self, client: httpx.AsyncClient) -> str | None:
+        """Find which semester the catalog pages are currently serving."""
+        try:
+            resp = await self._get(client, f"{BASE_URL}/query/byKeywords")
+        except Exception as exc:
+            logger.error(f"Error fetching current semester: {exc}")
+            return None
+        return parse_current_semester(resp.content)
 
     async def fetch_colleges_with_departments(
         self, client: httpx.AsyncClient
@@ -226,6 +250,9 @@ class NCUCourseFetcher:
     async def fetch_all_data(self) -> dict[str, Any]:
         """Orchestrate full async data fetching."""
         async with httpx.AsyncClient() as client:
+            semester = await self.fetch_current_semester(client)
+            logger.info(f"Current semester: {semester}")
+
             logger.info("Fetching colleges and departments...")
             colleges, departments = await self.fetch_colleges_with_departments(client)
             logger.info(
@@ -263,23 +290,21 @@ class NCUCourseFetcher:
                             "admit_cnt": cb["admit_cnt"],
                             "wait_cnt": cb["wait_cnt"],
                             "course_type": course_extras.get(s_no, "UNKNOWN"),
-                            "college_ids": {cb["college_id"]},
-                            "department_ids": {cb["department_id"]},
+                            "college_ids": [cb["college_id"]],
+                            "department_ids": [cb["department_id"]],
                         }
                     else:
-                        course_map[s_no]["college_ids"].add(cb["college_id"])
-                        course_map[s_no]["department_ids"].add(cb["department_id"])
+                        # Keep NCU's listing order: the catalog API reports the
+                        # last listing department as the course's home.
+                        for key in ("college_id", "department_id"):
+                            ids = course_map[s_no][f"{key}s"]
+                            if cb[key] not in ids:
+                                ids.append(cb[key])
 
-            courses = [
-                {
-                    **item,
-                    "college_ids": list(item["college_ids"]),
-                    "department_ids": list(item["department_ids"]),
-                }
-                for item in course_map.values()
-            ]
+            courses = list(course_map.values())
 
             return {
+                "semester": semester,
                 "colleges": colleges,
                 "departments": departments,
                 "courses": courses,
@@ -357,11 +382,34 @@ def scrape_ncu_courses(self: Any, save_to_db: bool = True) -> dict[str, Any]:
                 else:
                     session.add(Course(**crs_data, updated_at=now))
 
+            # 4. Record which semester the catalog now holds
+            state = session.get(CatalogState, CATALOG_STATE_ID)
+            semester = data.get("semester") or (state.semester if state else None)
+            if not semester:
+                raise RuntimeError(
+                    "Could not determine the current semester from NCU; "
+                    "refusing to store an unlabeled catalog."
+                )
+            if state and state.semester != semester:
+                # Serial numbers are reused every term: drop what the old term left.
+                scraped = {crs["serial_no"] for crs in courses}
+                for stale in session.exec(select(Course)).all():
+                    if stale.serial_no not in scraped:
+                        session.delete(stale)
+                for detail in session.exec(select(CourseDetail)).all():
+                    session.delete(detail)
+            if state:
+                state.semester = semester
+                state.last_synced_at = now
+            else:
+                session.add(CatalogState(semester=semester, last_synced_at=now))
+
             session.commit()
             logger.info("Database successfully updated with scraped NCU course data.")
 
     return {
         "status": "SUCCESS",
+        "semester": data.get("semester"),
         "college_count": len(colleges),
         "department_count": len(departments),
         "course_count": len(courses),

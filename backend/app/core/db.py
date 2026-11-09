@@ -1,7 +1,13 @@
 from sqlmodel import Session, SQLModel, create_engine
 
 from app.core.config import settings
-from app.models import College, Course, Department  # noqa: F401
+from app.models import (  # noqa: F401
+    CatalogState,
+    College,
+    Course,
+    CourseDetail,
+    Department,
+)
 
 engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
 

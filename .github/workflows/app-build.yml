@@ -15,6 +15,10 @@ concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    working-directory: app
+
 jobs:
   android:
     name: Android build and tests
@@ -117,8 +121,8 @@ jobs:
         with:
           name: ios-reports
           path: |
-            shared/build/test-results/iosSimulatorArm64Test/**/*.xml
-            shared/build/reports/tests/iosSimulatorArm64Test/**
+            app/shared/build/test-results/iosSimulatorArm64Test/**/*.xml
+            app/shared/build/reports/tests/iosSimulatorArm64Test/**
             ${{ runner.temp }}/Build-iOS.log
             ${{ runner.temp }}/Build-iOS.xcresult
           if-no-files-found: ignore

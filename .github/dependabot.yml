@@ -1,8 +1,25 @@
 version: 2
 updates:
+  - package-ecosystem: gradle
+    directory: /app
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Taipei
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      gradle-minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
   # Python 依賴更新 (使用 uv 套件管理器)
   - package-ecosystem: "uv"
-    directory: "/"
+    directory: "/backend"
     schedule:
       interval: "weekly"
       day: "monday"
@@ -54,19 +71,20 @@ updates:
         patterns:
           - "*"
 
-  # GitHub Actions Workflow 動作版本更新
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "08:00"
-      timezone: "Asia/Taipei"
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Taipei
     open-pull-requests-limit: 5
-    labels:
-      - "dependencies"
-      - "github-actions"
+    commit-message:
+      prefix: "ci(deps)"
     groups:
-      actions-dependencies:
+      github-actions-minor-and-patch:
         patterns:
           - "*"
+        update-types:
+          - minor
+          - patch

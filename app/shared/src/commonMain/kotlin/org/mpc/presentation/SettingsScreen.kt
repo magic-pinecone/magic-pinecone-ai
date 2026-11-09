@@ -22,6 +22,7 @@ import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.PortalAuthenticationMode
 import org.mpc.domain.model.TimetableColorMode
+import org.mpc.presentation.state.BackendEndpointUiState
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
 
@@ -33,6 +34,8 @@ fun SettingsScreen(
     onThemeModeSelected: (AppThemeMode) -> Unit,
     onPortalAuthenticationModeSelected: (PortalAuthenticationMode) -> Unit,
     onTimetableColorModeSelected: (TimetableColorMode) -> Unit,
+    backendEndpoint: BackendEndpointUiState? = null,
+    onUseCourseSource: (String) -> Unit = {},
 ) {
     Column(
         modifier = modifier
@@ -113,6 +116,19 @@ fun SettingsScreen(
                 onPortalAuthenticationModeSelected(PortalAuthenticationMode.MANUAL_PORTAL)
             },
         )
+
+        if (backendEndpoint != null) {
+            HorizontalDivider()
+
+            SettingsSectionTitle(
+                title = "課程資料來源",
+                description = "開發用。填入神奇松果後端的位址，改由後端提供課程資料；留空則使用公開的靜態資料。",
+            )
+            BackendEndpointSection(
+                state = backendEndpoint,
+                onUseSource = onUseCourseSource,
+            )
+        }
     }
 }
 

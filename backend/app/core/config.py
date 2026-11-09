@@ -54,6 +54,7 @@ class Settings(BaseSettings):
     REDIS_PASSWORD: str | None = None
 
     SCRAPER_INTERVAL_MINUTES: int = 360  # Default every 6 hours
+    COURSE_DETAIL_CACHE_HOURS: int = 24
 
     @property
     def celery_broker_url(self) -> str:

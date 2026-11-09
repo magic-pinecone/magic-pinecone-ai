@@ -1,0 +1,13 @@
+# Editors and OS
+.idea
+.vscode
+.DS_Store
+
+# Local environment files
+.env
+
+# Python (backend/)
+__pycache__/
+.venv/
+.pytest_cache/
+.ruff_cache/

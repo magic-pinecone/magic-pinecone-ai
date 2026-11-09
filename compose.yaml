@@ -1,0 +1,5 @@
+# One command for the whole backend stack: PostgreSQL, Redis, the API, and the
+# Celery worker and beat that scrape NCU. The services are defined in
+# backend/compose.yaml; settings come from backend/.env (see backend/.env.example).
+include:
+  - path: backend/compose.yaml

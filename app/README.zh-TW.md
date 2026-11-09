@@ -53,6 +53,10 @@ cd mpc-compose
 2. 使用 Xcode 開啟 [`iosApp/iosApp.xcodeproj`](iosApp/iosApp.xcodeproj)。
 3. 選擇目標裝置後執行 App。
 
+## 使用後端提供課程資料
+
+App 預設讀取公開的靜態課程資料。要改由 [`backend/`](../backend/) 提供，先依[根目錄的 README](../README.md) 啟動後端，再到 App 的「設定」>「課程資料來源」填入後端位址（Android 模擬器為 `http://10.0.2.2:8000`，iOS 模擬器為 `http://localhost:8000`）並按「連線並同步」。API 合約見 [`docs/api-contract.md`](../docs/api-contract.md)。
+
 ## 測試與檢查
 
 執行 Android host 與 iOS simulator 上的 shared tests：

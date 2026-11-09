@@ -99,6 +99,7 @@ import org.mpc.presentation.SettingsScreen
 import org.mpc.presentation.state.CoursePlanUiState
 import org.mpc.presentation.theme.AndroidMpcTheme
 import org.mpc.presentation.viewModel.AppSettingsViewModel
+import org.mpc.presentation.viewModel.BackendEndpointViewModel
 import org.mpc.presentation.viewModel.CoursePlanViewModel
 
 @Composable
@@ -563,6 +564,8 @@ private fun SettingsDialog(
 ) {
     val settings by settingsViewModel.settings.collectAsStateWithLifecycle()
     val settingsWriteFailed by settingsViewModel.settingsWriteFailed.collectAsStateWithLifecycle()
+    val backendEndpointViewModel: BackendEndpointViewModel = metroViewModel()
+    val backendEndpoint by backendEndpointViewModel.uiState.collectAsStateWithLifecycle()
     val isExpanded =
         currentWindowAdaptiveInfo()
             .windowSizeClass
@@ -596,6 +599,8 @@ private fun SettingsDialog(
                 onTimetableColorModeSelected = settingsViewModel::setTimetableColorMode,
                 onThemeModeSelected = settingsViewModel::setThemeMode,
                 onPortalAuthenticationModeSelected = settingsViewModel::setPortalAuthenticationMode,
+                backendEndpoint = backendEndpoint,
+                onUseCourseSource = backendEndpointViewModel::useSource,
             )
         }
     }

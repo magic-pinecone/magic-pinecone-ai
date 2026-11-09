@@ -1,7 +1,5 @@
 package org.mpc.data.dataSource
 
-import dev.zacsweers.metro.AppScope
-import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -9,7 +7,7 @@ import io.ktor.client.request.get
 import org.mpc.data.dto.CourseDetailDto
 import org.mpc.data.dto.CourseResultDto
 
-@ContributesBinding(AppScope::class)
+// Bound through RoutingCourseDataSource, which picks between this and a backend.
 @Inject
 internal class StaticRemoteCourseDataSource(
     private val httpClient: HttpClient,

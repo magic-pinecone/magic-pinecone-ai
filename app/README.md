@@ -53,6 +53,10 @@ Open the project in Android Studio and run the `androidApp` configuration, or bu
 2. Open [`iosApp/iosApp.xcodeproj`](iosApp/iosApp.xcodeproj) in Xcode.
 3. Select a target device and run the app.
 
+## Use a backend for course data
+
+The app reads the published static course catalog by default. To read from [`backend/`](../backend/) instead, start the backend as described in the [root README](../README.md), then open **Settings** > **課程資料來源** in the app, enter the backend address (`http://10.0.2.2:8000` on the Android emulator, `http://localhost:8000` on the iOS simulator), and select **連線並同步**. See [`docs/api-contract.md`](../docs/api-contract.md) for the API contract.
+
 ## Tests and checks
 
 Run the shared Android-hosted and iOS simulator tests:

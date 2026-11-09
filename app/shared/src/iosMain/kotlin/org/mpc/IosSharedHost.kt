@@ -52,6 +52,7 @@ import org.mpc.presentation.model.toEeclassCourses
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.viewModel.AppSettingsViewModel
+import org.mpc.presentation.viewModel.BackendEndpointViewModel
 import org.mpc.presentation.views.courseFilters.CourseSlotPicker
 import platform.UIKit.UIViewController
 
@@ -133,6 +134,8 @@ class IosSharedHost internal constructor(
             ThemedContent { settings ->
                 val settingsViewModel: AppSettingsViewModel = metroViewModel()
                 val settingsWriteFailed by settingsViewModel.settingsWriteFailed.collectAsStateWithLifecycle()
+                val backendEndpointViewModel: BackendEndpointViewModel = metroViewModel()
+                val backendEndpoint by backendEndpointViewModel.uiState.collectAsStateWithLifecycle()
 
                 SettingsScreen(
                     settings = settings,
@@ -140,6 +143,8 @@ class IosSharedHost internal constructor(
                     onTimetableColorModeSelected = settingsViewModel::setTimetableColorMode,
                     onThemeModeSelected = settingsViewModel::setThemeMode,
                     onPortalAuthenticationModeSelected = settingsViewModel::setPortalAuthenticationMode,
+                    backendEndpoint = backendEndpoint,
+                    onUseCourseSource = backendEndpointViewModel::useSource,
                 )
             }
         }

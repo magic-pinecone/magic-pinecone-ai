@@ -3,8 +3,14 @@ name: CI (Test & Build Check)
 on:
   push:
     branches: [ main, master, develop ]
+    paths: [ "backend/**", ".github/workflows/backend-ci.yml" ]
   pull_request:
     branches: [ main, master, develop ]
+    paths: [ "backend/**", ".github/workflows/backend-ci.yml" ]
+
+defaults:
+  run:
+    working-directory: backend
 
 jobs:
   lint-and-style:
@@ -81,7 +87,7 @@ jobs:
       - name: Build Docker Image (Dry Run)
         uses: docker/build-push-action@v7
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./backend
+          file: ./backend/Dockerfile
           push: false
           tags: magic-pinecone-backend:test

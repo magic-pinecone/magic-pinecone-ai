@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# The Gradle project lives in app/.
+cd "$(git rev-parse --show-toplevel)/app" || exit 1
 echo "Running detekt check..."
 OUTPUT="/tmp/detekt-$(date +%s)"
 ./gradlew detekt -Pprecommit=true \
