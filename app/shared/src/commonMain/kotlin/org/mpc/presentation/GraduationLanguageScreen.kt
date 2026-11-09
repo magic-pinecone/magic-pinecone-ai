@@ -34,8 +34,9 @@ import org.mpc.domain.model.Degree
 import org.mpc.domain.model.GraduationLanguage
 import org.mpc.domain.model.GraduationLanguageRule
 import org.mpc.domain.model.LocalizedText
-import org.mpc.presentation.state.GraduationLanguageFilter
+import org.mpc.presentation.state.FIRST_COHORT
 import org.mpc.presentation.state.GraduationLanguageUiState
+import org.mpc.presentation.state.LAST_COHORT
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
 
@@ -182,7 +183,7 @@ private fun Filters(
             )
             IconButton(
                 onClick = { actions.onSelectCohort(filter.cohort - 1) },
-                enabled = filter.cohort > GraduationLanguageFilter.Cohorts.first,
+                enabled = filter.cohort > FIRST_COHORT,
             ) {
                 Icon(Icons.Filled.Remove, contentDescription = text.earlierYear)
             }
@@ -193,7 +194,7 @@ private fun Filters(
             )
             IconButton(
                 onClick = { actions.onSelectCohort(filter.cohort + 1) },
-                enabled = filter.cohort < GraduationLanguageFilter.Cohorts.last,
+                enabled = filter.cohort < LAST_COHORT,
             ) {
                 Icon(Icons.Filled.Add, contentDescription = text.laterYear)
             }

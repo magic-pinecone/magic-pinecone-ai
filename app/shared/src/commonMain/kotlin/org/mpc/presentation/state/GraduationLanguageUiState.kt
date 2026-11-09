@@ -28,10 +28,10 @@ data class GraduationLanguageFilter(
     /** A college's Chinese name; null shows every college. */
     val college: String? = null,
     /** Admission academic year in the ROC calendar. */
-    val cohort: Int = DefaultCohort,
-) {
-    companion object {
-        const val DefaultCohort = 115
-        val Cohorts = 110..116
-    }
-}
+    val cohort: Int = DEFAULT_COHORT,
+)
+
+/** The admission academic years (ROC calendar) the filter offers. */
+const val FIRST_COHORT = 110
+const val LAST_COHORT = 116
+private const val DEFAULT_COHORT = 115

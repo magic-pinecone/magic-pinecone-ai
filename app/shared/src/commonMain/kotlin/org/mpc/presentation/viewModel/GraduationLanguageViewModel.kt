@@ -20,8 +20,10 @@ import org.mpc.domain.model.GraduationLanguage
 import org.mpc.domain.model.collegesFor
 import org.mpc.domain.model.rulesFor
 import org.mpc.domain.repository.GraduationLanguageRepository
+import org.mpc.presentation.state.FIRST_COHORT
 import org.mpc.presentation.state.GraduationLanguageFilter
 import org.mpc.presentation.state.GraduationLanguageUiState
+import org.mpc.presentation.state.LAST_COHORT
 
 @Inject
 @ViewModelKey
@@ -91,5 +93,5 @@ class GraduationLanguageViewModel(
     /** Selects the college with Chinese name [college], or every college when null. */
     fun selectCollege(college: String?) = filter.update { it.copy(college = college) }
 
-    fun selectCohort(cohort: Int) = filter.update { it.copy(cohort = cohort.coerceIn(GraduationLanguageFilter.Cohorts)) }
+    fun selectCohort(cohort: Int) = filter.update { it.copy(cohort = cohort.coerceIn(FIRST_COHORT, LAST_COHORT)) }
 }
