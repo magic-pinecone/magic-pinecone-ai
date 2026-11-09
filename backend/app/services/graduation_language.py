@@ -26,6 +26,41 @@ def load_sources() -> list[dict[str, Any]]:
 
 
 @lru_cache
+def load_english() -> dict[str, str]:
+    """Unofficial English renderings of the Chinese strings, keyed by the Chinese."""
+    data = json.loads((DATA_DIR / "translations_en.json").read_text(encoding="utf-8"))
+    return data["strings"]
+
+
+def display_strings(data: dict[str, Any]) -> set[str]:
+    """Every Chinese-only string of `requirements.json` that a client shows."""
+    found: set[str] = set()
+
+    def collect(value: Any) -> None:
+        if isinstance(value, str):
+            found.add(value)
+        elif isinstance(value, list):
+            for item in value:
+                collect(item)
+
+    for rule in data["rules"]:
+        for thresholds in rule["english"].values():
+            for threshold in thresholds:
+                collect([threshold["value"], threshold.get("note")])
+        for test in rule["other_languages"]:
+            collect(list(test.values()))
+        for key in ("alternatives", "international_students", "notes"):
+            collect(rule.get(key))
+        collect(rule.get("other_languages_without_threshold"))
+    general = data["general"]
+    for section in (general, general["graduate"], data["chinese"]):
+        for key, value in section.items():
+            if key != "sources":
+                collect(value)
+    return found
+
+
+@lru_cache
 def load_programs() -> dict[str, Any]:
     return json.loads((DATA_DIR / "programs.json").read_text(encoding="utf-8"))
 

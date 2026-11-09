@@ -57,7 +57,7 @@ internal object EnglishLabels : GraduationLanguageLabels {
     override val chineseRequirements = "What affects graduation"
     override val notGraduationRequirements = "Often mistaken for graduation requirements"
     override val openQuestions = "Still to confirm with the university"
-    override val verifiedOn = "Checked against official sources on"
+    override val verifiedOn = "English text is an unofficial translation; the Chinese original prevails. Checked against official sources on"
     override val needsBackend = "This page needs a Magic Pinecone backend. Enter its address under Settings › 課程資料來源."
     override val failed = "Could not load the requirements."
     override val retry = "Try again"

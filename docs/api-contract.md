@@ -142,7 +142,8 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
   ],
   "sources": [
     { "id": "lc-form-general", "title": "…", "url": "https://www.lc.ncu.edu.tw/…", "org": "語言中心", "lang": "zh", "degree_levels": ["bachelor"], "effective": "115 學年度第 1 學期起", "extract": "pdf" }
-  ]
+  ],
+  "en": { "4 級": "Level 4", "身心障礙生得依個別情況專案處理，或免予鑑定。": "Students with disabilities may be handled case by case or exempted from the requirement." }
 }
 ```
 
@@ -156,6 +157,7 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 - 給了 `cohort` 時，門檻全部屬於其他入學年度的規則會被略過（例如管理學院碩士班有 110–114 與 115 起兩個版本）；本來就沒有分數門檻的規則照常回傳。
 - 研究所規則不完整：`general.graduate.not_checked` 列出還沒查的系所。沒有回傳規則不代表沒有門檻。
 - `international_students` 裡用「」括起來的文字是官方條文原文。
+- `en` 是非官方英譯，以中文原文為鍵（`backend/app/data/graduation_language/translations_en.json`）。回應裡每個含中文的顯示字串都有對應的英譯，由 `test_every_chinese_display_string_has_an_english_rendering` 保證；顯示英文時查不到就顯示原文。
 - 官方文件沒寫的事項不會出現推測值；`general.international_students` 與 `chinese.open_questions` 會明講哪些事需要向語言中心、教務處或院系確認。
 - `chinese.not_graduation_requirements` 列的是常被誤認為畢業條件的華語規定（獎助學金、獎勵金、招生語言證明）。
 

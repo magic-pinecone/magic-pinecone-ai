@@ -87,7 +87,7 @@ fun GraduationLanguageScreen(
             items(state.rules, key = { it.id }) { rule ->
                 RuleCard(rule, state.requirements, text, english)
             }
-            item { GeneralCards(state.requirements, state.filter.degree, text) }
+            item { GeneralCards(state.requirements, state.filter.degree, text, english) }
             item {
                 Text(
                     text = "${state.requirements.disclaimer.pick(english)}\n" +
@@ -229,13 +229,14 @@ private fun RuleCard(
         if (rule.department != null) {
             Text(rule.college.pick(english), style = MpcTheme.typography.caption, color = MpcTheme.colors.labelSecondary)
         }
+        val tr = requirements.translator(english)
         rule.summary?.let { Paragraph(it.pick(english)) }
         rule.applyAt?.let { Paragraph("${text.applyAt} ${it.pick(english)}", secondary = true) }
 
         RuleScores(rule, requirements, text, english)
-        Callout(text.internationalStudents, rule.internationalStudents)
-        Bullets(text.alternatives, rule.alternatives)
-        Bullets(text.notes, rule.notes)
+        Callout(text.internationalStudents, rule.internationalStudents.map(tr))
+        Bullets(text.alternatives, rule.alternatives.map(tr))
+        Bullets(text.notes, rule.notes.map(tr))
 
         val sources = rule.sources.mapNotNull { id -> requirements.sources.firstOrNull { it.id == id } }
         if (sources.isNotEmpty()) {
@@ -252,17 +253,18 @@ private fun RuleScores(
     text: GraduationLanguageLabels,
     english: Boolean,
 ) {
+    val tr = requirements.translator(english)
     if (rule.english.isNotEmpty()) {
         Subheading(text.englishTests)
         rule.english.forEach { (test, thresholds) ->
             val name = requirements.tests[test]?.pick(english) ?: test
-            thresholds.forEach { ScoreRow(name, listOfNotNull(it.value, it.note).joinToString("\n")) }
+            thresholds.forEach { ScoreRow(name, listOfNotNull(it.value, it.note).joinToString("\n", transform = tr)) }
         }
     }
     if (rule.otherLanguages.isNotEmpty() || rule.otherLanguagesWithoutThreshold.isNotEmpty()) {
         Subheading(text.otherLanguages)
-        rule.otherLanguages.forEach { ScoreRow("${it.language} · ${it.test}", it.requirement) }
-        rule.otherLanguagesWithoutThreshold.forEach { Paragraph(it, secondary = true) }
+        rule.otherLanguages.forEach { ScoreRow("${tr(it.language)} · ${tr(it.test)}", tr(it.requirement)) }
+        rule.otherLanguagesWithoutThreshold.forEach { Paragraph(tr(it), secondary = true) }
     }
 }
 
@@ -271,20 +273,22 @@ private fun GeneralCards(
     requirements: GraduationLanguage,
     degree: Degree,
     text: GraduationLanguageLabels,
+    english: Boolean,
 ) {
+    val tr = requirements.translator(english)
     Column(verticalArrangement = Arrangement.spacedBy(MpcSpacing.space3)) {
         val graduate = requirements.general.graduate
         if (degree == Degree.BACHELOR) {
             GraduationLanguageCard {
-                Callout(text.internationalStudents, requirements.general.internationalStudents)
-                Bullets(text.procedure, requirements.general.procedure)
-                Bullets(text.alternatives, requirements.general.alternatives)
+                Callout(text.internationalStudents, requirements.general.internationalStudents.map(tr))
+                Bullets(text.procedure, requirements.general.procedure.map(tr))
+                Bullets(text.alternatives, requirements.general.alternatives.map(tr))
             }
         } else if (graduate != null) {
             GraduationLanguageCard {
-                Callout(text.internationalStudents, graduate.internationalStudents)
-                Bullets(text.noRuleFound, graduate.noRuleFound)
-                Bullets(text.notChecked, graduate.notChecked)
+                Callout(text.internationalStudents, graduate.internationalStudents.map(tr))
+                Bullets(text.noRuleFound, graduate.noRuleFound.map(tr))
+                Bullets(text.notChecked, graduate.notChecked.map(tr))
             }
         }
         GraduationLanguageCard {
@@ -294,12 +298,19 @@ private fun GeneralCards(
                 color = MpcTheme.colors.label,
                 modifier = Modifier.semantics { heading() },
             )
-            Paragraph(requirements.chinese.summary.pick(text === EnglishLabels))
-            Bullets(text.chineseRequirements, requirements.chinese.requirements)
-            Bullets(text.notGraduationRequirements, requirements.chinese.notGraduationRequirements)
-            Bullets(text.openQuestions, requirements.chinese.openQuestions)
+            Paragraph(requirements.chinese.summary.pick(english))
+            Bullets(text.chineseRequirements, requirements.chinese.requirements.map(tr))
+            Bullets(text.notGraduationRequirements, requirements.chinese.notGraduationRequirements.map(tr))
+            Bullets(text.openQuestions, requirements.chinese.openQuestions.map(tr))
         }
     }
+}
+
+/** Renders a Chinese string of the requirements in the chosen language; untranslated strings stay as they are. */
+private fun GraduationLanguage.translator(english: Boolean): (String) -> String = if (english) {
+    { chinese -> en[chinese] ?: chinese }
+} else {
+    { it }
 }
 
 internal fun LocalizedText.pick(english: Boolean): String = if (english) en else zh

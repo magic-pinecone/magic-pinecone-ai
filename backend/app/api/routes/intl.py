@@ -79,6 +79,9 @@ class GraduationLanguageResponse(BaseModel):
     chinese: dict[str, Any]
     rules: list[Rule]
     sources: list[Source]
+    # Unofficial English renderings of the Chinese strings above, keyed by the
+    # Chinese text. A string with no entry has no translation need (a number).
+    en: dict[str, str]
 
 
 class ProgramGraduation(BaseModel):
@@ -148,4 +151,5 @@ def get_graduation_language(
         "chinese": data["chinese"],
         "rules": rules,
         "sources": [s for s in service.load_sources() if s["id"] in cited],
+        "en": service.load_english(),
     }

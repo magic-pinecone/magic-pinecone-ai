@@ -18,6 +18,8 @@ data class GraduationLanguage(
     val chinese: ChineseRequirements,
     val rules: List<GraduationLanguageRule>,
     val sources: List<GraduationLanguageSource>,
+    /** Unofficial English renderings of the Chinese strings, keyed by the Chinese text. */
+    val en: Map<String, String> = emptyMap(),
 )
 
 @Serializable

@@ -25,6 +25,7 @@ def test_graduation_language_matches_app_contract(client: TestClient):
         "chinese",
         "rules",
         "sources",
+        "en",
     }
     rule = next(r for r in body["rules"] if r["id"] == "bachelor-management")
     assert rule["degree"] == "bachelor"
@@ -148,3 +149,14 @@ def test_graduate_rule_quotes_its_international_student_clause(client: TestClien
     mechanical = next(r for r in rules if r["id"] == "master-mechanical")
     assert "外籍學位生不受此條文限制" in mechanical["international_students"][0]
     assert mechanical["english"] == {}
+
+
+def test_every_chinese_display_string_has_an_english_rendering():
+    english = service.load_english()
+    chinese = {
+        text
+        for text in service.display_strings(service.load_requirements())
+        if any(ord(char) > 0x2E7F for char in text)
+    }
+
+    assert chinese - english.keys() == set()
