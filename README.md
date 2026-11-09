@@ -22,13 +22,15 @@ NCU 課務系統 ──(Celery 定期爬取)──▶ PostgreSQL ──▶ FastA
 
 App 預設仍讀取公開的靜態課程資料，行為與上游相同。在設定頁填入後端位址後，課程目錄與課程大綱改由後端提供；後端回傳的 JSON 與靜態檔同形，所以 App 的其他部分不需要知道資料從哪裡來。
 
-## 啟動後端
+## 啟動後端與網頁預覽
 
-需要 Docker（Compose 2.20 以上）。
+需要 Docker Compose。在專案根目錄執行：
 
 ```bash
 docker compose up --build
 ```
+
+這會啟動 PostgreSQL、Redis、API、Celery worker 與 beat，以及共用 Compose UI 的網頁預覽 <http://localhost:8080>。網頁預覽使用固定的範例資料，不會連到後端；第一次建置要編譯 Kotlin/Wasm，需要幾分鐘。
 
 第一次啟動後資料庫是空的，觸發一次同步（一兩分鐘，會向 NCU 抓取全部課程）：
 
@@ -42,7 +44,7 @@ curl -X POST http://localhost:8000/api/v1/scraper/trigger
 curl http://localhost:8000/api/v1/catalog
 ```
 
-之後 Celery beat 會每 6 小時自動同步。API 文件在 <http://localhost:8000/docs>。要調整資料庫密碼等設定，把 `backend/.env.example` 複製成 `backend/.env` 再修改。
+之後 Celery beat 會每 6 小時自動同步。API 文件在 <http://localhost:8000/docs>。後端程式的設定放在 `backend/.env`（從 `backend/.env.example` 複製）。Compose 本身的變數，例如資料庫密碼與 `POSTGRES_HOST_PORT`、`REDIS_HOST_PORT`、`WEB_HOST_PORT` 這些對外連接埠，則從根目錄的 `.env` 或 shell 環境變數讀取。
 
 ## 讓 App 連到後端
 
