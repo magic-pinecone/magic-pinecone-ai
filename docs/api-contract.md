@@ -9,6 +9,7 @@ App（`app/`）會一次下載整個學期的課程目錄，存進裝置上的 R
 | `GET /catalog` | 後端目前持有的學期、同步時間、課程數 | （尚未使用，供除錯與之後的學期選擇） |
 | `GET /catalog/{semester}/courses` | 整個學期的課程 | `BackendCourseDataSource.getAllCourses` |
 | `GET /catalog/{semester}/courses/{serial_no}/detail` | 單一課程大綱 | `BackendCourseDataSource.getCourseDetails` |
+| `GET /campus/places` | 校園地點與地圖連結 | （尚未使用） |
 
 `{semester}` 的格式是 `<學年>-<學期>`，例如 `115-1`。
 
@@ -87,3 +88,54 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 
 - 後端：`backend/tests/test_catalog.py` 的 `test_catalog_matches_app_contract`。
 - App：`app/shared/src/commonTest/kotlin/org/mpc/data/dataSource/BackendCourseDataSourceTest.kt`。
+
+## `GET /campus/places`
+
+校園地點清單：建築、餐廳、宿舍、公車站等，目前約 30 筆，資料在 `backend/app/data/campus_places.json`。這個端點不需要資料庫，也不需要先同步。
+
+| 查詢參數 | 說明 |
+|---|---|
+| `q` | 比對中文名、英文名、建築代碼與別名，不分大小寫。例如 `工程五館`、`E6`、`OIA` |
+| `category` | `academic`、`administration`、`library`、`dormitory`、`dining`、`sports`、`service`、`transit`、`landmark` 其中之一 |
+
+兩個參數都給時取交集；都不給時回傳全部。
+
+```json
+{
+  "attribution": "© OpenStreetMap contributors, ODbL 1.0",
+  "places": [
+    {
+      "id": "engineering-building-5",
+      "name_zh": "工程五館",
+      "name_en": "Engineering Building 5",
+      "code": "E6",
+      "category": "academic",
+      "latitude": 24.967014,
+      "longitude": 121.187598,
+      "osm_id": "way/268561940",
+      "aliases": ["工五館", "工五"],
+      "note_en": null,
+      "map_links": {
+        "google_maps": "https://www.google.com/maps/search/?api=1&query=24.967014%2C121.187598",
+        "google_walking_directions": "https://www.google.com/maps/dir/?api=1&destination=24.967014%2C121.187598&travelmode=walking",
+        "apple_maps": "https://maps.apple.com/?daddr=24.967014%2C121.187598&dirflg=w"
+      }
+    }
+  ]
+}
+```
+
+- 座標取自 OpenStreetMap，畫面上顯示這些資料時必須一併顯示 `attribution`。
+- `name_en` 只有少數來自 OpenStreetMap，其餘是自行翻譯，尚未與學校的官方英文館名核對。
+- `code` 是教室編號用的建築代碼，目前只填了有依據的兩筆（`E6`、`TR`），其餘為 `null`。
+- 路線不由後端計算：`map_links` 會在手機的地圖 App 開啟步行導航。
+
+`GET /campus/places/{id}` 回傳單一地點，形狀與上面 `places` 的元素相同；找不到時回 404。
+
+### MCP tool：`find_place`
+
+同一份資料也透過 MCP 提供給 AI 客戶端，參數是 `query` 與 `category`，回傳內容與上面相同。以 stdio 啟動：
+
+```bash
+cd backend && uv run python -m app.mcp_server
+```
