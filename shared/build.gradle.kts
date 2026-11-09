@@ -116,6 +116,7 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kotlinx.datetime)
             implementation(libs.metrox.viewmodel.compose)
             implementation(libs.kermit)
         }
@@ -153,6 +154,11 @@ detekt {
     toolVersion = "2.0.0-alpha.5"
     config.setFrom(rootProject.file("config/detekt/detekt.yml"))
     buildUponDefaultConfig = true
+}
+
+// The Android-typed pass cannot resolve iOS types, so it misreads every iosMain call; :shared:detekt still covers iosMain.
+tasks.named<dev.detekt.gradle.Detekt>("detektMainAndroid") {
+    exclude { "/iosMain/" in it.file.invariantSeparatorsPath }
 }
 
 ktlint {

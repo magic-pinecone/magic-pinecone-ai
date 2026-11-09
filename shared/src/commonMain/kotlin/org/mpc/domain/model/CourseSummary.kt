@@ -67,6 +67,12 @@ enum class CourseDay(
     SATURDAY("六", "6", 6),
     SUNDAY("日", "7", 7),
     UNKNOWN("無", "0", 8),
+    ;
+
+    companion object {
+        /** 1 is Monday and 7 is Sunday; anything else is [UNKNOWN]. */
+        fun fromIsoWeekday(isoWeekday: Int): CourseDay = entries.firstOrNull { it != UNKNOWN && it.order == isoWeekday } ?: UNKNOWN
+    }
 }
 
 enum class CoursePeriod(

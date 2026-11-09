@@ -11,9 +11,11 @@ import org.mpc.data.local.entities.toDomain
 import org.mpc.data.local.entities.toLocalCatalogEntities
 import org.mpc.data.mapper.dto.toDomain
 import org.mpc.domain.model.CourseDetail
+import org.mpc.domain.model.CourseQuery
 import org.mpc.domain.model.CourseResult
 import org.mpc.domain.model.CourseSerialNo
 import org.mpc.domain.repository.CourseRepository
+import org.mpc.domain.search.searchCourses
 
 // TODO: Add fetched-at freshness and stale-cache fallback policy.
 @ContributesBinding(AppScope::class)
@@ -25,24 +27,9 @@ internal class DefaultCourseRepository(
     override suspend fun fetchAllCourses(semester: String): CourseResult = courseCatalogDao.findCatalogEntities(semester)?.toDomain()
         ?: refreshCatalog(semester)
 
-    override suspend fun fetchCourses(
-        semester: String,
-        query: String,
-    ): CourseResult {
-        val result = fetchAllCourses(semester)
-        val normalizedQuery = query.trim()
-        if (normalizedQuery.isEmpty()) {
-            return result
-        }
-
-        val filteredCourse =
-            result.courses.filter { course ->
-                course.title.contains(
-                    other = normalizedQuery,
-                    ignoreCase = true,
-                )
-            }
-        return result.copy(courses = filteredCourse)
+    override suspend fun searchCourses(query: CourseQuery): CourseResult {
+        val result = fetchAllCourses(query.semester)
+        return result.copy(courses = searchCourses(result.courses, query))
     }
 
     override suspend fun fetchCoursesBySerialNo(

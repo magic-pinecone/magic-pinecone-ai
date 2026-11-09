@@ -12,11 +12,28 @@ struct CourseCatalogStaticPreview: View {
             selectedSerialNumbers: Set(snapshot.courses.prefix(1).map(\.serialNumber)),
             canEditPlan: true,
             isCompact: isCompact,
+            onShowFilters: {},
             onRetry: {},
             onCourseDetails: { _ in },
             onToggleCourse: { _ in }
         )
         .background(Color(uiColor: .systemGroupedBackground).ignoresSafeArea())
+    }
+}
+
+private extension CourseCatalogSnapshot {
+    static func preview(isLoading: Bool, failureMessage: String?) -> CourseCatalogSnapshot {
+        let populated = IosComposePreviewHost.shared.catalogSnapshot
+        return populated.doCopy(
+            semester: populated.semester,
+            query: "",
+            courses: [],
+            filters: [],
+            suggestions: [],
+            filterOptions: populated.filterOptions,
+            isLoading: isLoading,
+            failureMessage: failureMessage
+        )
     }
 }
 
@@ -26,24 +43,19 @@ struct CourseCatalogStaticPreview: View {
 
 #Preview("Catalog results · empty") {
     CourseCatalogStaticPreview(
-        snapshot: CourseCatalogSnapshot(semester: "1151", courses: [], isLoading: false, failureMessage: nil)
+        snapshot: .preview(isLoading: false, failureMessage: nil)
     )
 }
 
 #Preview("Catalog results · loading") {
     CourseCatalogStaticPreview(
-        snapshot: CourseCatalogSnapshot(semester: "1151", courses: [], isLoading: true, failureMessage: nil)
+        snapshot: .preview(isLoading: true, failureMessage: nil)
     )
 }
 
 #Preview("Catalog results · failure") {
     CourseCatalogStaticPreview(
-        snapshot: CourseCatalogSnapshot(
-            semester: "1151",
-            courses: [],
-            isLoading: false,
-            failureMessage: "目前無法連線，請確認網路狀態後再試一次。"
-        )
+        snapshot: .preview(isLoading: false, failureMessage: "目前無法連線，請確認網路狀態後再試一次。")
     )
 }
 

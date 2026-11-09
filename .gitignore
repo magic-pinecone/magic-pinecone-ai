@@ -22,6 +22,7 @@ node_modules/
 
 # Local verification artifacts
 .audit/
+iosApp/Configuration/SiriAI.local.xcconfig
 
 # Coding agents: local state only, shared rules and settings stay committable
 .claude/worktrees/

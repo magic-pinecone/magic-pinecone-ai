@@ -3,13 +3,15 @@ import SwiftUI
 
 struct ContentView: View {
     let sharedHost: IosSharedHost
+    @Environment(AppRouter.self) private var router
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var themeMode = AppThemeMode.system
     @State private var isShowingSettings = false
 
     var body: some View {
-        TabView {
-            Tab("首頁", systemImage: "house") {
+        @Bindable var router = router
+        TabView(selection: $router.selectedTab) {
+            Tab("首頁", systemImage: "house", value: AppTab.home) {
                 NavigationStack {
                     HomeView(
                         loadCourses: { try await sharedHost.loadEeclassCourses() },
@@ -21,7 +23,7 @@ struct ContentView: View {
                 }
                 .ignoresSafeArea(.container, edges: bottomSafeAreaEdges)
             }
-            Tab("選課", systemImage: "calendar") {
+            Tab("選課", systemImage: "calendar", value: AppTab.coursePlanning) {
                 NavigationStack {
                     CoursePlanningView(
                         sharedHost: sharedHost,
@@ -30,7 +32,7 @@ struct ContentView: View {
                 }
                 .ignoresSafeArea(.container, edges: bottomSafeAreaEdges)
             }
-            Tab("Portal", systemImage: "building.columns") {
+            Tab("Portal", systemImage: "building.columns", value: AppTab.portal) {
                 NavigationStack {
                     PortalView(
                         sharedHost: sharedHost,

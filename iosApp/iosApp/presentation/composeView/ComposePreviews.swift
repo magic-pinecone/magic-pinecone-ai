@@ -39,3 +39,11 @@ private func composePreview(
 #Preview("Settings") {
     composePreview(.settings)
 }
+
+#Preview("Course slot picker") {
+    composePreview(.slotPicker)
+}
+
+#Preview("Course slot picker · dark") {
+    composePreview(.slotPicker, isDarkTheme: true)
+}

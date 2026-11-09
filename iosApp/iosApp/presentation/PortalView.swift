@@ -10,7 +10,9 @@ struct PortalView: View {
     @State private var favoriteIds: [String]?
     @State private var query = ""
     @State private var editMode = EditMode.inactive
-    @State private var signInDestination: PortalDestination?
+    // Pushed without a NavigationLink: the sign-in page and destinations opened from intents.
+    @State private var pushedDestination: PortalDestination?
+    @Environment(AppRouter.self) private var router
     @Environment(\.scenePhase) private var scenePhase
 
     init(sharedHost: IosSharedHost, onOpenSettings: @escaping () -> Void) {
@@ -75,7 +77,7 @@ struct PortalView: View {
         .navigationDestination(for: PortalDestination.self) { destination in
             WebPageView(sharedHost: sharedHost, title: destination.title, url: destination.url)
         }
-        .navigationDestination(item: $signInDestination) { destination in
+        .navigationDestination(item: $pushedDestination) { destination in
             WebPageView(sharedHost: sharedHost, title: destination.title, url: destination.url)
         }
         .toolbar {
@@ -98,6 +100,11 @@ struct PortalView: View {
         .task {
             for await value in bridge.account {
                 account = value
+            }
+        }
+        .task(id: router.pendingRoute) {
+            if let destination = router.take(\.portal) {
+                pushedDestination = destination
             }
         }
         .onAppear { bridge.refresh() }
@@ -175,7 +182,7 @@ struct PortalView: View {
         case .signIn:
             Task {
                 guard let url = try? await bridge.signInUrl() else { return }
-                signInDestination = PortalDestination(title: "Portal 登入", url: url)
+                pushedDestination = PortalDestination(title: "Portal 登入", url: url)
             }
         case .signOut:
             bridge.signOut()
@@ -183,11 +190,6 @@ struct PortalView: View {
             bridge.refresh()
         }
     }
-}
-
-private struct PortalDestination: Hashable {
-    let title: String
-    let url: String
 }
 
 private struct PortalAccountRow: View {
@@ -278,7 +280,7 @@ private extension PortalShortcutTint {
     }
 }
 
-private extension PortalShortcutIcon {
+extension PortalShortcutIcon {
     var systemImage: String {
         switch self {
         case .accountBalance: "building.columns"

@@ -1,3 +1,4 @@
+import AppIntents
 import Shared
 import SwiftUI
 import UIKit
@@ -22,10 +23,15 @@ struct CoursePlanningView: View {
     @State private var isSearchPresented = false
     @State private var sectionBeforeSearch: Section?
     @State private var catalogBridge = CourseSearchBridge()
+    @State private var catalogSnapshot: CourseCatalogSnapshot?
+    @State private var isShowingFilters = false
+    @State private var isHidingTokens = false
+        @State private var emptiedEvent = SearchEmptiedEvent()
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.layoutDirection) private var layoutDirection
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    private let semester = "115-1"
+    @Environment(AppRouter.self) private var router
+    private let semester = CourseIdentity.currentSemester
 
     private var selectedCourses: [CourseSummary] {
         planSnapshot.selectedCourses
@@ -54,7 +60,9 @@ struct CoursePlanningView: View {
                     isCompact: isCompactCatalog,
                     semester: semester,
                     query: $catalogQuery,
-                    bridge: catalogBridge
+                    bridge: catalogBridge,
+                    catalogSnapshot: catalogSnapshot,
+                    onShowFilters: { isShowingFilters = true }
                 )
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .offset(x: isWide ? 0 : pageOffset(for: .catalog, width: geometry.size.width))
@@ -101,15 +109,31 @@ struct CoursePlanningView: View {
             }
             .searchable(
                 text: $catalogQuery,
+                tokens: tokensBinding,
                 isPresented: $isSearchPresented,
                 placement: .navigationBarDrawer(displayMode: .always),
                 prompt: "搜尋課程名稱"
-            )
-            .onSubmit(of: .search) {
-                catalogBridge.submitSearch(
-                    request: CourseSearchRequest(semester: semester, query: catalogQuery)
-                )
+            ) { token in
+                Label(token.label, systemImage: token.symbol)
             }
+            .searchSuggestions {
+                ForEach(suggestionTokens) { token in
+                    Label(token.label, systemImage: token.symbol)
+                        .searchCompletion(token)
+                }
+            }
+            .onSubmit(of: .search) {
+                catalogBridge.submit(semester: semester, query: catalogQuery)
+            }
+            .onChange(of: catalogQuery) { old, newValue in
+                catalogBridge.updateQuery(semester: semester, query: newValue)
+                if newValue.isEmpty, !old.isEmpty {
+                    noteEmptied { $0.textBeforeEmptied = old }
+                }
+            }
+            // Picking a suggestion makes the ViewModel clear the query; reflect that in the field.
+            // Filters added from the sheet keep the query, so the field is left alone.
+            .onChange(of: catalogSnapshot?.filters.count ?? 0, clearQueryAfterFilterAdded)
             // Searching takes over the catalog page, then returns to the page it started from.
             .onChange(of: isSearchPresented) { _, isPresented in
                 if isPresented {
@@ -157,6 +181,10 @@ struct CoursePlanningView: View {
                     }
                 }
 
+                if isWide || activeSection == .timetable {
+                    ToolbarItem(placement: .topBarTrailing) { CalendarExportButton(sharedHost: sharedHost) }
+                }
+
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("設定", systemImage: "gear", action: onOpenSettings)
                         .labelStyle(.iconOnly)
@@ -175,10 +203,27 @@ struct CoursePlanningView: View {
         .onDisappear {
             planBridge.observeCourseDetailsRequest(observer: nil)
         }
+        .task(id: router.pendingRoute) {
+            await openPendingRoute()
+        }
+        // Looking at the timetable is when "what's my next class" is worth suggesting.
+        .task(id: activeSection) { if activeSection == .timetable { _ = try? await NextClassIntent().donate() } }
         .task(id: ObjectIdentifier(planBridge)) {
             for await snapshot in planBridge.planSnapshot {
                 planSnapshot = snapshot
             }
+        }
+        .task(id: ObjectIdentifier(catalogBridge)) {
+            for await snapshot in catalogBridge.catalogSnapshot {
+                catalogSnapshot = snapshot
+            }
+        }
+        .sheet(isPresented: $isShowingFilters) {
+            CourseFilterSheet(
+                sharedHost: sharedHost,
+                bridge: catalogBridge,
+                snapshot: catalogSnapshot
+            )
         }
         .sheet(isPresented: $isShowingSelectedCourses) {
             SelectedCoursesSheet(
@@ -235,16 +280,100 @@ struct CoursePlanningView: View {
     }
 }
 
-private extension View {
-    // Let both pages scroll beneath the section picker so it shares the navigation bar's edge effect.
-    @ViewBuilder
-    func coursePlanningTopBar(@ViewBuilder content: () -> some View) -> some View {
-        if #available(iOS 26.0, *) {
-            safeAreaBar(edge: .top, spacing: 0, content: content)
-        } else {
-            safeAreaInset(edge: .top, spacing: 0) {
-                content().background(Color(uiColor: .systemGroupedBackground))
+private extension CoursePlanningView {
+    func openPendingRoute() async {
+        if let query = router.take(\.catalogSearch) {
+            // Results the user asked for should not open behind a sheet left from earlier.
+            courseDetailSelection = nil
+            isShowingSelectedCourses = false
+            isShowingFilters = false
+            activeSection = .catalog
+            catalogQuery = query
+            catalogBridge.submit(semester: semester, query: query)
+        } else if let identity = router.take(\.course) {
+            guard let course = try? await sharedHost.course(
+                semester: identity.semester,
+                serialNumber: identity.serialNumber
+            ) else { return }
+            planBridge.requestCourseDetails(semester: identity.semester, course: course)
+        }
+    }
+
+    func clearQueryAfterFilterAdded(old: Int, new: Int) {
+        if new > old, catalogSnapshot?.query.isEmpty == true, !catalogQuery.isEmpty {
+            catalogQuery = ""
+        }
+    }
+
+    var suggestionTokens: [CourseFilterToken] {
+        (catalogSnapshot?.suggestions ?? []).map(CourseFilterToken.init)
+    }
+
+    var tokensBinding: Binding<[CourseFilterToken]> {
+        Binding {
+            guard !isHidingTokens else { return [] }
+            return (catalogSnapshot?.filters ?? []).map(CourseFilterToken.init)
+        } set: { newTokens in
+            let current = (catalogSnapshot?.filters ?? []).map(CourseFilterToken.init)
+            let newIDs = Set(newTokens.map(\.id))
+            let currentIDs = Set(current.map(\.id))
+            for token in newTokens where !currentIDs.contains(token.id) {
+                catalogBridge.pickSuggestion(filter: token.filter)
+            }
+            let removed = current.filter { !newIDs.contains($0.id) }
+            guard !removed.isEmpty else { return }
+            noteEmptied {
+                let known = $0.removedTokens
+                $0.removedTokens += removed.filter { !known.contains($0) }
+                $0.hadTokens = current.count
             }
         }
     }
+
+    // SwiftUI reports Close, the field's clear button and a token backspace as text and token
+    // changes. Collect them for one turn, then tell them apart by whether search is still presented.
+    func noteEmptied(_ update: (inout SearchEmptiedEvent) -> Void) {
+        let isFirst = !emptiedEvent.isPending
+        update(&emptiedEvent)
+        emptiedEvent.isPending = true
+        guard isFirst else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15, execute: resolveEmptied)
+    }
+
+    // The field drops its tokens on Close and keeps them when the binding value never changes,
+    // so publish an empty array for one turn before the real filters.
+    func restoreTokens() {
+        isHidingTokens = true
+        DispatchQueue.main.async { isHidingTokens = false }
+    }
+
+    func resolveEmptied() {
+        let event = emptiedEvent
+        emptiedEvent = SearchEmptiedEvent()
+        if !isSearchPresented {
+            // Close only leaves focus: keep the text and the filters.
+            if let text = event.textBeforeEmptied { catalogQuery = text }
+            restoreTokens()
+            return
+        }
+        let removedAll = event.hadTokens > 0 && event.removedTokens.count == event.hadTokens
+        if removedAll && (event.hadTokens > 1 || event.textBeforeEmptied != nil) {
+            catalogBridge.clearFilters()
+            catalogBridge.submit(semester: semester, query: "")
+        } else {
+            for token in event.removedTokens {
+                catalogBridge.removeFilter(filter: token.filter)
+            }
+            if event.textBeforeEmptied != nil {
+                catalogBridge.submit(semester: semester, query: "")
+            }
+        }
+    }
+}
+
+struct SearchEmptiedEvent {
+    var isPending = false
+    var textBeforeEmptied: String?
+    var removedTokens: [CourseFilterToken] = []
+    var hadTokens = 0
 }

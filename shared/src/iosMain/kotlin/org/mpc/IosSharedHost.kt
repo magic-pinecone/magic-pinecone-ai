@@ -1,6 +1,7 @@
 package org.mpc
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,8 +32,10 @@ import org.mpc.domain.html.HtmlParser
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.CourseDetail
+import org.mpc.domain.model.CourseFilter
 import org.mpc.domain.model.EeclassBulletinNumber
 import org.mpc.domain.model.EeclassCourseNumber
+import org.mpc.domain.model.SlotMatch
 import org.mpc.domain.session.CampusSites
 import org.mpc.domain.session.SitePath
 import org.mpc.domain.session.browserEntry
@@ -46,8 +49,10 @@ import org.mpc.presentation.model.EeclassCourses
 import org.mpc.presentation.model.toEeclassBulletinPage
 import org.mpc.presentation.model.toEeclassCoursePage
 import org.mpc.presentation.model.toEeclassCourses
+import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.viewModel.AppSettingsViewModel
+import org.mpc.presentation.views.courseFilters.CourseSlotPicker
 import platform.UIKit.UIViewController
 
 class IosSharedHost internal constructor(
@@ -141,7 +146,7 @@ class IosSharedHost internal constructor(
     }
 
     @Composable
-    private fun ThemedContent(content: @Composable (AppSettings) -> Unit) {
+    internal fun ThemedContent(content: @Composable (AppSettings) -> Unit) {
         val settingsState by loadedSettings.collectAsStateWithLifecycle()
         val settings = settingsState ?: return
         MpcTheme(
@@ -170,3 +175,16 @@ fun createIosSharedHost(htmlParser: HtmlParser): IosSharedHost {
 
 /** The URL the in-app browser opens for a link in ee-class content, or null when the system should open it. */
 fun IosSharedHost.campusLinkUrl(url: String): String? = appGraph.campusSessions.browserEntry(url)
+
+fun IosSharedHost.courseSlotPickerController(bridge: CourseSearchBridge): UIViewController = ComposeUIViewController {
+    ProvideAppDependencies(appGraph) {
+        ThemedContent {
+            val snapshot by bridge.catalogSnapshot.collectAsStateWithLifecycle()
+            CourseSlotPicker(
+                selected = snapshot.filters.filterIsInstance<CourseFilter.Schedule>().firstOrNull()?.slots.orEmpty(),
+                onSelectedChange = { slots -> bridge.setSchedule(slots, SlotMatch.FITS_WITHIN) },
+                modifier = Modifier.padding(MpcSpacing.space4),
+            )
+        }
+    }
+}

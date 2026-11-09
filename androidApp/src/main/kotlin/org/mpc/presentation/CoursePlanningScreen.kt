@@ -281,18 +281,36 @@ private fun CoursePlanningSectionPicker(
     selectedView: CoursePlanningView,
     onSelectedViewChange: (CoursePlanningView) -> Unit,
 ) {
+    SectionPicker(
+        items = CoursePlanningView.entries,
+        selected = selectedView,
+        onSelectedChange = onSelectedViewChange,
+        label = { it.label },
+        icon = { it.icon },
+    )
+}
+
+@Composable
+internal fun <T> SectionPicker(
+    items: List<T>,
+    selected: T,
+    onSelectedChange: (T) -> Unit,
+    label: (T) -> String,
+    icon: (T) -> ImageVector,
+    modifier: Modifier = Modifier,
+) {
     ButtonGroup(
         overflowIndicator = { menuState -> ButtonGroupDefaults.OverflowIndicator(menuState) },
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+        modifier = modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
     ) {
-        CoursePlanningView.entries.forEach { view ->
+        items.forEach { item ->
             toggleableItem(
-                checked = selectedView == view,
+                checked = selected == item,
                 onCheckedChange = { isChecked ->
-                    if (isChecked) onSelectedViewChange(view)
+                    if (isChecked) onSelectedChange(item)
                 },
-                label = view.label,
-                icon = { Icon(imageVector = view.icon, contentDescription = null) },
+                label = label(item),
+                icon = { Icon(imageVector = icon(item), contentDescription = null) },
                 weight = 1f,
             )
         }

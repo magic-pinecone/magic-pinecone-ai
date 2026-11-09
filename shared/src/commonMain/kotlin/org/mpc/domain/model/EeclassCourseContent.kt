@@ -56,3 +56,15 @@ data class EeclassHomework(
     val score: String,
     val path: SitePath,
 )
+
+/** One row of an enrolled course's list. */
+data class EeclassCourseItem<T>(
+    val course: EeclassCourse,
+    val item: T,
+)
+
+/** Rows read from every enrolled course's list. [unread] names the courses whose list did not load. */
+data class AcrossCourses<T>(
+    val items: List<EeclassCourseItem<T>>,
+    val unread: List<EeclassCourse>,
+)

@@ -74,6 +74,9 @@ struct CourseDetailSheet: View {
                     }
                 }
             }
+            .courseEntityContext(
+                CourseIdentity(semester: selection.semester, serialNumber: selection.course.serialNumber)
+            )
             .navigationTitle("課程資訊")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

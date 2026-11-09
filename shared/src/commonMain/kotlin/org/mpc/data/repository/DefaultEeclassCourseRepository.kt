@@ -5,11 +5,15 @@ import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import org.mpc.domain.html.HtmlElement
 import org.mpc.domain.html.HtmlParser
+import org.mpc.domain.model.AcrossCourses
+import org.mpc.domain.model.EeclassBulletin
 import org.mpc.domain.model.EeclassBulletinDetail
 import org.mpc.domain.model.EeclassBulletinNumber
 import org.mpc.domain.model.EeclassCourse
 import org.mpc.domain.model.EeclassCourseContent
+import org.mpc.domain.model.EeclassCourseItem
 import org.mpc.domain.model.EeclassCourseNumber
+import org.mpc.domain.model.EeclassHomework
 import org.mpc.domain.repository.EeclassCourseRepository
 import org.mpc.domain.session.CampusSessions
 import org.mpc.domain.session.CampusSites
@@ -52,6 +56,26 @@ internal class DefaultEeclassCourseRepository(
             pick = { html -> eeclassBulletinDialogLink(parser.parse(html, site.url(list)), bulletin) },
             parse = { html -> eeclassBulletinDetail(parser.parse(html, site.baseUrl + BULLETIN_DIALOG)) },
         ).then { detail -> detail?.let { SiteResult.Page(it) } ?: SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE) }
+    }
+
+    override suspend fun fetchHomeworkAcrossCourses(): SiteResult<AcrossCourses<EeclassHomework>> = acrossCourses(::eeclassHomeworkPath, ::eeclassHomework)
+
+    override suspend fun fetchBulletinsAcrossCourses(): SiteResult<AcrossCourses<EeclassBulletin>> = acrossCourses(::eeclassBulletinsPath, ::eeclassBulletins)
+
+    // The site session holds a lock for each page load, so concurrent requests would only queue behind it.
+    private suspend fun <T> acrossCourses(
+        list: (EeclassCourseNumber) -> SitePath,
+        read: (HtmlElement) -> List<T>,
+    ): SiteResult<AcrossCourses<T>> = fetchEnrolledCourses().then { courses ->
+        val items = mutableListOf<EeclassCourseItem<T>>()
+        val unread = mutableListOf<EeclassCourse>()
+        for (course in courses) {
+            when (val rows = fetchPage(list(course.number), read)) {
+                is SiteResult.Page -> rows.value.mapTo(items) { EeclassCourseItem(course, it) }
+                is SiteResult.NeedsPortal, is SiteResult.Unavailable -> unread += course
+            }
+        }
+        SiteResult.Page(AcrossCourses(items, unread))
     }
 
     private suspend fun <T> fetchPage(path: SitePath, read: (HtmlElement) -> T): SiteResult<T> {

@@ -1,0 +1,35 @@
+{
+  "configurations": [
+    {
+      "id": "6A54853E-FA33-49E2-9AF7-34CC7637A8F5",
+      "name": "zh-TW",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {
+    "environmentVariableEntries": [
+      {
+        "key": "MPC_APP_BUNDLE_IDENTIFIER",
+        "value": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+      }
+    ],
+    "targetForVariableExpansion": {
+      "containerPath": "container:iosApp.xcodeproj",
+      "identifier": "6C37BD0EFE8D5E5762154E16",
+      "name": "iosApp"
+    },
+    "testLanguage": "zh-Hant",
+    "testRegion": "TW"
+  },
+  "testTargets": [
+    {
+      "parallelizable": false,
+      "target": {
+        "containerPath": "container:iosApp.xcodeproj",
+        "identifier": "14645BC730A0BA0700767CA3",
+        "name": "SiriIntegrationTests"
+      }
+    }
+  ],
+  "version": 1
+}

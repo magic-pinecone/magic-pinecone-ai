@@ -62,6 +62,9 @@ private struct SelectedCoursesList: View {
             List {
                 ForEach(courses, id: \.serialNumber) { course in
                     SelectedCourseRow(course: course)
+                        .courseEntityContext(
+                            CourseIdentity(semester: CourseIdentity.currentSemester, serialNumber: course.serialNumber)
+                        )
                         .accessibilityIdentifier("selected-course-\(course.serialNumber)")
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             if canEditPlan {

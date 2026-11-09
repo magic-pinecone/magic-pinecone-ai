@@ -42,6 +42,8 @@ dependencies {
 
     implementation(libs.metrox.viewmodel.compose)
     implementation(libs.kotlinx.serialization.core)
+    implementation(libs.kotlinx.datetime)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     testImplementation(libs.kotlin.test)
     testImplementation(libs.junit)
@@ -79,6 +81,8 @@ android {
         }
     }
     compileOptions {
+        // kotlinx-datetime runs on java.time, which minSdk 24 lacks without desugaring.
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }

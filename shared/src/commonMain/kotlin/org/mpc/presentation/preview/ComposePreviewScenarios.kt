@@ -1,7 +1,12 @@
 package org.mpc.presentation.preview
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
@@ -23,9 +28,11 @@ import org.mpc.presentation.SettingsScreen
 import org.mpc.presentation.state.CoursePlanUiState
 import org.mpc.presentation.state.CourseSearchError
 import org.mpc.presentation.state.CourseSearchResultUiState
+import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.views.courseDetails.CourseDetailsActions
 import org.mpc.presentation.views.courseDetails.CourseDetailsUiState
 import org.mpc.presentation.views.courseDetails.CourseDetailsView
+import org.mpc.presentation.views.courseFilters.CourseSlotPicker
 import org.mpc.presentation.views.coursePlanning.CoursePlanningTimetableView
 import org.mpc.presentation.views.coursePlanning.CourseSearchResultView
 import kotlin.time.Instant
@@ -42,6 +49,7 @@ enum class ComposePreviewScenario {
     COURSE_DETAILS,
     PORTAL,
     SETTINGS,
+    SLOT_PICKER,
 }
 
 @Composable
@@ -124,6 +132,15 @@ internal fun ComposePreviewScenarioContent(scenario: ComposePreviewScenario) {
             onPortalAuthenticationModeSelected = {},
             onTimetableColorModeSelected = {},
         )
+
+        ComposePreviewScenario.SLOT_PICKER -> {
+            var selected by remember { mutableStateOf(ComposePreviewFixtures.courses.first().classTimes.toSet()) }
+            CourseSlotPicker(
+                selected = selected,
+                onSelectedChange = { selected = it },
+                modifier = Modifier.padding(MpcSpacing.space4),
+            )
+        }
     }
 }
 

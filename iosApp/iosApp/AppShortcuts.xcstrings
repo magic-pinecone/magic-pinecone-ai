@@ -1,0 +1,202 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Add my classes to Calendar with ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Add my classes to Calendar with ${applicationName}",
+              "Sync my timetable to Calendar with ${applicationName}"
+            ]
+          }
+        },
+        "zh-Hant" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "用${applicationName}把課表加入行事曆",
+              "用${applicationName}同步課表到行事曆"
+            ]
+          }
+        }
+      }
+    },
+    "Course details in ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Course details in ${applicationName}",
+              "Tell me about ${course} in ${applicationName}"
+            ]
+          }
+        },
+        "zh-Hant" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "用${applicationName}查課程資訊",
+              "用${applicationName}查${course}的課程資訊"
+            ]
+          }
+        }
+      }
+    },
+    "Find courses with ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Find courses with ${applicationName}",
+              "Find ${timeOfDay} courses with ${applicationName}",
+              "Find courses on ${day} with ${applicationName}",
+              "Find ${courseType} courses with ${applicationName}",
+              "Find courses that are ${seats} with ${applicationName}"
+            ]
+          }
+        },
+        "zh-Hant" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "用${applicationName}找課",
+              "用${applicationName}找${timeOfDay}的課",
+              "用${applicationName}找${day}的課",
+              "用${applicationName}找${courseType}課",
+              "用${applicationName}找${seats}的課"
+            ]
+          }
+        }
+      }
+    },
+    "Search the course catalog with ${applicationName}" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Search the course catalog with ${applicationName}"
+            ]
+          }
+        },
+        "zh-Hant" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "用${applicationName}找課程"
+            ]
+          }
+        }
+      }
+    },
+    "Show the latest announcements in ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Show the latest announcements in ${applicationName}",
+              "Any new announcements in ${applicationName}",
+              "Check ee-class announcements with ${applicationName}"
+            ]
+          }
+        },
+        "zh-Hant" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}最新公告",
+              "${applicationName}有新公告嗎",
+              "用${applicationName}查 ee-class 公告"
+            ]
+          }
+        }
+      }
+    },
+    "What classes do I have today in ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "What classes do I have today in ${applicationName}",
+              "What classes do I have on ${day} in ${applicationName}",
+              "Show today's classes in ${applicationName}"
+            ]
+          }
+        },
+        "zh-Hant" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}今天有什麼課",
+              "${applicationName}${day}有什麼課",
+              "用${applicationName}看今天的課"
+            ]
+          }
+        }
+      }
+    },
+    "What homework is due in ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "What homework is due in ${applicationName}",
+              "Show my homework in ${applicationName}",
+              "Check ee-class homework with ${applicationName}"
+            ]
+          }
+        },
+        "zh-Hant" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}有什麼作業要交",
+              "${applicationName}近期作業",
+              "用${applicationName}查 ee-class 作業"
+            ]
+          }
+        }
+      }
+    },
+    "What's my next class in ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "What's my next class in ${applicationName}",
+              "Next class in ${applicationName}",
+              "Check my next class with ${applicationName}"
+            ]
+          }
+        },
+        "zh-Hant" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "${applicationName}下一堂課是什麼",
+              "${applicationName}下一堂課",
+              "用${applicationName}查下一堂課"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

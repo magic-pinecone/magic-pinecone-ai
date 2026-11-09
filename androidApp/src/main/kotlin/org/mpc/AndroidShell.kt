@@ -67,6 +67,8 @@ import androidx.navigation3.ui.NavDisplay
 import androidx.window.core.layout.WindowSizeClass.Companion.WIDTH_DP_MEDIUM_LOWER_BOUND
 import com.mohamedrejeb.calf.ui.web.WebViewNavigator
 import dev.zacsweers.metrox.viewmodel.metroViewModel
+import org.mpc.calendar.CalendarExportButton
+import org.mpc.calendar.ClassCalendar
 import org.mpc.di.AppGraph
 import org.mpc.domain.model.CourseSummary
 import org.mpc.domain.session.CampusSites
@@ -322,6 +324,17 @@ private fun AndroidPrimaryNavigation(
                     state = topBarState,
                     coursePlanActions = CoursePlanTopBarActions(
                         onSavePlan = planViewModel::savePlan,
+                        onExportToCalendar = {
+                            val semester = (planUiState as? CoursePlanUiState.Success)?.plan?.semester
+                            val message = semester?.let {
+                                runCatching { ClassCalendar.exportSavedPlan(context, appGraph, it) }
+                                    .fold(ClassCalendar::resultMessage) { "無法加入行事曆，請稍後再試。" }
+                            }
+                            message?.let { snackbarHostState.showSnackbar(it) }
+                        },
+                        onCalendarPermissionDenied = {
+                            snackbarHostState.showSnackbar("沒有行事曆權限。請在「設定」允許神奇松果存取行事曆。")
+                        },
                         onToggleCompactCatalog = {
                             isCompactCatalog = !isCompactCatalog
                             displayPreferences.edit().putBoolean("compact", isCompactCatalog).apply()
@@ -415,29 +428,7 @@ private fun AndroidPrimaryTopBar(
                         }
                     }
                 }
-                if (state.showsCoursePlanAction && (state.isExpanded || state.selectedCoursePlanningView == CoursePlanningView.CATALOG)) {
-                    var isShowingDisplayOptions by remember { mutableStateOf(false) }
-                    Box {
-                        IconButton(onClick = { isShowingDisplayOptions = true }) {
-                            Icon(Icons.Default.MoreVert, contentDescription = "顯示選項")
-                        }
-                        DropdownMenu(
-                            expanded = isShowingDisplayOptions,
-                            onDismissRequest = { isShowingDisplayOptions = false },
-                        ) {
-                            DropdownMenuItem(
-                                text = { Text("精簡課程卡片") },
-                                leadingIcon = {
-                                    if (state.isCompactCatalog) Icon(Icons.Default.Check, contentDescription = "已啟用")
-                                },
-                                onClick = {
-                                    coursePlanActions.onToggleCompactCatalog()
-                                    isShowingDisplayOptions = false
-                                },
-                            )
-                        }
-                    }
-                }
+                if (state.showsCoursePlanAction) CoursePlanningViewActions(state, coursePlanActions)
                 IconButton(onClick = onOpenSettings) {
                     Icon(
                         imageVector = Icons.Default.Settings,
@@ -447,6 +438,44 @@ private fun AndroidPrimaryTopBar(
             }
         },
     )
+}
+
+/** The actions that belong to whichever Course Planning view is showing. */
+@Composable
+private fun CoursePlanningViewActions(
+    state: PrimaryTopBarState,
+    coursePlanActions: CoursePlanTopBarActions,
+) {
+    if (state.isExpanded || state.selectedCoursePlanningView == CoursePlanningView.TIMETABLE) {
+        CalendarExportButton(
+            enabled = state.canSavePlan,
+            onExport = coursePlanActions.onExportToCalendar,
+            onPermissionDenied = coursePlanActions.onCalendarPermissionDenied,
+        )
+    }
+    if (state.isExpanded || state.selectedCoursePlanningView == CoursePlanningView.CATALOG) {
+        var isShowingDisplayOptions by remember { mutableStateOf(false) }
+        Box {
+            IconButton(onClick = { isShowingDisplayOptions = true }) {
+                Icon(Icons.Default.MoreVert, contentDescription = "顯示選項")
+            }
+            DropdownMenu(
+                expanded = isShowingDisplayOptions,
+                onDismissRequest = { isShowingDisplayOptions = false },
+            ) {
+                DropdownMenuItem(
+                    text = { Text("精簡課程卡片") },
+                    leadingIcon = {
+                        if (state.isCompactCatalog) Icon(Icons.Default.Check, contentDescription = "已啟用")
+                    },
+                    onClick = {
+                        coursePlanActions.onToggleCompactCatalog()
+                        isShowingDisplayOptions = false
+                    },
+                )
+            }
+        }
+    }
 }
 
 /** Shares or opens the page the browser was opened with; later pages can carry one-time sign-in URLs. */
@@ -484,6 +513,8 @@ private fun WebPageMenu(url: String) {
 
 private data class CoursePlanTopBarActions(
     val onSavePlan: () -> Unit,
+    val onExportToCalendar: suspend () -> Unit,
+    val onCalendarPermissionDenied: suspend () -> Unit,
     val onToggleCompactCatalog: () -> Unit,
     val onOpenSelectedCourses: () -> Unit,
 )
