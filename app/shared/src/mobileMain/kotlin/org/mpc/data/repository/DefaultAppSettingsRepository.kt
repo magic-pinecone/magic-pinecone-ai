@@ -17,6 +17,7 @@ import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.PortalAuthenticationMode
 import org.mpc.domain.model.TimetableColorMode
+import org.mpc.domain.model.UserAffiliation
 import org.mpc.domain.repository.AppSettingsRepository
 
 @ContributesBinding(AppScope::class)
@@ -52,17 +53,33 @@ internal class DefaultAppSettingsRepository(
             preferences[timetableColorModeKey] = colorMode.name
         }
     }
+
+    override suspend fun setUserAffiliation(affiliation: UserAffiliation) {
+        dataStore.edit { preferences ->
+            preferences[userAffiliationKey] = affiliation.name
+        }
+    }
+
+    override suspend fun setUserDepartment(department: String) {
+        dataStore.edit { preferences ->
+            preferences[userDepartmentKey] = department.trim()
+        }
+    }
 }
 
 private val themeModeKey = stringPreferencesKey("appearance.theme_mode")
 private val portalAuthenticationModeKey = stringPreferencesKey("portal.authentication_mode")
 private val timetableColorModeKey = stringPreferencesKey("timetable.color_mode")
+private val userAffiliationKey = stringPreferencesKey("profile.user_affiliation")
+private val userDepartmentKey = stringPreferencesKey("profile.user_department")
 
 private fun Preferences.toAppSettings(): AppSettings = AppSettings(
     themeMode = this[themeModeKey].toEnumOrDefault(AppThemeMode.SYSTEM),
     // Fall back to manual sign-in until platform credential adapters are available.
     portalAuthenticationMode = PortalAuthenticationMode.MANUAL_PORTAL,
     timetableColorMode = this[timetableColorModeKey].toEnumOrDefault(TimetableColorMode.CATEGORY),
+    userAffiliation = this[userAffiliationKey].toEnumOrDefault(UserAffiliation.ALL),
+    userDepartment = this[userDepartmentKey]?.trim().orEmpty(),
 )
 
 private inline fun <reified T : Enum<T>> String?.toEnumOrDefault(default: T): T = this?.let { value ->

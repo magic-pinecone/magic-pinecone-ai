@@ -8,11 +8,17 @@ celery_app = Celery(
     "magic_pinecone",
     broker=settings.celery_broker_url,
     backend=settings.celery_result_backend,
-    include=["app.tasks.course_scraper"],
+    include=[
+        "app.tasks.course_scraper",
+        "app.tasks.announcement_scraper",
+    ],
 )
 
 celery_app.conf.update(
-    imports=["app.tasks.course_scraper"],
+    imports=[
+        "app.tasks.course_scraper",
+        "app.tasks.announcement_scraper",
+    ],
     # Timezone
     timezone="Asia/Taipei",
     enable_utc=True,
@@ -34,7 +40,13 @@ celery_app.conf.update(
             "task": "tasks.course_scraper.scrape_ncu_courses",
             "schedule": timedelta(minutes=settings.SCRAPER_INTERVAL_MINUTES),
         },
+        "scrape-ncu-announcements-periodic": {
+            "task": "tasks.announcement_scraper.scrape_ncu_announcements",
+            "schedule": timedelta(minutes=settings.SCRAPER_INTERVAL_MINUTES),
+        },
     },
 )
 
-celery_app.autodiscover_tasks(["app.tasks.course_scraper"])
+celery_app.autodiscover_tasks(
+    ["app.tasks.course_scraper", "app.tasks.announcement_scraper"]
+)

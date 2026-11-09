@@ -31,6 +31,7 @@ import org.mpc.domain.model.PasswordCardType
 import org.mpc.domain.model.PortalAuthenticationMode
 import org.mpc.domain.model.TimetableColorMode
 import org.mpc.domain.repository.AcademicTermRepository
+import org.mpc.domain.repository.AnnouncementRepository
 import org.mpc.domain.repository.AppSettingsRepository
 import org.mpc.domain.repository.CoursePlanRepository
 import org.mpc.domain.repository.CourseRepository
@@ -149,6 +150,7 @@ private class HostTestGraph(
     private val detailRepository: CourseRepository? = null,
     private val planRepository: CoursePlanRepository? = null,
 ) : AppGraph {
+    override val announcementRepository: AnnouncementRepository get() = error("No announcement request expected")
     override val coursePlanRepository: CoursePlanRepository get() = planRepository ?: error("No plan request expected")
     override val courseRepository: CourseRepository get() = detailRepository ?: error("No course request expected")
     override val coursePlanDraftStore: CoursePlanDraftStore get() = error("No Compose controller expected")

@@ -143,6 +143,8 @@ class IosSharedHost internal constructor(
                     onTimetableColorModeSelected = settingsViewModel::setTimetableColorMode,
                     onThemeModeSelected = settingsViewModel::setThemeMode,
                     onPortalAuthenticationModeSelected = settingsViewModel::setPortalAuthenticationMode,
+                    onUserAffiliationSelected = settingsViewModel::setUserAffiliation,
+                    onUserDepartmentSelected = settingsViewModel::setUserDepartment,
                     backendEndpoint = backendEndpoint,
                     onUseCourseSource = backendEndpointViewModel::useSource,
                 )

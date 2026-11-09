@@ -1,0 +1,16 @@
+<resources>
+    <string name="announcements_pinned">置頂</string>
+    <string name="announcements_open_attachment">開啟附件簡章</string>
+    <string name="announcements_attachment_title">%1$s - 附件</string>
+    <string name="announcements_summary_line">%1$s：%2$s</string>
+    <string name="announcements_search_affiliation_placeholder">搜尋處室、獎助學金或關鍵字</string>
+    <string name="announcements_search_department_placeholder">搜尋系所公告標題或關鍵字</string>
+    <string name="announcements_all_departments">全部系所</string>
+    <string name="announcements_all_categories">全部分類</string>
+    <string name="announcements_needs_backend_title">尚未設定後端伺服器</string>
+    <string name="announcements_needs_backend_description">請在「設定」中填入神奇松果後端位址，即可同步處室獎助學金與各系所最新公告。</string>
+    <string name="announcements_unavailable_title">無法載入校園與系所公告</string>
+    <string name="announcements_unavailable_description">請確認後端伺服器連線狀態後再重試。</string>
+    <string name="announcements_empty_title">沒有符合篩選條件的公告</string>
+    <string name="announcements_empty_description">可嘗試切換身分別、系所或清除搜尋關鍵字。</string>
+</resources>

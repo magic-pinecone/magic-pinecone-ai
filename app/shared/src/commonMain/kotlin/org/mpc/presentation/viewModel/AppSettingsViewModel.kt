@@ -18,6 +18,7 @@ import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.PortalAuthenticationMode
 import org.mpc.domain.model.TimetableColorMode
+import org.mpc.domain.model.UserAffiliation
 import org.mpc.domain.repository.AppSettingsRepository
 
 @Inject
@@ -53,6 +54,18 @@ class AppSettingsViewModel(
     fun setTimetableColorMode(colorMode: TimetableColorMode) {
         persistSetting {
             settingsRepository.setTimetableColorMode(colorMode)
+        }
+    }
+
+    fun setUserAffiliation(affiliation: UserAffiliation) {
+        persistSetting {
+            settingsRepository.setUserAffiliation(affiliation)
+        }
+    }
+
+    fun setUserDepartment(department: String) {
+        persistSetting {
+            settingsRepository.setUserDepartment(department)
         }
     }
 

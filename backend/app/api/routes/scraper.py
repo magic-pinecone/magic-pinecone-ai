@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 
 from app.core.celery_app import celery_app
 from app.core.config import settings
+from app.tasks.announcement_scraper import scrape_ncu_announcements
 from app.tasks.course_scraper import scrape_ncu_courses
 
 router = APIRouter(prefix="/scraper", tags=["scraper"])
@@ -23,6 +24,17 @@ def trigger_scraper() -> Any:
     task = scrape_ncu_courses.delay(save_to_db=True)
     return {
         "message": "Scraper task triggered successfully",
+        "task_id": task.id,
+        "status": task.status,
+    }
+
+
+@router.post("/announcements/trigger", response_model=dict[str, Any])
+def trigger_announcement_scraper() -> Any:
+    """Manually trigger NCU announcement scraping task in background Celery worker."""
+    task = scrape_ncu_announcements.delay(save_to_db=True)
+    return {
+        "message": "Announcement scraper task triggered successfully",
         "task_id": task.id,
         "status": task.status,
     }
