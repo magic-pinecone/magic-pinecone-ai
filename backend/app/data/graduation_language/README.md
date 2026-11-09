@@ -32,3 +32,30 @@
 3. 對照有變動的語料修改 `requirements.json`，並更新 `verified_on`。
 4. 圖片來源（`extract: manual`）要重新人工轉錄，再把檔頭的 `sha256` 改成新的值。
 5. 換招生梯次時用 `scripts/build_intl_programs.py --intake <梯次>` 重建 `programs.json`。
+
+## 給 AI 客戶端使用（MCP）
+
+`backend/app/mcp_server.py` 把這些資料包成唯讀的 MCP 工具，讓模型查資料而不是憑記憶回答：
+
+| 工具 | 用途 |
+|---|---|
+| `get_graduation_language_requirements` | 依學制、學院、入學學年度查門檻、替代方案、外籍生條款與來源 |
+| `get_chinese_language_requirements` | 與畢業有關的華語規定，以及常被誤認為畢業條件的規定 |
+| `search_international_programs` | 招收外國學位生的系所、授課語言、修業規定連結 |
+| `search_official_documents` | 在 `corpus/` 全文中找關鍵字（每個詞都要出現），回傳片段與官方網址 |
+
+另有資源 `ncu-intl://documents/{source_id}`，回傳單一官方文件全文。
+
+在 `backend/` 下以 stdio 啟動：
+
+```bash
+uv run python -m app.mcp_server
+```
+
+客戶端設定範例：
+
+```json
+{ "command": "uv", "args": ["run", "python", "-m", "app.mcp_server"], "cwd": "backend" }
+```
+
+所有工具都只讀本資料夾，不連外、不寫入。
