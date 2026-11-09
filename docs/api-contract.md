@@ -174,7 +174,7 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
       "teaching_language": "english",
       "college": { "zh": "管理學院", "en": "College of Management" },
       "admission_language_note": { "zh": "…", "en": "…" },
-      "graduation": { "years": "1-4", "credits": "42", "elective_credits": "21", "required_credits": "21" },
+      "graduation": { "years": "4", "credits": "36", "elective_credits": "12", "required_credits": "24" },
       "regulation_url": "https://…",
       "website": "https://…"
     }
