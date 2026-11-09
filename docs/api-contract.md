@@ -10,6 +10,7 @@ App（`app/`）會一次下載整個學期的課程目錄，存進裝置上的 R
 | `GET /catalog/{semester}/courses` | 整個學期的課程 | `BackendCourseDataSource.getAllCourses` |
 | `GET /catalog/{semester}/courses/{serial_no}/detail` | 單一課程大綱 | `BackendCourseDataSource.getCourseDetails` |
 | `GET /intl/graduation-language` | 畢業語言門檻（外籍生服務） | （尚未接上） |
+| `GET /intl/programs` | 招收外國學位生的系所與授課語言 | （尚未接上） |
 
 `{semester}` 的格式是 `<學年>-<學期>`，例如 `115-1`。
 
@@ -100,7 +101,16 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
     "procedure": ["…"],
     "alternatives": ["…"],
     "international_students": ["…"],
-    "sources": ["lc-threshold-page"]
+    "legal_basis": ["…"],
+    "sources": ["aa-study-regulations", "lc-threshold-page"]
+  },
+  "chinese": {
+    "summary": { "zh": "…", "en": "…" },
+    "requirements": ["…"],
+    "open_questions": ["…"],
+    "not_graduation_requirements": ["…"],
+    "courses": "…",
+    "sources": ["aa-freshman-chinese"]
   },
   "rules": [
     {
@@ -133,12 +143,50 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 後端保證：
 
 - `value`、`requirement` 是照官方文件轉錄的文字，不是數字；用來顯示，不要拿來比大小。
-- `english` 的鍵一定出現在 `tests` 裡；`rules[].sources` 與 `general.sources` 的每個 id 一定出現在回應的 `sources` 裡，而 `sources` 只含這次回應引用到的來源。
+- `department` 為 `null` 表示規則適用整個學院；有值時是該系在學院門檻之外另加的規定。
+- `english` 的鍵一定出現在 `tests` 裡；`rules[].sources`、`general.sources` 與 `chinese.sources` 的每個 id 一定出現在回應的 `sources` 裡，而 `sources` 只含這次回應引用到的來源。
 - `cohort_min`／`cohort_max` 為 `null` 表示該側沒有限制。
 - 找不到符合的學院時回 200 與空的 `rules`。
-- 官方文件沒寫的事項不會出現推測值；`general.international_students` 會明講哪些事需要向語言中心或院系確認。
+- 官方文件沒寫的事項不會出現推測值；`general.international_students` 與 `chinese.open_questions` 會明講哪些事需要向語言中心、教務處或院系確認。
+- `chinese.not_graduation_requirements` 列的是常被誤認為畢業條件的華語規定（獎助學金、獎勵金、招生語言證明）。
 
 更新資料：改 `sources.json` 後執行 `uv run python scripts/build_graduation_language_corpus.py` 重建語料，再對照語料修改 `requirements.json` 與 `verified_on`。加上 `--check` 只比對官方頁面是否變動，不寫檔。
+
+## `GET /intl/programs`
+
+招收外國學位生的系所，來自招生系統的系所招生資訊頁，由 `backend/scripts/build_intl_programs.py` 抓取（中英文各抓一次後合併）。
+
+| 參數 | 意義 |
+|---|---|
+| `degree` | `bachelor`、`master`、`phd` |
+| `teaching_language` | `chinese`（全中文授課）、`english_sufficient`（英語課程足以滿足畢業條件）、`english`（全英語授課） |
+| `q` | 系所或學院名稱的一部分，中英文皆可 |
+
+```json
+{
+  "intake": "2027 Fall Semester Admission for International Degree Students",
+  "source_url": "https://cis.ncu.edu.tw/AdmissionSys/oia/currentPrograms/…",
+  "fetched_on": "2026-11-09",
+  "programs": [
+    {
+      "name": { "zh": "國際經營管理碩士學位學程", "en": "International Master of Business Administration program" },
+      "degree": "master",
+      "teaching_language": "english",
+      "college": { "zh": "管理學院", "en": "College of Management" },
+      "admission_language_note": { "zh": "…", "en": "…" },
+      "graduation": { "years": "1-4", "credits": "42", "elective_credits": "21", "required_credits": "21" },
+      "regulation_url": "https://…",
+      "website": "https://…"
+    }
+  ]
+}
+```
+
+後端保證：
+
+- `graduation` 的四個欄位是招生系統上的原文字串，系所沒填時是空字串。
+- `regulation_url`（系所自己的修業規定）與 `website` 可能是 `null`。
+- `admission_language_note` 是入學申請要繳的語言證明，不是畢業條件；系所沒填時是空字串。
 
 ## 既有端點
 
@@ -148,5 +196,5 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 
 兩邊必須一起改，並且各有一個測試釘住合約：
 
-- 後端：`backend/tests/test_catalog.py` 的 `test_catalog_matches_app_contract`、`backend/tests/test_intl.py` 的 `test_graduation_language_matches_app_contract`。
+- 後端：`backend/tests/test_catalog.py` 的 `test_catalog_matches_app_contract`、`backend/tests/test_intl.py` 的 `test_graduation_language_matches_app_contract` 與 `test_programs_match_app_contract`。
 - App：`app/shared/src/commonTest/kotlin/org/mpc/data/dataSource/BackendCourseDataSourceTest.kt`。

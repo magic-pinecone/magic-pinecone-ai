@@ -51,22 +51,36 @@
       "「大一英文免修」與「英文畢業門檻」是兩件不同的申請，需分開送件。"
     ],
     "alternatives": [
-      "未通過英檢且符合資格者，可修讀「進修英文」（全學年、共 4 學分，上下學期各修一次），成績及格亦可畢業。",
-      "進修英文修課資格（符合其一）：學測英文成績小於或等於前標，且入學後參加過任一項本校認定的英文鑑定考試；沒有學測英文成績，且入學後參加過任一項英文鑑定考試；持系主任簽名信函證明有英文學習障礙且專業表現優秀。",
+      "未通過英文能力鑑定的大學部學生，須選修一學年的「進修英文」（兩學期、共 4 學分）且成績及格，才能畢業。",
+      "選修進修英文的前提是入學後參加過細則第 3 條所列的任一項英文鑑定考試；從未參加過者不得修習。未達合格標準者，可持成績單正本到語言中心加選。",
       "第一次修進修英文前，須填「修課資格審核申請表」並附英檢成績單正本，到語言中心審核通過後才能選課。",
-      "進修英文是否列入畢業學分，由各系訂在「各學士班應修科目及畢業條件」的備註欄。",
-      "身心障礙生經專業評估確有英文學習障礙者，可個案處理或免予英文能力鑑定。"
+      "進修英文學分是否列入畢業學分由各系規定：115 學年度應修科目表中，多數學系寫「不列入本系之畢業學分總數」，資訊工程學系與資訊電機學院學士班寫「列入」。",
+      "可抵免進修英文的情形：修過英文系開設、學分數相同的進階英文課程且及格；或近四年內在其他大學修過學分數相同的非共同科英文課程，及格且經語言中心鑑定合格。",
+      "身心障礙生得依個別情況專案處理，或免予鑑定。"
     ],
     "international_students": [
-      "語言中心的畢業門檻頁面與各學院表單都沒有寫外籍生可免除畢業門檻；表單只提到外籍生成績單僅有英文姓名時要附的證件。是否適用或有其他處理方式，請直接向語言中心或所屬院系確認。",
-      "沒有學測成績的學生（多數外籍生）符合進修英文修課資格的第二款：入學後先參加過一次本校認定的英檢，即可申請修進修英文。",
+      "學則、英文能力鑑定細則、語言中心頁面與各學院表單都沒有把外籍生排除在英文畢業門檻之外；教務處的學位證書公告對所有學士班學生一體適用。就現有官方文件看，外籍學士班學生同樣要通過門檻或修進修英文。",
+      "沒有學測或指考成績的學生，只要入學後參加過一次細則所列的英文鑑定考試，就具備進修英文的修課資格。",
       "理、工、地科、文學院可用第二外語達成門檻，可採計的語言含越南文、泰文、日文、韓文、德文、法文、西班牙文。官方文件沒有說明母語是否可採計，請向院系確認。",
-      "「英語系國家之外籍生：個案審理」「接受以英文為主要授課語言之高中教育滿三年者：個案審理」這兩項寫在大一英文免修規定，不是畢業門檻規定。"
+      "「英語系國家之外籍生：個案審理」「接受以英文為主要授課語言之高中教育滿三年者：個案審理」這兩項寫在大一英文免修規定（大一外文修課及教學實施細則第 7 條），不是畢業門檻規定。",
+      "成績單只有英文姓名時要另附證件（表單寫：本國生附護照、外籍生附身分證）。"
     ],
     "sources": [
+      "aa-study-regulations",
+      "aa-english-proficiency-rules",
+      "aa-freshman-foreign-language-rules",
+      "aa-foreign-student-admission",
+      "aa-degree-certificate-notice-114-2",
+      "aa-curriculum-notes",
       "lc-threshold-page",
       "lc-remedial-english",
       "lc-freshman-english"
+    ],
+    "legal_basis": [
+      "學則第 48 條第 2 款：學士班學生須「選修『進修英文』成績及格，或通過本校語言中心認定之校內外英文能力鑑定考試合格」才能畢業；各學院自訂外文能力鑑定合格標準並經教務會議通過者，從其規定。",
+      "英文能力鑑定暨進修英文課程實施細則第 3 條列出各學院的合格分數，並規定三種例外：英美語文學系畢業生認定為通過；各學院自訂標準者從其規定；身心障礙生得專案處理或免予鑑定。條文沒有外籍生的例外。",
+      "學則第 58 條：研究生的畢業條件由各系（所、專班、學位學程）自訂。學校層級沒有研究生的英文或華語畢業門檻。",
+      "外國學生入學規定第 18 條：各系所應自訂中英文語言能力之入學標準；入學後，外國學生應依各系所規定參加語言能力測驗。"
     ]
   },
   "rules": [
@@ -146,11 +160,13 @@
       "other_languages": [],
       "other_languages_without_threshold": [],
       "notes": [
-        "表單寫「114 年前適用／115 年後適用」並註明「以入學年度標準為主」；這裡解讀為 114 學年度（含）以前入學與 115 學年度（含）以後入學，送件前請向語言中心確認。"
+        "表單寫「114 年前適用／115 年後適用」並註明「以入學年度標準為主」；這裡解讀為 114 學年度（含）以前入學與 115 學年度（含）以後入學，送件前請向語言中心確認。",
+        "英文能力鑑定細則（114-06-18 核備）對資電學院仍列舊標準（例如多益 600 分）；785 分等新標準出自語言中心 115 學年度起適用的表單與圖表，屬於細則第 3 條第 2 款的學院自訂標準。"
       ],
       "sources": [
         "lc-threshold-chart",
-        "lc-form-general"
+        "lc-form-general",
+        "aa-english-proficiency-rules"
       ]
     },
     {
@@ -206,7 +222,8 @@
       "notes": [],
       "sources": [
         "lc-threshold-chart",
-        "lc-form-general"
+        "lc-form-general",
+        "aa-english-proficiency-rules"
       ]
     },
     {
@@ -259,10 +276,13 @@
       },
       "other_languages": [],
       "other_languages_without_threshold": [],
-      "notes": [],
+      "notes": [
+        "托福網路測驗：細則寫 72 分（舊制），語言中心圖表與表單寫新制 3.5 級。"
+      ],
       "sources": [
         "lc-threshold-chart",
-        "lc-form-general"
+        "lc-form-general",
+        "aa-english-proficiency-rules"
       ]
     },
     {
@@ -318,7 +338,8 @@
       "notes": [],
       "sources": [
         "lc-threshold-chart",
-        "lc-form-general"
+        "lc-form-general",
+        "aa-english-proficiency-rules"
       ]
     },
     {
@@ -376,7 +397,8 @@
       ],
       "sources": [
         "lc-threshold-chart",
-        "lc-form-general"
+        "lc-form-general",
+        "aa-english-proficiency-rules"
       ]
     },
     {
@@ -449,7 +471,8 @@
       ],
       "sources": [
         "lc-threshold-chart",
-        "lc-form-engineering"
+        "lc-form-engineering",
+        "aa-english-proficiency-rules"
       ]
     },
     {
@@ -522,7 +545,8 @@
       ],
       "sources": [
         "lc-threshold-chart",
-        "lc-form-science"
+        "lc-form-science",
+        "aa-english-proficiency-rules"
       ]
     },
     {
@@ -644,7 +668,8 @@
       "notes": [],
       "sources": [
         "lc-threshold-chart",
-        "lc-form-earth"
+        "lc-form-earth",
+        "aa-english-proficiency-rules"
       ]
     },
     {
@@ -759,12 +784,75 @@
       ],
       "other_languages_without_threshold": [],
       "notes": [
-        "語言中心圖表註 (1)：英文系學生不適用上述門檻。"
+        "語言中心圖表註 (1)：英文系學生不適用上述門檻。",
+        "細則第 3 條第 1 款：英美語文學系畢業生認定為通過英文能力鑑定。"
       ],
       "sources": [
         "lc-threshold-chart",
-        "lc-form-liberal-arts"
+        "lc-form-liberal-arts",
+        "aa-english-proficiency-rules"
+      ]
+    },
+    {
+      "id": "bachelor-french",
+      "degree": "bachelor",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "department": {
+        "zh": "法國語文學系",
+        "en": "Department of French Language and Literature"
+      },
+      "summary": {
+        "zh": "除學院的外文門檻外，法文系學生須通過並取得法語鑑定文憑 DELF B1 才能畢業。",
+        "en": "On top of the college threshold, French majors must obtain the DELF B1 diploma to graduate."
+      },
+      "english": {},
+      "other_languages": [
+        {
+          "language": "法文",
+          "test": "法語鑑定文憑 DELF",
+          "requirement": "B1"
+        }
+      ],
+      "other_languages_without_threshold": [],
+      "notes": [],
+      "sources": [
+        "curriculum-115-145656399"
       ]
     }
-  ]
+  ],
+  "chinese": {
+    "summary": {
+      "zh": "中央大學沒有全校性的華語能力畢業門檻（例如 TOCFL 等級）。與畢業有關的華語規定是學士班的「國文」共同必修：外籍生以華語或僑生國文課程替代。",
+      "en": "NCU has no university-wide Chinese proficiency level (such as a TOCFL level) required for graduation. What does affect graduation is the undergraduate common requirement in Chinese, which international students fulfil with Chinese-as-a-second-language courses instead."
+    },
+    "requirements": [
+      "大一國文修課實施辦法第 5 點：非中文系外籍生不需修中文系開設的大一國文，但須修語言中心開設的華語課程 6 學分，並在畢業前辦理國文課程抵修手續。",
+      "同辦法第 5 點：中文系外籍生須參加中文能力分級測驗；初級組除修中文系大一國文外，還要依程度選修語言中心課程（不列入畢業學分），通過後才能修「僑生國文」。",
+      "共同必修科目選修辦法第 3 條：僑生及外籍生修習「僑生國文」一學年 5 學分，不需修大一國文中文寫作課程。",
+      "僑生須參加中文能力分級測驗，修「僑生國文」一學年 5 學分；初級組須先修語言中心課程（不列入畢業學分）。"
+    ],
+    "open_questions": [
+      "上面兩份法規對非中文系外籍生的寫法不一致（華語課程 6 學分，或僑生國文 5 學分）。實際做法請向教務處或中文系確認。",
+      "研究所沒有學校層級的華語要求；各系所是否另有規定，要看系所的修業規定。"
+    ],
+    "not_graduation_requirements": [
+      "外籍生獎助學金：申請時須有通過本校一門華語課程的成績及格證明，或華語文溝通能力證明（秋季班入學者申請第一學年第二學期時可免）。這是領獎助學金的條件，不是畢業條件；碩士階段修過的華語課不能沿用到博士階段。",
+      "華語文能力測驗獎勵金：修過語言中心華語課程並通過 TOCFL 高階級（Level 4）以上者，可申請 2,000 元獎勵。",
+      "招生時的語言證明：全中文授課的系所要求相當於 CEFR A2 以上的中文能力證明；全英語授課或英語課程足以畢業的系所要求相當於 CEFR B1 以上的英語能力證明。各系所可另訂標準。"
+    ],
+    "courses": "語言中心華語組每學期為國際學生、僑生與交換學生開設華語學分課程（每學期 18 週）。",
+    "sources": [
+      "aa-freshman-chinese",
+      "aa-common-required-courses",
+      "oia-scholarship-guidelines",
+      "oia-scholarship-page",
+      "clc-tocfl-reward",
+      "clc-degree-student-courses",
+      "oia-chinese-courses-115-1",
+      "aa-foreign-student-admission"
+    ]
+  }
 }

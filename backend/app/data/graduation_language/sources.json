@@ -110,6 +110,858 @@
       "effective": "115 學年度",
       "extract": "html",
       "selector": "main"
+    },
+    {
+      "id": "aa-foreign-student-admission",
+      "title": "國立中央大學外國學生入學規定",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/321/919644946.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-scholarship-guidelines",
+      "title": "國立中央大學外籍生獎助學金處理要點",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/279/211322303.pdf",
+      "org": "國際事務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "2025-04-07 修正",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-scholarship-page",
+      "title": "NCU International Student Scholarship",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2205.php?Lang=en",
+      "org": "國際事務處",
+      "lang": "en",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "",
+      "extract": "html"
+    },
+    {
+      "id": "oia-incoming-students",
+      "title": "Information for Incoming Students",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2203.php?Lang=en",
+      "org": "國際事務處",
+      "lang": "en",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "",
+      "extract": "html"
+    },
+    {
+      "id": "oia-degree-student-handbook",
+      "title": "2026 Fall Degree Student Handbook",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/115-1StudentHandbook.pdf",
+      "org": "國際事務處",
+      "lang": "en",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "115 學年度第 1 學期",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-chinese-courses-115-1",
+      "title": "115 學年度第 1 學期華語學分課程總表",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/NCUChineseCoursesforFall2026.pdf",
+      "org": "語言中心華語組",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "115 學年度第 1 學期",
+      "extract": "pdf"
+    },
+    {
+      "id": "clc-degree-student-courses",
+      "title": "國際學位生課程",
+      "url": "https://mandarin.lc.ncu.edu.tw/ChineseLanguageCenter/國際學位生課程/",
+      "org": "語言中心華語組",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "",
+      "extract": "html"
+    },
+    {
+      "id": "clc-tocfl-reward",
+      "title": "國立中央大學外國學生通過華語文能力測驗獎勵金申請暨發放要點",
+      "url": "https://mandarin.lc.ncu.edu.tw/userfiles/files/20250624065634662.pdf",
+      "org": "語言中心華語組",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-study-regulations",
+      "title": "國立中央大學學則",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/439020843.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "115 學年度教務章則彙編；115-07-15 備查",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-english-proficiency-rules",
+      "title": "國立中央大學英文能力鑑定暨進修英文課程實施細則",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/205291087.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "114-06-18 教務會議核備",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-freshman-foreign-language-measures",
+      "title": "國立中央大學大一外文暨進修英文修課及教學實施辦法",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/139156659.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "111-01-12 教務會議修正",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-freshman-foreign-language-rules",
+      "title": "國立中央大學大一外文修課及教學實施細則",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/786143607.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "113-06-19",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-freshman-chinese",
+      "title": "國立中央大學大一國文修課實施辦法",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/521084208.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度教務章則彙編",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-common-required-courses",
+      "title": "國立中央大學共同必修科目選修辦法",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/364607259.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "111-01-12 教務會議通過",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-curriculum-notes",
+      "title": "國立中央大學各學士班應修科目表使用注意事項",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/459504876.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-degree-examination-rules",
+      "title": "國立中央大學博士班、碩士班研究生學位考試細則",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/472805553.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "115-07-15 備查",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-degree-certificate-notice-114-2",
+      "title": "114 學年度第 2 學期頒發學位證書相關注意事項（中英對照）",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/258/304301548.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "115-02-12 公告",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-study-regulations-en",
+      "title": "National Central University Study Regulations",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/1NationalCentralUniversityStudyRegulations.pdf",
+      "org": "教務處",
+      "lang": "en",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "英譯本，備查日期至 2024-01-05，比中文版舊",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-common-required-courses-en",
+      "title": "NCU Regulations on Common Required Courses",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/11GuidelinesfortheSelectionofCommonRequiredCoursesatNationalCentralUniversity.pdf",
+      "org": "教務處",
+      "lang": "en",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "2022-01-12",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-degree-examination-rules-en",
+      "title": "NCU Regulations on the Degree Examinations for Postgraduate Students",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/16NationalCentralUniversityRegulationsontheDegreeExaminationsforPostgraduateStudents.pdf",
+      "org": "教務處",
+      "lang": "en",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "英譯本，2025-07",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-906824067",
+      "title": "115 學年度中國文學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/906824067.pdf",
+      "org": "文學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-500649507",
+      "title": "115 學年度英美語文學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/500649507.pdf",
+      "org": "文學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-145656399",
+      "title": "115 學年度法國語文學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/145656399.pdf",
+      "org": "文學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-518506883",
+      "title": "115 學年度文學院學士班應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/518506883.pdf",
+      "org": "文學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-453992717",
+      "title": "115 學年度數學系(數學科學組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/453992717.pdf",
+      "org": "理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-746507438",
+      "title": "115 學年度數學系(計算與資料科學組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/746507438.pdf",
+      "org": "理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-479411241",
+      "title": "115 學年度物理學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/479411241.pdf",
+      "org": "理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-346206791",
+      "title": "115 學年度化學學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/346206791.pdf",
+      "org": "理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-377574411",
+      "title": "115 學年度光電科學與工程學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/377574411.pdf",
+      "org": "理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-568979643",
+      "title": "115 學年度理學院學士班應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/568979643.pdf",
+      "org": "理學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-435748891",
+      "title": "115 學年度數學領域專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/435748891.pdf",
+      "org": "理學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-737408689",
+      "title": "115 學年度化學領域專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/737408689.pdf",
+      "org": "理學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-496301445",
+      "title": "115 學年度光電科學與工程領域專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/496301445.pdf",
+      "org": "理學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-139368804",
+      "title": "115 學年度生命科學領域專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/139368804.pdf",
+      "org": "理學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-470714939",
+      "title": "115 學年度生醫科學與工程領域專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/470714939.pdf",
+      "org": "理學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-249312994",
+      "title": "115 學年度物理領域專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/249312994.pdf",
+      "org": "理學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-488872261",
+      "title": "115 學年度土木工程學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/488872261.pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-766512299",
+      "title": "115 學年度機械工程學系(光機電工程組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/766512299.pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-769126069",
+      "title": "115 學年度機械工程學系(先進材料與精密製造組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/769126069.pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-653730890",
+      "title": "115 學年度機械工程學系(智慧系統與永續能源組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/653730890.pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-496022181",
+      "title": "115 學年度機械工程學系(前瞻半導體國際組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/496022181.pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-801606499",
+      "title": "115 學年度機械工程學系課程地圖應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/801606499.pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-651975566",
+      "title": "115 學年度化學工程與材料工程學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/651975566.pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-556793567",
+      "title": "115 學年度工學院學士班應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/556793567.pdf",
+      "org": "工學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-174506928",
+      "title": "115 學年度智慧機械專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/174506928.pdf",
+      "org": "工學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-124603699",
+      "title": "115 學年度能源材料專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/124603699.pdf",
+      "org": "工學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-484565660",
+      "title": "115 學年度永續防災專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/484565660.pdf",
+      "org": "工學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-372899414",
+      "title": "115 學年度綠色科技專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/372899414.pdf",
+      "org": "工學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-461717212",
+      "title": "115 學年度企業管理學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/461717212.pdf",
+      "org": "管理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-465871625",
+      "title": "115 學年度資訊管理學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/465871625.pdf",
+      "org": "管理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-657983460",
+      "title": "115 學年度財務金融學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/657983460.pdf",
+      "org": "管理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-538172646",
+      "title": "115 學年度經濟學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/538172646.pdf",
+      "org": "管理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-543703057",
+      "title": "115 學年度資電學院各系等同課程對照表應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/543703057.pdf",
+      "org": "資訊電機學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-306922019",
+      "title": "115 學年度電機工程學系(含課程流程表)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/306922019.pdf",
+      "org": "資訊電機學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-327274484",
+      "title": "115 學年度資訊工程學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/327274484.pdf",
+      "org": "資訊電機學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-350502994",
+      "title": "115 學年度通訊工程學系(含課程流程表)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/350502994.pdf",
+      "org": "資訊電機學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-378506083",
+      "title": "115 學年度資訊電機學院學士班應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/378506083.pdf",
+      "org": "資訊電機學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-582483517",
+      "title": "115 學年度電機工程專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/582483517.pdf",
+      "org": "資訊電機學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-677307272",
+      "title": "115 學年度資訊工程專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/677307272.pdf",
+      "org": "資訊電機學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-130852954",
+      "title": "115 學年度通訊工程專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/130852954.pdf",
+      "org": "資訊電機學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-676077203",
+      "title": "115 學年度網路工程專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/676077203.pdf",
+      "org": "資訊電機學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-860342863",
+      "title": "115 學年度大氣科學學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/860342863.pdf",
+      "org": "地球科學學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-649516511",
+      "title": "115 學年度地球科學學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/649516511.pdf",
+      "org": "地球科學學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-918496985",
+      "title": "115 學年度太空科學與工程學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/918496985.pdf",
+      "org": "地球科學學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-955940110",
+      "title": "115 學年度地科院學士班應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/955940110.pdf",
+      "org": "地科院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-101274633",
+      "title": "115 學年度客家語文暨社會科學學系(客家社會及政策組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/101274633.pdf",
+      "org": "客家學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-321365145",
+      "title": "115 學年度客家語文暨社會科學學系(客家語文及傳播組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/321365145.pdf",
+      "org": "客家學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-307189846",
+      "title": "115 學年度生命科學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/307189846.pdf",
+      "org": "生醫理工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-794399332",
+      "title": "115 學年度生醫科學與工程學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/794399332.pdf",
+      "org": "生醫理工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
     }
   ]
 }

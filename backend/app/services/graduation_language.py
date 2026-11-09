@@ -25,6 +25,35 @@ def load_sources() -> list[dict[str, Any]]:
     return data["sources"]
 
 
+@lru_cache
+def load_programs() -> dict[str, Any]:
+    return json.loads((DATA_DIR / "programs.json").read_text(encoding="utf-8"))
+
+
+def find_programs(
+    degree: str | None = None,
+    teaching_language: str | None = None,
+    query: str | None = None,
+) -> list[dict[str, Any]]:
+    """Programs open to international students. `query` matches names and college."""
+    programs = load_programs()["programs"]
+    if degree:
+        programs = [p for p in programs if p["degree"] == degree]
+    if teaching_language:
+        programs = [p for p in programs if p["teaching_language"] == teaching_language]
+    if query:
+        wanted = query.strip().casefold()
+        programs = [
+            p
+            for p in programs
+            if any(
+                wanted in text.casefold()
+                for text in (*p["name"].values(), *p["college"].values())
+            )
+        ]
+    return programs
+
+
 def applies_to_cohort(threshold: dict[str, Any], cohort: int) -> bool:
     """Whether a threshold covers students admitted in academic year `cohort`."""
     return (

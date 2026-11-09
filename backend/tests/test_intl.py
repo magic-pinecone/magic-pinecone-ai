@@ -22,6 +22,7 @@ def test_graduation_language_matches_app_contract(client: TestClient):
         "disclaimer",
         "tests",
         "general",
+        "chinese",
         "rules",
         "sources",
     }
@@ -31,7 +32,11 @@ def test_graduation_language_matches_app_contract(client: TestClient):
     assert rule["english"]["toeic_lr"] == [
         {"value": "700", "cohort_min": None, "cohort_max": None, "note": None}
     ]
-    assert rule["sources"] == ["lc-threshold-chart", "lc-form-general"]
+    assert rule["sources"] == [
+        "lc-threshold-chart",
+        "lc-form-general",
+        "aa-english-proficiency-rules",
+    ]
 
 
 def test_cohort_selects_the_threshold_of_the_admission_year(client: TestClient):
@@ -53,7 +58,11 @@ def test_college_matches_id_and_either_name(client: TestClient):
 def test_response_lists_only_the_sources_it_cites(client: TestClient):
     body = client.get(URL, params={"college": "工學院"}).json()
 
-    cited = set(body["general"]["sources"]) | set(body["rules"][0]["sources"])
+    cited = {
+        *body["general"]["sources"],
+        *body["chinese"]["sources"],
+        *body["rules"][0]["sources"],
+    }
     assert {s["id"] for s in body["sources"]} == cited
 
 
@@ -69,6 +78,7 @@ def test_every_rule_cites_known_sources_and_known_tests():
         assert set(rule["sources"]) <= source_ids, rule["id"]
         assert set(rule["english"]) <= set(data["tests"]), rule["id"]
     assert set(data["general"]["sources"]) <= source_ids
+    assert set(data["chinese"]["sources"]) <= source_ids
 
 
 def test_every_source_has_a_corpus_file_with_its_metadata():
@@ -76,3 +86,46 @@ def test_every_source_has_a_corpus_file_with_its_metadata():
         text = (service.DATA_DIR / "corpus" / f"{source['id']}.md").read_text("utf-8")
         assert f"url: {json.dumps(source['url'], ensure_ascii=False)}" in text
         assert "\nsha256: " in text
+
+
+def test_department_rule_names_its_department(client: TestClient):
+    rules = client.get(URL, params={"college": "文學院"}).json()["rules"]
+
+    french = next(r for r in rules if r["id"] == "bachelor-french")
+    assert french["department"]["zh"] == "法國語文學系"
+    assert french["other_languages"] == [
+        {"language": "法文", "test": "法語鑑定文憑 DELF", "requirement": "B1"}
+    ]
+
+
+def test_programs_match_app_contract(client: TestClient):
+    body = client.get("/api/v1/intl/programs").json()
+
+    assert set(body) == {"intake", "source_url", "fetched_on", "programs"}
+    assert set(body["programs"][0]) == {
+        "name",
+        "degree",
+        "teaching_language",
+        "college",
+        "admission_language_note",
+        "graduation",
+        "regulation_url",
+        "website",
+    }
+    assert set(body["programs"][0]["graduation"]) == {
+        "years",
+        "credits",
+        "elective_credits",
+        "required_credits",
+    }
+
+
+def test_programs_filter_by_degree_language_and_name(client: TestClient):
+    params = {"degree": "master", "teaching_language": "english", "q": "國際經營"}
+    programs = client.get("/api/v1/intl/programs", params=params).json()["programs"]
+
+    assert programs
+    for program in programs:
+        assert program["degree"] == "master"
+        assert program["teaching_language"] == "english"
+        assert "國際經營" in program["name"]["zh"]
