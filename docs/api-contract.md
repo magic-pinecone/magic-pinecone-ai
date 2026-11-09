@@ -9,6 +9,11 @@ App（`app/`）會一次下載整個學期的課程目錄，存進裝置上的 R
 | `GET /catalog` | 後端目前持有的學期、同步時間、課程數 | （尚未使用，供除錯與之後的學期選擇） |
 | `GET /catalog/{semester}/courses` | 整個學期的課程 | `BackendCourseDataSource.getAllCourses` |
 | `GET /catalog/{semester}/courses/{serial_no}/detail` | 單一課程大綱 | `BackendCourseDataSource.getCourseDetails` |
+| `GET /announcements/status` | 後端目前持有的公告同步時間與數量統計 | |
+| `GET /announcements` | 統一查詢校務／身分別（Affiliation）與系所（Department）公告 | |
+| `GET /announcements/affiliation` | 查詢身分別／處室／獎助工讀公告（支援 `affiliation`、`category`、`search`） | |
+| `GET /announcements/department` | 查詢各系所公告（支援 `department_id`、`department_name`、`college_name`、`search`） | |
+| `GET /announcements/departments` | 列出支援系所公告的系所清單與公告數量 | |
 
 `{semester}` 的格式是 `<學年>-<學期>`，例如 `115-1`。
 
@@ -77,6 +82,51 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 | 502 | NCU 連不上，而且沒有快取 |
 | 503 | 後端還沒同步過 |
 
+## `GET /announcements`、`/announcements/affiliation`、`/announcements/department`
+
+```json
+{
+  "last_updated": "2026-11-09T12:00:00Z",
+  "total": 1,
+  "offset": 0,
+  "limit": 100,
+  "announcements": [
+    {
+      "announcement_id": "dept_csie:001",
+      "scope": "DEPARTMENT",
+      "source_id": "dept_csie",
+      "category": "系所公告",
+      "unit_name": "資訊工程學系",
+      "college_id": "collegeI4",
+      "college_name": "資訊電機學院",
+      "department_id": "dept4001",
+      "department_name": "資訊工程學系",
+      "affiliations": ["ALL"],
+      "title": "資工系專題發表會時程公告",
+      "summary": {
+        "發布單位": "資訊工程學系",
+        "發布日期": "2026-11-08"
+      },
+      "published_date": "2026-11-08",
+      "url": "https://www.csie.ncu.edu.tw/p/404-1000-88888.php",
+      "attachment_url": null,
+      "is_pinned": false
+    }
+  ]
+}
+```
+
+- `scope` 為 `"AFFILIATION"`（身分別／處室／獎助工讀公告）或 `"DEPARTMENT"`（系所公告）。
+- `affiliations` 元素只會是 `"ALL"`、`"UNDERGRADUATE"`、`"GRADUATE"`、`"INTERNATIONAL"`、`"FACULTY"`。查詢時若帶入 `affiliation=UNDERGRADUATE`，會同時回傳標註 `"UNDERGRADUATE"` 與 `"ALL"` 的公告。
+- `department_name` 查詢支援完整系名（如 `"資訊工程學系"`）與簡稱（如 `"資工系"`）雙向比對，並在同步時自動對應 `Department` 表的 `department_id` 與 `college_id`。
+- 排序固定為：置頂（`is_pinned: true`）優先，其次依 `published_date` 由新到舊排序。
+- 手動觸發公告同步：`POST /api/v1/scraper/announcements/trigger`。
+
+| 狀態碼 | 意義 |
+|---|---|
+| 200 | 成功 |
+| 503 | 後端還沒同步過公告；先呼叫 `POST /scraper/announcements/trigger` |
+
 ## 既有端點
 
 上游原本的 `/courses`（伺服器端搜尋與分頁）、`/courses/colleges`、`/courses/departments`、`/scraper/*` 都保留不變；App 目前沒有使用搜尋端點。
@@ -85,5 +135,5 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 
 兩邊必須一起改，並且各有一個測試釘住合約：
 
-- 後端：`backend/tests/test_catalog.py` 的 `test_catalog_matches_app_contract`。
+- 後端：`backend/tests/test_catalog.py` 的 `test_catalog_matches_app_contract` 與 `backend/tests/test_announcements.py`。
 - App：`app/shared/src/commonTest/kotlin/org/mpc/data/dataSource/BackendCourseDataSourceTest.kt`。

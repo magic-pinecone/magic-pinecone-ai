@@ -1,0 +1,16 @@
+<resources>
+    <string name="announcements_pinned">Đã ghim</string>
+    <string name="announcements_open_attachment">Mở tệp đính kèm</string>
+    <string name="announcements_attachment_title">%1$s - Đính kèm</string>
+    <string name="announcements_summary_line">%1$s: %2$s</string>
+    <string name="announcements_search_affiliation_placeholder">Tìm phòng ban, học bổng hoặc từ khóa</string>
+    <string name="announcements_search_department_placeholder">Tìm thông báo khoa hoặc từ khóa</string>
+    <string name="announcements_all_departments">Tất cả các khoa</string>
+    <string name="announcements_all_categories">Tất cả danh mục</string>
+    <string name="announcements_needs_backend_title">Chưa cấu hình máy chủ</string>
+    <string name="announcements_needs_backend_description">Hãy nhập địa chỉ máy chủ Magic Pinecone trong Cài đặt để đồng bộ thông báo trường và khoa.</string>
+    <string name="announcements_unavailable_title">Không thể tải thông báo</string>
+    <string name="announcements_unavailable_description">Vui lòng kiểm tra kết nối máy chủ và thử lại.</string>
+    <string name="announcements_empty_title">Không có thông báo phù hợp</string>
+    <string name="announcements_empty_description">Hãy thử đổi đối tượng, khoa hoặc xóa từ khóa tìm kiếm.</string>
+</resources>

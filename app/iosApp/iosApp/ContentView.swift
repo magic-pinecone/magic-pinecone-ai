@@ -14,6 +14,7 @@ struct ContentView: View {
             Tab("首頁", systemImage: "house", value: AppTab.home) {
                 NavigationStack {
                     HomeView(
+                        sharedHost: sharedHost,
                         loadCourses: { try await sharedHost.loadEeclassCourses() },
                         courseDestination: { course in
                             EeclassCourseView(sharedHost: sharedHost, course: course)

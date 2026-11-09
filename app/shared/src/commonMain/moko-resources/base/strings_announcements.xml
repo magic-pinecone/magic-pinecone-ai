@@ -1,0 +1,16 @@
+<resources>
+    <string name="announcements_pinned">Pinned</string>
+    <string name="announcements_open_attachment">Open attachment</string>
+    <string name="announcements_attachment_title">%1$s - Attachment</string>
+    <string name="announcements_summary_line">%1$s: %2$s</string>
+    <string name="announcements_search_affiliation_placeholder">Search offices, scholarships, or keywords</string>
+    <string name="announcements_search_department_placeholder">Search department announcements or keywords</string>
+    <string name="announcements_all_departments">All departments</string>
+    <string name="announcements_all_categories">All categories</string>
+    <string name="announcements_needs_backend_title">Backend server not configured</string>
+    <string name="announcements_needs_backend_description">Configure the Magic Pinecone backend URL in Settings to sync campus and department announcements.</string>
+    <string name="announcements_unavailable_title">Unable to load announcements</string>
+    <string name="announcements_unavailable_description">Check the backend server connection and try again.</string>
+    <string name="announcements_empty_title">No matching announcements</string>
+    <string name="announcements_empty_description">Try switching affiliation, department, or clearing your search query.</string>
+</resources>

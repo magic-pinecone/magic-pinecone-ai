@@ -10,6 +10,7 @@ import dev.zacsweers.metrox.viewmodel.ViewModelGraph
 import org.mpc.data.local.database.AppDatabase
 import org.mpc.domain.html.HtmlParser
 import org.mpc.domain.repository.AcademicTermRepository
+import org.mpc.domain.repository.AnnouncementRepository
 import org.mpc.domain.repository.AppSettingsRepository
 import org.mpc.domain.repository.CoursePlanRepository
 import org.mpc.domain.repository.CourseRepository
@@ -21,6 +22,7 @@ import org.mpc.presentation.state.CoursePlanDraftStore
 @DependencyGraph(AppScope::class)
 interface AppGraph : ViewModelGraph {
     val appSettingsRepository: AppSettingsRepository
+    val announcementRepository: AnnouncementRepository
     val courseRepository: CourseRepository
     val coursePlanRepository: CoursePlanRepository
     val academicTermRepository: AcademicTermRepository

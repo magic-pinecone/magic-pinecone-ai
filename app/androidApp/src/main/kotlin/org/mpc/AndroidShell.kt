@@ -212,6 +212,13 @@ private fun AndroidPrimaryNavigation(
             entry<HomeRoot> {
                 EeclassHomeScreen(
                     onOpenCourse = { number, name -> navigator.navigate(EeclassCourseRoute(number, name)) },
+                    onOpenUrl = { title, url ->
+                        if (url.startsWith("https://")) {
+                            navigator.navigate(PortalWebRoute(title = title, url = url))
+                        } else {
+                            uriHandler.openUri(url)
+                        }
+                    },
                     modifier = Modifier.fillMaxSize(),
                 )
             }
@@ -599,6 +606,8 @@ private fun SettingsDialog(
                 onTimetableColorModeSelected = settingsViewModel::setTimetableColorMode,
                 onThemeModeSelected = settingsViewModel::setThemeMode,
                 onPortalAuthenticationModeSelected = settingsViewModel::setPortalAuthenticationMode,
+                onUserAffiliationSelected = settingsViewModel::setUserAffiliation,
+                onUserDepartmentSelected = settingsViewModel::setUserDepartment,
                 backendEndpoint = backendEndpoint,
                 onUseCourseSource = backendEndpointViewModel::useSource,
             )

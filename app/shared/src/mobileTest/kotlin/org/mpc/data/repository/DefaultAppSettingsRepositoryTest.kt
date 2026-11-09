@@ -13,6 +13,7 @@ import kotlinx.coroutines.test.runTest
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.TimetableColorMode
+import org.mpc.domain.model.UserAffiliation
 import kotlin.test.assertEquals
 
 private class InMemoryPreferencesDataStore(
@@ -61,6 +62,21 @@ val appSettingsRepositoryTests by testSuite {
 
             assertEquals(AppThemeMode.DARK, reloadedSettings.themeMode)
             assertEquals(TimetableColorMode.SHUFFLED, reloadedSettings.timetableColorMode)
+        }
+    }
+
+    test("changing user affiliation and department persists across reloads") {
+        runTest {
+            val dataStore = InMemoryPreferencesDataStore()
+            val repository = DefaultAppSettingsRepository(dataStore)
+
+            repository.setUserAffiliation(UserAffiliation.GRADUATE)
+            repository.setUserDepartment(" 資訊工程學系 ")
+
+            val reloadedSettings = DefaultAppSettingsRepository(dataStore).settings.first()
+
+            assertEquals(UserAffiliation.GRADUATE, reloadedSettings.userAffiliation)
+            assertEquals("資訊工程學系", reloadedSettings.userDepartment)
         }
     }
 }

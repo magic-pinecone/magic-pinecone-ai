@@ -1,6 +1,7 @@
 package org.mpc.presentation
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -20,8 +22,10 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
+import org.mpc.domain.model.DEFAULT_NCU_DEPARTMENTS
 import org.mpc.domain.model.PortalAuthenticationMode
 import org.mpc.domain.model.TimetableColorMode
+import org.mpc.domain.model.UserAffiliation
 import org.mpc.presentation.state.BackendEndpointUiState
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
@@ -34,6 +38,8 @@ fun SettingsScreen(
     onThemeModeSelected: (AppThemeMode) -> Unit,
     onPortalAuthenticationModeSelected: (PortalAuthenticationMode) -> Unit,
     onTimetableColorModeSelected: (TimetableColorMode) -> Unit,
+    onUserAffiliationSelected: (UserAffiliation) -> Unit = {},
+    onUserDepartmentSelected: (String) -> Unit = {},
     backendEndpoint: BackendEndpointUiState? = null,
     onUseCourseSource: (String) -> Unit = {},
 ) {
@@ -117,6 +123,15 @@ fun SettingsScreen(
             },
         )
 
+        HorizontalDivider()
+
+        SettingsAnnouncementProfileSection(
+            userAffiliation = settings.userAffiliation,
+            userDepartment = settings.userDepartment,
+            onUserAffiliationSelected = onUserAffiliationSelected,
+            onUserDepartmentSelected = onUserDepartmentSelected,
+        )
+
         if (backendEndpoint != null) {
             HorizontalDivider()
 
@@ -186,6 +201,64 @@ private fun SettingsChoiceRow(
                 style = MpcTheme.typography.caption,
                 color = MpcTheme.colors.labelSecondary,
             )
+        }
+    }
+}
+
+@Composable
+private fun SettingsAnnouncementProfileSection(
+    userAffiliation: UserAffiliation,
+    userDepartment: String,
+    onUserAffiliationSelected: (UserAffiliation) -> Unit,
+    onUserDepartmentSelected: (String) -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(MpcSpacing.space2)) {
+        SettingsSectionTitle(
+            title = "身分別與系所公告偏好",
+            description = "設定預設的身分別與所屬系所，用於自動篩選處室獎助學金與系所公告。",
+        )
+        Text(
+            text = "身分別",
+            style = MpcTheme.typography.label,
+            color = MpcTheme.colors.labelSecondary,
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(MpcSpacing.space2),
+        ) {
+            UserAffiliation.entries.forEach { affiliation ->
+                FilterChip(
+                    selected = userAffiliation == affiliation,
+                    onClick = { onUserAffiliationSelected(affiliation) },
+                    label = { Text(affiliation.label) },
+                )
+            }
+        }
+        Text(
+            text = "所屬系所",
+            style = MpcTheme.typography.label,
+            color = MpcTheme.colors.labelSecondary,
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(MpcSpacing.space2),
+        ) {
+            FilterChip(
+                selected = userDepartment.isBlank(),
+                onClick = { onUserDepartmentSelected("") },
+                label = { Text("全部系所") },
+            )
+            DEFAULT_NCU_DEPARTMENTS.forEach { department ->
+                FilterChip(
+                    selected = userDepartment == department,
+                    onClick = { onUserDepartmentSelected(department) },
+                    label = { Text(department) },
+                )
+            }
         }
     }
 }
