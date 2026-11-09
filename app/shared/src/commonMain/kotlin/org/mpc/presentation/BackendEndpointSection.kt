@@ -78,8 +78,11 @@ fun BackendEndpointSection(
 
 private fun BackendSyncState.message(): String? = when (this) {
     BackendSyncState.Idle -> null
+
     BackendSyncState.Syncing -> "正在同步課程資料…"
+
     is BackendSyncState.Synced -> "已同步 $courseCount 門課程。已開啟的選課畫面會在重新啟動 App 後更新。"
+
     is BackendSyncState.Failed -> when (error) {
         BackendSyncError.INVALID_ADDRESS -> "請輸入以 http:// 或 https:// 開頭的位址。"
         BackendSyncError.SOURCE_UNAVAILABLE -> "無法從這個來源取得課程資料，已維持原本的資料來源。"
