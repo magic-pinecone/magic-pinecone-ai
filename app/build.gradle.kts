@@ -17,6 +17,7 @@ plugins {
     alias(libs.plugins.androidx.room) apply false
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.ktlint) apply false
+    alias(libs.plugins.moko.resources) apply false
     alias(libs.plugins.testBalloon) apply false
 }
 
