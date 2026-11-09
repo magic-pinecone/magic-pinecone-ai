@@ -65,6 +65,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.icerock.moko.resources.compose.stringResource
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.mpc.data.portal.portalHome
 import org.mpc.domain.model.PortalShortcutDestination
@@ -75,6 +76,19 @@ import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.theme.platformTimetablePalette
 import org.mpc.presentation.viewModel.PortalViewModel
+import org.mpc.shared.MR
+import org.mpc.shared.portal_add_favorite
+import org.mpc.shared.portal_already_favorite
+import org.mpc.shared.portal_clear_search
+import org.mpc.shared.portal_done
+import org.mpc.shared.portal_edit
+import org.mpc.shared.portal_favorites
+import org.mpc.shared.portal_favorites_empty
+import org.mpc.shared.portal_move_down
+import org.mpc.shared.portal_move_up
+import org.mpc.shared.portal_no_results
+import org.mpc.shared.portal_remove_favorite
+import org.mpc.shared.portal_search
 
 @Composable
 fun PortalScreen(
@@ -121,7 +135,7 @@ fun PortalScreen(
         if (isSearching && home.isEmpty) {
             item(key = "no-results") {
                 Text(
-                    text = "找不到「${query.trim()}」相關的服務",
+                    text = stringResource(MR.strings.portal_no_results, query.trim()),
                     modifier = Modifier.fillMaxWidth().padding(top = MpcSpacing.space8),
                     textAlign = TextAlign.Center,
                     color = MpcTheme.colors.labelSecondary,
@@ -158,10 +172,10 @@ private fun LazyListScope.favoritesSection(
     viewModel: PortalViewModel,
 ) {
     item(key = "favorites-header") {
-        PortalSectionHeader(title = "常用") {
+        PortalSectionHeader(title = stringResource(MR.strings.portal_favorites)) {
             if (onToggleEditing != null) {
                 TextButton(onClick = onToggleEditing) {
-                    Text(if (isEditing) "完成" else "編輯")
+                    Text(stringResource(if (isEditing) MR.strings.portal_done else MR.strings.portal_edit))
                 }
             }
         }
@@ -169,7 +183,7 @@ private fun LazyListScope.favoritesSection(
     if (favorites.isEmpty()) {
         item(key = "favorites-empty") {
             Text(
-                text = "點「編輯」後按 ＋，即可把服務加入常用",
+                text = stringResource(MR.strings.portal_favorites_empty),
                 modifier = Modifier.padding(horizontal = MpcSpacing.space4),
                 style = MpcTheme.typography.supporting,
                 color = MpcTheme.colors.labelSecondary,
@@ -243,7 +257,10 @@ private fun AddFavoriteButton(
     IconButton(onClick = onAdd, enabled = !isFavorite) {
         Icon(
             imageVector = if (isFavorite) Icons.Default.CheckCircle else Icons.Default.AddCircle,
-            contentDescription = if (isFavorite) "已在常用：$label" else "加入常用：$label",
+            contentDescription = stringResource(
+                if (isFavorite) MR.strings.portal_already_favorite else MR.strings.portal_add_favorite,
+                label,
+            ),
             tint = if (isFavorite) MpcTheme.colors.labelTertiary else MpcTheme.colors.accent,
         )
     }
@@ -258,12 +275,12 @@ private fun PortalSearchField(
         value = query,
         onValueChange = onQueryChange,
         modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text("搜尋服務") },
+        placeholder = { Text(stringResource(MR.strings.portal_search)) },
         leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
         trailingIcon = if (query.isNotEmpty()) {
             {
                 IconButton(onClick = { onQueryChange("") }) {
-                    Icon(Icons.Default.Close, contentDescription = "清除搜尋")
+                    Icon(Icons.Default.Close, contentDescription = stringResource(MR.strings.portal_clear_search))
                 }
             }
         } else {
@@ -359,15 +376,15 @@ private fun FavoriteEditControls(
 ) {
     Row {
         IconButton(onClick = { onMove(-1) }, enabled = canMoveUp) {
-            Icon(Icons.Default.KeyboardArrowUp, contentDescription = "上移$label")
+            Icon(Icons.Default.KeyboardArrowUp, contentDescription = stringResource(MR.strings.portal_move_up, label))
         }
         IconButton(onClick = { onMove(1) }, enabled = canMoveDown) {
-            Icon(Icons.Default.KeyboardArrowDown, contentDescription = "下移$label")
+            Icon(Icons.Default.KeyboardArrowDown, contentDescription = stringResource(MR.strings.portal_move_down, label))
         }
         IconButton(onClick = onRemove) {
             Icon(
                 imageVector = Icons.Default.RemoveCircleOutline,
-                contentDescription = "從常用移除$label",
+                contentDescription = stringResource(MR.strings.portal_remove_favorite, label),
                 tint = MpcTheme.colors.destructive,
             )
         }

@@ -1,0 +1,17 @@
+<resources>
+    <string name="portal_no_results">找不到「%1$s」相關的服務</string>
+    <string name="portal_favorites">常用</string>
+    <string name="portal_done">完成</string>
+    <string name="portal_edit">編輯</string>
+    <string name="portal_favorites_empty">點「編輯」後按 ＋，即可把服務加入常用</string>
+    <string name="portal_already_favorite">已在常用：%1$s</string>
+    <string name="portal_add_favorite">加入常用：%1$s</string>
+    <string name="portal_search">搜尋服務</string>
+    <string name="portal_clear_search">清除搜尋</string>
+    <string name="portal_move_up">上移%1$s</string>
+    <string name="portal_move_down">下移%1$s</string>
+    <string name="portal_remove_favorite">從常用移除%1$s</string>
+    <string name="portal_sign_in">登入</string>
+    <string name="portal_sign_out">登出</string>
+    <string name="portal_retry">重試</string>
+</resources>

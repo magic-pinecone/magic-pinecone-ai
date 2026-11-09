@@ -27,6 +27,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.icerock.moko.resources.compose.stringResource
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.coroutines.launch
 import org.mpc.data.portal.portalLoginDestination
@@ -40,6 +41,10 @@ import org.mpc.presentation.theme.MpcShapes
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.viewModel.CampusSessionViewModel
+import org.mpc.shared.MR
+import org.mpc.shared.portal_retry
+import org.mpc.shared.portal_sign_in
+import org.mpc.shared.portal_sign_out
 
 @Composable
 internal fun PortalAccountCard(
@@ -125,8 +130,11 @@ private fun PortalAccountIcon(tone: PortalAccountTone) {
     }
 }
 
-private fun PortalAccountAction.label(): String = when (this) {
-    PortalAccountAction.SIGN_IN -> "登入"
-    PortalAccountAction.SIGN_OUT -> "登出"
-    PortalAccountAction.RETRY -> "重試"
-}
+@Composable
+private fun PortalAccountAction.label(): String = stringResource(
+    when (this) {
+        PortalAccountAction.SIGN_IN -> MR.strings.portal_sign_in
+        PortalAccountAction.SIGN_OUT -> MR.strings.portal_sign_out
+        PortalAccountAction.RETRY -> MR.strings.portal_retry
+    },
+)
