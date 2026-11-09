@@ -31,6 +31,12 @@ def test_every_place_is_near_campus_and_has_both_names():
         assert place.name_zh.strip() and place.name_en.strip(), place.id
 
 
+def test_building_codes_are_unique():
+    codes = [place.code for place in campus_places.load().places if place.code]
+    assert codes
+    assert len(codes) == len(set(codes))
+
+
 def test_lists_every_place_with_attribution(client: TestClient):
     response = client.get("/api/v1/campus/places")
     assert response.status_code == 200
@@ -46,6 +52,8 @@ def test_lists_every_place_with_attribution(client: TestClient):
         ("e6", "engineering-building-5"),
         ("engineering building 5", "engineering-building-5"),
         ("OIA", "teaching-research-building"),
+        ("教學研究綜合大樓", "teaching-research-building"),
+        ("i1", "management-building-2"),
         ("  國際事務處 ", "teaching-research-building"),
     ],
 )

@@ -1,10 +1,291 @@
 {
-  "source": "OpenStreetMap (Nominatim), retrieved 2026-11-09",
+  "source": "Building codes and Chinese building names: NCU course system (cis.ncu.edu.tw/Course), retrieved 2026-11-09. Coordinates: OpenStreetMap (Nominatim), retrieved 2026-11-09.",
   "attribution": "© OpenStreetMap contributors, ODbL 1.0",
   "places": [
     {
+      "id": "liberal-arts-building-1",
+      "name_zh": "文學一館",
+      "name_en": "Liberal Arts Building 1",
+      "code": "A",
+      "category": "academic",
+      "latitude": 24.969355,
+      "longitude": 121.194556,
+      "osm_id": "way/202691228",
+      "aliases": [
+        "文一館"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "liberal-arts-building-2",
+      "name_zh": "文學二館",
+      "name_en": "Liberal Arts Building 2",
+      "code": "C2",
+      "category": "academic",
+      "latitude": 24.968911,
+      "longitude": 121.194548,
+      "osm_id": "way/202691227",
+      "aliases": [
+        "文二館"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "engineering-building-1",
+      "name_zh": "工程一館",
+      "name_en": "Engineering Building 1",
+      "code": "E",
+      "category": "academic",
+      "latitude": 24.967519,
+      "longitude": 121.192353,
+      "osm_id": "way/268841451",
+      "aliases": [
+        "工一館",
+        "工一"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "engineering-building-2",
+      "name_zh": "工程二館",
+      "name_en": "Engineering Building 2",
+      "code": "E1",
+      "category": "academic",
+      "latitude": 24.967605,
+      "longitude": 121.191384,
+      "osm_id": "way/268841454",
+      "aliases": [
+        "工二館",
+        "電機館",
+        "電機系",
+        "Electrical Engineering"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "mechanical-engineering-building",
+      "name_zh": "機械館",
+      "name_en": "Mechanical Engineering Building",
+      "code": "E2",
+      "category": "academic",
+      "latitude": 24.967922,
+      "longitude": 121.188162,
+      "osm_id": "relation/6576312",
+      "aliases": [
+        "工程三館(機械館)",
+        "工三館",
+        "工程三館"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "large-scale-mechanics-laboratory",
+      "name_zh": "大型力學實驗館",
+      "name_en": "Large-Scale Mechanics Laboratory",
+      "code": "E5",
+      "category": "academic",
+      "latitude": 24.968765,
+      "longitude": 121.18859,
+      "osm_id": "way/268561934",
+      "aliases": [
+        "大型力學實驗室"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "engineering-building-5",
+      "name_zh": "工程五館",
+      "name_en": "Engineering Building 5",
+      "code": "E6",
+      "category": "academic",
+      "latitude": 24.967014,
+      "longitude": 121.187598,
+      "osm_id": "way/268561940",
+      "aliases": [
+        "工五館",
+        "工五"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "hakka-college-building",
+      "name_zh": "客家學院大樓",
+      "name_en": "College of Hakka Studies Building",
+      "code": "HK",
+      "category": "academic",
+      "latitude": 24.971003,
+      "longitude": 121.190396,
+      "osm_id": "way/268561421",
+      "aliases": [
+        "客家學院"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "zhi-xi-hall",
+      "name_zh": "志希館",
+      "name_en": "Zhi-Xi Hall",
+      "code": "I",
+      "category": "academic",
+      "latitude": 24.970225,
+      "longitude": 121.193658,
+      "osm_id": "way/217833431",
+      "aliases": [],
+      "note_en": null
+    },
+    {
+      "id": "management-building-2",
+      "name_zh": "管理二館",
+      "name_en": "Management Building 2",
+      "code": "I1",
+      "category": "academic",
+      "latitude": 24.970692,
+      "longitude": 121.193645,
+      "osm_id": "way/202805970",
+      "aliases": [
+        "管理學院二館",
+        "管二館"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "kuo-ting-optoelectronics-building",
+      "name_zh": "國鼎光電大樓",
+      "name_en": "Kuo-Ting Optoelectronics Building",
+      "code": "IL",
+      "category": "academic",
+      "latitude": 24.970271,
+      "longitude": 121.190371,
+      "osm_id": "way/202690841",
+      "aliases": [
+        "光電大樓"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "humanities-social-sciences-building",
+      "name_zh": "人文社會科學大樓",
+      "name_en": "Humanities and Social Sciences Building",
+      "code": "LS",
+      "category": "academic",
+      "latitude": 24.969282,
+      "longitude": 121.195192,
+      "osm_id": "way/268845976",
+      "aliases": [
+        "人社大樓"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "hong-jing-hall",
+      "name_zh": "鴻經館",
+      "name_en": "Hong-Jing Hall (Department of Mathematics)",
+      "code": "M",
+      "category": "academic",
+      "latitude": 24.970846,
+      "longitude": 121.19273,
+      "osm_id": "way/202805968",
+      "aliases": [
+        "數學系",
+        "Mathematics"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "language-center",
+      "name_zh": "綜教館",
+      "name_en": "Zong-Jiao Hall (Language Center)",
+      "code": "O",
+      "category": "academic",
+      "latitude": 24.97023,
+      "longitude": 121.192881,
+      "osm_id": "way/202806028",
+      "aliases": [
+        "綜教館(語言中心)",
+        "語言中心",
+        "Chinese class"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "space-remote-sensing-center",
+      "name_zh": "太空及遙測研究中心",
+      "name_en": "Center for Space and Remote Sensing Research",
+      "code": "R2",
+      "category": "academic",
+      "latitude": 24.96784,
+      "longitude": 121.187321,
+      "osm_id": "way/217833430",
+      "aliases": [
+        "太遙中心",
+        "CSRSR"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "science-building-2",
+      "name_zh": "科學二館",
+      "name_en": "Science Building 2 (College of Science)",
+      "code": "S1",
+      "category": "academic",
+      "latitude": 24.969983,
+      "longitude": 121.192245,
+      "osm_id": "way/202691136",
+      "aliases": [
+        "科學二館(理學院大樓)",
+        "科二館",
+        "理學院",
+        "理學院大樓"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "science-building-3",
+      "name_zh": "科學三館",
+      "name_en": "Science Building 3",
+      "code": "S2",
+      "category": "academic",
+      "latitude": 24.970743,
+      "longitude": 121.192161,
+      "osm_id": "way/268846332",
+      "aliases": [
+        "科三館"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "science-building-4",
+      "name_zh": "健雄館(科學四館)",
+      "name_en": "Chien-Shiung Hall (Science Building 4)",
+      "code": "S4",
+      "category": "academic",
+      "latitude": 24.971201,
+      "longitude": 121.192003,
+      "osm_id": "way/202691135",
+      "aliases": [
+        "科學四館",
+        "科四館",
+        "健雄館"
+      ],
+      "note_en": null
+    },
+    {
+      "id": "science-building-5",
+      "name_zh": "科學五館",
+      "name_en": "Science Building 5",
+      "code": "S5",
+      "category": "academic",
+      "latitude": 24.971319,
+      "longitude": 121.192746,
+      "osm_id": "way/268846328",
+      "aliases": [
+        "科五館"
+      ],
+      "note_en": null
+    },
+    {
       "id": "teaching-research-building",
-      "name_zh": "教學研究綜合大樓",
+      "name_zh": "教研大樓",
       "name_en": "Teaching and Research Building",
       "code": "TR",
       "category": "administration",
@@ -12,13 +293,29 @@
       "longitude": 121.191656,
       "osm_id": "way/996613836",
       "aliases": [
-        "教研大樓",
+        "教學研究綜合大樓",
         "OIA",
         "國際事務處",
         "Office of International Affairs",
         "International Student Affairs"
       ],
       "note_en": "The Office of International Affairs (OIA) is on the 1st floor."
+    },
+    {
+      "id": "yi-ren-gymnasium",
+      "name_zh": "體育館(依仁堂)",
+      "name_en": "Gymnasium (Yi-Ren Hall)",
+      "code": "YH",
+      "category": "sports",
+      "latitude": 24.968342,
+      "longitude": 121.190777,
+      "osm_id": "way/268841456",
+      "aliases": [
+        "依仁堂",
+        "體育館",
+        "Gym"
+      ],
+      "note_en": null
     },
     {
       "id": "administration-building",
@@ -79,166 +376,6 @@
       "note_en": null
     },
     {
-      "id": "engineering-building-5",
-      "name_zh": "工程五館",
-      "name_en": "Engineering Building 5",
-      "code": "E6",
-      "category": "academic",
-      "latitude": 24.967014,
-      "longitude": 121.187598,
-      "osm_id": "way/268561940",
-      "aliases": [
-        "工五館",
-        "工五"
-      ],
-      "note_en": null
-    },
-    {
-      "id": "engineering-building-1",
-      "name_zh": "工程一館",
-      "name_en": "Engineering Building 1",
-      "code": null,
-      "category": "academic",
-      "latitude": 24.967519,
-      "longitude": 121.192353,
-      "osm_id": "way/268841451",
-      "aliases": [
-        "工一館",
-        "工一"
-      ],
-      "note_en": null
-    },
-    {
-      "id": "engineering-building-3",
-      "name_zh": "工程三館(機械館)",
-      "name_en": "Engineering Building 3 (Mechanical Engineering)",
-      "code": null,
-      "category": "academic",
-      "latitude": 24.967922,
-      "longitude": 121.188162,
-      "osm_id": "relation/6576312",
-      "aliases": [
-        "機械館",
-        "工三館"
-      ],
-      "note_en": null
-    },
-    {
-      "id": "hong-jing-hall",
-      "name_zh": "鴻經館",
-      "name_en": "Hong-Jing Hall (Department of Mathematics)",
-      "code": null,
-      "category": "academic",
-      "latitude": 24.970846,
-      "longitude": 121.19273,
-      "osm_id": "way/202805968",
-      "aliases": [
-        "數學系",
-        "Mathematics"
-      ],
-      "note_en": null
-    },
-    {
-      "id": "zhi-xi-hall",
-      "name_zh": "志希館",
-      "name_en": "Zhi-Xi Hall",
-      "code": null,
-      "category": "academic",
-      "latitude": 24.970225,
-      "longitude": 121.193658,
-      "osm_id": "way/217833431",
-      "aliases": [],
-      "note_en": null
-    },
-    {
-      "id": "humanities-social-sciences-building",
-      "name_zh": "人文社會科學大樓",
-      "name_en": "Humanities and Social Sciences Building",
-      "code": null,
-      "category": "academic",
-      "latitude": 24.969282,
-      "longitude": 121.195192,
-      "osm_id": "way/268845976",
-      "aliases": [
-        "人社大樓"
-      ],
-      "note_en": null
-    },
-    {
-      "id": "liberal-arts-building-1",
-      "name_zh": "文學一館",
-      "name_en": "Liberal Arts Building 1",
-      "code": null,
-      "category": "academic",
-      "latitude": 24.969355,
-      "longitude": 121.194556,
-      "osm_id": "way/202691228",
-      "aliases": [
-        "文一館"
-      ],
-      "note_en": null
-    },
-    {
-      "id": "liberal-arts-building-2",
-      "name_zh": "文學二館",
-      "name_en": "Liberal Arts Building 2",
-      "code": null,
-      "category": "academic",
-      "latitude": 24.968911,
-      "longitude": 121.194548,
-      "osm_id": "way/202691227",
-      "aliases": [
-        "文二館"
-      ],
-      "note_en": null
-    },
-    {
-      "id": "science-building-2",
-      "name_zh": "科學二館(理學院大樓)",
-      "name_en": "Science Building 2 (College of Science)",
-      "code": null,
-      "category": "academic",
-      "latitude": 24.969983,
-      "longitude": 121.192245,
-      "osm_id": "way/202691136",
-      "aliases": [
-        "科二館",
-        "理學院"
-      ],
-      "note_en": null
-    },
-    {
-      "id": "science-building-4",
-      "name_zh": "科學四館",
-      "name_en": "Science Building 4",
-      "code": null,
-      "category": "academic",
-      "latitude": 24.971201,
-      "longitude": 121.192003,
-      "osm_id": "way/202691135",
-      "aliases": [
-        "科四館",
-        "健雄館"
-      ],
-      "note_en": null
-    },
-    {
-      "id": "language-center",
-      "name_zh": "綜教館(語言中心)",
-      "name_en": "Language Center",
-      "code": null,
-      "category": "academic",
-      "latitude": 24.97023,
-      "longitude": 121.192881,
-      "osm_id": "way/202806028",
-      "aliases": [
-        "綜教館",
-        "語言中心",
-        "Chinese class"
-      ],
-      "note_en": null
-    },
-    {
       "id": "grand-lecture-hall",
       "name_zh": "大講堂",
       "name_en": "Grand Lecture Hall",
@@ -260,21 +397,6 @@
       "longitude": 121.192362,
       "osm_id": "way/996613837",
       "aliases": [],
-      "note_en": null
-    },
-    {
-      "id": "yi-ren-gymnasium",
-      "name_zh": "依仁堂",
-      "name_en": "Yi-Ren Gymnasium",
-      "code": null,
-      "category": "sports",
-      "latitude": 24.968342,
-      "longitude": 121.190777,
-      "osm_id": "way/268841456",
-      "aliases": [
-        "體育館",
-        "Gym"
-      ],
       "note_en": null
     },
     {

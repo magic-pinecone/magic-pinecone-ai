@@ -1,7 +1,9 @@
 """Campus places: a small curated list of where things are at NCU.
 
-The list lives in `app/data/campus_places.json`. Coordinates come from
-OpenStreetMap; the English names are ours unless OpenStreetMap had one.
+The list lives in `app/data/campus_places.json`. Building codes and the
+Chinese names of coded buildings follow the NCU course system, coordinates
+come from OpenStreetMap, and the English names are ours unless OpenStreetMap
+had one.
 Each place carries links that open it in a maps app, so walking directions
 are left to the phone instead of being computed here.
 """
@@ -39,7 +41,8 @@ class CampusPlace(BaseModel):
     id: str
     name_zh: str
     name_en: str
-    # NCU building code as used in classroom numbers, e.g. "E6".
+    # Building code from the NCU course system, the prefix of a classroom
+    # number such as "E6-A203". None for places that hold no classes.
     code: str | None
     category: PlaceCategory
     latitude: float = Field(ge=-90, le=90)

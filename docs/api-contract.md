@@ -91,7 +91,7 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 
 ## `GET /campus/places`
 
-校園地點清單：建築、餐廳、宿舍、公車站等，目前約 30 筆，資料在 `backend/app/data/campus_places.json`。這個端點不需要資料庫，也不需要先同步。
+校園地點清單：建築、餐廳、宿舍、公車站等，目前 40 筆，資料在 `backend/app/data/campus_places.json`。這個端點不需要資料庫，也不需要先同步。
 
 | 查詢參數 | 說明 |
 |---|---|
@@ -127,7 +127,9 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 
 - 座標取自 OpenStreetMap，畫面上顯示這些資料時必須一併顯示 `attribution`。
 - `name_en` 只有少數來自 OpenStreetMap，其餘是自行翻譯，尚未與學校的官方英文館名核對。
-- `code` 是教室編號用的建築代碼，目前只填了有依據的兩筆（`E6`、`TR`），其餘為 `null`。
+- `code` 與有代碼建築的 `name_zh` 以選課系統（課程列表的「時間/教室」欄，例如 `E6-A203 (工程五館-A203)`）為準；OpenStreetMap 上不同的名稱放在 `aliases`。沒有排課的地點 `code` 為 `null`。
+- 選課系統有、但這裡還沒收錄的代碼：`E3` 環工化工館、`E4` 機電實驗室、`LH` 校史館大講堂、`R3` 研究中心大樓二期館、`S` 科學一館，因為在 OpenStreetMap 上找不到可確定對應的建築。
+- `E1` 工程二館的座標取自 OpenStreetMap 上標為「電機系」的建築，這個對應是推定的。
 - 路線不由後端計算：`map_links` 會在手機的地圖 App 開啟步行導航。
 
 `GET /campus/places/{id}` 回傳單一地點，形狀與上面 `places` 的元素相同；找不到時回 404。
