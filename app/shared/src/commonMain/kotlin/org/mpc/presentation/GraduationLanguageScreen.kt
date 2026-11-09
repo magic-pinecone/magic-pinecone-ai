@@ -78,7 +78,7 @@ fun GraduationLanguageScreen(
             verticalArrangement = Arrangement.spacedBy(MpcSpacing.space3),
         ) {
             item {
-                Header(state.requirements, text, english, onToggleLanguage = { english = !english })
+                Header(state.requirements.summaryFor(state.filter.degree).pick(english), text, onToggleLanguage = { english = !english })
             }
             item { Filters(state, actions, text, english) }
             if (state.rules.isEmpty()) {
@@ -123,9 +123,8 @@ private fun Message(
 
 @Composable
 private fun Header(
-    requirements: GraduationLanguage,
+    summary: String,
     text: GraduationLanguageLabels,
-    english: Boolean,
     onToggleLanguage: () -> Unit,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(MpcSpacing.space2)) {
@@ -138,7 +137,7 @@ private fun Header(
             )
             FilterChip(selected = false, onClick = onToggleLanguage, label = { Text(text.otherLanguage) })
         }
-        Paragraph(requirements.general.summary.pick(english))
+        Paragraph(summary)
     }
 }
 
@@ -312,5 +311,8 @@ private fun GraduationLanguage.translator(english: Boolean): (String) -> String 
 } else {
     { it }
 }
+
+/** Bachelor's degrees share one university rule; graduate degrees are summarised separately. */
+private fun GraduationLanguage.summaryFor(degree: Degree): LocalizedText = general.graduate?.summary?.takeIf { degree != Degree.BACHELOR } ?: general.summary
 
 internal fun LocalizedText.pick(english: Boolean): String = if (english) en else zh
