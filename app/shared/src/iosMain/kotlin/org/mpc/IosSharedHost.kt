@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.uikit.OnFocusBehavior
 import androidx.compose.ui.window.ComposeUIViewController
@@ -41,6 +42,8 @@ import org.mpc.domain.session.SitePath
 import org.mpc.domain.session.browserEntry
 import org.mpc.presentation.CourseCatalogViewBinding
 import org.mpc.presentation.CoursePlanningTimetableViewBinding
+import org.mpc.presentation.GraduationLanguageActions
+import org.mpc.presentation.GraduationLanguageScreen
 import org.mpc.presentation.PortalWebScreen
 import org.mpc.presentation.SettingsScreen
 import org.mpc.presentation.model.EeclassBulletinPage
@@ -53,6 +56,7 @@ import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.viewModel.AppSettingsViewModel
 import org.mpc.presentation.viewModel.BackendEndpointViewModel
+import org.mpc.presentation.viewModel.GraduationLanguageViewModel
 import org.mpc.presentation.views.courseFilters.CourseSlotPicker
 import platform.UIKit.UIViewController
 
@@ -145,6 +149,26 @@ class IosSharedHost internal constructor(
                     onPortalAuthenticationModeSelected = settingsViewModel::setPortalAuthenticationMode,
                     backendEndpoint = backendEndpoint,
                     onUseCourseSource = backendEndpointViewModel::useSource,
+                )
+            }
+        }
+    }
+
+    fun graduationLanguageScreenController(): UIViewController = ComposeUIViewController {
+        ProvideAppDependencies(appGraph) {
+            ThemedContent {
+                val viewModel: GraduationLanguageViewModel = metroViewModel()
+                val state by viewModel.uiState.collectAsStateWithLifecycle()
+                GraduationLanguageScreen(
+                    state = state,
+                    actions = remember(viewModel) {
+                        GraduationLanguageActions(
+                            onSelectDegree = viewModel::selectDegree,
+                            onSelectCollege = viewModel::selectCollege,
+                            onSelectCohort = viewModel::selectCohort,
+                            onRetry = viewModel::refresh,
+                        )
+                    },
                 )
             }
         }

@@ -1,0 +1,19 @@
+package org.mpc.data.dataSource
+
+import dev.zacsweers.metro.Inject
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.plugins.expectSuccess
+import io.ktor.client.request.get
+import org.mpc.domain.model.GraduationLanguage
+
+/** Reads the international-student endpoints of a Magic Pinecone backend. */
+@Inject
+internal class IntlDataSource(
+    private val httpClient: HttpClient,
+) {
+    suspend fun getGraduationLanguage(baseUrl: String): GraduationLanguage = httpClient
+        .get("$baseUrl/api/v1/intl/graduation-language") {
+            expectSuccess = true
+        }.body<GraduationLanguage>()
+}

@@ -9,7 +9,7 @@ App（`app/`）會一次下載整個學期的課程目錄，存進裝置上的 R
 | `GET /catalog` | 後端目前持有的學期、同步時間、課程數 | （尚未使用，供除錯與之後的學期選擇） |
 | `GET /catalog/{semester}/courses` | 整個學期的課程 | `BackendCourseDataSource.getAllCourses` |
 | `GET /catalog/{semester}/courses/{serial_no}/detail` | 單一課程大綱 | `BackendCourseDataSource.getCourseDetails` |
-| `GET /intl/graduation-language` | 畢業語言門檻（外籍生服務） | （尚未接上） |
+| `GET /intl/graduation-language` | 畢業語言門檻（外籍生服務） | `IntlDataSource.getGraduationLanguage` |
 | `GET /intl/programs` | 招收外國學位生的系所與授課語言 | （尚未接上） |
 
 `{semester}` 的格式是 `<學年>-<學期>`，例如 `115-1`。
@@ -206,4 +206,4 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 兩邊必須一起改，並且各有一個測試釘住合約：
 
 - 後端：`backend/tests/test_catalog.py` 的 `test_catalog_matches_app_contract`、`backend/tests/test_intl.py` 的 `test_graduation_language_matches_app_contract` 與 `test_programs_match_app_contract`。
-- App：`app/shared/src/commonTest/kotlin/org/mpc/data/dataSource/BackendCourseDataSourceTest.kt`。
+- App：`app/shared/src/commonTest/kotlin/org/mpc/data/dataSource/BackendCourseDataSourceTest.kt` 與同資料夾的 `IntlDataSourceTest.kt`。

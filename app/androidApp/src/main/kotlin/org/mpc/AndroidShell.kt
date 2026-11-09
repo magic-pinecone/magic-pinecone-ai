@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -81,6 +82,7 @@ import org.mpc.navigation.EeclassBulletinRoute
 import org.mpc.navigation.EeclassCategoryRoute
 import org.mpc.navigation.EeclassCourseRoute
 import org.mpc.navigation.HomeRoot
+import org.mpc.navigation.InternationalRoot
 import org.mpc.navigation.PortalRoot
 import org.mpc.navigation.PortalWebRoute
 import org.mpc.navigation.SettingsRoute
@@ -93,6 +95,8 @@ import org.mpc.presentation.EeclassBulletinScreen
 import org.mpc.presentation.EeclassCategoryScreen
 import org.mpc.presentation.EeclassCourseScreen
 import org.mpc.presentation.EeclassHomeScreen
+import org.mpc.presentation.GraduationLanguageActions
+import org.mpc.presentation.GraduationLanguageScreen
 import org.mpc.presentation.PortalScreen
 import org.mpc.presentation.PortalWebScreen
 import org.mpc.presentation.SettingsScreen
@@ -101,6 +105,7 @@ import org.mpc.presentation.theme.AndroidMpcTheme
 import org.mpc.presentation.viewModel.AppSettingsViewModel
 import org.mpc.presentation.viewModel.BackendEndpointViewModel
 import org.mpc.presentation.viewModel.CoursePlanViewModel
+import org.mpc.presentation.viewModel.GraduationLanguageViewModel
 
 @Composable
 fun AndroidAppShell(appGraph: AppGraph) {
@@ -256,6 +261,22 @@ private fun AndroidPrimaryNavigation(
                             ),
                         )
                     },
+                )
+            }
+            entry<InternationalRoot> {
+                val viewModel: GraduationLanguageViewModel = metroViewModel()
+                val state by viewModel.uiState.collectAsStateWithLifecycle()
+                GraduationLanguageScreen(
+                    state = state,
+                    actions = remember(viewModel) {
+                        GraduationLanguageActions(
+                            onSelectDegree = viewModel::selectDegree,
+                            onSelectCollege = viewModel::selectCollege,
+                            onSelectCohort = viewModel::selectCohort,
+                            onRetry = viewModel::refresh,
+                        )
+                    },
+                    modifier = Modifier.fillMaxSize(),
                 )
             }
             entry<PortalWebRoute> { route ->
@@ -541,6 +562,7 @@ private data class PrimaryTopBarState(
                 selectedTopLevelRoute == CoursePlanningRoot -> selectedCoursePlanningView.title
                 selectedTopLevelRoute == HomeRoot -> "首頁"
                 selectedTopLevelRoute == PortalRoot -> "Portal"
+                selectedTopLevelRoute == InternationalRoot -> "International"
                 else -> "Magic Pinecone"
             }
 
@@ -617,4 +639,5 @@ private val topLevelNavigationItems =
         TopLevelNavigationItem(HomeRoot, "首頁", Icons.Default.Home),
         TopLevelNavigationItem(CoursePlanningRoot, "選課", Icons.Default.DateRange),
         TopLevelNavigationItem(PortalRoot, "Portal", Icons.Default.AccountCircle),
+        TopLevelNavigationItem(InternationalRoot, "Intl", Icons.Default.Language),
     )
