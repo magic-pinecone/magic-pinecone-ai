@@ -11,3 +11,9 @@ __pycache__/
 .venv/
 .pytest_cache/
 .ruff_cache/
+
+# Celery beat schedule written by the beat container through the bind mount
+celerybeat-schedule*
+
+# Agent worktrees
+.claude/worktrees/
