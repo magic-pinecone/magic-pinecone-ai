@@ -19,8 +19,8 @@ import org.mpc.domain.session.CampusSessions
 import org.mpc.domain.session.CampusSites
 import org.mpc.domain.session.EECLASS_DASHBOARD
 import org.mpc.domain.session.SitePath
+import org.mpc.domain.session.SiteRequest
 import org.mpc.domain.session.SiteResult
-import org.mpc.domain.session.Unavailability
 import org.mpc.domain.session.eeclassBulletinDetail
 import org.mpc.domain.session.eeclassBulletinDialogLink
 import org.mpc.domain.session.eeclassBulletins
@@ -50,12 +50,11 @@ internal class DefaultEeclassCourseRepository(
     override suspend fun fetchBulletin(course: EeclassCourseNumber, bulletin: EeclassBulletinNumber): SiteResult<EeclassBulletinDetail> {
         val site = CampusSites.Eeclass
         val list = eeclassBulletinsPath(course)
-        return campusSessions.fetchFollowing(
-            site = site,
-            path = list,
-            pick = { html -> eeclassBulletinDialogLink(parser.parse(html, site.url(list)), bulletin) },
-            parse = { html -> eeclassBulletinDetail(parser.parse(html, site.baseUrl + BULLETIN_DIALOG)) },
-        ).then { detail -> detail?.let { SiteResult.Page(it) } ?: SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE) }
+        return campusSessions.fetchThen(site, list) { html ->
+            eeclassBulletinDialogLink(parser.parse(html, site.url(list)), bulletin)?.let { link ->
+                eeclassBulletinDetail(parser.parse(send(SiteRequest.Get(link)), site.baseUrl + BULLETIN_DIALOG))
+            }
+        }
     }
 
     override suspend fun fetchHomeworkAcrossCourses(): SiteResult<AcrossCourses<EeclassHomework>> = acrossCourses(::eeclassHomeworkPath, ::eeclassHomework)

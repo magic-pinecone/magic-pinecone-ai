@@ -23,10 +23,15 @@ import org.mpc.domain.session.PortalPage
 import org.mpc.domain.session.PortalSignIn
 import org.mpc.domain.session.PortalStatus
 import org.mpc.domain.session.Renewal
+import org.mpc.domain.session.SiteFile
+import org.mpc.domain.session.SiteFollowUp
 import org.mpc.domain.session.SitePath
+import org.mpc.domain.session.SiteRequest
+import org.mpc.domain.session.SiteResponse
 import org.mpc.domain.session.SiteResult
 import org.mpc.domain.session.SiteStatus
 import org.mpc.domain.session.SiteVerdict
+import org.mpc.domain.session.TransferProgress
 import org.mpc.domain.session.Unavailability
 import org.mpc.domain.session.isPortalUrl
 import org.mpc.domain.session.parseHttpsUrl
@@ -72,20 +77,28 @@ private class SiteSession(
     private val lock = Mutex()
     val status = MutableStateFlow<SiteStatus>(SiteStatus.Unknown)
 
-    suspend fun <T> fetch(path: SitePath, parse: (String) -> T): SiteResult<T> = lock.withLock {
-        when (val loaded = load(path)) {
-            is Loaded.Page -> SiteResult.Page(parse(loaded.html))
+    suspend fun <R, T> fetch(request: SiteRequest<R>, read: (R) -> T): SiteResult<T> = lock.withLock {
+        when (val loaded = load(request)) {
+            is Loaded.Page -> request.reply(loaded.response)?.let { SiteResult.Page(read(it)) }
+                ?: SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE)
+
             is Loaded.Stopped -> loaded.result
         }
     }
 
-    suspend fun <T> fetchFollowing(path: SitePath, pick: (String) -> String?, parse: (String) -> T): SiteResult<T> = lock.withLock {
-        when (val loaded = load(path)) {
+    suspend fun <T> fetchThen(path: SitePath, then: suspend SiteFollowUp.(String) -> T?): SiteResult<T> = lock.withLock {
+        when (val loaded = load(SiteRequest.Get(site.url(path)))) {
             is Loaded.Stopped -> loaded.result
 
-            is Loaded.Page -> when (val url = pick(loaded.html)?.let { followableUrl(site, it) }) {
-                null -> SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE)
-                else -> follow(url, parse)
+            is Loaded.Page -> {
+                val followUp = FollowUp()
+                try {
+                    followUp.then(loaded.response.html)?.let { SiteResult.Page(it) } ?: SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE)
+                } catch (stopped: FollowUpStopped) {
+                    stopped.result
+                } finally {
+                    followUp.open = false
+                }
             }
         }
     }
@@ -127,15 +140,14 @@ private class SiteSession(
         }
     }
 
-    /** Loads [path], recovering the session as [CampusSessions.fetch] describes, and records the status. Holds the lock. */
-    private suspend fun load(path: SitePath): Loaded {
+    private suspend fun load(request: SiteRequest<*>): Loaded {
         portalState.load()
         var attempt = Attempt(portalState.automaticSignIn(mode(), now()))
         var step: Step = Step.FetchPage
-        var html = ""
+        var response: SiteResponse? = null
         while (step !is Step.Finish) {
             val observation = when (step) {
-                Step.FetchPage -> observePage(transport, parser, site, path).also { html = it.html }.observation
+                Step.FetchPage -> observePage(transport, parser, site, request).also { response = it.response }.observation
 
                 Step.Handoff -> observeHandoff(transport, portalState, site)
 
@@ -149,7 +161,7 @@ private class SiteSession(
             step = nextStep
         }
         return when (val outcome = step.outcome) {
-            FetchOutcome.Page -> Loaded.Page(html).also { status.value = SiteStatus.SignedIn }
+            FetchOutcome.Page -> Loaded.Page(requireNotNull(response)).also { status.value = SiteStatus.SignedIn }
 
             is FetchOutcome.NeedsPortal -> Loaded.Stopped(SiteResult.NeedsPortal(outcome.need)).also {
                 status.value = SiteStatus.SignedOut(renewal())
@@ -161,20 +173,43 @@ private class SiteSession(
         }
     }
 
-    /** Loads a link picked from a page just loaded. It is not recovered: a signed-out answer makes the next fetch hand off. */
-    private suspend fun <T> follow(url: String, parse: (String) -> T): SiteResult<T> = when (val result = transport.get(url)) {
-        is TransportResult.Failed -> SiteResult.Unavailable(result.reason)
+    private inner class FollowUp : SiteFollowUp {
+        var open = true
 
-        is TransportResult.Response -> when {
-            site.signals.classify(result.response, parser) == SiteVerdict.SIGNED_OUT -> {
-                status.value = SiteStatus.SignedOut(renewal())
-                SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE)
+        override suspend fun <R> send(request: SiteRequest<R>): R {
+            check(open) { "A follow-up ends with its fetchThen call" }
+            return when (val reply = sendOnce(request)) {
+                is SiteResult.Page -> reply.value
+                is SiteResult.NeedsPortal -> throw FollowUpStopped(reply)
+                is SiteResult.Unavailable -> throw FollowUpStopped(reply)
             }
-
-            result.response.status == HTTP_STATUS_OK -> SiteResult.Page(parse(result.response.html))
-
-            else -> SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE)
         }
+    }
+
+    private suspend fun <R> sendOnce(request: SiteRequest<R>): SiteResult<R> {
+        val onSite = onSite(request) ?: return SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE)
+        return when (val result = transport.send(onSite)) {
+            is TransportResult.Failed -> SiteResult.Unavailable(result.reason)
+
+            is TransportResult.Response -> when {
+                site.signals.classify(result.response, parser) == SiteVerdict.SIGNED_OUT -> {
+                    status.value = SiteStatus.SignedOut(renewal())
+                    SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE)
+                }
+
+                result.response.status == HTTP_STATUS_OK -> onSite.reply(result.response)?.let { SiteResult.Page(it) }
+                    ?: SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE)
+
+                else -> SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE)
+            }
+        }
+    }
+
+    private fun <R> onSite(request: SiteRequest<R>): SiteRequest<R>? {
+        val link = request.link
+        val absolute = if (link.startsWith("/") && !link.startsWith("//")) site.baseUrl + link else link
+        val url = parseHttpsUrl(absolute)?.takeIf { it.host.equals(site.host, ignoreCase = true) } ?: return null
+        return request.withLink(url.toString())
     }
 
     private suspend fun renewal(): Renewal = portalState.renewal(mode(), now())
@@ -200,7 +235,7 @@ internal class DefaultCampusSessions(
 
     override val portal: StateFlow<PortalStatus> get() = portalState.status
 
-    override fun status(site: CampusSite): StateFlow<SiteStatus> = session(site).status
+    override fun status(site: CampusSite): StateFlow<SiteStatus> = site.session.status
 
     override suspend fun refreshPortal() {
         portalState.load()
@@ -216,28 +251,25 @@ internal class DefaultCampusSessions(
         }
     }
 
-    override suspend fun <T> fetch(site: CampusSite, path: SitePath, parse: (String) -> T): SiteResult<T> = session(site).fetch(path, parse)
+    override suspend fun <T> fetch(site: CampusSite, path: SitePath, parse: (String) -> T): SiteResult<T> = site.session.fetch(SiteRequest.Get(site.url(path)), parse)
 
-    override suspend fun <T> fetchFollowing(
-        site: CampusSite,
-        path: SitePath,
-        pick: (String) -> String?,
-        parse: (String) -> T,
-    ): SiteResult<T> = session(site).fetchFollowing(path, pick, parse)
+    override suspend fun fetchFile(site: CampusSite, path: SitePath, onProgress: TransferProgress?): SiteResult<SiteFile> = site.session.fetch(SiteRequest.Download(site.url(path), onProgress = onProgress)) { it }
 
-    override suspend fun refresh(site: CampusSite) = session(site).refresh()
+    override suspend fun <T> fetchThen(site: CampusSite, path: SitePath, then: suspend SiteFollowUp.(String) -> T?): SiteResult<T> = site.session.fetchThen(path, then)
+
+    override suspend fun refresh(site: CampusSite) = site.session.refresh()
 
     override fun browserEntry(url: String): String? {
         val host = parseHttpsUrl(url)?.host ?: return null
         val site = sites.firstOrNull { it.host.equals(host, ignoreCase = true) } ?: return null
-        return session(site).browserEntry(url)
+        return site.session.browserEntry(url)
     }
 
     override suspend fun browserPage(url: String, loading: Boolean) {
         val site = CampusSites.forUrl(url)?.takeIf { it in sites }
         val portalUrl = parseHttpsUrl(url)?.takeIf(::isPortalUrl)
         when {
-            site != null && loading -> session(site).markChecking()
+            site != null && loading -> site.session.markChecking()
 
             site != null -> refresh(site)
 
@@ -259,39 +291,35 @@ internal class DefaultCampusSessions(
         return PortalSignIn.OpenBrowser("$PORTAL_BASE_URL/login")
     }
 
-    override suspend fun signOut(site: CampusSite) = session(site).signOut()
+    override suspend fun signOut(site: CampusSite) = site.session.signOut()
 
     override suspend fun signOutEverywhere() {
         // Block first: if the app stops partway, it still cannot sign back in by itself.
         portalState.block(PortalBlock.USER_SIGNED_OUT)
         transport.clearCookies(PORTAL_BASE_URL, keep = setOf(PORTAL_BROWSER_COOKIE))
-        sites.forEach { site -> session(site).signOut(Renewal.PORTAL_SIGN_IN_BY_USER) }
+        sites.forEach { site -> site.session.signOut(Renewal.PORTAL_SIGN_IN_BY_USER) }
     }
 
-    private fun session(site: CampusSite): SiteSession = requireNotNull(sessions[site.id]) { "Unknown campus site" }
+    private val CampusSite.session: SiteSession get() = requireNotNull(sessions[id]) { "Unknown campus site" }
 }
 
+// Not an Exception, so a catch-all in the caller's block does not swallow the stop.
+private class FollowUpStopped(val result: SiteResult<Nothing>) : Throwable()
+
 private sealed interface Loaded {
-    class Page(val html: String) : Loaded
+    class Page(val response: SiteResponse) : Loaded
 
     class Stopped(val result: SiteResult<Nothing>) : Loaded
 }
 
-/** [link] as an absolute URL when it is https on [site]'s host. A link picked from a page goes nowhere else. */
-private fun followableUrl(site: CampusSite, link: String): String? {
-    val absolute = if (link.startsWith("/") && !link.startsWith("//")) site.baseUrl + link else link
-    val url = parseHttpsUrl(absolute) ?: return null
-    return url.toString().takeIf { url.host.equals(site.host, ignoreCase = true) }
-}
+private class PageObservation(val observation: Observation, val response: SiteResponse? = null)
 
-private class PageObservation(val observation: Observation, val html: String = "")
-
-private suspend fun observePage(transport: SessionTransport, parser: HtmlParser, site: CampusSite, path: SitePath): PageObservation = when (val result = transport.get(site.url(path))) {
+private suspend fun observePage(transport: SessionTransport, parser: HtmlParser, site: CampusSite, request: SiteRequest<*>): PageObservation = when (val result = transport.send(request)) {
     is TransportResult.Failed -> PageObservation(Observation.Failed(result.reason))
 
     is TransportResult.Response -> when {
         site.signals.classify(result.response, parser) == SiteVerdict.SIGNED_OUT -> PageObservation(Observation.SiteSignedOut)
-        result.response.status == HTTP_STATUS_OK -> PageObservation(Observation.PageOk, result.response.html)
+        result.response.status == HTTP_STATUS_OK -> PageObservation(Observation.PageOk, result.response)
         else -> PageObservation(Observation.Failed(Unavailability.UNEXPECTED_RESPONSE))
     }
 }

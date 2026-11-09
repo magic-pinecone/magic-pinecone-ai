@@ -13,7 +13,10 @@ import org.mpc.domain.session.PortalNeed
 import org.mpc.domain.session.PortalSignIn
 import org.mpc.domain.session.PortalStatus
 import org.mpc.domain.session.Renewal
+import org.mpc.domain.session.SiteFile
+import org.mpc.domain.session.SiteFollowUp
 import org.mpc.domain.session.SitePath
+import org.mpc.domain.session.SiteRequest
 import org.mpc.domain.session.SiteResponse
 import org.mpc.domain.session.SiteResult
 import org.mpc.domain.session.SiteSignals
@@ -21,6 +24,7 @@ import org.mpc.domain.session.SiteStatus
 import org.mpc.domain.session.SiteVerdict
 import org.mpc.domain.session.Unavailability
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.fail
 
 private val SIGNED_IN_DASHBOARD = SiteResponse(
@@ -65,8 +69,8 @@ private class ScriptedTransport(
     val events = mutableListOf<String>()
     private var requests = 0
 
-    override suspend fun get(url: String): TransportResult {
-        events += "get $url"
+    override suspend fun send(request: SiteRequest<*>): TransportResult {
+        events += describe(request)
         if (++requests >= gatedFromRequest) gate.await()
         return pages.removeFirst()
     }
@@ -84,6 +88,13 @@ private class ScriptedTransport(
     override suspend fun clearCookies(url: String, keep: Set<String>) {
         events += "clear $url keep=$keep"
     }
+}
+
+private fun describe(request: SiteRequest<*>): String = when (request) {
+    is SiteRequest.Get -> "get ${request.link}"
+    is SiteRequest.Download -> "download ${request.link}"
+    is SiteRequest.Form -> "post ${request.link} form ${request.fields}"
+    is SiteRequest.Multipart -> "post ${request.link} multipart ${request.fields} files ${request.files.map { (field, file) -> "$field=${file.name}" }}"
 }
 
 private fun sessions(
@@ -241,7 +252,7 @@ val defaultCampusSessionsTests by testSuite {
         }
     }
 
-    test("following loads the picked same-site link from the recovered page once") {
+    test("a follow-up loads the link picked from the recovered page once") {
         runTest {
             val list = SiteResponse(status = 200, location = null, html = "list")
             val detail = SiteResponse(status = 200, location = null, html = "detail")
@@ -250,12 +261,9 @@ val defaultCampusSessionsTests by testSuite {
                 handoffs = ArrayDeque(listOf(HandoffResult.Done)),
             )
 
-            val result = sessions(transport).fetchFollowing(
-                site = TEST_SITE,
-                path = TIMETABLE,
-                pick = { html -> "/content/?id=1&ajaxAuth=token".takeIf { html == "list" } },
-                parse = { html -> html },
-            )
+            val result = sessions(transport).fetchThen(TEST_SITE, TIMETABLE) { html ->
+                if (html == "list") send(SiteRequest.Get("/content/?id=1&ajaxAuth=token")) else null
+            }
 
             assertEquals(SiteResult.Page("detail"), result)
             assertEquals(
@@ -270,7 +278,102 @@ val defaultCampusSessionsTests by testSuite {
         }
     }
 
-    test("following refuses links off the site or without https, and a missing link") {
+    test("a form POST carries a token read from the page a follow-up loaded") {
+        runTest {
+            val report = SiteResponse(status = 200, location = null, html = "/homework/editReport/?id=1&ajaxAuth=token")
+            val editor = SiteResponse(status = 200, location = null, html = "anticsrf=abc")
+            val saved = SiteResponse(status = 200, location = null, html = """{"ret":{"status":"true"}}""")
+            val transport = ScriptedTransport(pages = ArrayDeque(listOf(page(report), page(editor), page(saved))))
+
+            val result = sessions(transport).fetchThen(TEST_SITE, TIMETABLE) { editorLink ->
+                val anticsrf = send(SiteRequest.Get(editorLink)).substringAfter('=')
+                send(SiteRequest.Form(editorLink, listOf("action" to "temp", "anticsrf" to anticsrf)))
+            }
+
+            assertEquals(SiteResult.Page(saved.html), result)
+            assertEquals(
+                listOf(
+                    "get https://ncueeclass.ncu.edu.tw/dashboard/myTimeTable",
+                    "get https://ncueeclass.ncu.edu.tw/homework/editReport/?id=1&ajaxAuth=token",
+                    "post https://ncueeclass.ncu.edu.tw/homework/editReport/?id=1&ajaxAuth=token form [(action, temp), (anticsrf, abc)]",
+                ),
+                transport.events,
+            )
+        }
+    }
+
+    test("a multipart POST sends its fields and files to the site") {
+        runTest {
+            val uploaded = SiteResponse(status = 200, location = null, html = """{"status":true}""")
+            val transport = ScriptedTransport(pages = ArrayDeque(listOf(page(SIGNED_IN_DASHBOARD), page(uploaded))))
+            val file = SiteFile("報告.pdf", "application/pdf", byteArrayOf(1, 2, 3))
+
+            val result = sessions(transport).fetchThen(TEST_SITE, TIMETABLE) {
+                send(SiteRequest.Multipart("/ajax/upload/?ajaxAuth=token", listOf("anticsrf" to "abc"), listOf("files[]" to file)))
+            }
+
+            assertEquals(SiteResult.Page(uploaded.html), result)
+            assertEquals(
+                "post https://ncueeclass.ncu.edu.tw/ajax/upload/?ajaxAuth=token multipart [(anticsrf, abc)] files [files[]=報告.pdf]",
+                transport.events.last(),
+            )
+        }
+    }
+
+    test("a failed POST ends the call without sending it again or sending the rest") {
+        runTest {
+            val transport = ScriptedTransport(
+                pages = ArrayDeque(listOf(page(SIGNED_IN_DASHBOARD), TransportResult.Failed(Unavailability.UNEXPECTED_RESPONSE))),
+            )
+            val sessions = sessions(transport)
+
+            val result = sessions.fetchThen(TEST_SITE, TIMETABLE) {
+                send(SiteRequest.Form("/save/", listOf("a" to "1")))
+                send(SiteRequest.Get("/after/"))
+            }
+
+            assertEquals(SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE), result)
+            assertEquals(
+                listOf("get https://ncueeclass.ncu.edu.tw/dashboard/myTimeTable", "post https://ncueeclass.ncu.edu.tw/save/ form [(a, 1)]"),
+                transport.events,
+            )
+            assertEquals(SiteStatus.SignedIn, sessions.status(TEST_SITE).value)
+        }
+    }
+
+    test("a download recovers the session and returns the named file") {
+        runTest {
+            val file = SiteFile("講義.pdf", "application/pdf", byteArrayOf(9))
+            val transport = ScriptedTransport(
+                pages = ArrayDeque(listOf(page(SIGNED_OUT_REDIRECT), page(SiteResponse(200, null, "", file)))),
+                handoffs = ArrayDeque(listOf(HandoffResult.Done)),
+            )
+
+            val result = sessions(transport).fetchFile(TEST_SITE, SitePath.of("/filedownload/5"))
+
+            assertEquals("講義.pdf", (result as SiteResult.Page).value.name)
+            assertEquals(
+                listOf(
+                    "download https://ncueeclass.ncu.edu.tw/filedownload/5",
+                    "handoff test",
+                    "download https://ncueeclass.ncu.edu.tw/filedownload/5",
+                ),
+                transport.events,
+            )
+        }
+    }
+
+    test("a download answered with a page instead of a file is unavailable") {
+        runTest {
+            val transport = ScriptedTransport(pages = ArrayDeque(listOf(page(SiteResponse(200, null, "<html>error</html>")))))
+
+            val result = sessions(transport).fetchFile(TEST_SITE, SitePath.of("/filedownload/5"))
+
+            assertEquals(SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE), result)
+        }
+    }
+
+    test("a follow-up refuses links off the site or without https, and a page without the link") {
         runTest {
             val refused = listOf(
                 "https://evil.example/content/?ajaxAuth=token",
@@ -282,7 +385,9 @@ val defaultCampusSessionsTests by testSuite {
             refused.forEach { link ->
                 val transport = ScriptedTransport(pages = ArrayDeque(listOf(page(SIGNED_IN_DASHBOARD))))
 
-                val result = sessions(transport).fetchFollowing(TEST_SITE, TIMETABLE, pick = { link }, parse = { it })
+                val result = sessions(transport).fetchThen(TEST_SITE, TIMETABLE) {
+                    link?.let { refusedLink -> send(SiteRequest.Form(refusedLink, listOf("anticsrf" to "abc"))) }
+                }
 
                 assertEquals(SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE), result, "link $link")
                 assertEquals(listOf("get https://ncueeclass.ncu.edu.tw/dashboard/myTimeTable"), transport.events, "link $link")
@@ -290,16 +395,28 @@ val defaultCampusSessionsTests by testSuite {
         }
     }
 
-    test("a followed link that answers signed out marks the site signed out without recovering") {
+    test("a follow-up that answers signed out marks the site signed out without recovering") {
         runTest {
             val transport = ScriptedTransport(pages = ArrayDeque(listOf(page(SIGNED_IN_DASHBOARD), page(SIGNED_OUT_REDIRECT))))
             val sessions = sessions(transport)
 
-            val result = sessions.fetchFollowing(TEST_SITE, TIMETABLE, pick = { "/content/" }, parse = { it })
+            val result = sessions.fetchThen(TEST_SITE, TIMETABLE) { send(SiteRequest.Get("/content/")) }
 
             assertEquals(SiteResult.Unavailable(Unavailability.UNEXPECTED_RESPONSE), result)
             assertEquals(0, transport.events.count { it.startsWith("handoff") })
             assertEquals(SiteStatus.SignedOut(Renewal.PORTAL_SIGN_IN_BY_USER), sessions.status(TEST_SITE).value)
+        }
+    }
+
+    test("a follow-up kept past its call cannot send") {
+        runTest {
+            val transport = ScriptedTransport(pages = ArrayDeque(listOf(page(SIGNED_IN_DASHBOARD))))
+            var kept: SiteFollowUp? = null
+
+            sessions(transport).fetchThen(TEST_SITE, TIMETABLE) { kept = this }
+
+            assertFailsWith<IllegalStateException> { kept?.send(SiteRequest.Get("/content/?ajaxAuth=token")) }
+            assertEquals(listOf("get https://ncueeclass.ncu.edu.tw/dashboard/myTimeTable"), transport.events)
         }
     }
 

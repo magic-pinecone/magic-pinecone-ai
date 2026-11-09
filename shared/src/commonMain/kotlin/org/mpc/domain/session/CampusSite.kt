@@ -9,26 +9,128 @@ const val PORTAL_BASE_URL = "https://$PORTAL_HOST"
 internal const val HTTPS_DEFAULT_PORT = 443
 private const val CAMPUS_DOMAIN = "ncu.edu.tw"
 
-/** A path on a campus site: starts with "/", plain segments only, no query string (a query could carry a token). */
+/**
+ * A path on a campus site: starts with "/", plain segments only, and an optional query such as `?page=2&pageSize=20`.
+ * Query keys come from a short list of paging and filter keys, so a path never carries a token and is safe to keep.
+ */
 @JvmInline
 value class SitePath private constructor(val value: String) {
+    val query: List<Pair<String, String>>
+        get() = value.substringAfter('?', "").takeIf { it.isNotEmpty() }?.split('&')?.map { pair ->
+            pair.substringBefore('=') to pair.substringAfter('=')
+        }.orEmpty()
+
+    fun withQuery(vararg pairs: Pair<String, String>): SitePath {
+        val added = pairs.joinToString("&") { (key, value) -> "$key=$value" }
+        return of(value + (if (query.isEmpty()) "?" else "&") + added)
+    }
+
     companion object {
-        fun parse(raw: String): SitePath? = raw.takeIf { path ->
-            path.startsWith("/") && path.drop(1).split('/').all { segment -> segment.matches(PATH_SEGMENT) }
-        }?.let(::SitePath)
+        fun parse(raw: String): SitePath? {
+            val path = raw.substringBefore('?')
+            val validPath = path.startsWith("/") && path.drop(1).split('/').all { segment -> segment.matches(PATH_SEGMENT) }
+            val validQuery = '?' !in raw || raw.substringAfter('?').split('&').all(::isPlainPair)
+            return if (validPath && validQuery) SitePath(raw) else null
+        }
 
         fun of(literal: String): SitePath = requireNotNull(parse(literal)) { "Invalid site path" }
     }
 }
 
 private val PATH_SEGMENT = Regex("[A-Za-z0-9_-]+")
+private val QUERY_VALUE = Regex("[A-Za-z0-9_.~-]*")
 
-/** What a campus site answered: status, raw `Location`, and body. No headers, so classifiers never see cookies. */
+private val TOKEN_FREE_QUERY_KEYS = setOf("page", "pageSize", "size", "category", "condition")
+
+private fun isPlainPair(pair: String): Boolean = '=' in pair && pair.substringBefore('=') in TOKEN_FREE_QUERY_KEYS && pair.substringAfter('=').matches(QUERY_VALUE)
+
+/**
+ * What a campus site answered: status, raw `Location`, and body. No other headers, so classifiers never see cookies.
+ * A [SiteRequest.Download] that is not HTML arrives as [file] with [html] empty, so no classifier parses its bytes.
+ */
 class SiteResponse(
     val status: Int,
     val location: String?,
     val html: String,
+    val file: SiteFile? = null,
 )
+
+/** A file's bytes, named from its `Content-Disposition` and typed from its `Content-Type`; null when the site sent none. */
+class SiteFile(
+    val name: String?,
+    val contentType: String?,
+    val bytes: ByteArray,
+)
+
+/** The request headers a caller may set. The session sets cookies and the body's type itself. */
+enum class SiteHeader(val wireName: String) {
+    ACCEPT("Accept"),
+    REFERER("Referer"),
+    X_REQUESTED_WITH("X-Requested-With"),
+}
+
+/** Bytes moved so far and the total when the site announced one. */
+typealias TransferProgress = (sent: Long, total: Long?) -> Unit
+
+/**
+ * A request to a campus site, answered with what [R] names. Its [link] may carry tokens, so build it inside
+ * [CampusSessions.fetchThen] and let it go nowhere else.
+ */
+sealed class SiteRequest<out R> {
+    /** An absolute URL or a root-relative path; it must resolve to https on the requested site. */
+    abstract val link: String
+    abstract val headers: Map<SiteHeader, String>
+
+    internal abstract fun reply(response: SiteResponse): R?
+
+    internal abstract fun withLink(url: String): SiteRequest<R>
+
+    final override fun toString(): String = "SiteRequest"
+
+    class Get(
+        override val link: String,
+        override val headers: Map<SiteHeader, String> = emptyMap(),
+    ) : SiteRequest<String>() {
+        override fun reply(response: SiteResponse): String = response.html
+
+        override fun withLink(url: String) = Get(url, headers)
+    }
+
+    /** A POST of [fields] as `application/x-www-form-urlencoded`, in order. */
+    class Form(
+        override val link: String,
+        val fields: List<Pair<String, String>>,
+        override val headers: Map<SiteHeader, String> = emptyMap(),
+    ) : SiteRequest<String>() {
+        override fun reply(response: SiteResponse): String = response.html
+
+        override fun withLink(url: String) = Form(url, fields, headers)
+    }
+
+    /** A `multipart/form-data` POST of [fields], then [files] keyed by form field name. */
+    class Multipart(
+        override val link: String,
+        val fields: List<Pair<String, String>>,
+        val files: List<Pair<String, SiteFile>>,
+        override val headers: Map<SiteHeader, String> = emptyMap(),
+        val onProgress: TransferProgress? = null,
+    ) : SiteRequest<String>() {
+        override fun reply(response: SiteResponse): String = response.html
+
+        override fun withLink(url: String) = Multipart(url, fields, files, headers, onProgress)
+    }
+
+    /** A GET read as bytes. */
+    class Download(
+        override val link: String,
+        override val headers: Map<SiteHeader, String> = emptyMap(),
+        val onProgress: TransferProgress? = null,
+    ) : SiteRequest<SiteFile>() {
+        override fun reply(response: SiteResponse): SiteFile? = response.file
+
+        override fun withLink(url: String) = Download(url, headers, onProgress)
+    }
+}
 
 enum class SiteVerdict {
     SIGNED_IN,

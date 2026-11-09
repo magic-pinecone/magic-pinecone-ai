@@ -50,6 +50,15 @@ sealed interface SiteResult<out T> {
     data class Unavailable(val reason: Unavailability) : SiteResult<Nothing>
 }
 
+/** Sends follow-up requests inside [CampusSessions.fetchThen]. */
+interface SiteFollowUp {
+    /**
+     * Sends [request] once and returns its reply. A failure, a signed-out reply, or a reply [request] cannot read ends
+     * the whole call by throwing past [CampusSessions.fetchThen]'s block, so do not wrap it in `runCatching`.
+     */
+    suspend fun <R> send(request: SiteRequest<R>): R
+}
+
 sealed interface PortalSignIn {
     /** Load this URL in the in-app WebView; the WebView reports the outcome through [CampusSessions.browserPage]. */
     data class OpenBrowser(val url: String) : PortalSignIn
@@ -78,16 +87,17 @@ interface CampusSessions {
      */
     suspend fun <T> fetch(site: CampusSite, path: SitePath, parse: (String) -> T): SiteResult<T>
 
+    /** Downloads [path] on [site] like [fetch]. An HTML page where a file was expected is [SiteResult.Unavailable]. */
+    suspend fun fetchFile(site: CampusSite, path: SitePath, onProgress: TransferProgress? = null): SiteResult<SiteFile>
+
     /**
-     * Loads [path] like [fetch], then loads the link [pick] chooses from its HTML and parses that page. The link must
-     * be https on [site]. It may carry a one-time token, so it is used once inside this call and never returned.
+     * Loads [path] like [fetch], then runs [then] on its HTML. [then] sends follow-up requests built from tokens on
+     * the page, each once and never retried, and returns what the caller needs; null means the page lacked what it
+     * looked for. Requests must go to https on [site]. Tokens, token-bearing links, and replies that carry them stay
+     * inside [then]: return only values parsed from them. Any failed follow-up ends the call, and a signed-out reply
+     * leaves the session for the next fetch to recover.
      */
-    suspend fun <T> fetchFollowing(
-        site: CampusSite,
-        path: SitePath,
-        pick: (String) -> String?,
-        parse: (String) -> T,
-    ): SiteResult<T>
+    suspend fun <T> fetchThen(site: CampusSite, path: SitePath, then: suspend SiteFollowUp.(html: String) -> T?): SiteResult<T>
 
     /** Checks [site]'s session without recovering it. */
     suspend fun refresh(site: CampusSite)

@@ -21,7 +21,7 @@ fun eeclassBulletins(page: HtmlElement): List<EeclassBulletin> = rows(page, "bul
 
 /**
  * The dialog link for [bulletin] on a course's announcement list, or null when the list no longer shows it. The link
- * carries a one-time token: hand it straight to [CampusSessions.fetchFollowing] and never keep it.
+ * carries a one-time token: send it from [CampusSessions.fetchThen] and never keep it.
  */
 fun eeclassBulletinDialogLink(page: HtmlElement, bulletin: EeclassBulletinNumber): String? = page.select("#bulletinMgrTable a.fs-bulletin-item")
     .firstOrNull { dialogBulletinNumber(it) == bulletin }

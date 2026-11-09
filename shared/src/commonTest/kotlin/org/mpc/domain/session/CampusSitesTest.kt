@@ -2,6 +2,7 @@ package org.mpc.domain.session
 
 import de.infix.testBalloon.framework.core.testSuite
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -37,10 +38,41 @@ val campusSitesTests by testSuite {
         assertNull(CampusSites.forUrl("https://portal.ncu.edu.tw/"))
     }
 
-    test("site paths reject queries and unusual segments") {
+    test("site paths reject unusual segments") {
         assertEquals("/dashboard/myTimeTable", SitePath.parse("/dashboard/myTimeTable")?.value)
-        assertNull(SitePath.parse("/dashboard?token=1"))
+        assertEquals(emptyList(), SitePath.of("/dashboard/myTimeTable").query)
         assertNull(SitePath.parse("dashboard"))
         assertNull(SitePath.parse("/../admin"))
+        assertNull(SitePath.parse("/dashboard/"))
+    }
+
+    test("a request prints no link or field") {
+        val request = SiteRequest.Form("/save/?ajaxAuth=secret", listOf("anticsrf" to "secret"))
+
+        assertEquals("SiteRequest", request.toString())
+    }
+
+    test("paging queries round-trip in order") {
+        val bulletins = SitePath.of("/dashboard/latestBulletin").withQuery("category" to "all", "condition" to "0", "page" to "2", "pageSize" to "20")
+
+        assertEquals("/dashboard/latestBulletin?category=all&condition=0&page=2&pageSize=20", bulletins.value)
+        assertEquals(listOf("category" to "all", "condition" to "0", "page" to "2", "pageSize" to "20"), bulletins.query)
+        assertEquals(bulletins, SitePath.parse(bulletins.value))
+        assertEquals("/dashboard/latestMaterial?page=3&size=20", SitePath.of("/dashboard/latestMaterial?page=3").withQuery("size" to "20").value)
+    }
+
+    test("site paths refuse token keys, unknown keys, and malformed queries") {
+        listOf(
+            "/bulletin/content?id=1&ajaxAuth=0123456789abcdef",
+            "/media/download/1?auth=abc",
+            "/homework/editReport?anticsrf=abc",
+            "/dashboard?token=1",
+            "/dashboard?page=2&",
+            "/dashboard?page",
+            "/dashboard?page=2=3",
+            "/dashboard?page=%32",
+            "/dashboard?",
+        ).forEach { raw -> assertNull(SitePath.parse(raw), raw) }
+        assertFailsWith<IllegalArgumentException> { SitePath.of("/course/homework/1").withQuery("ajaxAuth" to "abc") }
     }
 }

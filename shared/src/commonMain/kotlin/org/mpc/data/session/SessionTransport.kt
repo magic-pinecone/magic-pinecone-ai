@@ -2,18 +2,41 @@ package org.mpc.data.session
 
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
+import io.ktor.client.content.ProgressListener
 import io.ktor.client.plugins.HttpTimeout
-import io.ktor.client.request.get
+import io.ktor.client.plugins.onDownload
+import io.ktor.client.plugins.onUpload
+import io.ktor.client.plugins.timeout
+import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.forms.FormDataContent
+import io.ktor.client.request.forms.MultiPartFormDataContent
+import io.ktor.client.request.forms.formData
 import io.ktor.client.request.header
+import io.ktor.client.request.request
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsBytes
 import io.ktor.client.statement.bodyAsText
+import io.ktor.http.ContentDisposition
+import io.ktor.http.ContentType
+import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
 import io.ktor.http.Url
+import io.ktor.http.content.OutgoingContent
+import io.ktor.http.contentType
+import io.ktor.http.decodeURLPart
+import io.ktor.http.parameters
+import io.ktor.http.quote
+import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.mpc.domain.session.CampusSite
 import org.mpc.domain.session.PORTAL_BASE_URL
 import org.mpc.domain.session.PortalPage
+import org.mpc.domain.session.SiteFile
+import org.mpc.domain.session.SiteRequest
 import org.mpc.domain.session.SiteResponse
 import org.mpc.domain.session.Unavailability
 import org.mpc.domain.session.isPortalUrl
@@ -51,7 +74,7 @@ internal sealed interface PortalCheck {
 
 /** HTTP for campus sessions over the shared [PlatformCookieJar]. The only client that carries campus cookies. */
 internal interface SessionTransport {
-    suspend fun get(url: String): TransportResult
+    suspend fun send(request: SiteRequest<*>): TransportResult
 
     /** Reads Portal's home page without following redirects. Checking never signs anyone in or out. */
     suspend fun checkPortal(): PortalCheck
@@ -63,6 +86,8 @@ internal interface SessionTransport {
 }
 
 private const val REQUEST_TIMEOUT_MILLIS = 15_000L
+private const val TRANSFER_TIMEOUT_MILLIS = 300_000L
+private const val TRANSFER_IDLE_TIMEOUT_MILLIS = 60_000L
 private const val CONNECT_TIMEOUT_MILLIS = 10_000L
 private const val MAX_HANDOFF_HOPS = 6
 private val REDIRECT_STATUS_CODES = setOf(301, 302, 303, 307, 308)
@@ -88,13 +113,17 @@ internal class KtorSessionTransport(
     // newer, so such a response is stale: report it unavailable and keep its Set-Cookie lines out of the jar.
     private val requestLock = Mutex()
 
-    override suspend fun get(url: String): TransportResult = requestLock.withLock {
+    override suspend fun send(request: SiteRequest<*>): TransportResult = requestLock.withLock {
+        val url = request.link
         try {
             val cookiesBeforeRequest = cookieJar.cookieHeader(url)
-            val response = httpClient.get(url) {
+            val response = httpClient.request(url) {
                 cookiesBeforeRequest?.let { header(HttpHeaders.Cookie, it.value) }
+                request.headers.forEach { (name, value) -> header(name.wireName, value) }
+                describe(request)
             }
-            val body = response.bodyAsText()
+            val file = if (request is SiteRequest.Download) siteFile(response) else null
+            val body = if (file == null) response.bodyAsText() else ""
             if (cookieJar.cookieHeader(url) != cookiesBeforeRequest) {
                 TransportResult.Failed(Unavailability.UNEXPECTED_RESPONSE)
             } else {
@@ -105,6 +134,7 @@ internal class KtorSessionTransport(
                         status = response.status.value,
                         location = response.headers[HttpHeaders.Location],
                         html = body,
+                        file = file,
                     ),
                 )
             }
@@ -138,6 +168,78 @@ internal class KtorSessionTransport(
         is TransportResult.Failed -> Hop.End(HandoffResult.Failed(result.reason))
         is TransportResult.Response -> nextHop(site, url, result.response)
     }
+}
+
+internal suspend fun SessionTransport.get(url: String): TransportResult = send(SiteRequest.Get(url))
+
+private fun HttpRequestBuilder.describe(request: SiteRequest<*>) {
+    when (request) {
+        is SiteRequest.Get -> method = HttpMethod.Get
+
+        is SiteRequest.Download -> {
+            method = HttpMethod.Get
+            transferTimeout()
+            onDownload(request.onProgress?.let { progress -> ProgressListener { sent, total -> progress(sent, total) } })
+        }
+
+        is SiteRequest.Form -> {
+            method = HttpMethod.Post
+            setBody(OneShot(FormDataContent(parameters { request.fields.forEach { (name, value) -> append(name, value) } })))
+        }
+
+        is SiteRequest.Multipart -> {
+            method = HttpMethod.Post
+            transferTimeout()
+            onUpload(request.onProgress?.let { progress -> ProgressListener { sent, total -> progress(sent, total) } })
+            setBody(
+                MultiPartFormDataContent(
+                    formData {
+                        request.fields.forEach { (name, value) -> append(name, value) }
+                        request.files.forEach { (name, file) -> append(name, file.bytes, fileHeaders(name, file)) }
+                    },
+                ),
+            )
+        }
+    }
+}
+
+private fun HttpRequestBuilder.transferTimeout() = timeout {
+    requestTimeoutMillis = TRANSFER_TIMEOUT_MILLIS
+    socketTimeoutMillis = TRANSFER_IDLE_TIMEOUT_MILLIS
+}
+
+/**
+ * [content] as a stream. OkHttp resends a replayable body after a dropped connection, which would repeat a write the
+ * site may already have applied; it never replays a stream. Multipart bodies are streams already.
+ */
+private class OneShot(private val content: OutgoingContent.ByteArrayContent) : OutgoingContent.ReadChannelContent() {
+    override val contentType: ContentType? get() = content.contentType
+    override val contentLength: Long? get() = content.contentLength
+
+    override fun readFrom(): ByteReadChannel = ByteReadChannel(content.bytes())
+}
+
+private fun fileHeaders(field: String, file: SiteFile): Headers = Headers.build {
+    append(HttpHeaders.ContentType, file.contentType ?: ContentType.Application.OctetStream.toString())
+    append(HttpHeaders.ContentDisposition, "filename=${(file.name ?: field).quote()}")
+}
+
+private suspend fun siteFile(response: HttpResponse): SiteFile? {
+    val contentType = response.contentType()
+    if (contentType?.match(ContentType.Text.Html) == true) return null
+    return SiteFile(
+        name = response.headers[HttpHeaders.ContentDisposition]?.let(::dispositionFileName),
+        contentType = contentType?.withoutParameters()?.toString(),
+        bytes = response.bodyAsBytes(),
+    )
+}
+
+internal fun dispositionFileName(value: String): String? {
+    val disposition = runCatching { ContentDisposition.parse(value) }.getOrNull() ?: return null
+    val extended = disposition.parameter("filename*")
+        ?.takeIf { it.startsWith("UTF-8''", ignoreCase = true) }
+        ?.let { runCatching { it.substringAfter("''").decodeURLPart() }.getOrNull() }
+    return (extended ?: disposition.parameter(ContentDisposition.Parameters.FileName))?.takeIf { it.isNotBlank() }
 }
 
 private val PORTAL_HOME = Url("$PORTAL_BASE_URL/")
