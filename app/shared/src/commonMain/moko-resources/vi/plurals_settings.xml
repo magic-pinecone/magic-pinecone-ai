@@ -1,0 +1,5 @@
+<resources>
+    <plurals name="settings_synced">
+        <item quantity="other">Đã đồng bộ %1$d môn học. Các màn hình chọn môn đang mở sẽ cập nhật sau khi bạn khởi động lại ứng dụng.</item>
+    </plurals>
+</resources>

@@ -1,0 +1,6 @@
+<resources>
+    <plurals name="settings_synced">
+        <item quantity="one">Synced %1$d course. Course selection screens that are already open will update after you restart the app.</item>
+        <item quantity="other">Synced %1$d courses. Course selection screens that are already open will update after you restart the app.</item>
+    </plurals>
+</resources>

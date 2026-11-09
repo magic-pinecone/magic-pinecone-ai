@@ -1,0 +1,5 @@
+<resources>
+    <plurals name="settings_synced">
+        <item quantity="other">已同步 %1$d 門課程。已開啟的選課畫面會在重新啟動 App 後更新。</item>
+    </plurals>
+</resources>
