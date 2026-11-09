@@ -40,6 +40,10 @@
     "bestep_lr": {
       "zh": "培力英檢（聽讀測驗）",
       "en": "BESTEP (Listening & Reading)"
+    },
+    "gept_hi_second": {
+      "zh": "全民英檢中高級複試",
+      "en": "GEPT High-Intermediate (second stage)"
     }
   },
   "general": {
@@ -94,16 +98,16 @@
         "en": "There is no university-wide language requirement for graduate degrees: Study Regulations art. 58 leaves graduation conditions to each department. College-level rules exist for master's programs in Engineering and Management and for the Graduate College of Sustainability and Green Energy."
       },
       "international_students": [
-        "明文讓外籍生免除英文門檻的只有兩處：機械系碩士班（外籍學位生不受限）與人工智慧國際碩士學位學程（英語母語或在英語系國家取得學位者可申請免除）。",
-        "對外籍生另加華語要求的有：環境工程研究所（兩門華語課或 TOCFL 入門級）、客家研究博士班（TOCFL 進階級）、物理系 TIGP-MST（初級中文 I、II）。",
+        "明文讓外籍生免除英文門檻的有：機械系碩士班、光機電工程碩士班、能源工程研究所碩士班（外籍學位生不受限）；人工智慧國際碩士學位學程與網路學習科技研究所博士班（英語母語或在英語系國家取得學位者可申請免除）。",
+        "對外籍生另加華語要求的有：環境工程研究所（兩門華語課或 TOCFL 入門級）、客家研究博士班（TOCFL 進階級）、物理系 TIGP-MST 與跨領域神經科學 TIGP-INS（初級中文課）。",
         "其餘查過的院系規定都沒有提到外籍生，只能透過院級規定的「特殊情形專案處理」條款個案申請。"
       ],
       "no_rule_found": [
-        "資訊電機學院、理學院、地球科學學院、文學院沒有找到院級的研究所語言門檻。",
-        "查過系所修業辦法而沒有語言門檻的包括：資工（碩、博）、電機碩、通訊碩、化學（碩、博）、天文所、大氣（碩、博）、地球物理碩、企管博、土木（碩、博）、生科（碩、博）、英文碩、中文博。"
+        "資訊電機學院、理學院、地球科學學院、文學院、生醫理工學院沒有找到院級的研究所語言門檻。",
+        "查過系所修業辦法而沒有語言門檻的包括：資工（碩、博）、電機（碩、博）、通訊碩、網學所碩、數學（碩、博）、統計所、物理（碩、博）、化學（碩、博）、光電（碩、博）、天文所、認知神經所（碩、博）、大氣（碩、博）、地球物理碩、應用地質所（碩、博）、水文與海洋所（碩、博）、遙測科技碩士學程、環境科技博士學程、企管博、工管所博、產經所博、土木（碩、博）、材料所博、生科（碩、博）、生物醫學工程碩、系統生物與生物資訊、跨領域轉譯醫學博、英文碩、中文博、歷史所碩、藝術學所碩、學習與教學所。"
       ],
       "not_checked": [
-        "下列系所的研究所規定還沒查：營建管理所、材料所、能源所、電機博、網路學習科技所、數學、統計所、物理（一般碩博）、光電碩、認知神經、應用地質所、水文與海洋所、太空科學與工程、經濟、工管、會計所、產經所、各在職專班、哲研所、歷史所、藝術學所、學習與教學所、法律與政府學系、生醫科學與工程、系統生物與生物資訊、跨領域轉譯醫學。",
+        "還沒取得規定的系所：營建管理研究所（網站只提供 HTTP）、太空科學與工程學系（修業規定頁面無法以程式讀取）、地球物理博士班的現行版本（連結失效，只取得 106 年版，該版沒有語言規定）、各在職專班。",
         "沒有列出的系所不代表沒有門檻，請以系所修業辦法為準；`/intl/programs` 的 `regulation_url` 提供各系所修業規定的連結。"
       ]
     }
@@ -1863,6 +1867,443 @@
         "zh": "永續領導力學位學程",
         "en": "Sustainability Leadership program"
       }
+    },
+    {
+      "id": "master-opto-mechatronics",
+      "degree": "master",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "department": {
+        "zh": "機械工程學系光機電工程碩士班",
+        "en": "Master Program in Opto-Mechatronics Engineering"
+      },
+      "summary": {
+        "zh": "申請學位考試前應滿足工學院碩士班學生英文能力合格標準；外籍學位生不受此限。",
+        "en": "The College of Engineering English standard must be met before the degree examination; international degree students are exempt."
+      },
+      "english": {},
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "alternatives": [],
+      "international_students": [
+        "「申請學位考試前應滿足『國立中央大學工學院碩士班學生英文能力合格標準』，外籍學位生不受此條文限制。」"
+      ],
+      "notes": [],
+      "sources": [
+        "ome-master-rules",
+        "coe-master-english-standard"
+      ]
+    },
+    {
+      "id": "master-energy",
+      "degree": "master",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "department": {
+        "zh": "能源工程研究所",
+        "en": "Graduate Institute of Energy Engineering"
+      },
+      "summary": {
+        "zh": "申請學位考試前應滿足工學院碩士班學生英文能力合格標準；外籍學位生不受此限。",
+        "en": "The College of Engineering English standard must be met before the degree examination; international degree students are exempt."
+      },
+      "english": {},
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "alternatives": [],
+      "international_students": [
+        "「申請學位考試前應滿足『國立中央大學工學院碩士班學生英文能力合格標準』，外籍學位生不受此條文限制。」"
+      ],
+      "notes": [],
+      "sources": [
+        "energy-master-rules",
+        "coe-master-english-standard"
+      ]
+    },
+    {
+      "id": "master-materials",
+      "degree": "master",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "department": {
+        "zh": "材料科學與工程研究所",
+        "en": "Graduate Institute of Materials Science and Engineering"
+      },
+      "summary": {
+        "zh": "提學位考試前須符合工學院碩士班學生英文能力合格標準。",
+        "en": "The College of Engineering English standard must be met before the degree examination."
+      },
+      "english": {},
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "alternatives": [],
+      "international_students": [
+        "修業辦法沒有寫外籍生可免除英文標準。"
+      ],
+      "notes": [],
+      "sources": [
+        "mse-master-rules",
+        "coe-master-english-standard"
+      ]
+    },
+    {
+      "id": "phd-network-learning",
+      "degree": "phd",
+      "college": {
+        "zh": "資訊電機學院",
+        "en": "College of Electrical Engineering and Computer Science"
+      },
+      "department": {
+        "zh": "網路學習科技研究所",
+        "en": "Graduate Institute of Network Learning Technology"
+      },
+      "summary": {
+        "zh": "112 學年度起入學的博士生，修業期間須參加英文檢定並達到下列任一標準。",
+        "en": "PhD students admitted from academic year 112 must reach one of these English test scores during their studies."
+      },
+      "english": {
+        "toefl_ibt": [
+          {
+            "value": "79–80（舊制）",
+            "cohort_min": 112
+          }
+        ],
+        "ielts": [
+          {
+            "value": "5.0",
+            "cohort_min": 112
+          }
+        ],
+        "gept_hi_second": [
+          {
+            "value": "通過",
+            "cohort_min": 112
+          }
+        ],
+        "toeic_lr": [
+          {
+            "value": "750",
+            "cohort_min": 112
+          }
+        ]
+      },
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "alternatives": [],
+      "international_students": [
+        "「如在入學前已取得上述標準之英文檢定考試證書者、母語是英語系國家的外籍生、及大學或研究所在英語系國家取得學位者，可向學術委員會提出申請，經學術委員會審查通過後方可免除其英文檢定考試。」"
+      ],
+      "notes": [
+        "條文另列托福 PBT 550 分、CBT 213 分。"
+      ],
+      "sources": [
+        "lst-phd-rules"
+      ]
+    },
+    {
+      "id": "phd-tigp-ins",
+      "degree": "phd",
+      "college": {
+        "zh": "生醫理工學院",
+        "en": "College of Health Sciences and Technology"
+      },
+      "department": {
+        "zh": "跨領域神經科學國際研究生博士學位學程（TIGP-INS，與中央研究院合辦）",
+        "en": "TIGP Interdisciplinary Neuroscience PhD Program (with Academia Sinica)"
+      },
+      "summary": {
+        "zh": "沒有英文檢定門檻；論文須以英文撰寫，非英文授課的課程最多採計 3 學分（學士入學者 10 學分）。",
+        "en": "No English test; the thesis must be written in English, and at most 3 credits of courses not taught in English count (10 for students admitted with a bachelor's degree)."
+      },
+      "english": {},
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "alternatives": [],
+      "international_students": [
+        "「國際研究生學程初級中文課（Elementary Chinese Class）: 0 學分（非中文語系國家學生須修讀）。」"
+      ],
+      "notes": [],
+      "sources": [
+        "tigp-ins-phd-rules"
+      ]
+    },
+    {
+      "id": "master-economics",
+      "degree": "master",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "department": {
+        "zh": "經濟學系",
+        "en": "Department of Economics"
+      },
+      "summary": {
+        "zh": "提送學位考試前須滿足管理學院碩士班進修英文課程實施辦法（分數見管理學院的院級規定）。",
+        "en": "Before the degree examination, students must satisfy the College of Management Remedial English rule (see the college-level rule for scores)."
+      },
+      "english": {},
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "alternatives": [],
+      "international_students": [
+        "修業辦法沒有外籍生條款。"
+      ],
+      "notes": [],
+      "sources": [
+        "econ-graduate-rules",
+        "mgt-master-english-115"
+      ]
+    },
+    {
+      "id": "phd-economics",
+      "degree": "phd",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "department": {
+        "zh": "經濟學系",
+        "en": "Department of Economics"
+      },
+      "summary": {
+        "zh": "博士班須通過下列英文能力檢測標準之一。",
+        "en": "PhD students must meet one of these English proficiency standards."
+      },
+      "english": {
+        "toeic_lr": [
+          {
+            "value": "730"
+          }
+        ],
+        "ielts": [
+          {
+            "value": "6.5"
+          }
+        ],
+        "gept_hi_second": [
+          {
+            "value": "合格"
+          }
+        ],
+        "toefl_itp": [
+          {
+            "value": "550（筆試）"
+          }
+        ]
+      },
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "alternatives": [],
+      "international_students": [
+        "修業辦法沒有外籍生條款。"
+      ],
+      "notes": [
+        "條文另列托福電腦測驗 213 分。"
+      ],
+      "sources": [
+        "econ-graduate-rules"
+      ]
+    },
+    {
+      "id": "master-industrial-management",
+      "degree": "master",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "department": {
+        "zh": "工業管理研究所",
+        "en": "Graduate Institute of Industrial Management"
+      },
+      "summary": {
+        "zh": "提送學位考試前須滿足管理學院碩士班進修英文課程實施辦法（分數見管理學院的院級規定）。",
+        "en": "Before the degree examination, students must satisfy the College of Management Remedial English rule (see the college-level rule for scores)."
+      },
+      "english": {},
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "alternatives": [],
+      "international_students": [
+        "修業辦法沒有外籍生條款。"
+      ],
+      "notes": [],
+      "sources": [
+        "iim-master-rules",
+        "mgt-master-english-115"
+      ]
+    },
+    {
+      "id": "master-accounting",
+      "degree": "master",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "department": {
+        "zh": "會計研究所",
+        "en": "Graduate Institute of Accounting"
+      },
+      "summary": {
+        "zh": "提送學位考試前須滿足管理學院碩士班進修英文課程實施辦法（分數見管理學院的院級規定）。",
+        "en": "Before the degree examination, students must satisfy the College of Management Remedial English rule (see the college-level rule for scores)."
+      },
+      "english": {},
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "alternatives": [],
+      "international_students": [
+        "語言規定沒有外籍生條款。另有非語言的規定：非會計背景的僑生、外國學生及大陸學生須補修中級會計學 6 學分與管理會計學 3 學分。"
+      ],
+      "notes": [],
+      "sources": [
+        "acc-master-rules",
+        "mgt-master-english-115"
+      ]
+    },
+    {
+      "id": "master-industrial-economics",
+      "degree": "master",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "department": {
+        "zh": "產業經濟研究所",
+        "en": "Graduate Institute of Industrial Economics"
+      },
+      "summary": {
+        "zh": "須通過管理學院碩士班進修英文辦法的英文能力鑑定或修課要求；論文計畫書須口頭報告中、英文各一次。",
+        "en": "Students must meet the test or course requirement of the College of Management Remedial English rule, and present the thesis proposal orally once in Chinese and once in English."
+      },
+      "english": {},
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "alternatives": [],
+      "international_students": [
+        "修業辦法沒有外籍生條款。"
+      ],
+      "notes": [],
+      "sources": [
+        "ie-master-rules",
+        "mgt-master-english-115"
+      ]
+    },
+    {
+      "id": "master-philosophy",
+      "degree": "master",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "department": {
+        "zh": "哲學研究所",
+        "en": "Graduate Institute of Philosophy"
+      },
+      "summary": {
+        "zh": "申請學位考試前須通過「本校語文能力鑑定」。",
+        "en": "Students must pass “the university's language proficiency assessment” before the degree examination."
+      },
+      "english": {},
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "alternatives": [],
+      "international_students": [],
+      "notes": [
+        "修業辦法沒有說明是哪一項鑑定或合格標準，請洽所辦。"
+      ],
+      "sources": [
+        "phi-master-rules"
+      ]
+    },
+    {
+      "id": "phd-philosophy",
+      "degree": "phd",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "department": {
+        "zh": "哲學研究所",
+        "en": "Graduate Institute of Philosophy"
+      },
+      "summary": {
+        "zh": "取得博士學位前須通過一門第二外國語的語言能力鑑定。",
+        "en": "Students must pass a proficiency assessment in one second foreign language before receiving the PhD."
+      },
+      "english": {},
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "alternatives": [
+        "替代方案：托福 iBT 75 分（含）以上，並在博士論文口試時增加 10 分鐘以上的英語口頭報告、接受部分英語口試。",
+        "鑑定方式包括修課學分、機構證書或所內考試，詳見修業辦法第 5 條。"
+      ],
+      "international_students": [
+        "條文中的「外籍生不在此限」指的是補修學分的規定，不是語言規定。"
+      ],
+      "notes": [],
+      "sources": [
+        "phi-phd-rules"
+      ]
+    },
+    {
+      "id": "master-law-government",
+      "degree": "master",
+      "college": {
+        "zh": "客家學院",
+        "en": "College of Hakka Studies"
+      },
+      "department": {
+        "zh": "法律與政府研究所／學系",
+        "en": "Department of Law and Government"
+      },
+      "summary": {
+        "zh": "110 學年度（含）以後入學者，申請學位考試前須通過「本系規定之英文測驗」。",
+        "en": "Students admitted from academic year 110 must pass “the English test specified by the department” before applying for the degree examination."
+      },
+      "english": {},
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "alternatives": [],
+      "international_students": [],
+      "notes": [
+        "修業辦法與課程規定都沒有公布測驗名稱或分數，請洽系辦。",
+        "98 至 109 學年度入學者：須通過本校碩一英文能力測驗鑑定考試，或本系規定之英文測驗。"
+      ],
+      "sources": [
+        "lawgov-master-rules"
+      ]
+    },
+    {
+      "id": "phd-biomedical-engineering",
+      "degree": "phd",
+      "college": {
+        "zh": "生醫理工學院",
+        "en": "College of Health Sciences and Technology"
+      },
+      "department": {
+        "zh": "生醫科學與工程學系生物醫學工程博士班",
+        "en": "PhD Program in Biomedical Engineering"
+      },
+      "summary": {
+        "zh": "沒有英文檢定門檻；以論文發表方式畢業者，申請學位考試前須在系內公開英文演講。",
+        "en": "No test score; students graduating by publication must give a public talk in English in the department before applying for the degree examination."
+      },
+      "english": {},
+      "other_languages": [],
+      "other_languages_without_threshold": [],
+      "alternatives": [],
+      "international_students": [],
+      "notes": [],
+      "sources": [
+        "bme-phd-rules"
+      ]
     }
   ],
   "chinese": {
