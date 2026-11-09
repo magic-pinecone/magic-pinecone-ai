@@ -16,11 +16,20 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import dev.icerock.moko.resources.compose.localized
+import dev.icerock.moko.resources.compose.stringResource
 import org.mpc.presentation.state.BackendEndpointUiState
 import org.mpc.presentation.state.BackendSyncError
 import org.mpc.presentation.state.BackendSyncState
+import org.mpc.presentation.state.message
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
+import org.mpc.shared.MR
+import org.mpc.shared.settings_backend_address
+import org.mpc.shared.settings_connect_sync
+import org.mpc.shared.settings_source_current
+import org.mpc.shared.settings_source_static_current
+import org.mpc.shared.settings_use_static
 
 /** Lets the user point the course catalog at a Magic Pinecone backend, or back at the static catalog. */
 @Composable
@@ -37,7 +46,11 @@ fun BackendEndpointSection(
         verticalArrangement = Arrangement.spacedBy(MpcSpacing.space2),
     ) {
         Text(
-            text = if (state.baseUrl == null) "目前使用：公開的靜態課程資料" else "目前使用：${state.baseUrl}",
+            text = if (state.baseUrl == null) {
+                stringResource(MR.strings.settings_source_static_current)
+            } else {
+                stringResource(MR.strings.settings_source_current, state.baseUrl)
+            },
             style = MpcTheme.typography.supporting,
             color = MpcTheme.colors.label,
         )
@@ -45,7 +58,7 @@ fun BackendEndpointSection(
             value = address,
             onValueChange = { address = it },
             modifier = Modifier.fillMaxWidth(),
-            label = { Text("後端位址") },
+            label = { Text(stringResource(MR.strings.settings_backend_address)) },
             placeholder = { Text("http://10.0.2.2:8000") },
             singleLine = true,
             enabled = !syncing,
@@ -57,34 +70,21 @@ fun BackendEndpointSection(
                 onClick = { onUseSource(address) },
                 enabled = !syncing && address.isNotBlank(),
             ) {
-                Text("連線並同步")
+                Text(stringResource(MR.strings.settings_connect_sync))
             }
             TextButton(
                 onClick = { onUseSource("") },
                 enabled = !syncing && state.baseUrl != null,
             ) {
-                Text("改用靜態資料")
+                Text(stringResource(MR.strings.settings_use_static))
             }
         }
-        state.sync.message()?.let { message ->
+        state.sync.message()?.localized()?.let { message ->
             Text(
                 text = message,
                 style = MpcTheme.typography.caption,
                 color = if (state.sync is BackendSyncState.Failed) MpcTheme.colors.destructive else MpcTheme.colors.labelSecondary,
             )
         }
-    }
-}
-
-private fun BackendSyncState.message(): String? = when (this) {
-    BackendSyncState.Idle -> null
-
-    BackendSyncState.Syncing -> "正在同步課程資料…"
-
-    is BackendSyncState.Synced -> "已同步 $courseCount 門課程。已開啟的選課畫面會在重新啟動 App 後更新。"
-
-    is BackendSyncState.Failed -> when (error) {
-        BackendSyncError.INVALID_ADDRESS -> "請輸入以 http:// 或 https:// 開頭的位址。"
-        BackendSyncError.SOURCE_UNAVAILABLE -> "無法從這個來源取得課程資料，已維持原本的資料來源。"
     }
 }

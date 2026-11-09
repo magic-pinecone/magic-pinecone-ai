@@ -9,13 +9,11 @@ app/androidApp/src/main/kotlin/org/mpc/presentation/CourseFilterPicker.kt
 app/androidApp/src/main/kotlin/org/mpc/presentation/CourseFilterSheet.kt
 app/androidApp/src/main/kotlin/org/mpc/presentation/CoursePlanningScreen.kt
 app/androidApp/src/main/kotlin/org/mpc/presentation/EeclassBulletinScreen.kt
-app/shared/src/commonMain/kotlin/org/mpc/presentation/BackendEndpointSection.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/EeclassCourseScreen.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/EeclassHomeScreen.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/EeclassPageContent.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/PortalAccountCard.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/PortalScreen.kt
-app/shared/src/commonMain/kotlin/org/mpc/presentation/SettingsScreen.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/formatting/CourseFilterLabel.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/formatting/CoursePresentationFormatters.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/formatting/EeclassFormatters.kt
