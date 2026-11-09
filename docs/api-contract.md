@@ -77,6 +77,36 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 | 502 | NCU 連不上，而且沒有快取 |
 | 503 | 後端還沒同步過 |
 
+## `GET /intl/service-learning`
+
+服務學習規定，給外籍生看的整理。資料是人工整理的 `backend/app/data/service_learning/requirements.json`，不連資料庫，也不連外。可用 `degree` 篩選：`bachelor`（學士班）或 `graduate`（研究所）；其他值回 422。
+
+```json
+{
+  "contact": {
+    "name_zh": "學務處服務學習發展中心",
+    "name_en": "Center for Service Learning, Office of Student Affairs",
+    "website": "https://service-learning.ncu.edu.tw/",
+    "sources": [{ "url": "…", "title": "…", "fetched": "2026-11-10", "quote": "…" }]
+  },
+  "requirements": [
+    {
+      "id": "course",
+      "degrees": ["bachelor"],
+      "title_zh": "服務學習課程：零學分必修，修兩學期",
+      "title_en": "Service-learning course: required, zero credits, two semesters",
+      "summary_zh": "…",
+      "summary_en": "…",
+      "sources": [{ "url": "…", "title": "…", "fetched": "2026-11-10", "quote": "…" }]
+    }
+  ],
+  "open_questions": ["…"]
+}
+```
+
+- 每條規則至少有一個 ncu.edu.tw 來源與原文引述。
+- `open_questions` 列出官方文件還沒確認的事。App 顯示規則時應一併顯示，避免把「沒寫」當成「不需要」。
+
 ## 既有端點
 
 上游原本的 `/courses`（伺服器端搜尋與分頁）、`/courses/colleges`、`/courses/departments`、`/scraper/*` 都保留不變；App 目前沒有使用搜尋端點。
