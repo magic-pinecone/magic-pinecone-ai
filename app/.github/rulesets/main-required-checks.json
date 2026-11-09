@@ -1,0 +1,45 @@
+{
+  "name": "Main CI status checks",
+  "target": "branch",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {
+      "include": ["refs/heads/main"],
+      "exclude": []
+    }
+  },
+  "rules": [
+    {
+      "type": "required_status_checks",
+      "parameters": {
+        "strict_required_status_checks_policy": true,
+        "required_status_checks": [
+          {
+            "context": "Detekt and ktlint",
+            "integration_id": 15368
+          },
+          {
+            "context": "SwiftLint",
+            "integration_id": 15368
+          },
+          {
+            "context": "Android build and tests",
+            "integration_id": 15368
+          },
+          {
+            "context": "iOS build and tests",
+            "integration_id": 15368
+          },
+          {
+            "context": "Analyze Kotlin",
+            "integration_id": 15368
+          },
+          {
+            "context": "Analyze Swift",
+            "integration_id": 15368
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+name: Lint
+
+on:
+  pull_request:
+  push:
+    branches:
+      - dev
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lint-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  kotlin:
+    name: Detekt and ktlint
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: corretto
+          java-version: "21"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+
+      - name: Run Detekt and ktlint
+        run: >-
+          ./gradlew
+          ktlintCheck
+          :shared:detektMainAndroid
+          :shared:detektHostTestAndroid
+          :androidApp:detektDebug
+          --no-daemon
+
+  swift:
+    name: SwiftLint
+    runs-on: xcode-27
+    timeout-minutes: 15
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_27.1.app/Contents/Developer
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Verify Xcode version
+        run: |
+          xcodebuild -version
+          test "$(xcodebuild -version | head -n 1)" = "Xcode 27.1"
+
+      - name: Install SwiftLint
+        run: brew install swiftlint
+
+      - name: Run SwiftLint
+        run: swiftlint lint --config .swiftlint.yml --no-cache iosApp/iosApp

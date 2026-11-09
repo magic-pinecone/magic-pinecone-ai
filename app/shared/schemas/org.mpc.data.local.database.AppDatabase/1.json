@@ -1,0 +1,347 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "75e51fa725046de874fe517174594fd2",
+    "entities": [
+      {
+        "tableName": "course_catalog",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`semester` TEXT NOT NULL, `lastUpdatedEpochMillis` INTEGER NOT NULL, PRIMARY KEY(`semester`))",
+        "fields": [
+          {
+            "fieldPath": "semester",
+            "columnName": "semester",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastUpdatedEpochMillis",
+            "columnName": "lastUpdatedEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "semester"
+          ]
+        }
+      },
+      {
+        "tableName": "course",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`semester` TEXT NOT NULL, `serialNo` TEXT NOT NULL, `classNo` TEXT NOT NULL, `title` TEXT NOT NULL, `credit` REAL NOT NULL, `passwordCard` TEXT NOT NULL, `limitCnt` INTEGER NOT NULL, `admitCnt` INTEGER NOT NULL, `waitCnt` INTEGER NOT NULL, `collegeName` TEXT NOT NULL, `departmentName` TEXT NOT NULL, `courseType` TEXT NOT NULL, `detailUrl` TEXT NOT NULL, PRIMARY KEY(`semester`, `serialNo`), FOREIGN KEY(`semester`) REFERENCES `course_catalog`(`semester`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "semester",
+            "columnName": "semester",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serialNo",
+            "columnName": "serialNo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "classNo",
+            "columnName": "classNo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "credit",
+            "columnName": "credit",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "passwordCard",
+            "columnName": "passwordCard",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "limitCnt",
+            "columnName": "limitCnt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "admitCnt",
+            "columnName": "admitCnt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "waitCnt",
+            "columnName": "waitCnt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "collegeName",
+            "columnName": "collegeName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "departmentName",
+            "columnName": "departmentName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "courseType",
+            "columnName": "courseType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "detailUrl",
+            "columnName": "detailUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "semester",
+            "serialNo"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "course_catalog",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "semester"
+            ],
+            "referencedColumns": [
+              "semester"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "course_time",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`semester` TEXT NOT NULL, `serialNo` TEXT NOT NULL, `dayCode` INTEGER NOT NULL, `periodCode` TEXT NOT NULL, PRIMARY KEY(`semester`, `serialNo`, `dayCode`, `periodCode`), FOREIGN KEY(`semester`, `serialNo`) REFERENCES `course`(`semester`, `serialNo`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "semester",
+            "columnName": "semester",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serialNo",
+            "columnName": "serialNo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dayCode",
+            "columnName": "dayCode",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "periodCode",
+            "columnName": "periodCode",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "semester",
+            "serialNo",
+            "dayCode",
+            "periodCode"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "course",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "semester",
+              "serialNo"
+            ],
+            "referencedColumns": [
+              "semester",
+              "serialNo"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "course_teacher",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`semester` TEXT NOT NULL, `serialNo` TEXT NOT NULL, `position` INTEGER NOT NULL, `teacherName` TEXT NOT NULL, PRIMARY KEY(`semester`, `serialNo`, `position`), FOREIGN KEY(`semester`, `serialNo`) REFERENCES `course`(`semester`, `serialNo`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "semester",
+            "columnName": "semester",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serialNo",
+            "columnName": "serialNo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "position",
+            "columnName": "position",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "teacherName",
+            "columnName": "teacherName",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "semester",
+            "serialNo",
+            "position"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_course_teacher_teacherName",
+            "unique": false,
+            "columnNames": [
+              "teacherName"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_course_teacher_teacherName` ON `${TABLE_NAME}` (`teacherName`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "course",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "semester",
+              "serialNo"
+            ],
+            "referencedColumns": [
+              "semester",
+              "serialNo"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "course_plan",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`semester` TEXT NOT NULL, `updatedAtEpochMillis` INTEGER NOT NULL, PRIMARY KEY(`semester`), FOREIGN KEY(`semester`) REFERENCES `course_catalog`(`semester`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "semester",
+            "columnName": "semester",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAtEpochMillis",
+            "columnName": "updatedAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "semester"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "course_catalog",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "semester"
+            ],
+            "referencedColumns": [
+              "semester"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "course_plan_item",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`semester` TEXT NOT NULL, `serialNo` TEXT NOT NULL, PRIMARY KEY(`semester`, `serialNo`), FOREIGN KEY(`semester`) REFERENCES `course_plan`(`semester`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`semester`, `serialNo`) REFERENCES `course`(`semester`, `serialNo`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "semester",
+            "columnName": "semester",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serialNo",
+            "columnName": "serialNo",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "semester",
+            "serialNo"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "course_plan",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "semester"
+            ],
+            "referencedColumns": [
+              "semester"
+            ]
+          },
+          {
+            "table": "course",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "semester",
+              "serialNo"
+            ],
+            "referencedColumns": [
+              "semester",
+              "serialNo"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '75e51fa725046de874fe517174594fd2')"
+    ]
+  }
+}
