@@ -49,6 +49,7 @@ jobs:
           :androidApp:testDebugUnitTest
           :androidApp:lintDebug
           :androidApp:assembleDebug
+          :shared:compileKotlinWasmJs
           --no-daemon
           --stacktrace
 

@@ -1,6 +1,5 @@
 package org.mpc.presentation.viewModel
 
-import androidx.datastore.core.IOException
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.zacsweers.metro.AppScope
@@ -12,6 +11,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.mpc.core.StorageIOException
 import org.mpc.data.portal.addingFavorite
 import org.mpc.data.portal.movingFavorite
 import org.mpc.data.portal.removingFavorite
@@ -41,7 +41,7 @@ class PortalViewModel(
             // A failed write leaves the stored favorites, which the screen already shows, unchanged.
             try {
                 favorites.updateFavoriteIds(transform)
-            } catch (_: IOException) {
+            } catch (_: StorageIOException) {
             }
         }
     }

@@ -2,8 +2,11 @@ import co.touchlab.skie.configuration.EnumInterop
 import co.touchlab.skie.configuration.FlowInterop
 import co.touchlab.skie.configuration.SealedInterop
 import co.touchlab.skie.configuration.SuspendInterop
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
+import org.jetbrains.kotlin.gradle.targets.js.webpack.WebpackDevtool
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -51,6 +54,9 @@ kotlin {
         iosArm64(),
         iosSimulatorArm64(),
     ).forEach { iosTarget ->
+        iosTarget.compilerOptions {
+            freeCompilerArgs.add("-Xexport-kdoc")
+        }
         iosTarget.binaries.framework {
             baseName = "Shared"
             isStatic = buildType != NativeBuildType.DEBUG
@@ -83,6 +89,35 @@ kotlin {
         }
     }
 
+    // Browser build of the preview scenarios for quick UI checks; it has no persistence or app graph.
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        outputModuleName = "mpcPreview"
+        browser {
+            commonWebpackConfig {
+                outputFileName = "mpcPreview.js"
+                // kotlinx-io reads import.meta, which webpack's default eval devtool cannot carry.
+                devtool = WebpackDevtool.SOURCE_MAP
+            }
+        }
+        binaries.executable()
+    }
+
+    // Room, DataStore, and the bundled SQLite driver publish no web artifacts, so they live in mobileMain.
+    // materialMain holds the Material actuals Android and the web preview share.
+    applyDefaultHierarchyTemplate {
+        common {
+            group("mobile") {
+                withCompilations { it.target.platformType == KotlinPlatformType.androidJvm }
+                group("ios")
+            }
+            group("material") {
+                withCompilations { it.target.platformType == KotlinPlatformType.androidJvm }
+                withWasmJs()
+            }
+        }
+    }
+
     sourceSets {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
@@ -92,6 +127,16 @@ kotlin {
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+        }
+        getByName("mobileMain").dependencies {
+            implementation(libs.androidx.datastore)
+            implementation(libs.androidx.datastorePreferences)
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundled)
+        }
+        wasmJsMain.dependencies {
+            implementation(libs.ktor.client.js)
+            implementation(libs.compose.material3AdaptiveNavigationSuite)
         }
         commonMain.dependencies {
             api(libs.calf.ui)
@@ -106,10 +151,6 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
-            implementation(libs.androidx.datastore)
-            implementation(libs.androidx.datastorePreferences)
-            implementation(libs.androidx.room.runtime)
-            implementation(libs.androidx.sqlite.bundled)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.client.logging)
@@ -132,10 +173,6 @@ kotlin {
             implementation(libs.testBalloon.frameworkCore)
             implementation(libs.ktor.client.mock)
         }
-    }
-
-    compilerOptions {
-        freeCompilerArgs.add("-Xexport-kdoc")
     }
 }
 
