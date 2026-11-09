@@ -62,9 +62,17 @@ class LocalizedName(BaseModel):
     en: str
 
 
+class StopPosition(BaseModel):
+    # WGS84, as TDX publishes it.
+    lat: float
+    lon: float
+
+
 class StopArrival(BaseModel):
     stop_uid: str
     stop_name: LocalizedName
+    # None when TDX's stop list could not be read or has no usable coordinates.
+    position: StopPosition | None = None
     # Position of the stop along the route. Loop routes such as 132 pass the same
     # place twice under one direction, so this is what tells the two apart.
     sequence: int
@@ -109,12 +117,31 @@ def parse_arrivals(raw: list[dict[str, Any]]) -> list[StopArrival]:
     return sorted(arrivals, key=lambda a: (a.direction, a.sequence))
 
 
+def parse_stop_positions(raw: list[dict[str, Any]]) -> dict[str, StopPosition]:
+    """Read each stop's coordinates out of TDX's StopOfRoute rows."""
+    positions = {}
+    for route in raw:
+        for stop in route.get("Stops") or []:
+            point = stop.get("StopPosition") or {}
+            lat, lon = point.get("PositionLat"), point.get("PositionLon")
+            # Skip blanks and anything outside Taiwan, e.g. 0,0 placeholders.
+            if (
+                isinstance(lat, int | float)
+                and isinstance(lon, int | float)
+                and 21.5 <= lat <= 25.5
+                and 119.0 <= lon <= 122.5
+            ):
+                positions[stop.get("StopUID", "")] = StopPosition(lat=lat, lon=lon)
+    return positions
+
+
 class TdxClient:
     def __init__(self, transport: httpx.BaseTransport | None = None):
         self._transport = transport
         self._token: str | None = None
         self._token_expires_at = 0.0
         self._arrivals: dict[str, tuple[float, list[StopArrival]]] = {}
+        self._positions: dict[str, tuple[float, dict[str, StopPosition]]] = {}
 
     def _http(self) -> httpx.Client:
         return httpx.Client(transport=self._transport, timeout=10.0)
@@ -156,20 +183,34 @@ class TdxClient:
         resp.raise_for_status()
         return resp
 
-    def bus_arrivals(self, route: str) -> list[StopArrival]:
-        """Arrivals at every stop of a route. Raises KeyError for an unlisted one."""
-        scope = ROUTE_SCOPES[route]
-        cached = self._arrivals.get(route)
-        if cached and time.monotonic() - cached[0] < settings.TDX_ARRIVAL_CACHE_SECONDS:
-            return cached[1]
+    def _rows(self, kind: str, route: str) -> list[dict[str, Any]]:
         with self._http() as http:
-            resp = self._get(http, f"{API_BASE}/EstimatedTimeOfArrival/{scope}/{route}")
+            resp = self._get(http, f"{API_BASE}/{kind}/{ROUTE_SCOPES[route]}/{route}")
         # TDX matches route names by prefix, so "132" can also return "132A".
-        rows = [
+        return [
             r
             for r in resp.json()
             if (r.get("RouteName") or {}).get("Zh_tw", route) == route
         ]
+
+    def stop_positions(self, route: str) -> dict[str, StopPosition]:
+        """Coordinates of a route's stops by StopUID. Stops rarely move."""
+        cached = self._positions.get(route)
+        max_age = settings.TDX_STOP_CACHE_HOURS * 3600
+        if cached and time.monotonic() - cached[0] < max_age:
+            return cached[1]
+        positions = parse_stop_positions(self._rows("StopOfRoute", route))
+        self._positions[route] = (time.monotonic(), positions)
+        return positions
+
+    def bus_arrivals(self, route: str) -> list[StopArrival]:
+        """Arrivals at every stop of a route. Raises KeyError for an unlisted one."""
+        if route not in ROUTE_SCOPES:
+            raise KeyError(route)
+        cached = self._arrivals.get(route)
+        if cached and time.monotonic() - cached[0] < settings.TDX_ARRIVAL_CACHE_SECONDS:
+            return cached[1]
+        rows = self._rows("EstimatedTimeOfArrival", route)
         arrivals = parse_arrivals(rows)
         self._arrivals[route] = (time.monotonic(), arrivals)
         return arrivals

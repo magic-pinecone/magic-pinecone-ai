@@ -92,6 +92,7 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
     {
       "stop_uid": "TAO269",
       "stop_name": { "zh": "中央大學正門", "en": "NCU Main Gate" },
+      "position": { "lat": 24.9655, "lon": 121.1945 },
       "sequence": 14,
       "direction": 0,
       "on_campus": true,
@@ -108,6 +109,7 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 - `stops` 依 `direction`、`sequence` 排序。132 是循環線，整條都是 `direction` 0，同一個地點會以不同的 `stop_uid` 出現兩次（去程與回程），要靠 `sequence` 分辨。
 - `status`：`ARRIVING`（有車在路上，看 `estimate_seconds`）、`NOT_DEPARTED`（尚未發車，看 `next_bus_time`）、`SKIPPED`（交管不停靠）、`LAST_BUS_GONE`（末班車已過）、`NO_SERVICE`（今日未營運）、`UNKNOWN`。
 - 校內站牌的英文名稱由後端改寫（TDX 原本的譯名不一致）；其他站牌沿用 TDX 的英文名稱。
+- `position` 是 WGS84 經緯度，來自 TDX 的站牌清單（每 `TDX_STOP_CACHE_HOURS` 小時更新一次）。站牌清單讀不到或座標不合理時是 `null`，到站資訊照常回傳。
 - 同一路線的結果會重複使用 `TDX_ARRIVAL_CACHE_SECONDS` 秒（預設 30）。
 
 | 狀態碼 | 意義 |
@@ -115,6 +117,37 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 | 404 | 不是可查的路線 |
 | 502 | TDX 連不上 |
 | 503 | 後端沒有設定 `TDX_CLIENT_ID`／`TDX_CLIENT_SECRET` |
+
+## `GET /transit/places`
+
+外籍生常需要前往的地點，以及從中大怎麼去。資料是人工維護的 `backend/app/data/places.json`，不需要 TDX 金鑰。App 目前還沒有使用。
+
+`?category=` 可以篩選：`station`、`airport`、`immigration`、`health_insurance`、`hospital`、`campus`。`GET /transit/places/{id}` 回傳單一地點，找不到時是 404。
+
+```json
+[
+  {
+    "id": "nia-taoyuan-service-center",
+    "category": "immigration",
+    "name": { "zh": "移民署桃園市服務站", "en": "National Immigration Agency, Taoyuan City Service Center (ARC)" },
+    "address": { "zh": "桃園市桃園區縣府路106號1樓", "en": "1F, No. 106, Xianfu Rd., Taoyuan Dist., Taoyuan City 330026" },
+    "position": { "lat": 24.9943647, "lon": 121.3027015 },
+    "phone": "03-331-0409",
+    "hours": { "zh": "週一至週五 08:00–17:00，中午不休息", "en": "Mon–Fri 08:00–17:00, open through lunch" },
+    "official_url": "https://servicestation.immigration.gov.tw/3411",
+    "getting_there": { "zh": "…", "en": "…" },
+    "bus_routes": ["132", "133"],
+    "sources": ["https://servicestation.immigration.gov.tw/3411"],
+    "checked_on": "2026-11-10",
+    "maps_url": "https://www.google.com/maps/dir/?api=1&origin=24.9684%2C121.1916&destination=24.9943647%2C121.3027015&travelmode=transit"
+  }
+]
+```
+
+- `address`、`position`、`phone`、`hours`、`official_url` 都可能是 `null`。
+- `maps_url` 會開啟 Google Maps 從中大出發的大眾運輸路線；沒有座標的地點改用地址當目的地。
+- `bus_routes` 裡的路線都可以拿去查 `/transit/bus/{route}/arrivals`。
+- 新增或修改地點時，`sources` 要填資料出處，`checked_on` 填查證日期；座標必須是 WGS84 且落在臺灣範圍內，否則後端載入時會失敗。
 
 ## 既有端點
 

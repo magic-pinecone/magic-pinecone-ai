@@ -61,6 +61,7 @@ class Settings(BaseSettings):
     TDX_CLIENT_ID: str | None = None
     TDX_CLIENT_SECRET: str | None = None
     TDX_ARRIVAL_CACHE_SECONDS: int = 30
+    TDX_STOP_CACHE_HOURS: int = 24
 
     @property
     def celery_broker_url(self) -> str:
