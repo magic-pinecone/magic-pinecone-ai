@@ -1,0 +1,20 @@
+<resources>
+    <string name="eeclass_category_bulletins">公告</string>
+    <string name="eeclass_category_materials">教材</string>
+    <string name="eeclass_category_homework">作業</string>
+    <string name="eeclass_category_bulletins_empty">沒有公告</string>
+    <string name="eeclass_category_materials_empty">沒有教材</string>
+    <string name="eeclass_category_homework_empty">沒有作業</string>
+    <string name="eeclass_courses_header">ee-class 課程</string>
+    <string name="eeclass_courses_empty">沒有 ee-class 課程</string>
+    <string name="eeclass_courses_unavailable">無法載入 ee-class 課程</string>
+    <string name="eeclass_course_unavailable">無法載入課程內容</string>
+    <string name="eeclass_bulletin_unavailable">無法載入公告</string>
+    <string name="eeclass_needs_portal_title">需要登入 Portal</string>
+    <string name="eeclass_needs_portal_description">在 Portal 分頁登入後再重新整理。</string>
+    <string name="eeclass_try_again_later">請稍後再試。</string>
+    <string name="eeclass_refresh">重新整理</string>
+    <string name="eeclass_attachments">附件</string>
+    <string name="eeclass_see_all">查看全部 %1$d 項</string>
+    <string name="eeclass_homework_due">期限 %1$s</string>
+</resources>
