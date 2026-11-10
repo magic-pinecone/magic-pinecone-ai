@@ -8,10 +8,12 @@
 
 | 檔案 | 來源欄位 |
 |---|---|
-| `data/course-translations/catalog.<lang>.json` | 課名、學院、系所、分發條件 |
-| `data/course-translations/detail.<lang>.json` | 課程目標、授課內容、教科書、授課方式、評量配分 |
+| `backend/app/data/course_translations/catalog.<lang>.json` | 課名、學院、系所、分發條件 |
+| `backend/app/data/course_translations/detail.<lang>.json` | 課程目標、授課內容、教科書、授課方式、評量配分 |
 
-使用端把欄位以 `\n` 切行，逐行查表，查不到就保留原文。教師姓名不翻。
+使用端把欄位以 `\n` 切行，逐行查表，查不到就保留原文。教師姓名不翻。後端的 `GET /catalog/...?lang=en` 直接讀這些檔案。
+
+目前提交的表是 `--fast`（`lowLatency`）的結果，因為產生時 Apple Intelligence 還沒就緒。就緒後不加 `--fast` 重跑即可：表的 `strategy` 和這次不同時，工具會逐行重翻並就地覆蓋，全部翻完才改 `strategy` 標記。
 
 ## 執行
 
@@ -25,7 +27,7 @@ swift run -c release course-translate --lite ../../../magic-pinecone-lite
 | 參數 | 預設 | 說明 |
 |---|---|---|
 | `--lite DIR` | `../../../magic-pinecone-lite` | lite repo 的位置 |
-| `--out DIR` | `../../data/course-translations` | 輸出目錄 |
+| `--out DIR` | `../../backend/app/data/course_translations` | 輸出目錄 |
 | `--lang en,vi` | `en,vi` | 目標語言 |
 | `--scope catalog,detail` | 兩者 | 要翻的範圍 |
 | `--fast` | 關 | 改用傳統翻譯模型（`lowLatency`），快但品質差 |
