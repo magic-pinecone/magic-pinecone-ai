@@ -1,5 +1,6 @@
 package org.mpc.data.dataSource
 
+import androidx.compose.ui.text.intl.Locale
 import de.infix.testBalloon.framework.core.testSuite
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
@@ -66,6 +67,7 @@ private class Responder(
     private val body: (String) -> String,
 ) {
     val requestedUrls = mutableListOf<String>()
+    val requestedPaths get() = requestedUrls.map { it.substringBefore('?') }
 
     val client = HttpClient(
         MockEngine { request ->
@@ -108,7 +110,7 @@ val backendCourseDataSourceTests by testSuite {
 
             val result = BackendCourseDataSource(responder.client).getAllCourses(BACKEND, "115-1")
 
-            assertEquals(listOf("$BACKEND/api/v1/catalog/115-1/courses"), responder.requestedUrls)
+            assertEquals(listOf("$BACKEND/api/v1/catalog/115-1/courses"), responder.requestedPaths)
             assertEquals(Instant.parse("2026-11-09T19:28:17.336076Z"), result.lastUpdated)
             assertEquals("115", result.academicYear)
             assertEquals("1", result.semester)
@@ -127,7 +129,7 @@ val backendCourseDataSourceTests by testSuite {
 
             val detail = BackendCourseDataSource(responder.client).getCourseDetails(BACKEND, "115-1", "01001")
 
-            assertEquals(listOf("$BACKEND/api/v1/catalog/115-1/courses/01001/detail"), responder.requestedUrls)
+            assertEquals(listOf("$BACKEND/api/v1/catalog/115-1/courses/01001/detail"), responder.requestedPaths)
             assertEquals("強健體魄", detail.objectives)
             assertEquals("", detail.books)
             assertEquals(1, detail.distributionConditions.single().priority)
@@ -146,7 +148,7 @@ val backendCourseDataSourceTests by testSuite {
 
     test("courses come from the configured backend") {
         runTest {
-            val responder = Responder { url -> if (url.endsWith("/detail")) detailJson else catalogJson }
+            val responder = Responder { url -> if (url.contains("/detail")) detailJson else catalogJson }
             val source = routing(responder, baseUrl = BACKEND)
 
             source.getAllCourses("115-1")
@@ -157,8 +159,21 @@ val backendCourseDataSourceTests by testSuite {
                     "$BACKEND/api/v1/catalog/115-1/courses",
                     "$BACKEND/api/v1/catalog/115-1/courses/01001/detail",
                 ),
-                responder.requestedUrls,
+                responder.requestedPaths,
             )
+        }
+    }
+
+    test("both catalog endpoints are asked for the app's language") {
+        runTest {
+            val responder = Responder { url -> if (url.contains("/detail")) detailJson else catalogJson }
+            val source = BackendCourseDataSource(responder.client)
+
+            source.getAllCourses(BACKEND, "115-1")
+            source.getCourseDetails(BACKEND, "115-1", "01001")
+
+            val expected = "lang=${Locale.current.toLanguageTag()}"
+            assertEquals(listOf(expected, expected), responder.requestedUrls.map { it.substringAfter('?') })
         }
     }
 
