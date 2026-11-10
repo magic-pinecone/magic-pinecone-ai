@@ -27,12 +27,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.icerock.moko.resources.compose.localized
+import dev.icerock.moko.resources.compose.stringResource
 import org.mpc.domain.model.CourseFilter
 import org.mpc.domain.model.CourseType
 import org.mpc.domain.model.SeatAvailability
-import org.mpc.presentation.formatting.label
+import org.mpc.presentation.formatting.labelDesc
 import org.mpc.presentation.formatting.stableKey
 import org.mpc.presentation.theme.MpcTheme
+import org.mpc.shared.MR
+import org.mpc.shared.catalog_add_filter
+import org.mpc.shared.catalog_remove_filter
 
 @Composable
 internal fun CourseFilterChipRow(
@@ -49,11 +54,11 @@ internal fun CourseFilterChipRow(
             InputChip(
                 selected = false,
                 onClick = { onRemove(filter) },
-                label = { Text(filter.label()) },
+                label = { Text(filter.labelDesc().localized()) },
                 trailingIcon = {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = "移除${filter.label()}",
+                        contentDescription = stringResource(MR.strings.catalog_remove_filter, filter.labelDesc().localized()),
                     )
                 },
             )
@@ -70,10 +75,10 @@ internal fun CourseFilterSuggestionList(
     LazyColumn(modifier = modifier) {
         items(suggestions, key = { it.stableKey }) { filter ->
             ListItem(
-                headlineContent = { Text(filter.label()) },
+                headlineContent = { Text(filter.labelDesc().localized()) },
                 leadingContent = { Icon(filter.icon(), contentDescription = null) },
                 colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface),
-                modifier = Modifier.clickable(onClickLabel = "加入篩選") { onSelect(filter) },
+                modifier = Modifier.clickable(onClickLabel = stringResource(MR.strings.catalog_add_filter)) { onSelect(filter) },
             )
         }
     }

@@ -21,9 +21,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.launch
 import org.mpc.presentation.model.EeclassLoadStatus
 import org.mpc.presentation.theme.MpcTheme
+import org.mpc.shared.MR
+import org.mpc.shared.eeclass_needs_portal_description
+import org.mpc.shared.eeclass_needs_portal_title
+import org.mpc.shared.eeclass_refresh
+import org.mpc.shared.eeclass_try_again_later
 
 /**
  * Shows a spinner until [status] is known, then [content] for a loaded page or the reason it is missing.
@@ -32,7 +39,7 @@ import org.mpc.presentation.theme.MpcTheme
 @Composable
 fun EeclassPageContent(
     status: EeclassLoadStatus?,
-    unavailableTitle: String,
+    unavailableTitle: StringResource,
     onRefresh: suspend () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
@@ -60,14 +67,14 @@ fun EeclassPageContent(
             EeclassLoadStatus.LOADED -> content()
 
             EeclassLoadStatus.NEEDS_PORTAL -> EeclassMessage(
-                title = "需要登入 Portal",
-                description = "在 Portal 分頁登入後再重新整理。",
+                title = MR.strings.eeclass_needs_portal_title,
+                description = MR.strings.eeclass_needs_portal_description,
                 onRetry = refresh,
             )
 
             EeclassLoadStatus.UNAVAILABLE -> EeclassMessage(
                 title = unavailableTitle,
-                description = "請稍後再試。",
+                description = MR.strings.eeclass_try_again_later,
                 onRetry = refresh,
             )
         }
@@ -77,8 +84,8 @@ fun EeclassPageContent(
 /** A centered message. It scrolls so that pull to refresh still works. */
 @Composable
 internal fun EeclassMessage(
-    title: String,
-    description: String? = null,
+    title: StringResource,
+    description: StringResource? = null,
     onRetry: (() -> Unit)? = null,
 ) {
     Column(
@@ -89,17 +96,17 @@ internal fun EeclassMessage(
         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = title, style = MpcTheme.typography.headline, textAlign = TextAlign.Center)
+        Text(text = stringResource(title), style = MpcTheme.typography.headline, textAlign = TextAlign.Center)
         if (description != null) {
             Text(
-                text = description,
+                text = stringResource(description),
                 style = MpcTheme.typography.supporting,
                 color = MpcTheme.colors.labelSecondary,
                 textAlign = TextAlign.Center,
             )
         }
         if (onRetry != null) {
-            TextButton(onClick = onRetry) { Text("重新整理") }
+            TextButton(onClick = onRetry) { Text(stringResource(MR.strings.eeclass_refresh)) }
         }
     }
 }

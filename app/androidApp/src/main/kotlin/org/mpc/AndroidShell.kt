@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -66,10 +67,14 @@ import androidx.navigation3.scene.DialogSceneStrategy
 import androidx.navigation3.ui.NavDisplay
 import androidx.window.core.layout.WindowSizeClass.Companion.WIDTH_DP_MEDIUM_LOWER_BOUND
 import com.mohamedrejeb.calf.ui.web.WebViewNavigator
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.compose.pluralStringResource
+import dev.icerock.moko.resources.compose.stringResource
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.mpc.calendar.CalendarExportButton
 import org.mpc.calendar.ClassCalendar
 import org.mpc.di.AppGraph
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.CourseSummary
 import org.mpc.domain.session.CampusSites
 import org.mpc.domain.session.SitePath
@@ -82,6 +87,7 @@ import org.mpc.navigation.EeclassBulletinRoute
 import org.mpc.navigation.EeclassCategoryRoute
 import org.mpc.navigation.EeclassCourseRoute
 import org.mpc.navigation.HomeRoot
+import org.mpc.navigation.InternationalRoot
 import org.mpc.navigation.PortalRoot
 import org.mpc.navigation.PortalWebRoute
 import org.mpc.navigation.SettingsRoute
@@ -95,6 +101,8 @@ import org.mpc.presentation.EeclassBulletinScreen
 import org.mpc.presentation.EeclassCategoryScreen
 import org.mpc.presentation.EeclassCourseScreen
 import org.mpc.presentation.EeclassHomeScreen
+import org.mpc.presentation.GraduationLanguageActions
+import org.mpc.presentation.GraduationLanguageScreen
 import org.mpc.presentation.PortalScreen
 import org.mpc.presentation.PortalWebScreen
 import org.mpc.presentation.SettingsScreen
@@ -103,6 +111,32 @@ import org.mpc.presentation.theme.AndroidMpcTheme
 import org.mpc.presentation.viewModel.AppSettingsViewModel
 import org.mpc.presentation.viewModel.BackendEndpointViewModel
 import org.mpc.presentation.viewModel.CoursePlanViewModel
+import org.mpc.presentation.viewModel.GraduationLanguageViewModel
+import org.mpc.shared.MR
+import org.mpc.shared.intl_title
+import org.mpc.shared.shell_app_title
+import org.mpc.shared.shell_back
+import org.mpc.shared.shell_calendar_export_failed
+import org.mpc.shared.shell_calendar_permission_denied
+import org.mpc.shared.shell_close_settings
+import org.mpc.shared.shell_compact_course_cards
+import org.mpc.shared.shell_display_options
+import org.mpc.shared.shell_enabled
+import org.mpc.shared.shell_more_options
+import org.mpc.shared.shell_official_course_page
+import org.mpc.shared.shell_open_in_browser
+import org.mpc.shared.shell_plan_save_failed
+import org.mpc.shared.shell_plan_saved
+import org.mpc.shared.shell_previous_page
+import org.mpc.shared.shell_save
+import org.mpc.shared.shell_selected_course_count
+import org.mpc.shared.shell_settings
+import org.mpc.shared.shell_share
+import org.mpc.shared.shell_tab_course_selection
+import org.mpc.shared.shell_tab_home
+import org.mpc.shared.shell_tab_international
+import org.mpc.shared.shell_tab_portal
+import org.mpc.shared.shell_view_selected_courses
 
 @Composable
 fun AndroidAppShell(appGraph: AppGraph) {
@@ -139,7 +173,7 @@ private fun AndroidAppContent(appGraph: AppGraph) {
             entry<SettingsRoute>(
                 metadata =
                 DialogSceneStrategy.dialog(
-                    DialogProperties(windowTitle = "設定"),
+                    DialogProperties(windowTitle = stringResource(MR.strings.shell_settings)),
                 ),
             ) {
                 SettingsDialog(
@@ -189,9 +223,14 @@ private fun AndroidPrimaryNavigation(
     var isCompactCatalog by rememberSaveable {
         mutableStateOf(displayPreferences.getBoolean("compact", false))
     }
+    val planSavedMessage = stringResource(MR.strings.shell_plan_saved)
+    val planSaveFailedMessage = stringResource(MR.strings.shell_plan_save_failed)
+    val calendarExportFailedMessage = stringResource(MR.strings.shell_calendar_export_failed)
+    val calendarPermissionDeniedMessage = stringResource(MR.strings.shell_calendar_permission_denied)
+    val officialCoursePageTitle = stringResource(MR.strings.shell_official_course_page)
     LaunchedEffect(planViewModel) {
         planViewModel.saveResult.collect { saved ->
-            snackbarHostState.showSnackbar(if (saved) "課表已儲存" else "課表儲存失敗，請重試")
+            snackbarHostState.showSnackbar(if (saved) planSavedMessage else planSaveFailedMessage)
         }
     }
     var selectedCoursePlanningView by rememberSaveable { mutableStateOf(CoursePlanningView.CATALOG) }
@@ -261,8 +300,21 @@ private fun AndroidPrimaryNavigation(
                     },
                 )
             }
-            entry<ClubsRoute> {
-                ClubsScreen(modifier = Modifier.fillMaxSize())
+            entry<InternationalRoot> {
+                val viewModel: GraduationLanguageViewModel = metroViewModel()
+                val state by viewModel.uiState.collectAsStateWithLifecycle()
+                GraduationLanguageScreen(
+                    state = state,
+                    actions = remember(viewModel) {
+                        GraduationLanguageActions(
+                            onSelectDegree = viewModel::selectDegree,
+                            onSelectCollege = viewModel::selectCollege,
+                            onSelectCohort = viewModel::selectCohort,
+                            onRetry = viewModel::refresh,
+                        )
+                    },
+                    modifier = Modifier.fillMaxSize(),
+                )
             }
             entry<PortalWebRoute> { route ->
                 PortalWebScreen(
@@ -284,7 +336,7 @@ private fun AndroidPrimaryNavigation(
                     onOpenWebPage = { url ->
                         // The WebView blocks cleartext traffic, so plain http pages open in the browser.
                         if (url.startsWith("https://")) {
-                            navigator.navigate(PortalWebRoute(title = "官方課程頁面", url = url))
+                            navigator.navigate(PortalWebRoute(title = officialCoursePageTitle, url = url))
                         } else {
                             uriHandler.openUri(url)
                         }
@@ -302,10 +354,10 @@ private fun AndroidPrimaryNavigation(
                     icon = {
                         Icon(
                             imageVector = item.icon,
-                            contentDescription = item.label,
+                            contentDescription = stringResource(item.label),
                         )
                     },
-                    label = { Text(item.label) },
+                    label = { Text(stringResource(item.label)) },
                 )
             }
         },
@@ -335,12 +387,12 @@ private fun AndroidPrimaryNavigation(
                             val semester = (planUiState as? CoursePlanUiState.Success)?.plan?.semester
                             val message = semester?.let {
                                 runCatching { ClassCalendar.exportSavedPlan(context, appGraph, it) }
-                                    .fold(ClassCalendar::resultMessage) { "無法加入行事曆，請稍後再試。" }
+                                    .fold({ count -> ClassCalendar.resultMessage(context, count) }) { calendarExportFailedMessage }
                             }
                             message?.let { snackbarHostState.showSnackbar(it) }
                         },
                         onCalendarPermissionDenied = {
-                            snackbarHostState.showSnackbar("沒有行事曆權限。請在「設定」允許神奇松果存取行事曆。")
+                            snackbarHostState.showSnackbar(calendarPermissionDeniedMessage)
                         },
                         onToggleCompactCatalog = {
                             isCompactCatalog = !isCompactCatalog
@@ -380,13 +432,13 @@ private fun AndroidPrimaryTopBar(
     onOpenSettings: () -> Unit,
 ) {
     TopAppBar(
-        title = { Text(state.title) },
+        title = { Text(state.title()) },
         navigationIcon = {
             if (state.currentPortalWebRoute != null || state.pushedTitle != null) {
                 IconButton(onClick = onBack) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "返回",
+                        contentDescription = stringResource(MR.strings.shell_back),
                     )
                 }
             }
@@ -397,7 +449,7 @@ private fun AndroidPrimaryTopBar(
                     IconButton(onClick = onBackInPage) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.Undo,
-                            contentDescription = "上一頁",
+                            contentDescription = stringResource(MR.strings.shell_previous_page),
                         )
                     }
                 }
@@ -405,7 +457,7 @@ private fun AndroidPrimaryTopBar(
             } else if (state.pushedTitle == null) {
                 if (state.showsCoursePlanAction) {
                     TextButton(onClick = coursePlanActions.onSavePlan, enabled = state.canSavePlan) {
-                        Text("儲存")
+                        Text(stringResource(MR.strings.shell_save))
                     }
                     BadgedBox(
                         badge = {
@@ -420,12 +472,19 @@ private fun AndroidPrimaryTopBar(
                             }
                         },
                     ) {
+                        val viewSelectedCoursesDescription = stringResource(MR.strings.shell_view_selected_courses)
+                        val selectedCourseCountDescription =
+                            pluralStringResource(
+                                MR.plurals.shell_selected_course_count,
+                                state.selectedCourseCount,
+                                state.selectedCourseCount,
+                            )
                         FilledTonalIconButton(
                             onClick = coursePlanActions.onOpenSelectedCourses,
                             modifier =
                             Modifier.semantics {
-                                contentDescription = "查看已選課程"
-                                stateDescription = "${state.selectedCourseCount} 門課"
+                                contentDescription = viewSelectedCoursesDescription
+                                stateDescription = selectedCourseCountDescription
                             },
                         ) {
                             Icon(
@@ -439,7 +498,7 @@ private fun AndroidPrimaryTopBar(
                 IconButton(onClick = onOpenSettings) {
                     Icon(
                         imageVector = Icons.Default.Settings,
-                        contentDescription = "設定",
+                        contentDescription = stringResource(MR.strings.shell_settings),
                     )
                 }
             }
@@ -464,16 +523,16 @@ private fun CoursePlanningViewActions(
         var isShowingDisplayOptions by remember { mutableStateOf(false) }
         Box {
             IconButton(onClick = { isShowingDisplayOptions = true }) {
-                Icon(Icons.Default.MoreVert, contentDescription = "顯示選項")
+                Icon(Icons.Default.MoreVert, contentDescription = stringResource(MR.strings.shell_display_options))
             }
             DropdownMenu(
                 expanded = isShowingDisplayOptions,
                 onDismissRequest = { isShowingDisplayOptions = false },
             ) {
                 DropdownMenuItem(
-                    text = { Text("精簡課程卡片") },
+                    text = { Text(stringResource(MR.strings.shell_compact_course_cards)) },
                     leadingIcon = {
-                        if (state.isCompactCatalog) Icon(Icons.Default.Check, contentDescription = "已啟用")
+                        if (state.isCompactCatalog) Icon(Icons.Default.Check, contentDescription = stringResource(MR.strings.shell_enabled))
                     },
                     onClick = {
                         coursePlanActions.onToggleCompactCatalog()
@@ -493,14 +552,14 @@ private fun WebPageMenu(url: String) {
     var isShowingMenu by remember { mutableStateOf(false) }
     Box {
         IconButton(onClick = { isShowingMenu = true }) {
-            Icon(Icons.Default.MoreVert, contentDescription = "更多選項")
+            Icon(Icons.Default.MoreVert, contentDescription = stringResource(MR.strings.shell_more_options))
         }
         DropdownMenu(
             expanded = isShowingMenu,
             onDismissRequest = { isShowingMenu = false },
         ) {
             DropdownMenuItem(
-                text = { Text("分享") },
+                text = { Text(stringResource(MR.strings.shell_share)) },
                 onClick = {
                     isShowingMenu = false
                     val send = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, url)
@@ -508,7 +567,7 @@ private fun WebPageMenu(url: String) {
                 },
             )
             DropdownMenuItem(
-                text = { Text("在瀏覽器中開啟") },
+                text = { Text(stringResource(MR.strings.shell_open_in_browser)) },
                 onClick = {
                     isShowingMenu = false
                     uriHandler.openUri(url)
@@ -538,27 +597,36 @@ private data class PrimaryTopBarState(
     val canSavePlan: Boolean,
     val isCompactCatalog: Boolean,
 ) {
-    val title: String
-        get() =
-            when {
-                currentPortalWebRoute != null -> currentPortalWebRoute.title
-                pushedTitle != null -> pushedTitle
-                selectedTopLevelRoute == CoursePlanningRoot && isExpanded -> "選課"
-                selectedTopLevelRoute == CoursePlanningRoot -> selectedCoursePlanningView.title
-                selectedTopLevelRoute == HomeRoot -> "首頁"
-                selectedTopLevelRoute == PortalRoot -> "Portal"
-                else -> "Magic Pinecone"
-            }
+    @Composable
+    fun title(): String = when {
+        currentPortalWebRoute != null -> currentPortalWebRoute.title
+
+        pushedTitle != null -> pushedTitle
+
+        selectedTopLevelRoute == CoursePlanningRoot && isExpanded ->
+            stringResource(MR.strings.shell_tab_course_selection)
+
+        selectedTopLevelRoute == CoursePlanningRoot -> stringResource(selectedCoursePlanningView.title)
+
+        selectedTopLevelRoute == HomeRoot -> stringResource(MR.strings.shell_tab_home)
+
+        selectedTopLevelRoute == PortalRoot -> stringResource(MR.strings.shell_tab_portal)
+
+        selectedTopLevelRoute == InternationalRoot -> stringResource(MR.strings.intl_title)
+
+        else -> stringResource(MR.strings.shell_app_title)
+    }
 
     val showsCoursePlanAction: Boolean
         get() =
             selectedTopLevelRoute == CoursePlanningRoot
 }
 
+@Composable
 private fun NavKey.pushedTitle(): String? = when (this) {
     is ClubsRoute -> "社團"
     is EeclassCourseRoute -> name
-    is EeclassCategoryRoute -> category.title
+    is EeclassCategoryRoute -> stringResource(category.titleResource)
     else -> null
 }
 
@@ -589,12 +657,12 @@ private fun SettingsDialog(
     Surface(modifier = surfaceModifier) {
         Column(modifier = Modifier.fillMaxSize()) {
             TopAppBar(
-                title = { Text("設定") },
+                title = { Text(stringResource(MR.strings.shell_settings)) },
                 navigationIcon = {
                     IconButton(onClick = onClose) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = "關閉設定",
+                            contentDescription = stringResource(MR.strings.shell_close_settings),
                         )
                     }
                 },
@@ -606,6 +674,15 @@ private fun SettingsDialog(
                 onTimetableColorModeSelected = settingsViewModel::setTimetableColorMode,
                 onThemeModeSelected = settingsViewModel::setThemeMode,
                 onPortalAuthenticationModeSelected = settingsViewModel::setPortalAuthenticationMode,
+                onLanguageSelected = { language ->
+                    val requestedTags = androidx.core.os.LocaleListCompat.forLanguageTags(language.tag).toLanguageTags()
+                    val currentTags = androidx.appcompat.app.AppCompatDelegate.getApplicationLocales().toLanguageTags()
+                    if (requestedTags == currentTags) {
+                        settingsViewModel.setLanguage(language)
+                    } else {
+                        setAndroidAppLanguage(language)
+                    }
+                },
                 backendEndpoint = backendEndpoint,
                 onUseCourseSource = backendEndpointViewModel::useSource,
             )
@@ -615,13 +692,14 @@ private fun SettingsDialog(
 
 private data class TopLevelNavigationItem(
     val route: TopLevelRoute,
-    val label: String,
+    val label: StringResource,
     val icon: ImageVector,
 )
 
 private val topLevelNavigationItems =
     listOf(
-        TopLevelNavigationItem(HomeRoot, "首頁", Icons.Default.Home),
-        TopLevelNavigationItem(CoursePlanningRoot, "選課", Icons.Default.DateRange),
-        TopLevelNavigationItem(PortalRoot, "Portal", Icons.Default.AccountCircle),
+        TopLevelNavigationItem(HomeRoot, MR.strings.shell_tab_home, Icons.Default.Home),
+        TopLevelNavigationItem(CoursePlanningRoot, MR.strings.shell_tab_course_selection, Icons.Default.DateRange),
+        TopLevelNavigationItem(PortalRoot, MR.strings.shell_tab_portal, Icons.Default.AccountCircle),
+        TopLevelNavigationItem(InternationalRoot, MR.strings.shell_tab_international, Icons.Default.Language),
     )

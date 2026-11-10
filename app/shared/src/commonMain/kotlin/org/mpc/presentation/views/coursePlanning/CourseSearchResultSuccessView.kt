@@ -15,12 +15,18 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import dev.icerock.moko.resources.compose.pluralStringResource
+import dev.icerock.moko.resources.compose.stringResource
 import org.mpc.domain.model.CourseResult
 import org.mpc.domain.model.CourseSerialNo
 import org.mpc.domain.model.CourseSummary
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.views.coursePlanning.components.CourseCard
+import org.mpc.shared.MR
+import org.mpc.shared.planning_search_empty_hint
+import org.mpc.shared.planning_search_empty_title
+import org.mpc.shared.planning_search_result_count
 
 @Composable
 fun CourseSearchResultSuccessView(
@@ -41,9 +47,9 @@ fun CourseSearchResultSuccessView(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(MpcSpacing.space2),
             ) {
-                Text("找不到符合的課程", style = MpcTheme.typography.headline)
+                Text(stringResource(MR.strings.planning_search_empty_title), style = MpcTheme.typography.headline)
                 Text(
-                    "試試其他關鍵字，或清除搜尋條件查看全部課程。",
+                    stringResource(MR.strings.planning_search_empty_hint),
                     style = MpcTheme.typography.supporting,
                     color = MpcTheme.colors.labelSecondary,
                     textAlign = TextAlign.Center,
@@ -63,7 +69,7 @@ fun CourseSearchResultSuccessView(
     ) {
         item(key = "result-count") {
             Text(
-                text = "共 ${courseResult.courses.size} 門課程",
+                text = pluralStringResource(MR.plurals.planning_search_result_count, courseResult.courses.size, courseResult.courses.size),
                 style = MpcTheme.typography.supporting,
                 color = MpcTheme.colors.labelSecondary,
             )

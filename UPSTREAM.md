@@ -19,6 +19,9 @@
 - `app/tasks/course_scraper.py`：同步時偵測並記錄學期；跨系所課程保留 NCU 的列出順序；換學期時清掉上學期的課程與大綱快取。
 - `app/core/config.py`：新增 `COURSE_DETAIL_CACHE_HOURS`。
 - 新增 `tests/test_catalog.py`。
+- 新增 `app/data/campus_places.json`、`app/services/campus_places.py`、`app/api/routes/campus.py`、`tests/test_campus.py`：校園地點 API。
+- 新增 `app/data/student_services/`、`app/services/student_services.py`、`tests/test_student_services.py`：國際處頁面檢索、承辦窗口、健保加保日估算；端點在 `app/api/routes/intl.py`。
+- `app/mcp_server.py`：以 MCP 提供畢業語言門檻、國際生行政事項與校園地點共 8 個工具；依賴新增 `mcp`。
 
 ### `app/`
 

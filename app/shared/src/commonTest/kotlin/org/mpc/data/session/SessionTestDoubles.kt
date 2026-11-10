@@ -2,6 +2,7 @@ package org.mpc.data.session
 
 import io.ktor.http.Url
 import kotlinx.coroutines.flow.MutableStateFlow
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.PortalAuthenticationMode
@@ -45,6 +46,8 @@ internal class FakeAppSettingsRepository(
     mode: PortalAuthenticationMode = PortalAuthenticationMode.MANUAL_PORTAL,
 ) : AppSettingsRepository {
     override val settings = MutableStateFlow(AppSettings(portalAuthenticationMode = mode))
+
+    override suspend fun setLanguage(language: AppLanguage): Unit = error("Settings writes are unused")
 
     override suspend fun setThemeMode(themeMode: AppThemeMode) {
         settings.value = settings.value.copy(themeMode = themeMode)

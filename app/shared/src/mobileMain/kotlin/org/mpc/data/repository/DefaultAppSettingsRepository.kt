@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.PortalAuthenticationMode
@@ -35,6 +36,12 @@ internal class DefaultAppSettingsRepository(
         .map { preferences -> preferences.toAppSettings() }
         .distinctUntilChanged()
 
+    override suspend fun setLanguage(language: AppLanguage) {
+        dataStore.edit { preferences ->
+            preferences[languageKey] = language.name
+        }
+    }
+
     override suspend fun setThemeMode(themeMode: AppThemeMode) {
         dataStore.edit { preferences ->
             preferences[themeModeKey] = themeMode.name
@@ -54,11 +61,13 @@ internal class DefaultAppSettingsRepository(
     }
 }
 
+private val languageKey = stringPreferencesKey("appearance.language")
 private val themeModeKey = stringPreferencesKey("appearance.theme_mode")
 private val portalAuthenticationModeKey = stringPreferencesKey("portal.authentication_mode")
 private val timetableColorModeKey = stringPreferencesKey("timetable.color_mode")
 
 private fun Preferences.toAppSettings(): AppSettings = AppSettings(
+    language = this[languageKey].toEnumOrDefault(AppLanguage.SYSTEM),
     themeMode = this[themeModeKey].toEnumOrDefault(AppThemeMode.SYSTEM),
     // Fall back to manual sign-in until platform credential adapters are available.
     portalAuthenticationMode = PortalAuthenticationMode.MANUAL_PORTAL,

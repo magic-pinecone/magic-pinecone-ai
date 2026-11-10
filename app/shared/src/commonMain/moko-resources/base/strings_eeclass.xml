@@ -1,0 +1,20 @@
+<resources>
+    <string name="eeclass_category_bulletins">Announcements</string>
+    <string name="eeclass_category_materials">Materials</string>
+    <string name="eeclass_category_homework">Homework</string>
+    <string name="eeclass_category_bulletins_empty">No announcements</string>
+    <string name="eeclass_category_materials_empty">No materials</string>
+    <string name="eeclass_category_homework_empty">No homework</string>
+    <string name="eeclass_courses_header">ee-class courses</string>
+    <string name="eeclass_courses_empty">No ee-class courses</string>
+    <string name="eeclass_courses_unavailable">Couldn’t load ee-class courses</string>
+    <string name="eeclass_course_unavailable">Couldn’t load course content</string>
+    <string name="eeclass_bulletin_unavailable">Couldn’t load the announcement</string>
+    <string name="eeclass_needs_portal_title">Sign in to Portal</string>
+    <string name="eeclass_needs_portal_description">Sign in on the Portal tab, then refresh.</string>
+    <string name="eeclass_try_again_later">Please try again later.</string>
+    <string name="eeclass_refresh">Refresh</string>
+    <string name="eeclass_attachments">Attachments</string>
+    <string name="eeclass_see_all">See all %1$d items</string>
+    <string name="eeclass_homework_due">Due %1$s</string>
+</resources>

@@ -5,6 +5,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import dev.icerock.moko.resources.compose.stringResource
+import org.mpc.shared.MR
+import org.mpc.shared.planning_timetable_loading
 
 @Composable
 fun CoursePlanningTimetableLoadingView(modifier: Modifier) {
@@ -12,6 +15,6 @@ fun CoursePlanningTimetableLoadingView(modifier: Modifier) {
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
-        Text("Loading...")
+        Text(stringResource(MR.strings.planning_timetable_loading))
     }
 }

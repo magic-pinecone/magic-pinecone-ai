@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.mpc.core.StorageIOException
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.PortalAuthenticationMode
@@ -37,6 +38,12 @@ class AppSettingsViewModel(
         initialValue = AppSettings(),
     )
     val settingsWriteFailed: StateFlow<Boolean> = _settingsWriteFailed.asStateFlow()
+
+    fun setLanguage(language: AppLanguage) {
+        persistSetting {
+            settingsRepository.setLanguage(language)
+        }
+    }
 
     fun setThemeMode(themeMode: AppThemeMode) {
         persistSetting {

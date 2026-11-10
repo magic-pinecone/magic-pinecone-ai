@@ -1,4 +1,14 @@
 <resources>
+    <string name="settings_language">應用程式語言</string>
+    <string name="settings_language_description">選擇 App 介面文字使用的語言。</string>
+    <string name="settings_language_system">跟隨系統</string>
+    <string name="settings_language_system_description">使用裝置目前設定的語言。</string>
+    <string name="settings_language_english">English</string>
+    <string name="settings_language_english_description">介面文字使用英文。</string>
+    <string name="settings_language_traditional_chinese">繁體中文</string>
+    <string name="settings_language_traditional_chinese_description">介面文字使用繁體中文。</string>
+    <string name="settings_language_vietnamese">Tiếng Việt</string>
+    <string name="settings_language_vietnamese_description">介面文字使用越南文。</string>
     <string name="settings_write_failed">設定無法儲存，請稍後再試。</string>
     <string name="settings_appearance">外觀</string>
     <string name="settings_appearance_description">選擇 App 使用系統、淺色或深色配色。</string>

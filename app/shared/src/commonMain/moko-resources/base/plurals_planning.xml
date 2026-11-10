@@ -1,0 +1,18 @@
+<resources>
+    <plurals name="planning_search_result_count">
+        <item quantity="one">%1$d course</item>
+        <item quantity="other">%1$d courses</item>
+    </plurals>
+    <plurals name="planning_selected_summary">
+        <item quantity="one">%1$d course · %2$s credits</item>
+        <item quantity="other">%1$d courses · %2$s credits</item>
+    </plurals>
+    <plurals name="planning_timetable_no_time">
+        <item quantity="one">%1$d course has no class time yet. See it in Selected courses.</item>
+        <item quantity="other">%1$d courses have no class time yet. See them in Selected courses.</item>
+    </plurals>
+    <plurals name="planning_calendar_result_added">
+        <item quantity="one">Added %1$d class to the \"%2$s\" calendar.</item>
+        <item quantity="other">Added %1$d classes to the \"%2$s\" calendar.</item>
+    </plurals>
+</resources>

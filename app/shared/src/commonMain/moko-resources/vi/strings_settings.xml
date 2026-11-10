@@ -1,4 +1,14 @@
 <resources>
+    <string name="settings_language">Ngôn ngữ ứng dụng</string>
+    <string name="settings_language_description">Chọn ngôn ngữ hiển thị trong ứng dụng.</string>
+    <string name="settings_language_system">Theo hệ thống</string>
+    <string name="settings_language_system_description">Dùng ngôn ngữ hiện được chọn trên thiết bị.</string>
+    <string name="settings_language_english">English</string>
+    <string name="settings_language_english_description">Hiển thị nội dung bằng tiếng Anh.</string>
+    <string name="settings_language_traditional_chinese">繁體中文</string>
+    <string name="settings_language_traditional_chinese_description">Hiển thị nội dung bằng tiếng Hoa phồn thể.</string>
+    <string name="settings_language_vietnamese">Tiếng Việt</string>
+    <string name="settings_language_vietnamese_description">Hiển thị nội dung bằng tiếng Việt.</string>
     <string name="settings_write_failed">Không thể lưu cài đặt. Vui lòng thử lại sau.</string>
     <string name="settings_appearance">Giao diện</string>
     <string name="settings_appearance_description">Chọn giao diện theo hệ thống, sáng hoặc tối cho ứng dụng.</string>
@@ -30,8 +40,4 @@
     <string name="settings_syncing">Đang đồng bộ dữ liệu môn học…</string>
     <string name="settings_invalid_address">Hãy nhập địa chỉ bắt đầu bằng http:// hoặc https://.</string>
     <string name="settings_source_unavailable">Không thể lấy dữ liệu môn học từ nguồn này. Nguồn dữ liệu hiện tại vẫn được giữ nguyên.</string>
-    <string name="settings_language">Ngôn ngữ</string>
-    <string name="settings_language_description">Ngôn ngữ cho chữ trong ứng dụng và thông tin câu lạc bộ</string>
-    <string name="settings_language_system">Ngôn ngữ hệ thống</string>
-    <string name="settings_language_system_description">Theo ngôn ngữ của thiết bị hoặc trình duyệt</string>
 </resources>

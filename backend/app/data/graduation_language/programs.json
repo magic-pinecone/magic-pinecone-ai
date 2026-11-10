@@ -1,0 +1,2551 @@
+{
+  "intake": "2027 Fall Semester Admission for International Degree Students",
+  "source_url": "https://cis.ncu.edu.tw/AdmissionSys/oia/currentPrograms/2027_Fall_Semester_Admission_for_International_Degree_Students",
+  "fetched_on": "2026-11-09",
+  "programs": [
+    {
+      "name": {
+        "zh": "遙測科技碩士學位學程",
+        "en": "Master of Science Program in Remote Sensing Science and Technology"
+      },
+      "degree": "master",
+      "teaching_language": "english",
+      "college": {
+        "zh": "中心、處室",
+        "en": "Centres and Institues"
+      },
+      "admission_language_note": {
+        "zh": "相當於CEFR B1 進階級 (含)以上之英文能力證明",
+        "en": "An English proficiency certificate at CEFR B1 (Threshold) or above is required."
+      },
+      "graduation": {
+        "years": "2",
+        "credits": "24",
+        "elective_credits": "18",
+        "required_credits": "6"
+      },
+      "regulation_url": "https://www.csrsr.ncu.edu.tw",
+      "website": "https://www.csrsr.ncu.edu.tw"
+    },
+    {
+      "name": {
+        "zh": "環境科技博士學位學程(台灣聯合大學系統)",
+        "en": "International Ph.D. Program in Environmental Science and Technology(UST-EST)"
+      },
+      "degree": "phd",
+      "teaching_language": "english",
+      "college": {
+        "zh": "中心、處室",
+        "en": "Centres and Institues"
+      },
+      "admission_language_note": {
+        "zh": "相當於CEFR B1 進階級 (含)以上之英文能力證明",
+        "en": "An English proficiency certificate at CEFR B1 (Threshold) or above is required."
+      },
+      "graduation": {
+        "years": "4",
+        "credits": "18",
+        "elective_credits": "12",
+        "required_credits": "6"
+      },
+      "regulation_url": "https://www.csrsr.ncu.edu.tw",
+      "website": "https://www.csrsr.ncu.edu.tw"
+    },
+    {
+      "name": {
+        "zh": "中國文學系",
+        "en": "Department of Chinese Literature"
+      },
+      "degree": "bachelor",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "中國文學系碩士班",
+        "en": "MA in Chinese Literature"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "英美語文學系碩士班",
+        "en": "MA in English Literature"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "admission_language_note": {
+        "zh": "CEFR B1進階級(含)以上的英文能力證明",
+        "en": "English Proficiency at least CEFR B1"
+      },
+      "graduation": {
+        "years": "4",
+        "credits": "24",
+        "elective_credits": "24",
+        "required_credits": "0"
+      },
+      "regulation_url": "https://english.ncu.edu.tw/english-homepage-2/graduate-program/",
+      "website": "https://english.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "法國語文學系碩士班",
+        "en": "MA in French Literature"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "admission_language_note": {
+        "zh": "法語檢定證明。",
+        "en": "Evidence of French proficiency."
+      },
+      "graduation": {
+        "years": "2-4",
+        "credits": "24",
+        "elective_credits": "18",
+        "required_credits": "6"
+      },
+      "regulation_url": "https://french.ncu.edu.tw/wp-content/uploads/114%E4%BF%AE%E6%A5%AD%E8%A6%8F%E7%AB%A0%E8%8B%B1%E6%96%87%E7%89%88.pdf",
+      "website": "https://french.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "哲學研究所碩士班",
+        "en": "Master of Philosophy"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "歷史研究所碩士班",
+        "en": "MA in History"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2~4",
+        "credits": "24~27",
+        "elective_credits": "24",
+        "required_credits": "0~3"
+      },
+      "regulation_url": "https://his.ncu.edu.tw/p/405-1018-6171,c835.php?Lang=zh-tw",
+      "website": "https://his.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "藝術學研究所碩士班",
+        "en": "MA in Art Studies"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "學習與教學研究所碩士班",
+        "en": "Graduate Institute of Learning & Instruction"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "亞際文化研究國際碩士學位學程(台灣聯合大學系統)",
+        "en": "International Master’s Program in Inter-Asia Cultural Studies"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "admission_language_note": {
+        "zh": "中文能力證明",
+        "en": "Chinese Proficiency"
+      },
+      "graduation": {
+        "years": "3-4年",
+        "credits": "24",
+        "elective_credits": "18",
+        "required_credits": "6"
+      },
+      "regulation_url": "https://iacs.ncu.edu.tw/en/regulations/",
+      "website": "https://iacs.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "中國文學系博士班",
+        "en": "Ph.D. in Chinese Literature"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "哲學研究所博士班",
+        "en": "Ph.D. in Philosophy"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "學習與教學研究所博士班",
+        "en": "Graduate Institute of Learning & Instruction"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "文學院",
+        "en": "College of Liberal Arts"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "數學系(數學科學組)",
+        "en": "Division of Mathematical Sciences, Department of Mathematics"
+      },
+      "degree": "bachelor",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "數學系(計算與資料科學組)",
+        "en": "Division of Computational and Data Sciences, Department of Mathematics"
+      },
+      "degree": "bachelor",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "數學系碩士班",
+        "en": "MSc in Mathematics"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "物理學系碩士班",
+        "en": "MSc in Physics"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "1-4",
+        "credits": "24",
+        "elective_credits": "9",
+        "required_credits": "15"
+      },
+      "regulation_url": "https://www.phy.ncu.edu.tw/wp-content/uploads/2021/01/%E5%9C%8B%EF%A7%B7%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8%E7%89%A9%EF%A7%A4%E5%AD%B8%E7%B3%BB%E7%A2%A9%E3%80%81%E5%8D%9A%E5%A3%AB%E7%8F%AD%E7%A0%94%E7%A9%B6%E7%94%9F%E4%BF%AE%E6%A5%AD%E8%BE%A6%E6%B3%951050615%E6%95%99%E5%8B%99%E6%9C%83%E8%AD%B0%E9%80%9A%E9%81%8E.pdf",
+      "website": "https://www.phy.ncu.edu.tw/en"
+    },
+    {
+      "name": {
+        "zh": "化學學系碩士班",
+        "en": "MSc in Chemistry"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "統計研究所碩士班",
+        "en": "MSc in Statistics"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "1~4",
+        "credits": "33",
+        "elective_credits": "21",
+        "required_credits": "12"
+      },
+      "regulation_url": "https://www.stat.ncu.edu.tw/en/",
+      "website": "https://www.stat.ncu.edu.tw/en/"
+    },
+    {
+      "name": {
+        "zh": "光電科學與工程學系碩士班",
+        "en": "MSc in Optics and Photonics"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "天文研究所碩士班",
+        "en": "MSc in Astronomy"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "4",
+        "credits": "24",
+        "elective_credits": "13",
+        "required_credits": "11"
+      },
+      "regulation_url": "https://www.astro.ncu.edu.tw/regulation/file/NCUIoA-MSC-PhD-Graduation-Regulations20130618.pdf",
+      "website": "https://www.astro.ncu.edu.tw/index_e.php"
+    },
+    {
+      "name": {
+        "zh": "光電科學與工程學系半導體光電科技碩士班",
+        "en": "Master’s Program in Semiconductor Photonics Technology, Department of Optics and Photonics"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "數學系博士班",
+        "en": "Ph.D. in Mathematics"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "物理學系博士班",
+        "en": "Ph.D. in Physics"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2-7",
+        "credits": "18",
+        "elective_credits": "0-18",
+        "required_credits": "12-30"
+      },
+      "regulation_url": "https://www.phy.ncu.edu.tw/wp-content/uploads/2021/01/%E5%9C%8B%EF%A7%B7%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8%E7%89%A9%EF%A7%A4%E5%AD%B8%E7%B3%BB%E7%A2%A9%E3%80%81%E5%8D%9A%E5%A3%AB%E7%8F%AD%E7%A0%94%E7%A9%B6%E7%94%9F%E4%BF%AE%E6%A5%AD%E8%BE%A6%E6%B3%951050615%E6%95%99%E5%8B%99%E6%9C%83%E8%AD%B0%E9%80%9A%E9%81%8E.pdf",
+      "website": "https://www.phy.ncu.edu.tw/en"
+    },
+    {
+      "name": {
+        "zh": "化學學系博士班",
+        "en": "Ph.D. in Chemistry"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "統計研究所博士班",
+        "en": "Ph.D. in Statistics"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2-7",
+        "credits": "18",
+        "elective_credits": "12",
+        "required_credits": "6"
+      },
+      "regulation_url": "https://www.stat.ncu.edu.tw/en/",
+      "website": "https://www.stat.ncu.edu.tw/en/"
+    },
+    {
+      "name": {
+        "zh": "光電科學與工程學系博士班",
+        "en": "Ph.D. in Optics and Photonics"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "天文研究所博士班",
+        "en": "Ph.D. in Astronomy"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "7",
+        "credits": "18",
+        "elective_credits": "3",
+        "required_credits": "15"
+      },
+      "regulation_url": "https://www.astro.ncu.edu.tw/regulation/file/NCUIoA-MSC-PhD-Graduation-Regulations20130618.pdf",
+      "website": "https://www.astro.ncu.edu.tw/index_e.php"
+    },
+    {
+      "name": {
+        "zh": "光電博士學位學程(台灣聯合大學系統)",
+        "en": "International Ph.D. Program in Photonics(University System of Taiwan)"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "理學院",
+        "en": "College of Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "機械工程學系(前瞻半導體國際組)",
+        "en": "Division of International Advanced Semiconductor, Department of Mechanical Engineering"
+      },
+      "degree": "bachelor",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "4~6",
+        "credits": "134",
+        "elective_credits": "34",
+        "required_credits": "100"
+      },
+      "regulation_url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/496022181.pdf",
+      "website": "https://www.me.ncu.edu.tw/en/"
+    },
+    {
+      "name": {
+        "zh": "土木工程學系碩士班",
+        "en": "Master’s Program, Department of Civil Engineering"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "機械工程學系碩士班",
+        "en": "MSc in Mechanical Engineering"
+      },
+      "degree": "master",
+      "teaching_language": "english",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "1~4",
+        "credits": "24",
+        "elective_credits": "24",
+        "required_credits": "0"
+      },
+      "regulation_url": "https://www.me.ncu.edu.tw/en/curriculum/masterphd/",
+      "website": "https://www.me.ncu.edu.tw/en/"
+    },
+    {
+      "name": {
+        "zh": "化學工程與材料工程學系碩士班",
+        "en": "Master’s Program, Department of Chemical and Materials Engineering"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "環境工程研究所碩士班",
+        "en": "Master’s Program, Graduate Institute of Environmental Engineering"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "1-4",
+        "credits": "34",
+        "elective_credits": "24",
+        "required_credits": "10"
+      },
+      "regulation_url": "https://ev.in.ncu.edu.tw/eng.php/Course/course_more.html?id=4369c7e513065866889203adfaabf319",
+      "website": "https://ev.in.ncu.edu.tw/index.php"
+    },
+    {
+      "name": {
+        "zh": "機械工程學系光機電工程碩士班",
+        "en": "Master Program in Opto-Mechatronics Engineering, Department of Mechanical Engineering"
+      },
+      "degree": "master",
+      "teaching_language": "english",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "1~4",
+        "credits": "24",
+        "elective_credits": "24",
+        "required_credits": "0"
+      },
+      "regulation_url": "https://www.me.ncu.edu.tw/en/curriculum/masterphd/",
+      "website": "https://www.me.ncu.edu.tw/en/"
+    },
+    {
+      "name": {
+        "zh": "能源工程研究所碩士班",
+        "en": "MSc in Energy Engineering"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "1~4",
+        "credits": "24",
+        "elective_credits": "24",
+        "required_credits": "0"
+      },
+      "regulation_url": "https://www.me.ncu.edu.tw/en/curriculum/masterphd/",
+      "website": "https://www.me.ncu.edu.tw/en/"
+    },
+    {
+      "name": {
+        "zh": "材料科學與工程研究所碩士班",
+        "en": "Institute of Materials Science and Engineering"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "4",
+        "credits": "24",
+        "elective_credits": "18",
+        "required_credits": "6"
+      },
+      "regulation_url": "https://in.ncu.edu.tw/~mse/imse-en/master.php",
+      "website": "https://in.ncu.edu.tw/mse/"
+    },
+    {
+      "name": {
+        "zh": "土木工程學系營建管理碩士班",
+        "en": "Master’s Program in Construction Management, Department of Civil Engineering"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "1至4年",
+        "credits": "27",
+        "elective_credits": "12",
+        "required_credits": "15"
+      },
+      "regulation_url": "http://www.cem.ncu.edu.tw/EN/Admission/DR.aspx",
+      "website": "http://www.cem.ncu.edu.tw"
+    },
+    {
+      "name": {
+        "zh": "土木工程學系博士班",
+        "en": "Ph.D Program, Department of Civil Engineering"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "機械工程學系博士班",
+        "en": "Ph.D. in Mechanical Engineering"
+      },
+      "degree": "phd",
+      "teaching_language": "english",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2-7",
+        "credits": "18",
+        "elective_credits": "9",
+        "required_credits": "9"
+      },
+      "regulation_url": "https://www.me.ncu.edu.tw/en/curriculum/masterphd/",
+      "website": "https://www.me.ncu.edu.tw/en/"
+    },
+    {
+      "name": {
+        "zh": "化學工程與材料工程學系博士班",
+        "en": "Ph.D Program, Department of Chemical and Materials Engineering"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "環境工程研究所博士班",
+        "en": "Ph.D Program, Graduate Institute of Environmental Engineering"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2-7",
+        "credits": "48",
+        "elective_credits": "30",
+        "required_credits": "18"
+      },
+      "regulation_url": "https://ev.in.ncu.edu.tw/eng.php/Course/index.html?id=5859c3771777e21b9c356214ced46c9af21d",
+      "website": "https://ev.in.ncu.edu.tw/index.php"
+    },
+    {
+      "name": {
+        "zh": "機械工程學系光機電工程博士班",
+        "en": "Ph.D. Program in Opto-Mechatronics Engineering, Department of Mechanical Engineering"
+      },
+      "degree": "phd",
+      "teaching_language": "english",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2-7",
+        "credits": "18",
+        "elective_credits": "9",
+        "required_credits": "9"
+      },
+      "regulation_url": "https://www.me.ncu.edu.tw/en/curriculum/masterphd/",
+      "website": "https://www.me.ncu.edu.tw/en/"
+    },
+    {
+      "name": {
+        "zh": "能源工程研究所博士班",
+        "en": "Ph.D. in Energy Engineering"
+      },
+      "degree": "phd",
+      "teaching_language": "english",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2-7",
+        "credits": "18",
+        "elective_credits": "9",
+        "required_credits": "9"
+      },
+      "regulation_url": "https://www.me.ncu.edu.tw/en/curriculum/masterphd/",
+      "website": "https://www.me.ncu.edu.tw/en/"
+    },
+    {
+      "name": {
+        "zh": "材料科學與工程研究所博士班",
+        "en": "Ph.D Program, Graduate Institute of Materials Science and Engineering"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "7",
+        "credits": "18",
+        "elective_credits": "12",
+        "required_credits": "6"
+      },
+      "regulation_url": "https://in.ncu.edu.tw/~mse/imse-en/phd.php",
+      "website": "https://in.ncu.edu.tw/mse/"
+    },
+    {
+      "name": {
+        "zh": "土木工程學系營建管理博士班",
+        "en": "Ph.D. Program in Construction Management, Department of Civil Engineering"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "工學院",
+        "en": "College of Engineering"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2至7年",
+        "credits": "24",
+        "elective_credits": "24",
+        "required_credits": "0"
+      },
+      "regulation_url": "http://www.cem.ncu.edu.tw/EN/Admission/DR.aspx",
+      "website": "http://www.cem.ncu.edu.tw"
+    },
+    {
+      "name": {
+        "zh": "企業管理學系",
+        "en": "Department of Business Administration"
+      },
+      "degree": "bachelor",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "資訊管理學系",
+        "en": "Department of Information Management"
+      },
+      "degree": "bachelor",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "admission_language_note": {
+        "zh": "申請者須繳交相當於CEFR A2 基礎級 (含)以上之中文能力證明。",
+        "en": "Applicants must submit proof of Chinese language proficiency at the CEFR A2 (Basic) level or higher."
+      },
+      "graduation": {
+        "years": "4",
+        "credits": "128",
+        "elective_credits": "28",
+        "required_credits": "100"
+      },
+      "regulation_url": "https://im.mgt.ncu.edu.tw/course/rule",
+      "website": "https://im.mgt.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "經濟學系",
+        "en": "Department of Economics"
+      },
+      "degree": "bachelor",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "admission_language_note": {
+        "zh": "申請之系所授課語言為中文者，須繳交相當於CEFR A2 (基礎級) (含)以上之中文能力證明。 請注意各系所仍可自行訂定語言能力要求，請至招生簡章查詢。 中文主要檢測對照表及英語系國家列表請至以下網站查詢， 連結：https://cis.ncu.edu.tw/admissions//menu.content/view/sn/81",
+        "en": "If you are applying for a program that is conducted in Chinese, you are required to submit a Chinese proficiency certificate at CEFR A2 (Waystage) or above. For example: Test of Chinese as a Foreign Language (TOCFL): Band A Level 2. Chinese Proficiency Test Comparison Chart can be found on our website. Here is the link: https://cis.ncu.edu.tw/admissions//menu.content/view/sn/81 Please note that the language proficiency required by each department may vary. Specific requirements of each department/graduate institute can be found at Admission Handbook for International Degree Students."
+      },
+      "graduation": {
+        "years": "4",
+        "credits": "128",
+        "elective_credits": "43",
+        "required_credits": "85"
+      },
+      "regulation_url": "https://ec.mgt.ncu.edu.tw/zh-TW/c/practice-method#inner_2",
+      "website": "https://ec.mgt.ncu.edu.tw/zh-TW"
+    },
+    {
+      "name": {
+        "zh": "企業管理學系碩士班",
+        "en": "Master of Business Administration"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "1~4年",
+        "credits": "46",
+        "elective_credits": "15",
+        "required_credits": "31"
+      },
+      "regulation_url": "https://ba.mgt.ncu.edu.tw/en/file.php",
+      "website": "https://ba.mgt.ncu.edu.tw/en/index.php"
+    },
+    {
+      "name": {
+        "zh": "資訊管理學系碩士班",
+        "en": "Department of Information Management"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "4",
+        "credits": "30~33",
+        "elective_credits": "9",
+        "required_credits": "21~24"
+      },
+      "regulation_url": "https://im.mgt.ncu.edu.tw/course/rule",
+      "website": "https://im.mgt.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "工業管理研究所碩士班",
+        "en": "Graduate Institute of Industrial Management"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "1-4",
+        "credits": "34",
+        "elective_credits": "21",
+        "required_credits": "13"
+      },
+      "regulation_url": "https://ia.mgt.ncu.edu.tw/Course?section=master",
+      "website": "https://ia.mgt.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "人力資源管理研究所碩士班",
+        "en": "Graduate Institute of Human Resource Management"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2-4",
+        "credits": "41",
+        "elective_credits": "21",
+        "required_credits": "20"
+      },
+      "regulation_url": "https://hr.mgt.ncu.edu.tw/en/category/method",
+      "website": "https://hr.mgt.ncu.edu.tw"
+    },
+    {
+      "name": {
+        "zh": "財務金融學系碩士班",
+        "en": "Department of Finance"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "admission_language_note": {
+        "zh": "申請之系所授課語言為中文者，須繳交相當於CEFR A2 (基礎級) (含)以上之中文能力證明。 請注意各系所仍可自行訂定語言能力要求，請至招生簡章查詢。 中文主要檢測對照表及英語系國家列表請至以下網站查詢， 連結：https://cis.ncu.edu.tw/admissions//menu.content/view/sn/81",
+        "en": "If you are applying for a program that is conducted in Chinese, you are required to submit a Chinese proficiency certificate at CEFR A2 (Waystage) or above. For example: Test of Chinese as a Foreign Language (TOCFL): Band A Level 2. Chinese Proficiency Test Comparison Chart can be found on our website. Here is the link: https://cis.ncu.edu.tw/admissions//menu.content/view/sn/81 Please note that the language proficiency required by each department may vary. Specific requirements of each department/graduate institute can be found at Admission Handbook for International Degree Students."
+      },
+      "graduation": {
+        "years": "2~4",
+        "credits": "43",
+        "elective_credits": "20",
+        "required_credits": "23"
+      },
+      "regulation_url": "https://fm.mgt.ncu.edu.tw/en/category/course",
+      "website": "https://fm.mgt.ncu.edu.tw"
+    },
+    {
+      "name": {
+        "zh": "經濟學系碩士班",
+        "en": "Master of Economics"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "國際經營管理碩士學位學程",
+        "en": "International Master of Business Administration program"
+      },
+      "degree": "master",
+      "teaching_language": "english",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "admission_language_note": {
+        "zh": "請至少提供下列一項英語能力檢定證明： 多益（TOEIC）、托福（TOEFL）紙筆測驗（PBT）、電腦測驗（CBT）、網路測驗（iBT）、雅思（IELTS）、歐洲語言共同參考架構（CEFR）、其他。",
+        "en": "Please provide at least one type of the following certificates of English ability. TOEIC, TOEFL, PBT, CBT, iBT, IELTS, CEFR, Other"
+      },
+      "graduation": {
+        "years": "4",
+        "credits": "36",
+        "elective_credits": "12",
+        "required_credits": "24"
+      },
+      "regulation_url": "https://imba.mgt.ncu.edu.tw/en/graduation",
+      "website": "https://imba.mgt.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "企業管理學系博士班",
+        "en": "Department of Business Administration"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "31個月~7年",
+        "credits": "28",
+        "elective_credits": "9",
+        "required_credits": "19"
+      },
+      "regulation_url": "https://ba.mgt.ncu.edu.tw/en/file.php",
+      "website": "https://ba.mgt.ncu.edu.tw/en/index.php"
+    },
+    {
+      "name": {
+        "zh": "資訊管理學系博士班",
+        "en": "Department of Information Management"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "7",
+        "credits": "31",
+        "elective_credits": "9",
+        "required_credits": "22"
+      },
+      "regulation_url": "https://im.mgt.ncu.edu.tw/download/course/rules/National%20Central%20University%20Department%20of%20Information%20Management%20Regulations%20for%20Graduate%20Study%20in%20the%20Doctoral%20Program(PhD)_1131111.pdf",
+      "website": "https://im.mgt.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "工業管理研究所博士班",
+        "en": "Graduate Institute of Industrial Management"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "1-7",
+        "credits": "28",
+        "elective_credits": "24",
+        "required_credits": "4"
+      },
+      "regulation_url": "https://ia.mgt.ncu.edu.tw/Course?section=doctoral",
+      "website": "https://ia.mgt.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "人力資源管理研究所博士班",
+        "en": "Graduate Institute of Human Resource Management"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "3-7",
+        "credits": "24",
+        "elective_credits": "12",
+        "required_credits": "12"
+      },
+      "regulation_url": "https://hr.mgt.ncu.edu.tw/en/category/method",
+      "website": "https://hr.mgt.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "財務金融學系博士班",
+        "en": "Department of Finance"
+      },
+      "degree": "phd",
+      "teaching_language": "english",
+      "college": {
+        "zh": "管理學院",
+        "en": "College of Management"
+      },
+      "admission_language_note": {
+        "zh": "申請之系所授課語言為全英語授課或是有足夠的英文授課課程可滿足畢業條件之系所者，須繳交相當於CEFR B1 (進階級) (含) 以上之英語能力證明，例：托福TOEFL-ibt 42；雅思IELTS：4；多益測驗TOEIC：550；全民英檢GEPT：中級(Intermediate)",
+        "en": "申請之系所授課語言為全英語授課或是有足夠的英文授課課程可滿足畢業條件之系所者，須繳交相當於CEFR B1 (進階級) (含) 以上之英語能力證明，例：托福TOEFL-ibt 42；雅思IELTS：4；多益測驗TOEIC：550；全民英檢GEPT：中級(Intermediate) If you are applying for a program that is conducted in English (including English-taught programs and programs with sufficient English courses to satisfy graduation requirements), you will need to submit an English proficiency certificate at CEFR B1 (Threshold) or above. For example: TOEFL iBT: 42; IELTS:4; TOEIC: 550; GEPT: Intermediate. Applicants who are from an English-speaking country are exempted from providing a English proficiency certificate. Please note that the language proficiency required by each department may vary. English Proficiency Test Comparison Chart and List of English-Speaking Countries can be found on our website. Here is the link: https://cis.ncu.edu.tw/admissions//menu.content/view/sn/81"
+      },
+      "graduation": {
+        "years": "3~7",
+        "credits": "36",
+        "elective_credits": "6",
+        "required_credits": "30"
+      },
+      "regulation_url": "https://fm.mgt.ncu.edu.tw/en/category/course",
+      "website": "https://fm.mgt.ncu.edu.tw/en"
+    },
+    {
+      "name": {
+        "zh": "電機工程學系碩士班",
+        "en": "MSc in Electrical Engineering"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "資電學院",
+        "en": "College of Electrical Engineering and Computer Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "資訊工程學系碩士班",
+        "en": "MSc in Computer Science and Information Engineering"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "資電學院",
+        "en": "College of Electrical Engineering and Computer Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2-4",
+        "credits": "24",
+        "elective_credits": "18",
+        "required_credits": "6"
+      },
+      "regulation_url": "https://www.csie.ncu.edu.tw/p/412-1013-2098.php?Lang=en",
+      "website": "https://www.csie.ncu.edu.tw/?Lang=zh-tw"
+    },
+    {
+      "name": {
+        "zh": "通訊工程學系碩士班",
+        "en": "Communication Engineering"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "資電學院",
+        "en": "College of Electrical Engineering and Computer Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "1~4",
+        "credits": "24",
+        "elective_credits": "20",
+        "required_credits": "4"
+      },
+      "regulation_url": "https://www.ce.ncu.edu.tw/en/criteria?ty=1",
+      "website": "https://www.ce.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "網路學習科技研究所碩士班",
+        "en": "Graduate Institute of Network Learning Technology"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "資電學院",
+        "en": "College of Electrical Engineering and Computer Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2",
+        "credits": "24",
+        "elective_credits": "18",
+        "required_credits": "6"
+      },
+      "regulation_url": "https://www.lst.ncu.edu.tw/NLT_new/page.php?slug=method&lang=en",
+      "website": "https://www.lst.ncu.edu.tw/NLT_new/index.php"
+    },
+    {
+      "name": {
+        "zh": "人工智慧國際碩士學位學程",
+        "en": "International Graduate Program in Artificial Intelligence"
+      },
+      "degree": "master",
+      "teaching_language": "english",
+      "college": {
+        "zh": "資電學院",
+        "en": "College of Electrical Engineering and Computer Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2-4",
+        "credits": "4224",
+        "elective_credits": "24",
+        "required_credits": "0"
+      },
+      "regulation_url": "https://igpai.ncu.edu.tw/en-Constitution.aspx",
+      "website": "https://igpai.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "電機工程學系博士班",
+        "en": "Ph.D. in Electrical Engineering"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "資電學院",
+        "en": "College of Electrical Engineering and Computer Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "資訊工程學系博士班",
+        "en": "Ph.D. in Computer Science and Information Engineering"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "資電學院",
+        "en": "College of Electrical Engineering and Computer Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "3-7",
+        "credits": "18",
+        "elective_credits": "18",
+        "required_credits": "0"
+      },
+      "regulation_url": "https://www.csie.ncu.edu.tw/p/412-1013-2099.php?Lang=en",
+      "website": "https://www.csie.ncu.edu.tw/?Lang=zh-tw"
+    },
+    {
+      "name": {
+        "zh": "通訊工程學系博士班",
+        "en": "Ph.D. in Communication Engineering"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "資電學院",
+        "en": "College of Electrical Engineering and Computer Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2~7",
+        "credits": "18",
+        "elective_credits": "4",
+        "required_credits": "14"
+      },
+      "regulation_url": "https://www.ce.ncu.edu.tw/file/%E9%80%9A%E8%A8%8A%E7%B3%BB_%E5%8D%9A%E7%8F%AD%E4%BF%AE%E6%A5%AD%E8%BE%A6%E6%B3%95_%E4%B8%AD%E8%8B%B1%E6%96%87_109%E5%AD%B8%E5%B9%B4%E8%B5%B7%E9%81%A9%E7%94%A8.pdf",
+      "website": "https://www.ce.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "網路學習科技研究所博士班",
+        "en": "Ph.D. in Institute of Network Learning Technology"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "資電學院",
+        "en": "College of Electrical Engineering and Computer Science"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "4",
+        "credits": "24",
+        "elective_credits": "24",
+        "required_credits": "0"
+      },
+      "regulation_url": "https://www.lst.ncu.edu.tw/NLT_new/page.php?slug=method&lang=en",
+      "website": "https://www.lst.ncu.edu.tw/NLT_new/index.php"
+    },
+    {
+      "name": {
+        "zh": "太空科學與工程學系",
+        "en": "Department of Space Science and Engineering"
+      },
+      "degree": "bachelor",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "地科學院",
+        "en": "College of Earth Sciences"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "大氣科學學系大氣物理碩士班",
+        "en": "MSc in Atmospheric Physics"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "地科學院",
+        "en": "College of Earth Sciences"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "地球科學學系地球物理碩士班",
+        "en": "MSc in Geophysics"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "地科學院",
+        "en": "College of Earth Sciences"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2-4",
+        "credits": "24",
+        "elective_credits": "20",
+        "required_credits": "4"
+      },
+      "regulation_url": "https://www.gep.ncu.edu.tw/student?f1=6&f2=0",
+      "website": "HTTPS://WWW.GEP.NCU.EDU.TW/"
+    },
+    {
+      "name": {
+        "zh": "應用地質研究所碩士班",
+        "en": "MSc in Applied Geology"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "地科學院",
+        "en": "College of Earth Sciences"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2~4",
+        "credits": "24",
+        "elective_credits": "13",
+        "required_credits": "11"
+      },
+      "regulation_url": "https://geo.ncu.edu.tw/static/file/5/1005/img/128/244263537.pdf",
+      "website": "https://geo.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "水文與海洋科學研究所碩士班",
+        "en": "MSc in Hydrologocal and Oceanic Sciences"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "地科學院",
+        "en": "College of Earth Sciences"
+      },
+      "admission_language_note": {
+        "zh": "申請之系所授課語言為全英語授課或是有足夠的英文授課課程可滿足畢業條件之系所者，須繳交相當於CEFR B1 (進階級) (含) 以上之英語能力證明，例：托福TOEFL-ibt 42；雅思IELTS：4；多益測驗TOEIC：550；全民英檢GEPT：中級(Intermediate)",
+        "en": "If you are applying for a program that is conducted in English (including English-taught programs and programs with sufficient English courses to satisfy graduation requirements), you will need to submit an English proficiency certificate at CEFR B1 (Threshold) or above. For example: TOEFL iBT: 42; IELTS:4; TOEIC: 550; GEPT: Intermediate. Applicants who are from an English-speaking country are exempted from providing a English proficiency certificate."
+      },
+      "graduation": {
+        "years": "2-4",
+        "credits": "24",
+        "elective_credits": "21",
+        "required_credits": "3"
+      },
+      "regulation_url": "https://www.ihos.ncu.edu.tw/p/406-1004-567,r53.php?Lang=en",
+      "website": "https://www.ihos.ncu.edu.tw/index.php?Lang=en"
+    },
+    {
+      "name": {
+        "zh": "太空科學與工程學系碩士班",
+        "en": "MSc in Space Science and Engineering"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "地科學院",
+        "en": "College of Earth Sciences"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "大氣科學學系大氣物理博士班(一般組)",
+        "en": "Comprehensive Division, Ph.D. Program in Atmospheric Physics, Department of Atmospheric Sciences"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "地科學院",
+        "en": "College of Earth Sciences"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "地球科學學系地球物理博士班(一般組)",
+        "en": "Ph.D. Program in Geophysics, Department of Earth Sciences"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "地科學院",
+        "en": "College of Earth Sciences"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2-7",
+        "credits": "18",
+        "elective_credits": "14",
+        "required_credits": "4"
+      },
+      "regulation_url": "https://www.gep.ncu.edu.tw/student?f1=6&f2=0",
+      "website": "HTTPS://WWW.GEP.NCU.EDU.TW/"
+    },
+    {
+      "name": {
+        "zh": "應用地質研究所博士班(環境資源暨防災組)",
+        "en": "Environmental Resources and Disaster Prevention Ph.D. Program, Graduate Institute of Applied Geology"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "地科學院",
+        "en": "College of Earth Sciences"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2~7",
+        "credits": "18",
+        "elective_credits": "18",
+        "required_credits": "8"
+      },
+      "regulation_url": "https://geo.ncu.edu.tw/static/file/5/1005/img/128/894281872.pdf",
+      "website": "https://geo.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "水文與海洋科學研究所博士班",
+        "en": "Ph.D. in Hydrologocal and Oceanic Sciences"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "地科學院",
+        "en": "College of Earth Sciences"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2-7",
+        "credits": "18",
+        "elective_credits": "14",
+        "required_credits": "4"
+      },
+      "regulation_url": "https://www.ihos.ncu.edu.tw/p/406-1004-568,r53.php?Lang=en",
+      "website": "https://www.ihos.ncu.edu.tw/index.php?Lang=en"
+    },
+    {
+      "name": {
+        "zh": "太空科學與工程學系博士班",
+        "en": "Graduate Institute of Space Science and Engineering"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "地科學院",
+        "en": "College of Earth Sciences"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "客家語文暨社會科學學系(客家社會及政策組)",
+        "en": "Department of Hakka Language and Social Sciences"
+      },
+      "degree": "bachelor",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "客家學院",
+        "en": "College of Hakka Studies"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "客家語文暨社會科學學系(客家語文及傳播組)",
+        "en": "Department of Hakka Language and Social Sciences"
+      },
+      "degree": "bachelor",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "客家學院",
+        "en": "College of Hakka Studies"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "法律與政府學系",
+        "en": "Department of Law and Government"
+      },
+      "degree": "bachelor",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "客家學院",
+        "en": "College of Hakka Studies"
+      },
+      "admission_language_note": {
+        "zh": "本系全以中文授課。申請者務必具備 CEFR A2（含）以上之中文能力檢定證明。",
+        "en": "A minimum of CEFR A2 level is required as all courses are conducted entirely in Chinese."
+      },
+      "graduation": {
+        "years": "4",
+        "credits": "128",
+        "elective_credits": "51",
+        "required_credits": "77"
+      },
+      "regulation_url": "https://www.lawgov.ncu.edu.tw/#",
+      "website": "https://www.lawgov.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "客家語文暨社會科學學系客家社會及政策碩士班",
+        "en": "Master’s Program in Hakka Social and Policy Sciences, Department of Hakka Language and Social Sciences"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "客家學院",
+        "en": "College of Hakka Studies"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "客家語文暨社會科學學系客家語文碩士班",
+        "en": "Master’s Program in Hakka Language and Literature, Department of Hakka Language and Social Sciences"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "客家學院",
+        "en": "College of Hakka Studies"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "法律與政府學系碩士班",
+        "en": "Department of Law and Government"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "客家學院",
+        "en": "College of Hakka Studies"
+      },
+      "admission_language_note": {
+        "zh": "申請之系所授課語言為中文者，須繳交相當於CEFR A2 (基礎級) (含)以上之中文能力證明。 請注意各系所仍可自行訂定語言能力要求，請至招生簡章查詢。 中文主要檢測對照表及英語系國家列表請至以下網站查詢， 連結：https://cis.ncu.edu.tw/admissions//menu.content/view/sn/81",
+        "en": "If you are applying for a program that is conducted in Chinese, you are required to submit a Chinese proficiency certificate at CEFR A2 (Waystage) or above. For example: Test of Chinese as a Foreign Language (TOCFL): Band A Level 2. Chinese Proficiency Test Comparison Chart can be found on our website. Here is the link: https://cis.ncu.edu.tw/admissions//menu.content/view/sn/81 Please note that the language proficiency required by each department may vary. Specific requirements of each department/graduate institute can be found at Admission Handbook for International Degree Students."
+      },
+      "graduation": {
+        "years": "2至4",
+        "credits": "33",
+        "elective_credits": "33",
+        "required_credits": "0"
+      },
+      "regulation_url": "https://www.lawgov.ncu.edu.tw/p/426-1002-10.php?Lang=en",
+      "website": "https://www.lawgov.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "客家語文暨社會科學學系客家研究博士班",
+        "en": "Ph.D. Program of Hakka Studies, Department of Hakka Language and Social Sciences"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "客家學院",
+        "en": "College of Hakka Studies"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "生醫理工學院智慧生醫國際學士班",
+        "en": "生醫理工學院智慧生醫國際學士班"
+      },
+      "degree": "bachelor",
+      "teaching_language": "english",
+      "college": {
+        "zh": "生醫理工學院",
+        "en": "College of Health Sciences and Technology"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "4",
+        "credits": "128",
+        "elective_credits": "39",
+        "required_credits": "89"
+      },
+      "regulation_url": "https://pdc.adm.ncu.edu.tw/p/412-1019-2010.php?Lang=en",
+      "website": "https://ncu.edu.tw/chst/ISBS_EN/#/"
+    },
+    {
+      "name": {
+        "zh": "生命科學系碩士班",
+        "en": "MSc in Life Science"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "生醫理工學院",
+        "en": "College of Health Sciences and Technology"
+      },
+      "admission_language_note": {
+        "zh": "申請之系所授課語言為全英語授課或是有足夠的英文授課課程可滿足畢業條件之系所者，須繳交相當於CEFR B1 (進階級) (含) 以上之英語能力證明，例：托福TOEFL-ibt 42；雅思IELTS：4；多益測驗TOEIC：550；全民英檢GEPT：中級(Intermediate)",
+        "en": "If you are applying for a program that is conducted in English (including English-taught programs and programs with sufficient English courses to satisfy graduation requirements), you will need to submit an English proficiency certificate at CEFR B1 (Threshold) or above. For example: TOEFL iBT: 42; IELTS:4; TOEIC: 550; GEPT: Intermediate. Applicants who are from an English-speaking country are exempted from providing a English proficiency certificate. Please note that the language proficiency required by each department may vary. English Proficiency Test Comparison Chart and List of English-Speaking Countries can be found on our website. Here is the link: https://cis.ncu.edu.tw/AdmissionSys/oia/activity?type=1"
+      },
+      "graduation": {
+        "years": "1~4",
+        "credits": "24",
+        "elective_credits": "20",
+        "required_credits": "4"
+      },
+      "regulation_url": "https://nculs.in.ncu.edu.tw/index.php/eng/recruit/more.html?id=52&cid=96&pid=0",
+      "website": "https://nculs.in.ncu.edu.tw/index.php/Index/index.html"
+    },
+    {
+      "name": {
+        "zh": "認知神經科學研究所碩士班",
+        "en": "Graduate Institute of Cognitive Neuroscience"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "生醫理工學院",
+        "en": "College of Health Sciences and Technology"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "1-4",
+        "credits": "24",
+        "elective_credits": "15",
+        "required_credits": "9"
+      },
+      "regulation_url": "https://icn.ncu.edu.tw/Uploads/files/20241014082526.pdf",
+      "website": "https://icn.ncu.edu.tw"
+    },
+    {
+      "name": {
+        "zh": "生醫科學與工程學系系統生物與生物資訊碩士班",
+        "en": "Master Program in Systems Biology and Bioinformatics, Department of Biomedical Sciences and Engineering"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "生醫理工學院",
+        "en": "College of Health Sciences and Technology"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "生醫科學與工程學系生物醫學工程碩士班",
+        "en": "Master Program in Biomedical Engineering, Department of Biomedical Sciences and Engineering"
+      },
+      "degree": "master",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "生醫理工學院",
+        "en": "College of Health Sciences and Technology"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "生命科學系博士班",
+        "en": "PhD in Life Science"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "生醫理工學院",
+        "en": "College of Health Sciences and Technology"
+      },
+      "admission_language_note": {
+        "zh": "申請之系所授課語言為全英語授課或是有足夠的英文授課課程可滿足畢業條件之系所者，須繳交相當於CEFR B1 (進階級) (含) 以上之英語能力證明，例：托福TOEFL-ibt 42；雅思IELTS：4；多益測驗TOEIC：550；全民英檢GEPT：中級(Intermediate)",
+        "en": "If you are applying for a program that is conducted in English (including English-taught programs and programs with sufficient English courses to satisfy graduation requirements), you will need to submit an English proficiency certificate at CEFR B1 (Threshold) or above. For example: TOEFL iBT: 42; IELTS:4; TOEIC: 550; GEPT: Intermediate. Applicants who are from an English-speaking country are exempted from providing a English proficiency certificate. Please note that the language proficiency required by each department may vary. English Proficiency Test Comparison Chart and List of English-Speaking Countries can be found on our website. Here is the link: https://cis.ncu.edu.tw/AdmissionSys/oia/activity?type=1"
+      },
+      "graduation": {
+        "years": "2~7",
+        "credits": "18",
+        "elective_credits": "7",
+        "required_credits": "11"
+      },
+      "regulation_url": "https://nculs.in.ncu.edu.tw/index.php/eng/recruit/more.html?id=50&cid=95&pid=0",
+      "website": "https://nculs.in.ncu.edu.tw/index.php/Index/index.html"
+    },
+    {
+      "name": {
+        "zh": "認知神經科學研究所博士班",
+        "en": "Graduate Institute of Cognitive Neuroscience"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "生醫理工學院",
+        "en": "College of Health Sciences and Technology"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2-7",
+        "credits": "18",
+        "elective_credits": "14",
+        "required_credits": "4"
+      },
+      "regulation_url": "https://icn.ncu.edu.tw/Uploads/files/20210607124258.pdf",
+      "website": "https://icn.ncu.edu.tw"
+    },
+    {
+      "name": {
+        "zh": "跨領域神經科學博士學位學程(台灣聯合大學系統)",
+        "en": "International Ph.D. program in Interdisciplinary neuroscience (University System of Taiwan)"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "生醫理工學院",
+        "en": "College of Health Sciences and Technology"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "2-7",
+        "credits": "18",
+        "elective_credits": "8",
+        "required_credits": "10"
+      },
+      "regulation_url": "https://icn.ncu.edu.tw/Uploads/files/20240904180659.pdf",
+      "website": "https://icn.ncu.edu.tw"
+    },
+    {
+      "name": {
+        "zh": "生醫科學與工程學系系統生物與生物資訊博士班",
+        "en": "Ph.D. Program of Systems Biology and Bioinformatics, Department of Biomedical Sciences and Engineering"
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "生醫理工學院",
+        "en": "College of Health Sciences and Technology"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "生醫科學與工程學系生物醫學工程博士班(一般組)",
+        "en": "Ph.D. Program in Biomedical Engineering, Department of Biomedical Sciences and Engineering."
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "生醫理工學院",
+        "en": "College of Health Sciences and Technology"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "生醫科學與工程學系生物醫學工程博士班(產業組)",
+        "en": "Industrial Ph.D. Program in Biomedical Engineering, Department of Biomedical Sciences and Engineering."
+      },
+      "degree": "phd",
+      "teaching_language": "chinese",
+      "college": {
+        "zh": "生醫理工學院",
+        "en": "College of Health Sciences and Technology"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "",
+        "credits": "",
+        "elective_credits": "",
+        "required_credits": ""
+      },
+      "regulation_url": null,
+      "website": null
+    },
+    {
+      "name": {
+        "zh": "永續去碳科技碩士學位學程",
+        "en": "Master Programs, Sustainability in Decarbonization"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "永續與綠能科技研究學院",
+        "en": "College of Graduate College of Sustainability and Green Energy"
+      },
+      "admission_language_note": {
+        "zh": "英文能力證明：必繳 中文能力證明：不需檢附",
+        "en": "Evidence of English Proficiency: Required Evidence of Chinese Proficiency: Not required"
+      },
+      "graduation": {
+        "years": "1-4",
+        "credits": "25",
+        "elective_credits": "15",
+        "required_credits": "10"
+      },
+      "regulation_url": "https://sage.ncu.edu.tw/p/412-1011-2457.php?Lang=en",
+      "website": "https://sage.ncu.edu.tw/?Lang=en"
+    },
+    {
+      "name": {
+        "zh": "永續綠能科技碩士學位學程",
+        "en": "Master Programs, Sustainability in Green Energy"
+      },
+      "degree": "master",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "永續與綠能科技研究學院",
+        "en": "College of Graduate College of Sustainability and Green Energy"
+      },
+      "admission_language_note": {
+        "zh": "",
+        "en": ""
+      },
+      "graduation": {
+        "years": "1-4",
+        "credits": "24",
+        "elective_credits": "14",
+        "required_credits": "10"
+      },
+      "regulation_url": "https://sage.ncu.edu.tw/p/412-1011-2457.php?Lang=en",
+      "website": "https://sage.ncu.edu.tw/?Lang=en"
+    },
+    {
+      "name": {
+        "zh": "永續領導力碩士學位學程",
+        "en": "Master Programs, Sustainability Leadership"
+      },
+      "degree": "master",
+      "teaching_language": "english",
+      "college": {
+        "zh": "永續與綠能科技研究學院",
+        "en": "College of Graduate College of Sustainability and Green Energy"
+      },
+      "admission_language_note": {
+        "zh": "CEFR B2 (English)",
+        "en": "CEFR B2 (English)"
+      },
+      "graduation": {
+        "years": "4-8學期",
+        "credits": "24",
+        "elective_credits": "14",
+        "required_credits": "10"
+      },
+      "regulation_url": "https://sage.ncu.edu.tw/p/412-1011-2457.php?Lang=en",
+      "website": "https://sage.ncu.edu.tw/"
+    },
+    {
+      "name": {
+        "zh": "永續去碳科技博士學位學程",
+        "en": "Ph.D. Programs, Sustainability in Decarbonization"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "永續與綠能科技研究學院",
+        "en": "College of Graduate College of Sustainability and Green Energy"
+      },
+      "admission_language_note": {
+        "zh": "英文能力證明：必繳 中文能力證明：不需檢附",
+        "en": "Evidence of English Proficiency: Required Evidence of Chinese Proficiency: Not required"
+      },
+      "graduation": {
+        "years": "2-7",
+        "credits": "25",
+        "elective_credits": "15",
+        "required_credits": "10"
+      },
+      "regulation_url": "https://sage.ncu.edu.tw/p/412-1011-2457.php?Lang=en",
+      "website": "https://sage.ncu.edu.tw/?Lang=en"
+    },
+    {
+      "name": {
+        "zh": "永續綠能科技博士學位學程",
+        "en": "Ph.D. Programs, Sustainability in Green Energy"
+      },
+      "degree": "phd",
+      "teaching_language": "english_sufficient",
+      "college": {
+        "zh": "永續與綠能科技研究學院",
+        "en": "College of Graduate College of Sustainability and Green Energy"
+      },
+      "admission_language_note": {
+        "zh": "英文能力證明：必繳 中文能力證明：選繳",
+        "en": "Evidence of English Proficiency: Required Evidence of Chinese Proficiency: Optional"
+      },
+      "graduation": {
+        "years": "2-7",
+        "credits": "24",
+        "elective_credits": "14",
+        "required_credits": "10"
+      },
+      "regulation_url": "https://sage.ncu.edu.tw/p/412-1011-2457.php?Lang=en",
+      "website": "https://sage.ncu.edu.tw/?Lang=en"
+    },
+    {
+      "name": {
+        "zh": "永續領導力博士學位學程",
+        "en": "Ph.D. Programs, Sustainability Leadership"
+      },
+      "degree": "phd",
+      "teaching_language": "english",
+      "college": {
+        "zh": "永續與綠能科技研究學院",
+        "en": "College of Graduate College of Sustainability and Green Energy"
+      },
+      "admission_language_note": {
+        "zh": "CEFR B2 (English)",
+        "en": "CEFR B2 (English)"
+      },
+      "graduation": {
+        "years": "7-14學期",
+        "credits": "26",
+        "elective_credits": "9",
+        "required_credits": "15"
+      },
+      "regulation_url": "https://sage.ncu.edu.tw/p/412-1011-2457.php?Lang=en",
+      "website": "https://sage.ncu.edu.tw/?Lang=zh-tw"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+<resources>
+    <plurals name="catalog_label_schedule">
+        <item quantity="other">Khung giờ: %1$d tiết</item>
+    </plurals>
+</resources>

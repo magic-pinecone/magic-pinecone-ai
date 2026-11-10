@@ -22,7 +22,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -42,6 +41,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.compose.stringResource
 import org.mpc.domain.model.CourseDay
 import org.mpc.domain.model.CoursePeriod
 import org.mpc.domain.model.CourseTime
@@ -50,6 +51,19 @@ import org.mpc.presentation.preview.ComposePreviewScenarioContent
 import org.mpc.presentation.theme.MpcShapes
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
+import org.mpc.shared.MR
+import org.mpc.shared.catalog_clear_slots
+import org.mpc.shared.catalog_day_friday
+import org.mpc.shared.catalog_day_monday
+import org.mpc.shared.catalog_day_saturday
+import org.mpc.shared.catalog_day_sunday
+import org.mpc.shared.catalog_day_thursday
+import org.mpc.shared.catalog_day_tuesday
+import org.mpc.shared.catalog_day_unknown
+import org.mpc.shared.catalog_day_wednesday
+import org.mpc.shared.catalog_full_week
+import org.mpc.shared.catalog_slot_description
+import org.mpc.shared.catalog_weekdays
 import kotlin.math.floor
 
 private val WEEKDAYS = CourseDay.entries.filter { it.order <= CourseDay.FRIDAY.order }
@@ -84,7 +98,7 @@ fun CourseSlotPicker(
                 enabled = selected.isNotEmpty(),
                 colors = ButtonDefaults.textButtonColors(contentColor = MpcTheme.colors.accent),
             ) {
-                Text("清除時段", style = MpcTheme.typography.label)
+                Text(stringResource(MR.strings.catalog_clear_slots), style = MpcTheme.typography.label)
             }
         }
         SlotGrid(days = days, selected = selected, onSelectedChange = onSelectedChange)
@@ -105,7 +119,7 @@ private fun WeekSpanToggle(
             .padding(2.dp)
             .selectableGroup(),
     ) {
-        listOf("平日" to false, "全週" to true).forEach { (label, fullWeek) ->
+        listOf(MR.strings.catalog_weekdays to false, MR.strings.catalog_full_week to true).forEach { (label, fullWeek) ->
             val isSelected = showsFullWeek == fullWeek
             Box(
                 contentAlignment = Alignment.Center,
@@ -121,7 +135,7 @@ private fun WeekSpanToggle(
                     ),
             ) {
                 Text(
-                    text = label,
+                    text = stringResource(label),
                     style = MpcTheme.typography.label,
                     color = if (isSelected) MpcTheme.colors.label else MpcTheme.colors.onFillQuiet,
                 )
@@ -149,7 +163,7 @@ private fun SlotGrid(
             Box(Modifier.width(PERIOD_LABEL_WIDTH))
             days.forEach { day ->
                 Text(
-                    text = day.description,
+                    text = stringResource(day.shortName()),
                     style = MpcTheme.typography.label,
                     color = MpcTheme.colors.labelSecondary,
                     modifier = Modifier.weight(1f),
@@ -212,7 +226,7 @@ private fun SlotCell(
     onToggle: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val label = remember(slot) { "星期${slot.day.description} 第 ${slot.period.description} 節" }
+    val label = stringResource(MR.strings.catalog_slot_description, stringResource(slot.day.shortName()), slot.period.description)
     Box(
         modifier = modifier
             .height(CELL_HEIGHT)
@@ -228,6 +242,17 @@ private fun SlotCell(
                 }
             },
     )
+}
+
+private fun CourseDay.shortName(): StringResource = when (this) {
+    CourseDay.MONDAY -> MR.strings.catalog_day_monday
+    CourseDay.TUESDAY -> MR.strings.catalog_day_tuesday
+    CourseDay.WEDNESDAY -> MR.strings.catalog_day_wednesday
+    CourseDay.THURSDAY -> MR.strings.catalog_day_thursday
+    CourseDay.FRIDAY -> MR.strings.catalog_day_friday
+    CourseDay.SATURDAY -> MR.strings.catalog_day_saturday
+    CourseDay.SUNDAY -> MR.strings.catalog_day_sunday
+    CourseDay.UNKNOWN -> MR.strings.catalog_day_unknown
 }
 
 private fun slotAt(

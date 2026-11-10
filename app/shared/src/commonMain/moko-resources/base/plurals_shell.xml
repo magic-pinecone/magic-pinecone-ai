@@ -1,0 +1,6 @@
+<resources>
+    <plurals name="shell_selected_course_count">
+        <item quantity="one">%1$d course</item>
+        <item quantity="other">%1$d courses</item>
+    </plurals>
+</resources>

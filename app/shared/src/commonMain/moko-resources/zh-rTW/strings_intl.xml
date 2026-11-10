@@ -1,0 +1,33 @@
+<resources>
+    <string name="intl_title">畢業語言門檻</string>
+    <string name="intl_show_chinese">中文</string>
+    <string name="intl_show_english">English</string>
+    <string name="intl_degree_bachelor">學士班</string>
+    <string name="intl_degree_master">碩士班</string>
+    <string name="intl_degree_phd">博士班</string>
+    <string name="intl_all_colleges">全部學院</string>
+    <string name="intl_admission_year">入學學年度</string>
+    <string name="intl_cohort">%1$s 學年度（%2$s）</string>
+    <string name="intl_earlier_year">前一學年度</string>
+    <string name="intl_later_year">後一學年度</string>
+    <string name="intl_apply_at">辦理單位：%1$s</string>
+    <string name="intl_english_tests">可採計的英文檢定（擇一）</string>
+    <string name="intl_other_languages">可採計的其他外語</string>
+    <string name="intl_international_students">外籍生須知</string>
+    <string name="intl_alternatives">未達標時</string>
+    <string name="intl_procedure">審核方式</string>
+    <string name="intl_notes">備註</string>
+    <string name="intl_sources">官方來源</string>
+    <string name="intl_no_rule">這個條件下沒有找到規定。這不代表沒有門檻，請查閱系所的修業規定。</string>
+    <string name="intl_no_rule_found">已查閱、沒有語言規定</string>
+    <string name="intl_not_checked">尚未查閱</string>
+    <string name="intl_chinese">華語</string>
+    <string name="intl_chinese_requirements">與畢業有關的規定</string>
+    <string name="intl_not_graduation_requirements">常被誤認為畢業條件</string>
+    <string name="intl_open_questions">仍待向學校確認</string>
+    <string name="intl_unofficial_translation">英文內容為非官方翻譯，以中文原文為準。</string>
+    <string name="intl_verified_on">與官方來源核對日期：%1$s</string>
+    <string name="intl_needs_backend">這個頁面需要神奇松果後端。請到「設定 › %1$s」填入後端位址。</string>
+    <string name="intl_failed">無法載入畢業語言門檻。</string>
+    <string name="intl_retry">重試</string>
+</resources>

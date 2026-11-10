@@ -24,13 +24,25 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mohamedrejeb.calf.ui.sheet.AdaptiveBottomSheet
 import com.mohamedrejeb.calf.ui.sheet.rememberAdaptiveSheetState
+import dev.icerock.moko.resources.compose.pluralStringResource
+import dev.icerock.moko.resources.compose.stringResource
 import org.mpc.domain.model.CourseSummary
 import org.mpc.presentation.components.AdaptiveList
 import org.mpc.presentation.components.AdaptiveListItem
 import org.mpc.presentation.formatting.creditLabel
+import org.mpc.presentation.formatting.creditsLabel
+import org.mpc.presentation.formatting.instructorsLabel
 import org.mpc.presentation.formatting.scheduleDescription
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
+import org.mpc.shared.MR
+import org.mpc.shared.planning_course_remove
+import org.mpc.shared.planning_course_remove_from_selected
+import org.mpc.shared.planning_selected_close
+import org.mpc.shared.planning_selected_empty_hint
+import org.mpc.shared.planning_selected_empty_title
+import org.mpc.shared.planning_selected_summary
+import org.mpc.shared.planning_selected_title
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,12 +90,12 @@ fun SelectedCoursesSheetContent(
                 verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 Text(
-                    text = "已選課程",
+                    text = stringResource(MR.strings.planning_selected_title),
                     modifier = Modifier.semantics { heading() },
                     style = MpcTheme.typography.sectionTitle,
                 )
                 Text(
-                    text = "${courses.size} 門課 · $totalCredits 學分",
+                    text = pluralStringResource(MR.plurals.planning_selected_summary, courses.size, courses.size, totalCredits),
                     color = MpcTheme.colors.labelSecondary,
                     style = MpcTheme.typography.supporting,
                 )
@@ -91,7 +103,7 @@ fun SelectedCoursesSheetContent(
             IconButton(onClick = onDismissRequest) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    contentDescription = "關閉已選課程",
+                    contentDescription = stringResource(MR.strings.planning_selected_close),
                     tint = MpcTheme.colors.labelSecondary,
                 )
             }
@@ -130,27 +142,28 @@ private fun EmptySelectedCoursesState() {
             tint = MpcTheme.colors.labelSecondary,
         )
         Text(
-            text = "還沒有已選課程",
+            text = stringResource(MR.strings.planning_selected_empty_title),
             style = MpcTheme.typography.headline,
         )
         Text(
-            text = "加入的課程會顯示於此。",
+            text = stringResource(MR.strings.planning_selected_empty_hint),
             color = MpcTheme.colors.labelSecondary,
             style = MpcTheme.typography.supporting,
         )
     }
 }
 
+@Composable
 private fun CourseSummary.toListItem(canEditPlan: Boolean): AdaptiveListItem = AdaptiveListItem(
     id = serialNo.value,
     title = title,
     supportingText =
     buildList {
         add(courseType.description)
-        add(teachers.filter { it.isNotBlank() }.joinToString("、").ifBlank { "未提供授課教師" })
+        add(teachers.instructorsLabel())
         add(scheduleDescription())
     }.joinToString("\n"),
-    trailingText = "${credit.creditLabel()} 學分",
-    actionLabel = if (canEditPlan) "移除" else null,
-    actionAccessibilityLabel = "從已選課程移除 $title",
+    trailingText = credit.creditsLabel(),
+    actionLabel = if (canEditPlan) stringResource(MR.strings.planning_course_remove) else null,
+    actionAccessibilityLabel = stringResource(MR.strings.planning_course_remove_from_selected, title),
 )

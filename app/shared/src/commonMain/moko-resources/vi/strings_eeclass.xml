@@ -1,0 +1,20 @@
+<resources>
+    <string name="eeclass_category_bulletins">Thông báo</string>
+    <string name="eeclass_category_materials">Tài liệu</string>
+    <string name="eeclass_category_homework">Bài tập</string>
+    <string name="eeclass_category_bulletins_empty">Không có thông báo</string>
+    <string name="eeclass_category_materials_empty">Không có tài liệu</string>
+    <string name="eeclass_category_homework_empty">Không có bài tập</string>
+    <string name="eeclass_courses_header">Khóa học ee-class</string>
+    <string name="eeclass_courses_empty">Không có khóa học ee-class</string>
+    <string name="eeclass_courses_unavailable">Không thể tải các khóa học ee-class</string>
+    <string name="eeclass_course_unavailable">Không thể tải nội dung khóa học</string>
+    <string name="eeclass_bulletin_unavailable">Không thể tải thông báo</string>
+    <string name="eeclass_needs_portal_title">Cần đăng nhập Portal</string>
+    <string name="eeclass_needs_portal_description">Đăng nhập ở tab Portal rồi làm mới.</string>
+    <string name="eeclass_try_again_later">Vui lòng thử lại sau.</string>
+    <string name="eeclass_refresh">Làm mới</string>
+    <string name="eeclass_attachments">Tệp đính kèm</string>
+    <string name="eeclass_see_all">Xem tất cả %1$d mục</string>
+    <string name="eeclass_homework_due">Hạn nộp %1$s</string>
+</resources>

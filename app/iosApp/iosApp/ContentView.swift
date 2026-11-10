@@ -6,6 +6,7 @@ struct ContentView: View {
     @Environment(AppRouter.self) private var router
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var themeMode = AppThemeMode.system
+    @State private var appLanguageTag = ""
     @State private var isShowingSettings = false
 
     var body: some View {
@@ -41,10 +42,27 @@ struct ContentView: View {
                 }
                 .ignoresSafeArea(.container, edges: bottomSafeAreaEdges)
             }
+            Tab("Intl", systemImage: "globe", value: AppTab.international) {
+                NavigationStack {
+                    GraduationLanguageComposeView(sharedHost: sharedHost)
+                        .ignoresSafeArea(.container, edges: .bottom)
+                        .navigationTitle("International")
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar {
+                            ToolbarItem(placement: .topBarTrailing) {
+                                Button("設定", systemImage: "gearshape", action: openSettings)
+                            }
+                        }
+                }
+            }
         }
+        .id(appLanguageTag)
         .sheet(isPresented: $isShowingSettings) {
             NavigationStack {
-                SettingsView(sharedHost: sharedHost)
+                SettingsView(
+                    sharedHost: sharedHost,
+                    appLanguageTag: appLanguageTag
+                )
             }
             .preferredColorScheme(preferredColorScheme)
             .presentationDetents([.large])
@@ -56,6 +74,11 @@ struct ContentView: View {
         .task(id: ObjectIdentifier(sharedHost)) {
             for await selectedMode in sharedHost.themeMode {
                 themeMode = selectedMode
+            }
+        }
+        .task(id: ObjectIdentifier(sharedHost)) {
+            for await selectedLanguage in sharedHost.appLanguage {
+                appLanguageTag = selectedLanguage.tag
             }
         }
     }
@@ -81,6 +104,18 @@ struct ContentView: View {
 
     private func openSettings() {
         isShowingSettings = true
+    }
+}
+
+/// The graduation language requirements, drawn by the shared Compose screen.
+private struct GraduationLanguageComposeView: UIViewControllerRepresentable {
+    let sharedHost: IosSharedHost
+
+    func makeUIViewController(context: Context) -> some UIViewController {
+        sharedHost.graduationLanguageScreenController()
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
     }
 }
 

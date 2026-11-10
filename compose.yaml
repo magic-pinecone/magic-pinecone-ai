@@ -1,87 +1,111 @@
-# The whole stack in one command: PostgreSQL, Redis, the API, the Celery worker and
-# beat that scrape NCU, and the browser preview of the shared Compose UI.
-# Override the variables below in a .env file next to this one or in your shell.
-name: magic-pinecone
+
+# Magic Pinecone — Coolify / PR Preview Ready
 
 x-backend: &backend
   build:
-    context: backend
+    context: ./backend
     dockerfile: Dockerfile
   environment:
-    - POSTGRES_SERVER=db
-    - POSTGRES_PORT=5432
-    - POSTGRES_USER=${POSTGRES_USER:-postgres}
-    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
-    - POSTGRES_DB=${POSTGRES_DB:-magic_pinecone}
-    - REDIS_HOST=redis
-    - REDIS_PORT=6379
-    - REDIS_DB=0
-    # The web preview calls the API from another port, so the browser needs CORS.
-    - BACKEND_CORS_ORIGINS=http://localhost:${WEB_HOST_PORT:-8080}
+    POSTGRES_SERVER: db
+    POSTGRES_PORT: "5432"
+    POSTGRES_USER: ${POSTGRES_USER:-postgres}
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in Coolify}
+    POSTGRES_DB: ${POSTGRES_DB:-magic_pinecone}
+    REDIS_HOST: redis
+    REDIS_PORT: "6379"
+    REDIS_DB: "0"
   depends_on:
     db:
       condition: service_healthy
     redis:
       condition: service_healthy
-  volumes:
-    - ./backend:/app
+  restart: unless-stopped
 
 services:
   db:
     image: postgres:16-alpine
-    container_name: magic-pinecone-db
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in Coolify}
       POSTGRES_DB: ${POSTGRES_DB:-magic_pinecone}
-    ports:
-      - "${POSTGRES_HOST_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-magic_pinecone}"]
+      test:
+        - CMD-SHELL
+        - pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
+    restart: unless-stopped
 
   redis:
     image: redis:7-alpine
-    container_name: magic-pinecone-redis
-    ports:
-      - "${REDIS_HOST_PORT:-6379}:6379"
     volumes:
       - redis_data:/data
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
+    restart: unless-stopped
 
   api:
     <<: *backend
-    container_name: magic-pinecone-api
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-    ports:
-      - "8000:8000"
+    command:
+      - uvicorn
+      - app.main:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+    expose:
+      - "8000"
 
   worker:
     <<: *backend
-    container_name: magic-pinecone-worker
-    command: celery -A app.core.celery_app worker --loglevel=info
+    command:
+      - celery
+      - -A
+      - app.core.celery_app
+      - worker
+      - --loglevel=info
 
   beat:
     <<: *backend
-    container_name: magic-pinecone-beat
-    command: celery -A app.core.celery_app beat --loglevel=info
+    environment:
+      POSTGRES_SERVER: db
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in Coolify}
+      POSTGRES_DB: ${POSTGRES_DB:-magic_pinecone}
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      REDIS_DB: "0"
+      ENABLE_BEAT: ${ENABLE_BEAT:-false}
+    command:
+      - sh
+      - -c
+      - |
+        if [ "$$ENABLE_BEAT" = "true" ]; then
+          exec celery -A app.core.celery_app beat --loglevel=info
+        else
+          echo "Celery Beat disabled in this environment"
+          exec sleep infinity
+        fi
+    restart: unless-stopped
 
   web:
     build:
-      context: app
+      context: ./app
       dockerfile: web.Dockerfile
-    container_name: magic-pinecone-web
-    ports:
-      - "${WEB_HOST_PORT:-8080}:80"
+    expose:
+      - "80"
+    depends_on:
+      - api
+    restart: unless-stopped
 
 volumes:
   postgres_data:
   redis_data:
+
