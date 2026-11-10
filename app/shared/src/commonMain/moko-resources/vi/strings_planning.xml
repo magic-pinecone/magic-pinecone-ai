@@ -1,7 +1,7 @@
 <resources>
     <string name="planning_view_catalog">Tìm kiếm</string>
     <string name="planning_view_timetable">Thời khóa biểu</string>
-    <string name="planning_timetable_title">Thời khóa biểu của tôi</string>
+    <string name="planning_timetable_title">Thời khóa biểu</string>
     <string name="planning_search_empty_title">Không tìm thấy môn học phù hợp</string>
     <string name="planning_search_empty_hint">Hãy thử từ khóa khác hoặc xóa bộ lọc tìm kiếm để xem tất cả môn học.</string>
     <string name="planning_search_loading">Đang tải môn học…</string>
@@ -62,7 +62,7 @@
     <string name="planning_calendar_add">Thêm vào lịch</string>
     <string name="planning_calendar_result_no_term">Chưa có ngày học của học kỳ này nên tạm thời chưa thể thêm vào lịch.</string>
     <string name="planning_calendar_result_cleared">Thời khóa biểu đã lưu không có môn học nào. Đã xóa các sự kiện của học kỳ này khỏi lịch \"%1$s\".</string>
-    <string name="planning_view_catalog_title">Tìm kiếm môn học</string>
+    <string name="planning_view_catalog_title">Tìm môn học</string>
     <string name="planning_calendar_add_hint">Thêm thời khóa biểu đã lưu vào lịch “%1$s”</string>
     <string name="planning_view_picker">Chế độ xem môn học</string>
     <string name="planning_search_failed_title">Không tải được môn học</string>
