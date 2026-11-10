@@ -13,10 +13,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.GridView
+import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.LocalLibrary
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.FilterChip
@@ -28,29 +30,25 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import co.touchlab.kermit.Logger
+import dev.icerock.moko.resources.desc.StringDesc
 import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
-import io.ktor.client.HttpClient
 import kotlinx.browser.window
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.TimeoutCancellationException
-import kotlinx.coroutines.withTimeout
-import org.mpc.core.installAppDefaults
-import org.mpc.data.dataSource.IntlDataSource
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppThemeMode
-import org.mpc.domain.model.GraduationLanguage
 import org.mpc.domain.model.TimetableColorMode
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
-import kotlin.time.Duration.Companion.seconds
 
 /** A navigation destination and the scenarios it previews, in the order its state chips show them. */
 private enum class PreviewScreen(
@@ -81,17 +79,33 @@ private enum class PreviewScreen(
     COURSE_DETAILS("詳情", Icons.Filled.Info, listOf(ComposePreviewScenario.COURSE_DETAILS)),
     SLOT_PICKER("節次", Icons.Filled.GridView, listOf(ComposePreviewScenario.SLOT_PICKER)),
     PORTAL("Portal", Icons.Filled.Home, listOf(ComposePreviewScenario.PORTAL)),
-    SETTINGS("設定", Icons.Filled.Settings, listOf(ComposePreviewScenario.SETTINGS)),
+    GOV_GUIDES(
+        "政府資訊",
+        Icons.Filled.LocalLibrary,
+        listOf(ComposePreviewScenario.GUIDES_LIVE, ComposePreviewScenario.GUIDES_POPULATED),
+    ),
+    CLUBS(
+        "社團",
+        Icons.Filled.Groups,
+        listOf(
+            ComposePreviewScenario.CLUBS_LIVE,
+            ComposePreviewScenario.CLUBS_POPULATED,
+            ComposePreviewScenario.CLUBS_NO_BACKEND,
+            ComposePreviewScenario.CLUBS_FAILURE,
+        ),
+    ),
     GRADUATION(
         "國際生",
         Icons.Filled.Language,
         listOf(
+            ComposePreviewScenario.GRADUATION_LIVE,
             ComposePreviewScenario.GRADUATION_POPULATED,
             ComposePreviewScenario.GRADUATION_LOADING,
             ComposePreviewScenario.GRADUATION_FAILURE,
             ComposePreviewScenario.GRADUATION_NEEDSBACKEND,
         ),
     ),
+    SETTINGS("設定", Icons.Filled.Settings, listOf(ComposePreviewScenario.SETTINGS)),
 }
 
 private val ComposePreviewScenario.screen: PreviewScreen
@@ -108,9 +122,7 @@ private val ComposePreviewScenario.stateLabel: String
 fun WebPreviewApp() {
     var scenario by remember { mutableStateOf(scenarioFromHash() ?: ComposePreviewScenario.CATALOG_POPULATED) }
     var darkTheme by remember { mutableStateOf(window.matchMedia("(prefers-color-scheme: dark)").matches) }
-    val graduationLanguage by produceState<LiveGraduationLanguage>(LiveGraduationLanguage.Loading) {
-        value = fetchGraduationLanguage()
-    }
+    val language by remember { PreviewSettings.settings.map { it.language } }.collectAsState(AppLanguage.SYSTEM)
     LaunchedEffect(scenario) { window.location.hash = scenario.name }
 
     MpcTheme(
@@ -137,11 +149,18 @@ fun WebPreviewApp() {
                             darkTheme = darkTheme,
                             onScenarioSelected = { scenario = it },
                             onToggleTheme = { darkTheme = !darkTheme },
-                            dataSource = graduationLanguage.label
-                                .takeIf { scenario == ComposePreviewScenario.GRADUATION_POPULATED },
                         )
                         Box(modifier = Modifier.weight(1f)) {
-                            ComposePreviewScenarioContent(scenario, graduationLanguage.requirements)
+                            // moko reads StringDesc.localeType when it resolves a string, and resolves each one once,
+                            // so a new language re-keys the scenario to resolve its text again.
+                            remember(language) { StringDesc.localeType = language.toLocaleType() }
+                            key(language) {
+                                ComposePreviewScenarioContent(
+                                    scenario = scenario,
+                                    language = language,
+                                    onLanguageSelected = { selected -> PreviewSettings.settings.update { it.copy(language = selected) } },
+                                )
+                            }
                         }
                     }
                 }
@@ -156,7 +175,6 @@ private fun PreviewToolbar(
     darkTheme: Boolean,
     onScenarioSelected: (ComposePreviewScenario) -> Unit,
     onToggleTheme: () -> Unit,
-    dataSource: String?,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(horizontal = MpcSpacing.space4),
@@ -177,14 +195,6 @@ private fun PreviewToolbar(
                 }
             }
         }
-        if (dataSource != null) {
-            Text(
-                text = dataSource,
-                modifier = Modifier.padding(start = MpcSpacing.space2),
-                style = MpcTheme.typography.supporting,
-                color = MpcTheme.colors.label,
-            )
-        }
         IconButton(onClick = onToggleTheme) {
             Icon(
                 imageVector = if (darkTheme) Icons.Filled.LightMode else Icons.Filled.DarkMode,
@@ -199,48 +209,4 @@ private fun scenarioFromHash(): ComposePreviewScenario? {
     return ComposePreviewScenario.entries.firstOrNull { it.name == name }
 }
 
-/** Where the populated graduation screen's requirements come from. */
-private sealed interface LiveGraduationLanguage {
-    /** Null while the backend has not answered yet. */
-    val requirements: GraduationLanguage?
-
-    /** Tells the viewer whether the numbers on screen are the backend's or the bundled excerpt. */
-    val label: String?
-
-    data object Loading : LiveGraduationLanguage {
-        override val requirements = null
-        override val label = null
-    }
-
-    data class Backend(override val requirements: GraduationLanguage) : LiveGraduationLanguage {
-        override val label = "後端即時資料"
-    }
-
-    data object Excerpt : LiveGraduationLanguage {
-        override val requirements = GraduationLanguagePreviewFixture.requirements
-        override val label = "連不到後端，顯示內建節錄"
-    }
-}
-
-/**
- * Reads the requirements from the backend served under `/api/` on this page's own origin, as the web container's
- * nginx proxies it. Falls back to the bundled excerpt when there is no backend there, as on a static file server.
- */
-private suspend fun fetchGraduationLanguage(): LiveGraduationLanguage {
-    val client = HttpClient { installAppDefaults() }
-    return try {
-        withTimeout(BACKEND_TIMEOUT) {
-            LiveGraduationLanguage.Backend(IntlDataSource(client).getGraduationLanguage(window.location.origin))
-        }
-    } catch (cause: CancellationException) {
-        if (cause !is TimeoutCancellationException) throw cause
-        LiveGraduationLanguage.Excerpt
-    } catch (cause: Exception) {
-        Logger.i(cause) { "No graduation language from the backend; showing the bundled excerpt" }
-        LiveGraduationLanguage.Excerpt
-    } finally {
-        client.close()
-    }
-}
-
-private val BACKEND_TIMEOUT = 8.seconds
+private fun AppLanguage.toLocaleType(): StringDesc.LocaleType = tag.ifEmpty { null }?.let(StringDesc.LocaleType::Custom) ?: StringDesc.LocaleType.System
