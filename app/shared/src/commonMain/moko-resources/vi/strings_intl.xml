@@ -42,4 +42,9 @@
     <string name="intl_guides_open_original">Mở trang gốc</string>
     <string name="intl_guides_back">Tất cả hướng dẫn</string>
     <string name="intl_guides_failed">Không thể tải các hướng dẫn.</string>
+    <string name="intl_guides_search">Tìm hướng dẫn</string>
+    <string name="intl_guides_clear_search">Xóa tìm kiếm</string>
+    <string name="intl_guides_no_match">Không có hướng dẫn nào nhắc đến “%1$s”.</string>
+    <string name="intl_guides_previous">Trước</string>
+    <string name="intl_guides_next">Tiếp</string>
 </resources>

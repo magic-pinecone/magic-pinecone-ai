@@ -2,10 +2,15 @@ package org.mpc.presentation.preview
 
 import androidx.lifecycle.ViewModel
 import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
+import kotlinx.browser.window
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import org.mpc.core.createHttpClient
+import org.mpc.data.dataSource.IntlDataSource
+import org.mpc.data.repository.DefaultGovGuidesRepository
+import org.mpc.domain.repository.BackendEndpointRepository
 import org.mpc.domain.repository.PortalFavoritesRepository
 import org.mpc.domain.session.CampusSessions
 import org.mpc.domain.session.CampusSite
@@ -20,6 +25,7 @@ import org.mpc.domain.session.SiteStatus
 import org.mpc.domain.session.TransferProgress
 import org.mpc.domain.session.Unavailability
 import org.mpc.presentation.viewModel.CampusSessionViewModel
+import org.mpc.presentation.viewModel.GovGuidesViewModel
 import org.mpc.presentation.viewModel.PortalViewModel
 import kotlin.reflect.KClass
 
@@ -28,7 +34,17 @@ internal object WebPreviewViewModelFactory : MetroViewModelFactory() {
     override val viewModelProviders: Map<KClass<out ViewModel>, () -> ViewModel> = mapOf(
         PortalViewModel::class to { PortalViewModel(InMemoryPortalFavoritesRepository()) },
         CampusSessionViewModel::class to { CampusSessionViewModel(SignedOutCampusSessions) },
+        GovGuidesViewModel::class to {
+            GovGuidesViewModel(DefaultGovGuidesRepository(PreviewBackendEndpoint, IntlDataSource(createHttpClient())))
+        },
     )
+}
+
+/** The backend behind this page: the web container's nginx proxies /api/ to it (see app/nginx.conf). */
+private object PreviewBackendEndpoint : BackendEndpointRepository {
+    override val baseUrl: Flow<String?> = MutableStateFlow(window.location.origin)
+
+    override suspend fun setBaseUrl(baseUrl: String?) = Unit
 }
 
 private class InMemoryPortalFavoritesRepository : PortalFavoritesRepository {

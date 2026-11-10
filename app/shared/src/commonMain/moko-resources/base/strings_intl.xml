@@ -42,4 +42,9 @@
     <string name="intl_guides_open_original">Open the original page</string>
     <string name="intl_guides_back">All guides</string>
     <string name="intl_guides_failed">Could not load the guides.</string>
+    <string name="intl_guides_search">Search guides</string>
+    <string name="intl_guides_clear_search">Clear search</string>
+    <string name="intl_guides_no_match">No guide mentions “%1$s”.</string>
+    <string name="intl_guides_previous">Previous</string>
+    <string name="intl_guides_next">Next</string>
 </resources>

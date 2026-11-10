@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.GridView
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.LocalLibrary
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.FilterChip
@@ -70,6 +71,11 @@ private enum class PreviewScreen(
     COURSE_DETAILS("詳情", Icons.Filled.Info, listOf(ComposePreviewScenario.COURSE_DETAILS)),
     SLOT_PICKER("節次", Icons.Filled.GridView, listOf(ComposePreviewScenario.SLOT_PICKER)),
     PORTAL("Portal", Icons.Filled.Home, listOf(ComposePreviewScenario.PORTAL)),
+    GOV_GUIDES(
+        "政府資訊",
+        Icons.Filled.LocalLibrary,
+        listOf(ComposePreviewScenario.GUIDES_LIVE, ComposePreviewScenario.GUIDES_POPULATED),
+    ),
     SETTINGS("設定", Icons.Filled.Settings, listOf(ComposePreviewScenario.SETTINGS)),
 }
 
