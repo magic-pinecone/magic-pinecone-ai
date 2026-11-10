@@ -22,9 +22,13 @@ import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.icerock.moko.resources.compose.stringResource
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.viewModel.EeclassViewModel
+import org.mpc.shared.MR
+import org.mpc.shared.eeclass_attachments
+import org.mpc.shared.eeclass_bulletin_unavailable
 
 /** One announcement: its title, ee-class's summary line, the body as rich text, and its attachments. */
 @Composable
@@ -44,7 +48,7 @@ fun EeclassBulletinScreen(
 
     EeclassPageContent(
         status = page?.status,
-        unavailableTitle = "無法載入公告",
+        unavailableTitle = MR.strings.eeclass_bulletin_unavailable,
         onRefresh = { viewModel.loadBulletin(course, number) },
         modifier = modifier,
     ) {
@@ -75,7 +79,7 @@ fun EeclassBulletinScreen(
                 }
             }
             if (loaded.attachments.isNotEmpty()) {
-                EeclassSectionHeader("附件")
+                EeclassSectionHeader(stringResource(MR.strings.eeclass_attachments))
                 loaded.attachments.forEach { attachment ->
                     ListItem(
                         headlineContent = { Text(attachment.title) },
