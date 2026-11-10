@@ -1,8 +1,9 @@
-"""Translate text with the self-hosted LibreTranslate service, caching every result in the database.
+"""Translate text with a self-hosted LibreTranslate, caching every result in the database.
 
-LibreTranslate runs Argos Translate's open models in its own container next to the API (`translate` in
-compose.yaml), so text never leaves the server and there is no rate limit. Its models cover English,
-Simplified (zh) and Traditional (zt) Chinese and Vietnamese; Chinese and Vietnamese pivot through English.
+LibreTranslate runs Argos Translate's open models on your own server, so text never leaves it and there is no
+rate limit. It is optional and not part of compose.yaml (its image and model download made every deployment
+slow): set TRANSLATOR_URL to an instance you run. Without it, `translate` returns nothing and callers keep
+their text, or use translations they ship (see app/data/gov_guides/translations/).
 """
 
 import hashlib
@@ -64,6 +65,12 @@ def _fetch(
 
 def status() -> dict[str, object]:
     """Whether the service answers, and the language codes it has models for."""
+    if not settings.TRANSLATOR_URL:
+        return {
+            "available": False,
+            "languages": [],
+            "error": "TRANSLATOR_URL is not set",
+        }
     try:
         response = httpx.get(f"{settings.TRANSLATOR_URL}/languages", timeout=5)
         response.raise_for_status()
@@ -89,6 +96,8 @@ def translate(
     `source` is the language the texts are written in; "auto" lets the service guess, which is unreliable
     for short lines.
     """
+    if not settings.TRANSLATOR_URL:
+        return {}
     by_hash = {_hash(t): t for t in texts if t.strip()}
     cached = session.exec(
         select(Translation).where(

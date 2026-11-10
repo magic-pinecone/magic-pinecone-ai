@@ -6,6 +6,11 @@ import pytest
 from app.services import translator
 
 
+@pytest.fixture(autouse=True)
+def configured(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setattr(translator.settings, "TRANSLATOR_URL", "http://translate:5000")
+
+
 @pytest.mark.parametrize(
     ("tag", "code"),
     [
@@ -77,4 +82,20 @@ def test_status_reports_the_languages_or_the_failure(monkeypatch):
         "available": False,
         "languages": [],
         "error": "ConnectError: refused",
+    }
+
+
+def test_without_a_url_nothing_is_translated_or_called(monkeypatch):
+    monkeypatch.setattr(translator.settings, "TRANSLATOR_URL", "")
+
+    def no_network(*_a, **_k):
+        raise AssertionError("must not call the network")
+
+    monkeypatch.setattr(translator.httpx, "get", no_network)
+    monkeypatch.setattr(translator.httpx, "Client", no_network)
+    assert translator.translate(None, ["你好"], "en", "zh") == {}  # type: ignore[arg-type]
+    assert translator.status() == {
+        "available": False,
+        "languages": [],
+        "error": "TRANSLATOR_URL is not set",
     }

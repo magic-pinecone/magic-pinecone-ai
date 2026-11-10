@@ -53,8 +53,8 @@ class Settings(BaseSettings):
     REDIS_DB: int = 0
     REDIS_PASSWORD: str | None = None
 
-    # The LibreTranslate service that machine-translates guides (the `translate` service in compose.yaml).
-    TRANSLATOR_URL: str = "http://localhost:5000"
+    # A self-hosted LibreTranslate for lines the shipped guide translations lack; empty turns it off.
+    TRANSLATOR_URL: str = ""
 
     SCRAPER_INTERVAL_MINUTES: int = 360  # Default every 6 hours
     COURSE_DETAIL_CACHE_HOURS: int = 24
