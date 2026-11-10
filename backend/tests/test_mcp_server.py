@@ -21,6 +21,10 @@ def test_server_lists_its_tools():
         "get_chinese_language_requirements",
         "search_international_programs",
         "search_official_documents",
+        "search_student_services",
+        "get_student_service_contact",
+        "estimate_nhi_enrollment_date",
+        "find_place",
     }
 
 

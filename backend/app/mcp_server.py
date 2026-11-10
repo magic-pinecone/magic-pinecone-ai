@@ -1,8 +1,10 @@
 """MCP server for the international-student data.
 
-Lets an AI client look up NCU's graduation language requirements instead of
-recalling them. The tools only read the curated data and the corpus in
-`app/data/graduation_language/`; numbers come from there, never from the model.
+Lets an AI client look things up instead of recalling them: NCU's graduation
+language requirements, the Office of International Affairs pages on insurance,
+immigration and work permits, whom to contact, when National Health Insurance
+starts, and where a building is. The tools only read the curated data under
+`app/data/`; numbers and dates come from there, never from the model.
 
     uv run python -m app.mcp_server        # stdio transport
 
@@ -12,19 +14,29 @@ Example client entry:
 """
 
 import re
+from datetime import date
 from typing import Any, Literal
 
 from mcp.server.mcpserver import MCPServer
+from mcp.server.mcpserver.exceptions import ToolError
 
+from app.services import campus_places, student_services
 from app.services import graduation_language as service
+from app.services.campus_places import PlaceCategory
 
 mcp = MCPServer(
     "ncu-international",
     instructions=(
-        "Official language requirements for graduating from National Central "
-        "University (NCU), for international students. Quote thresholds exactly "
-        "as returned and cite the source URLs. When no rule is returned, say the "
-        "department's own regulations must be checked; do not infer a threshold."
+        "Official information for international students at National Central "
+        "University (NCU): graduation language requirements, insurance, "
+        "immigration and work-permit rules from the Office of International "
+        "Affairs (OIA), contacts, and campus places. Quote thresholds, amounts "
+        "and dates exactly as returned and cite the source URLs. Search in "
+        "English or Chinese whatever language the student writes in, then "
+        "answer in the student's language. When a tool returns nothing, say so "
+        "and give the OIA contact; do not infer a rule. For overstayed visas, "
+        "working without a permit, medical emergencies or personal crises, "
+        "refer the student to OIA or emergency services instead of advising."
     ),
 )
 
@@ -162,6 +174,109 @@ def official_document(source_id: str) -> str:
         raise ValueError(f"unknown document: {source_id}")
     path = service.DATA_DIR / "corpus" / f"{source_id}.md"
     return path.read_text(encoding="utf-8")
+
+
+@mcp.tool()
+def search_student_services(
+    query: str, topic: str | None = None, limit: int = 4
+) -> dict[str, Any]:
+    """Search NCU's OIA pages on everyday administrative matters.
+
+    Covers medical insurance (Cathay insurance, National Health Insurance,
+    student group insurance), immigration forms (visa, ARC), work permits,
+    scholarships, and information for incoming degree and exchange students.
+
+    Args:
+        query: a few English keywords, e.g. "work permit hours per week" or
+            "ARC extension form". The pages are in English, so translate the
+            student's question first.
+        topic: insurance, immigration, work_permit, exchange or general, to
+            search one area only.
+        limit: how many passages to return.
+
+    Returns passages with their page title, URL and the date the page was
+    fetched. Answer only from the passages and cite the URL. An empty list
+    means the pages do not cover the question: say so and give the contact
+    from `get_student_service_contact`.
+    """
+    return {
+        "topics": student_services.topics(),
+        "passages": student_services.search(query, topic=topic, limit=limit),
+    }
+
+
+@mcp.tool()
+def get_student_service_contact(topic: str | None = None) -> dict[str, Any]:
+    """Which NCU office an international student should contact, and how.
+
+    Args:
+        topic: insurance, work_permit, immigration, degree_students, exchange,
+            overseas_chinese_students, visiting_programs, admissions or
+            general; omit for every office.
+
+    Each office has a direct phone number, an extension (dialled after the
+    switchboard number), its location with map links, and opening hours.
+    Staff names are not included; `staff_page` lists who holds each duty.
+    """
+    contacts = student_services.load_contacts()
+    offices = []
+    for office in student_services.find_contacts(topic):
+        place = campus_places.get(office["place_id"])
+        offices.append({**office, "place": place.model_dump() if place else None})
+    return {
+        **{key: contacts[key] for key in ("verified_on", "switchboard", "staff_page")},
+        "topics": student_services.contact_topics(),
+        "offices": offices,
+    }
+
+
+@mcp.tool()
+def estimate_nhi_enrollment_date(
+    arrival_date: str, trips_abroad: list[list[str]] | None = None
+) -> dict[str, Any]:
+    """When a newly arrived student can enrol in National Health Insurance (NHI).
+
+    Always use this instead of working the date out yourself.
+
+    Args:
+        arrival_date: first arrival in Taiwan, as YYYY-MM-DD.
+        trips_abroad: journeys out of Taiwan since then, each as
+            [departure, re-entry] in YYYY-MM-DD.
+
+    Applies the rule on the OIA insurance page: six months of continuous
+    residence, one trip under 30 days postpones the date, a longer or second
+    trip restarts the count. Returns the date, the last day private insurance
+    is needed, each step, the assumptions made and the source. Present it as
+    an estimate to confirm with OIA.
+    """
+    try:
+        trips = [
+            (date.fromisoformat(departure), date.fromisoformat(reentry))
+            for departure, reentry in trips_abroad or []
+        ]
+        return student_services.nhi_enrollment(date.fromisoformat(arrival_date), trips)
+    except ValueError as error:
+        # ToolError's text reaches the client, so it can ask the student again.
+        raise ToolError(f"Check the dates (YYYY-MM-DD): {error}") from error
+
+
+@mcp.tool()
+def find_place(query: str = "", category: PlaceCategory | None = None) -> dict:
+    """Find buildings and resources on the NCU campus and how to get to them.
+
+    `query` matches a Chinese or English name, a building code such as "E6",
+    or an alias such as "OIA"; leave it empty to list a whole category. The
+    closest matches come first. Each result has coordinates and links that
+    open walking directions in Google or Apple Maps. An empty result means the
+    place is not in the list, not that it does not exist. Show the attribution
+    when you show the results.
+    """
+    return {
+        "attribution": campus_places.load().attribution,
+        "places": [
+            place.model_dump() for place in campus_places.search(query, category)
+        ],
+    }
 
 
 if __name__ == "__main__":

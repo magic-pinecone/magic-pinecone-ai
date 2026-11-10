@@ -1,0 +1,51 @@
+{
+  "sources": [
+    {
+      "id": "oia-insurance",
+      "title": "Medical insurance for international degree students",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2201.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "insurance",
+      "effective": "",
+      "extract": "html",
+      "selector": ".mpgdetail"
+    },
+    {
+      "id": "oia-immigration",
+      "title": "Immigration: visa and ARC forms",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2202.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "immigration",
+      "effective": "",
+      "extract": "html",
+      "selector": ".mpgdetail",
+      "links": true
+    },
+    {
+      "id": "oia-work-permit",
+      "title": "Work permit for international degree students",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2204.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "work_permit",
+      "effective": "",
+      "extract": "html",
+      "selector": ".mpgdetail",
+      "links": true
+    },
+    {
+      "id": "oia-exchange-incoming",
+      "title": "Information for incoming exchange students",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2207.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "exchange",
+      "effective": "",
+      "extract": "html",
+      "selector": ".mpgdetail",
+      "links": true
+    }
+  ]
+}
