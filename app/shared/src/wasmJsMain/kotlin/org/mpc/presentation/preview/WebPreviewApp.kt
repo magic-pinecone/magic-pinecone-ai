@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.GridView
+import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LightMode
@@ -81,6 +82,16 @@ private enum class PreviewScreen(
         "政府資訊",
         Icons.Filled.LocalLibrary,
         listOf(ComposePreviewScenario.GUIDES_LIVE, ComposePreviewScenario.GUIDES_POPULATED),
+    ),
+    CLUBS(
+        "社團",
+        Icons.Filled.Groups,
+        listOf(
+            ComposePreviewScenario.CLUBS_LIVE,
+            ComposePreviewScenario.CLUBS_POPULATED,
+            ComposePreviewScenario.CLUBS_NO_BACKEND,
+            ComposePreviewScenario.CLUBS_FAILURE,
+        ),
     ),
     SETTINGS("設定", Icons.Filled.Settings, listOf(ComposePreviewScenario.SETTINGS)),
 }

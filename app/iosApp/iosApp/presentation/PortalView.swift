@@ -36,6 +36,16 @@ struct PortalView: View {
                 }
             }
 
+            if !isSearching {
+                Section {
+                    NavigationLink {
+                        ClubsView(sharedHost: sharedHost)
+                    } label: {
+                        Label("社團", systemImage: "person.3")
+                    }
+                }
+            }
+
             // Wait for the stored favorites so the defaults never flash before a customized list.
             if favoriteIds != nil, !isSearching || !home.favorites.isEmpty {
                 Section {

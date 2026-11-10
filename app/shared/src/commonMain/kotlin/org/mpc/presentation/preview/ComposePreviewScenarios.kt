@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
+import org.mpc.domain.model.Club
 import org.mpc.domain.model.CourseDay
 import org.mpc.domain.model.CourseDetail
 import org.mpc.domain.model.CoursePeriod
@@ -26,10 +27,13 @@ import org.mpc.domain.model.GovGuides
 import org.mpc.domain.model.PasswordCardType
 import org.mpc.domain.model.PortalAuthenticationMode
 import org.mpc.domain.model.TimetableColorMode
+import org.mpc.presentation.ClubsScreen
+import org.mpc.presentation.ClubsView
 import org.mpc.presentation.GovGuidesRoute
 import org.mpc.presentation.GovGuidesScreen
 import org.mpc.presentation.PortalScreen
 import org.mpc.presentation.SettingsScreen
+import org.mpc.presentation.state.ClubUiState
 import org.mpc.presentation.state.CoursePlanUiState
 import org.mpc.presentation.state.CourseSearchError
 import org.mpc.presentation.state.CourseSearchResultUiState
@@ -60,6 +64,13 @@ enum class ComposePreviewScenario {
 
     /** Reads the running backend through [org.mpc.presentation.viewModel.GovGuidesViewModel]. */
     GUIDES_LIVE,
+
+    CLUBS_POPULATED,
+    CLUBS_NO_BACKEND,
+    CLUBS_FAILURE,
+
+    /** Reads the running backend through [org.mpc.presentation.viewModel.ClubViewModel]. */
+    CLUBS_LIVE,
 }
 
 // One branch per scenario; splitting the dispatch would only scatter it.
@@ -158,6 +169,26 @@ internal fun ComposePreviewScenarioContent(
 
         ComposePreviewScenario.GUIDES_LIVE -> GovGuidesRoute(modifier = Modifier.fillMaxSize())
 
+        ComposePreviewScenario.CLUBS_POPULATED -> ClubsView(
+            state = ClubUiState.Loaded(ComposePreviewFixtures.clubs.groupBy { it.categoryName }.toList()),
+            onRetry = {},
+            modifier = Modifier.fillMaxSize(),
+        )
+
+        ComposePreviewScenario.CLUBS_NO_BACKEND -> ClubsView(
+            state = ClubUiState.NoBackend,
+            onRetry = {},
+            modifier = Modifier.fillMaxSize(),
+        )
+
+        ComposePreviewScenario.CLUBS_FAILURE -> ClubsView(
+            state = ClubUiState.Failed,
+            onRetry = {},
+            modifier = Modifier.fillMaxSize(),
+        )
+
+        ComposePreviewScenario.CLUBS_LIVE -> ClubsScreen(modifier = Modifier.fillMaxSize())
+
         ComposePreviewScenario.SLOT_PICKER -> {
             var selected by remember { mutableStateOf(ComposePreviewFixtures.courses.first().classTimes.toSet()) }
             CourseSlotPicker(
@@ -236,6 +267,42 @@ internal object ComposePreviewFixtures {
                 fetchedOn = "2026-11-10",
                 body = "外來人士在臺生活諮詢服務熱線 | 1990\n中、英、日語：24小時、全年無休。",
             ),
+        ),
+    )
+
+    val clubs = listOf(
+        Club(
+            id = 1049,
+            category = "A",
+            categoryName = "聯誼性",
+            name = "桃園地區校友會",
+            nameEn = "NCUTY",
+            description = "我們是中央的桃園地區校友會~~\n歡迎大家加入我們的行列喔!",
+            address = "據德樓",
+            website = "",
+            pictureUrl = "",
+        ),
+        Club(
+            id = 1051,
+            category = "A",
+            categoryName = "聯誼性",
+            name = "新竹校友會",
+            nameEn = "NCUHsinChu",
+            description = "我們是來自大竹苗地區的學長姐",
+            address = "夢工廠",
+            website = "https://www.facebook.com/NCUHsinChu/",
+            pictureUrl = "",
+        ),
+        Club(
+            id = 1171,
+            category = "G",
+            categoryName = "學生自治組織",
+            name = "學生會",
+            nameEn = "Student Association",
+            description = "",
+            address = "",
+            website = "",
+            pictureUrl = "",
         ),
     )
 

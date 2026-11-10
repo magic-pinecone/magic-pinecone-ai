@@ -81,6 +81,7 @@ import org.mpc.domain.session.SitePath
 import org.mpc.domain.session.browserEntry
 import org.mpc.navigation.AndroidNavigator
 import org.mpc.navigation.AppRoot
+import org.mpc.navigation.ClubsRoute
 import org.mpc.navigation.CoursePlanningRoot
 import org.mpc.navigation.EeclassBulletinRoute
 import org.mpc.navigation.EeclassCategoryRoute
@@ -93,6 +94,7 @@ import org.mpc.navigation.SettingsRoute
 import org.mpc.navigation.TopLevelRoute
 import org.mpc.navigation.rememberAndroidNavigationState
 import org.mpc.navigation.scene.BottomSheetSceneStrategy
+import org.mpc.presentation.ClubsScreen
 import org.mpc.presentation.CoursePlanningScreen
 import org.mpc.presentation.CoursePlanningView
 import org.mpc.presentation.EeclassBulletinScreen
@@ -109,6 +111,7 @@ import org.mpc.presentation.viewModel.AppSettingsViewModel
 import org.mpc.presentation.viewModel.BackendEndpointViewModel
 import org.mpc.presentation.viewModel.CoursePlanViewModel
 import org.mpc.shared.MR
+import org.mpc.shared.clubs_title
 import org.mpc.shared.shell_app_title
 import org.mpc.shared.shell_back
 import org.mpc.shared.shell_calendar_export_failed
@@ -284,6 +287,7 @@ private fun AndroidPrimaryNavigation(
             entry<PortalRoot> {
                 PortalScreen(
                     modifier = Modifier.fillMaxSize(),
+                    onOpenClubs = { navigator.navigate(ClubsRoute) },
                     onOpenDestination = { destination ->
                         navigator.navigate(
                             PortalWebRoute(
@@ -293,6 +297,9 @@ private fun AndroidPrimaryNavigation(
                         )
                     },
                 )
+            }
+            entry<ClubsRoute> {
+                ClubsScreen(modifier = Modifier.fillMaxSize())
             }
             entry<InternationalRoot> {
                 InternationalScreen(modifier = Modifier.fillMaxSize())
@@ -605,6 +612,7 @@ private data class PrimaryTopBarState(
 
 @Composable
 private fun NavKey.pushedTitle(): String? = when (this) {
+    is ClubsRoute -> stringResource(MR.strings.clubs_title)
     is EeclassCourseRoute -> name
     is EeclassCategoryRoute -> stringResource(category.titleResource)
     else -> null

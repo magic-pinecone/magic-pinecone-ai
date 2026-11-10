@@ -21,6 +21,7 @@ This repository is the Kotlin Multiplatform rewrite of the original Flutter app.
 - **Offline persistence**: Store course data and saved plans in a local SQLite database with Room.
 - **Native platform shells**: Use Jetpack Compose on Android and SwiftUI on iOS while reusing core logic, data, and Compose UI through KMP.
 - **Portal shortcuts**: Search campus services and open Portal pages in the app or direct services in the browser.
+- **Clubs**: Browse NCU student clubs by category from the Portal tab. Needs a backend; club text comes from the NCU club site in Chinese, and the backend machine-translates and caches it in the app's language (`GET /api/v1/clubs?lang=`).
 
 Portal pages support manual sign-in in the embedded web view. Automatic sign-in, secure credential storage, and session restoration are not connected to the app yet.
 

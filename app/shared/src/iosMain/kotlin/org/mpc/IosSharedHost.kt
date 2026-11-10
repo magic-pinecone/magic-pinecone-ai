@@ -44,6 +44,7 @@ import org.mpc.domain.model.SlotMatch
 import org.mpc.domain.session.CampusSites
 import org.mpc.domain.session.SitePath
 import org.mpc.domain.session.browserEntry
+import org.mpc.presentation.ClubsScreen
 import org.mpc.presentation.CourseCatalogViewBinding
 import org.mpc.presentation.CoursePlanningTimetableViewBinding
 import org.mpc.presentation.InternationalScreen
@@ -159,6 +160,14 @@ class IosSharedHost internal constructor(
                     backendEndpoint = backendEndpoint,
                     onUseCourseSource = backendEndpointViewModel::useSource,
                 )
+            }
+        }
+    }
+
+    fun clubsScreenController(): UIViewController = ComposeUIViewController {
+        ProvideAppDependencies(appGraph) {
+            ThemedContent {
+                ClubsScreen()
             }
         }
     }

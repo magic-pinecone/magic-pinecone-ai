@@ -77,6 +77,8 @@ import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.theme.platformTimetablePalette
 import org.mpc.presentation.viewModel.PortalViewModel
 import org.mpc.shared.MR
+import org.mpc.shared.clubs_portal_description
+import org.mpc.shared.clubs_title
 import org.mpc.shared.portal_add_favorite
 import org.mpc.shared.portal_already_favorite
 import org.mpc.shared.portal_clear_search
@@ -94,6 +96,7 @@ import org.mpc.shared.portal_search
 fun PortalScreen(
     onOpenDestination: (PortalShortcutDestination) -> Unit,
     modifier: Modifier = Modifier,
+    onOpenClubs: (() -> Unit)? = null,
     viewModel: PortalViewModel = metroViewModel(),
 ) {
     val favoriteIds by viewModel.favoriteIds.collectAsStateWithLifecycle()
@@ -115,6 +118,21 @@ fun PortalScreen(
                 onOpenDestination = onOpenDestination,
                 modifier = Modifier.fillMaxWidth().padding(top = MpcSpacing.space4),
             )
+        }
+        if (onOpenClubs != null && !isSearching) {
+            item(key = "clubs") {
+                ListItem(
+                    headlineContent = { Text(stringResource(MR.strings.clubs_title)) },
+                    supportingContent = { Text(stringResource(MR.strings.clubs_portal_description)) },
+                    leadingContent = { Icon(Icons.Default.Workspaces, contentDescription = null) },
+                    colors = ListItemDefaults.colors(containerColor = MpcTheme.colors.surface),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = MpcSpacing.space4)
+                        .clip(RoundedCornerShape(12.dp))
+                        .clickable(onClick = onOpenClubs),
+                )
+            }
         }
         if (isSearching && home.isEmpty) {
             item(key = "no-results") {

@@ -1,0 +1,12 @@
+<resources>
+    <string name="clubs_title">Câu lạc bộ</string>
+    <string name="clubs_portal_description">Các câu lạc bộ sinh viên của NCU</string>
+    <string name="clubs_all">Tất cả</string>
+    <string name="clubs_no_backend_title">Chưa thiết lập máy chủ</string>
+    <string name="clubs_no_backend_body">Thiết lập máy chủ trong Cài đặt để xem các câu lạc bộ</string>
+    <string name="clubs_failed_title">Không thể tải danh sách câu lạc bộ</string>
+    <string name="clubs_failed_body">Kiểm tra kết nối mạng và máy chủ, rồi thử lại</string>
+    <string name="clubs_retry">Thử lại</string>
+    <string name="clubs_location">Địa điểm</string>
+    <string name="clubs_website">Trang web</string>
+</resources>
