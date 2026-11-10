@@ -30,4 +30,8 @@
     <string name="settings_syncing">Syncing course data…</string>
     <string name="settings_invalid_address">Enter an address that starts with http:// or https://.</string>
     <string name="settings_source_unavailable">Could not get course data from this source. The current data source has been kept.</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_description">The language for app text and club info</string>
+    <string name="settings_language_system">System language</string>
+    <string name="settings_language_system_description">Follow the device or browser language</string>
 </resources>

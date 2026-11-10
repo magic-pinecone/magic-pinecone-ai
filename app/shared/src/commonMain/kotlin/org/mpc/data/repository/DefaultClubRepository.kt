@@ -22,17 +22,18 @@ internal class DefaultClubRepository(
     private val httpClient: HttpClient,
     private val backendEndpoint: BackendEndpointRepository,
 ) : ClubRepository {
-    override suspend fun fetchClubs(): List<Club>? {
+    override suspend fun fetchClubs(language: String?): List<Club>? {
         val baseUrl = backendEndpoint.baseUrl.first() ?: return null
         return httpClient
             .get("$baseUrl/api/v1/clubs") {
                 expectSuccess = true
                 // The backend translates the club text into this language.
-                parameter("lang", Locale.current.toLanguageTag())
+                parameter("lang", language ?: Locale.current.toLanguageTag())
             }.body<List<ClubDto>>()
             .map {
                 Club(
                     id = it.clubId,
+                    category = it.category,
                     categoryName = it.categoryName,
                     name = it.name,
                     nameEn = it.nameEn,

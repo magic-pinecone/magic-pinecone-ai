@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 from typing import Any
 
@@ -15,6 +16,7 @@ router = APIRouter(prefix="/clubs", tags=["clubs"])
 # The NCU club site writes in Traditional Chinese, so these need no translation.
 SOURCE_LANGS = {"zh", "zh-tw", "zh-hant", "zh-hant-tw"}
 TRANSLATED = ("name", "description", "address", "category_name")
+CJK = re.compile(r"[一-鿿]")
 # Hand-written, since machine translation renders 聯誼性 as "sociability".
 CATEGORY_NAMES_EN = {
     "A": "Social",
@@ -70,8 +72,8 @@ def list_clubs(
     return [
         c.model_copy(
             update={f: texts.get(getattr(c, f), getattr(c, f)) for f in TRANSLATED}
-            # The club's own English beats a machine translation.
-            | ({"name": c.name_en} if english and c.name_en else {})
+            # The club's own English beats a machine translation. name_en stays a
+            # separate field: it is often an abbreviation such as NCUTY.
             | (
                 {"category_name": CATEGORY_NAMES_EN[c.category]}
                 if english and c.category in CATEGORY_NAMES_EN
@@ -79,7 +81,8 @@ def list_clubs(
             )
             | (
                 {"description": c.description_en}
-                if english and c.description_en
+                # Some clubs paste their Chinese text into the English field.
+                if english and c.description_en and not CJK.search(c.description_en)
                 else {}
             )
         )

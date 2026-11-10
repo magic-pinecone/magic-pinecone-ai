@@ -77,6 +77,8 @@ import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.theme.platformTimetablePalette
 import org.mpc.presentation.viewModel.PortalViewModel
 import org.mpc.shared.MR
+import org.mpc.shared.clubs_portal_description
+import org.mpc.shared.clubs_title
 import org.mpc.shared.portal_add_favorite
 import org.mpc.shared.portal_already_favorite
 import org.mpc.shared.portal_clear_search
@@ -120,8 +122,8 @@ fun PortalScreen(
         if (onOpenClubs != null && !isSearching) {
             item(key = "clubs") {
                 ListItem(
-                    headlineContent = { Text("社團") },
-                    supportingContent = { Text("中央大學學生社團一覽") },
+                    headlineContent = { Text(stringResource(MR.strings.clubs_title)) },
+                    supportingContent = { Text(stringResource(MR.strings.clubs_portal_description)) },
                     leadingContent = { Icon(Icons.Default.Workspaces, contentDescription = null) },
                     colors = ListItemDefaults.colors(containerColor = MpcTheme.colors.surface),
                     modifier = Modifier

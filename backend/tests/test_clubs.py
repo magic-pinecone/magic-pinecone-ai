@@ -124,7 +124,13 @@ def test_list_clubs_translates_and_caches(
     assert calls == []
     assert client.get("/api/v1/clubs", params={"lang": "ja&x"}).status_code == 422
 
-    save_clubs(session, [{**club(1, "A", 1, "甲"), "name_en": "Jia"}])
+    save_clubs(session, [{**club(1, "A", 1, "甲"), "description_en": "Own text"}])
     english = client.get("/api/v1/clubs", params={"lang": "en-US"}).json()[0]
-    assert english["name"] == "Jia"  # the club's own English, not a machine translation
+    # The club's own English and the hand-written category beat machine translation.
+    assert english["description"] == "Own text"
     assert english["category_name"] == "Social"
+    assert english["name"] == "en-US:甲"
+
+    save_clubs(session, [{**club(1, "A", 1, "甲"), "description_en": "中文"}])
+    english = client.get("/api/v1/clubs", params={"lang": "en"}).json()[0]
+    assert english["description"] == ""  # Chinese in the English field is ignored

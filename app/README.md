@@ -69,12 +69,11 @@ The app reads the published static course catalog by default. To read from [`bac
 
 ## Languages
 
-The club screen follows the device language, or on Android 13 and later the per-app language under **Settings** > **Apps** > **神奇松果** > **Language**. In the browser preview it follows the browser language. Its text lives in `shared/src/commonMain/composeResources/`:
+The app ships its text in English, Traditional Chinese, and Vietnamese through moko-resources; [`docs/i18n-plan.md`](../docs/i18n-plan.md) describes the setup and how to add text. It follows the device language, with English for any other language.
 
-- `values/strings.xml` is English, the fallback for every language without its own folder.
-- `values-zh/strings.xml` is Traditional Chinese.
+In the browser preview you can switch language at runtime under **Settings** > **Language**. Android and iOS don't offer the switch yet, because applying it there needs the platform work in the plan's language picker row (IL).
 
-To add a language, copy `values/strings.xml` to `values-<code>/strings.xml` (for example `values-ja`), translate every entry, and add the locale to `androidApp/src/main/res/xml/locales_config.xml`. Club names, descriptions, locations and categories come from the NCU club site in Chinese. The app sends its language to the backend (`GET /api/v1/clubs?lang=`), which machine-translates them and caches the result; English readers get the club's own English where it has one.
+Club names, descriptions, locations and categories come from the NCU club site in Chinese. The club screen asks the backend for them in the app's language (`GET /api/v1/clubs?lang=`), and the backend machine-translates and caches them. English readers get the club's own English where it has one.
 
 ## Tests and checks
 

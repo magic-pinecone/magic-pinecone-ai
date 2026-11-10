@@ -43,6 +43,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -57,27 +58,19 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.zacsweers.metrox.viewmodel.metroViewModel
-import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import org.mpc.domain.model.Club
 import org.mpc.presentation.state.ClubUiState
 import org.mpc.presentation.viewModel.ClubViewModel
-import org.mpc.resources.Res
-import org.mpc.resources.club_category_academic
-import org.mpc.resources.club_category_department
-import org.mpc.resources.club_category_recreation
-import org.mpc.resources.club_category_self_governance
-import org.mpc.resources.club_category_service
-import org.mpc.resources.club_category_social
-import org.mpc.resources.club_category_sports
-import org.mpc.resources.clubs_all
-import org.mpc.resources.clubs_failed_body
-import org.mpc.resources.clubs_failed_title
-import org.mpc.resources.clubs_location
-import org.mpc.resources.clubs_no_backend_body
-import org.mpc.resources.clubs_no_backend_title
-import org.mpc.resources.clubs_retry
-import org.mpc.resources.clubs_website
+import org.mpc.shared.MR
+import org.mpc.shared.clubs_all
+import org.mpc.shared.clubs_failed_body
+import org.mpc.shared.clubs_failed_title
+import org.mpc.shared.clubs_location
+import org.mpc.shared.clubs_no_backend_body
+import org.mpc.shared.clubs_no_backend_title
+import org.mpc.shared.clubs_retry
+import org.mpc.shared.clubs_website
 
 private const val COLLAPSED_DESCRIPTION_LINES = 3
 
@@ -86,6 +79,8 @@ fun ClubsScreen(
     modifier: Modifier = Modifier,
     viewModel: ClubViewModel = metroViewModel(),
 ) {
+    val language = LocalAppLanguage.current
+    LaunchedEffect(language) { viewModel.setLanguage(language.tag) }
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     ClubsView(state = state, onRetry = viewModel::load, modifier = modifier)
 }
@@ -104,20 +99,20 @@ fun ClubsView(
 
         ClubUiState.NoBackend -> ClubsMessage(
             icon = Icons.Outlined.Dns,
-            title = stringResource(Res.string.clubs_no_backend_title),
-            body = stringResource(Res.string.clubs_no_backend_body),
+            title = stringResource(MR.strings.clubs_no_backend_title),
+            body = stringResource(MR.strings.clubs_no_backend_body),
             modifier = modifier,
         )
 
         ClubUiState.Failed -> ClubsMessage(
             icon = Icons.Outlined.CloudOff,
-            title = stringResource(Res.string.clubs_failed_title),
-            body = stringResource(Res.string.clubs_failed_body),
+            title = stringResource(MR.strings.clubs_failed_title),
+            body = stringResource(MR.strings.clubs_failed_body),
             modifier = modifier,
             action = {
                 Button(onClick = onRetry, contentPadding = ButtonDefaults.ButtonWithIconContentPadding) {
                     Icon(Icons.Outlined.Refresh, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
-                    Text(stringResource(Res.string.clubs_retry), modifier = Modifier.padding(start = ButtonDefaults.IconSpacing))
+                    Text(stringResource(MR.strings.clubs_retry), modifier = Modifier.padding(start = ButtonDefaults.IconSpacing))
                 }
             },
         )
@@ -131,7 +126,7 @@ private fun ClubTabs(
     sections: List<Pair<String, List<Club>>>,
     modifier: Modifier,
 ) {
-    val tabs = listOf(stringResource(Res.string.clubs_all)) + sections.map { categoryLabel(it.first) }
+    val tabs = listOf(stringResource(MR.strings.clubs_all)) + sections.map { it.first }
     var selected by rememberSaveable { mutableIntStateOf(0) }
     val selectedIndex = selected.coerceIn(tabs.indices)
     val shown = if (selectedIndex == 0) sections else listOf(sections[selectedIndex - 1])
@@ -155,7 +150,7 @@ private fun ClubTabs(
                 if (selectedIndex == 0) {
                     item(key = "header-$category") {
                         Text(
-                            text = "${categoryLabel(category)} · ${clubs.size}",
+                            text = "$category · ${clubs.size}",
                             modifier = Modifier.padding(start = 4.dp, top = 8.dp),
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.primary,
@@ -185,7 +180,7 @@ private fun ClubCard(club: Club) {
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                ClubAvatar(club.categoryName)
+                ClubAvatar(club)
                 Column(modifier = Modifier.padding(start = 16.dp).weight(1f)) {
                     Text(club.name, style = MaterialTheme.typography.titleMedium)
                     if (subtitle.isNotBlank()) {
@@ -218,7 +213,7 @@ private fun ClubCard(club: Club) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(
                                 Icons.Outlined.Place,
-                                contentDescription = stringResource(Res.string.clubs_location),
+                                contentDescription = stringResource(MR.strings.clubs_location),
                                 modifier = Modifier.size(18.dp),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -233,7 +228,7 @@ private fun ClubCard(club: Club) {
                     if (club.website.isNotBlank()) {
                         AssistChip(
                             onClick = { uriHandler.openUri(club.website) },
-                            label = { Text(stringResource(Res.string.clubs_website)) },
+                            label = { Text(stringResource(MR.strings.clubs_website)) },
                             leadingIcon = { ChipIcon(Icons.AutoMirrored.Outlined.OpenInNew) },
                         )
                     }
@@ -250,7 +245,7 @@ private fun ChipIcon(icon: ImageVector) {
 
 /** The category's icon on a tonal circle; the club site's logos need an image loader the app does not have. */
 @Composable
-private fun ClubAvatar(categoryName: String) {
+private fun ClubAvatar(club: Club) {
     Surface(
         modifier = Modifier.size(48.dp),
         shape = CircleShape,
@@ -258,27 +253,22 @@ private fun ClubAvatar(categoryName: String) {
         contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
     ) {
         Box(contentAlignment = Alignment.Center) {
-            Icon(categoryIcon(categoryName), contentDescription = categoryLabel(categoryName), modifier = Modifier.size(24.dp))
+            Icon(categoryIcon(club.category), contentDescription = club.categoryName, modifier = Modifier.size(24.dp))
         }
     }
 }
 
-/** The NCU club site's categories, keyed by the names the backend sends. */
-private val CATEGORIES: Map<String, Pair<ImageVector, StringResource>> = mapOf(
-    "聯誼性" to (Icons.Outlined.Diversity3 to Res.string.club_category_social),
-    "學術性" to (Icons.Outlined.School to Res.string.club_category_academic),
-    "康樂性" to (Icons.Outlined.Celebration to Res.string.club_category_recreation),
-    "系學會" to (Icons.Outlined.Apartment to Res.string.club_category_department),
-    "體育性" to (Icons.Outlined.SportsBasketball to Res.string.club_category_sports),
-    "服務性" to (Icons.Outlined.VolunteerActivism to Res.string.club_category_service),
-    "學生自治組織" to (Icons.Outlined.HowToVote to Res.string.club_category_self_governance),
-)
-
-private fun categoryIcon(categoryName: String): ImageVector = CATEGORIES[categoryName]?.first ?: Icons.Outlined.Groups
-
-/** The category in the app's language; a category the app doesn't know keeps the backend's name. */
-@Composable
-private fun categoryLabel(categoryName: String): String = CATEGORIES[categoryName]?.let { stringResource(it.second) } ?: categoryName
+/** The NCU club site's category codes, A to G; the backend names them in the requested language. */
+private fun categoryIcon(category: String): ImageVector = when (category) {
+    "A" -> Icons.Outlined.Diversity3
+    "B" -> Icons.Outlined.School
+    "C" -> Icons.Outlined.Celebration
+    "D" -> Icons.Outlined.Apartment
+    "E" -> Icons.Outlined.SportsBasketball
+    "F" -> Icons.Outlined.VolunteerActivism
+    "G" -> Icons.Outlined.HowToVote
+    else -> Icons.Outlined.Groups
+}
 
 @Composable
 private fun ClubsMessage(

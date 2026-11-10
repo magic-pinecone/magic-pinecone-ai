@@ -193,10 +193,6 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
-compose.resources {
-    packageOfResClass = "org.mpc.resources"
-}
-
 detekt {
     toolVersion = "2.0.0-alpha.5"
     config.setFrom(rootProject.file("config/detekt/detekt.yml"))

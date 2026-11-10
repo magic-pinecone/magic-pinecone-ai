@@ -30,4 +30,8 @@
     <string name="settings_syncing">Đang đồng bộ dữ liệu môn học…</string>
     <string name="settings_invalid_address">Hãy nhập địa chỉ bắt đầu bằng http:// hoặc https://.</string>
     <string name="settings_source_unavailable">Không thể lấy dữ liệu môn học từ nguồn này. Nguồn dữ liệu hiện tại vẫn được giữ nguyên.</string>
+    <string name="settings_language">Ngôn ngữ</string>
+    <string name="settings_language_description">Ngôn ngữ cho chữ trong ứng dụng và thông tin câu lạc bộ</string>
+    <string name="settings_language_system">Ngôn ngữ hệ thống</string>
+    <string name="settings_language_system_description">Theo ngôn ngữ của thiết bị hoặc trình duyệt</string>
 </resources>

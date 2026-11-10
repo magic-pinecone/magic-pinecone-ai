@@ -8,6 +8,7 @@ import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,14 +28,27 @@ class ClubViewModel(
     private val state = MutableStateFlow<ClubUiState>(ClubUiState.Loading)
     val uiState: StateFlow<ClubUiState> = state.asStateFlow()
 
+    private var language: String? = null
+    private var loadJob: Job? = null
+
     init {
+        load()
+    }
+
+    /** Shows the clubs in [language], a language tag or null for the device language. */
+    fun setLanguage(language: String?) {
+        if (language == this.language) return
+        this.language = language
         load()
     }
 
     fun load() {
         state.value = ClubUiState.Loading
-        viewModelScope.launch {
-            state.value = runCatching { clubRepository.fetchClubs() }
+        val language = language
+        // A slower response for the previous language must not overwrite this one.
+        loadJob?.cancel()
+        loadJob = viewModelScope.launch {
+            state.value = runCatching { clubRepository.fetchClubs(language) }
                 .fold(
                     onSuccess = { clubs ->
                         if (clubs == null) {

@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class ClubDto(
     val clubId: Int,
+    val category: String = "",
     val categoryName: String,
     val name: String,
     val nameEn: String = "",

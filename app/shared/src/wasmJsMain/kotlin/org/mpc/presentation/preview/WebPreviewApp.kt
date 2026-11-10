@@ -37,7 +37,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 import kotlinx.browser.window
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppThemeMode
+import org.mpc.presentation.ProvideAppLanguage
 import org.mpc.domain.model.TimetableColorMode
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
@@ -98,6 +100,8 @@ private val ComposePreviewScenario.stateLabel: String
 fun WebPreviewApp() {
     var scenario by remember { mutableStateOf(scenarioFromHash() ?: ComposePreviewScenario.CATALOG_POPULATED) }
     var darkTheme by remember { mutableStateOf(window.matchMedia("(prefers-color-scheme: dark)").matches) }
+    // shortcut: kept for the page's lifetime only; the preview has no persistence.
+    var language by remember { mutableStateOf(AppLanguage.SYSTEM) }
     LaunchedEffect(scenario) { window.location.hash = scenario.name }
 
     MpcTheme(
@@ -126,7 +130,13 @@ fun WebPreviewApp() {
                             onToggleTheme = { darkTheme = !darkTheme },
                         )
                         Box(modifier = Modifier.weight(1f)) {
-                            ComposePreviewScenarioContent(scenario)
+                            ProvideAppLanguage(language) {
+                                ComposePreviewScenarioContent(
+                                    scenario = scenario,
+                                    language = language,
+                                    onLanguageSelected = { language = it },
+                                )
+                            }
                         }
                     }
                 }

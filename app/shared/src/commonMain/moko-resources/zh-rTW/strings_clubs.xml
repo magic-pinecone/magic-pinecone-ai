@@ -1,4 +1,6 @@
 <resources>
+    <string name="clubs_title">社團</string>
+    <string name="clubs_portal_description">中央大學學生社團一覽</string>
     <string name="clubs_all">全部</string>
     <string name="clubs_no_backend_title">尚未設定後端</string>
     <string name="clubs_no_backend_body">請在設定中設定後端以查看社團</string>
@@ -7,11 +9,4 @@
     <string name="clubs_retry">重試</string>
     <string name="clubs_location">地點</string>
     <string name="clubs_website">網站</string>
-    <string name="club_category_social">聯誼性</string>
-    <string name="club_category_academic">學術性</string>
-    <string name="club_category_recreation">康樂性</string>
-    <string name="club_category_department">系學會</string>
-    <string name="club_category_sports">體育性</string>
-    <string name="club_category_service">服務性</string>
-    <string name="club_category_self_governance">學生自治組織</string>
 </resources>

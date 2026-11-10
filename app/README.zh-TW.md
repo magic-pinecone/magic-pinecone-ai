@@ -69,12 +69,11 @@ App 預設讀取公開的靜態課程資料。要改由 [`backend/`](../backend/
 
 ## 語言
 
-社團頁面會跟隨裝置語言；Android 13 以上也可以在 **設定** > **應用程式** > **神奇松果** > **語言** 單獨設定。瀏覽器預覽則跟隨瀏覽器語言。文字放在 `shared/src/commonMain/composeResources/`：
+App 文字透過 moko-resources 提供英文、繁體中文與越南文；設定方式與新增文字的流程見 [`docs/i18n-plan.md`](../docs/i18n-plan.md)。App 預設跟隨裝置語言，其他語言則顯示英文。
 
-- `values/strings.xml` 是英文，也是所有沒有對應資料夾的語言的預設。
-- `values-zh/strings.xml` 是繁體中文。
+瀏覽器預覽可以在 **設定** > **語言** 即時切換語言。Android 與 iOS 尚未提供切換，因為套用語言需要計畫中語言選擇器（IL）那一列的平台工作。
 
-新增語言時，把 `values/strings.xml` 複製成 `values-<代碼>/strings.xml`（例如 `values-ja`），翻譯每一項，再把該語言加進 `androidApp/src/main/res/xml/locales_config.xml`。社團名稱、介紹、地點與類別來自中央大學社團網站，原文為中文。App 會把目前語言傳給後端（`GET /api/v1/clubs?lang=`），由後端機器翻譯並快取；英文使用者會優先看到社團自己提供的英文。
+社團名稱、介紹、地點與類別來自中央大學社團網站，原文為中文。社團頁面會用 App 目前的語言向後端要資料（`GET /api/v1/clubs?lang=`），由後端機器翻譯並快取；英文使用者會優先看到社團自己提供的英文。
 
 ## 測試與檢查
 

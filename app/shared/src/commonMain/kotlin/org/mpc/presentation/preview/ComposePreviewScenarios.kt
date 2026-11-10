@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.Club
@@ -63,7 +64,12 @@ enum class ComposePreviewScenario {
 }
 
 @Composable
-internal fun ComposePreviewScenarioContent(scenario: ComposePreviewScenario) {
+internal fun ComposePreviewScenarioContent(
+    scenario: ComposePreviewScenario,
+    language: AppLanguage = AppLanguage.SYSTEM,
+    // Null leaves the Settings language section out, as hosts that cannot switch language at runtime do.
+    onLanguageSelected: ((AppLanguage) -> Unit)? = null,
+) {
     when (scenario) {
         ComposePreviewScenario.CATALOG_POPULATED -> CourseSearchResultView(
             modifier = Modifier.fillMaxSize(),
@@ -141,6 +147,8 @@ internal fun ComposePreviewScenarioContent(scenario: ComposePreviewScenario) {
             onThemeModeSelected = {},
             onPortalAuthenticationModeSelected = {},
             onTimetableColorModeSelected = {},
+            language = language,
+            onLanguageSelected = onLanguageSelected,
         )
 
         ComposePreviewScenario.CLUBS_POPULATED -> ClubsView(
@@ -178,6 +186,7 @@ internal object ComposePreviewFixtures {
     val clubs = listOf(
         Club(
             id = 1049,
+            category = "A",
             categoryName = "聯誼性",
             name = "桃園地區校友會",
             nameEn = "NCUTY",
@@ -188,6 +197,7 @@ internal object ComposePreviewFixtures {
         ),
         Club(
             id = 1051,
+            category = "A",
             categoryName = "聯誼性",
             name = "新竹校友會",
             nameEn = "NCUHsinChu",
@@ -198,6 +208,7 @@ internal object ComposePreviewFixtures {
         ),
         Club(
             id = 1171,
+            category = "G",
             categoryName = "學生自治組織",
             name = "學生會",
             nameEn = "Student Association",

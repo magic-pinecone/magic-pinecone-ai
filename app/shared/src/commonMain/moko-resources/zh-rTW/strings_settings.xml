@@ -30,4 +30,8 @@
     <string name="settings_syncing">正在同步課程資料…</string>
     <string name="settings_invalid_address">請輸入以 http:// 或 https:// 開頭的位址。</string>
     <string name="settings_source_unavailable">無法從這個來源取得課程資料，已維持原本的資料來源。</string>
+    <string name="settings_language">語言</string>
+    <string name="settings_language_description">App 文字與社團資訊使用的語言</string>
+    <string name="settings_language_system">跟隨系統</string>
+    <string name="settings_language_system_description">跟隨裝置或瀏覽器的語言</string>
 </resources>

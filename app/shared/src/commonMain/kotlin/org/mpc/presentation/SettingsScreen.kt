@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import dev.icerock.moko.resources.compose.stringResource
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.PortalAuthenticationMode
@@ -31,6 +32,10 @@ import org.mpc.shared.settings_appearance
 import org.mpc.shared.settings_appearance_description
 import org.mpc.shared.settings_course_source
 import org.mpc.shared.settings_course_source_description
+import org.mpc.shared.settings_language
+import org.mpc.shared.settings_language_description
+import org.mpc.shared.settings_language_system
+import org.mpc.shared.settings_language_system_description
 import org.mpc.shared.settings_portal_login
 import org.mpc.shared.settings_portal_login_description
 import org.mpc.shared.settings_portal_manual
@@ -61,6 +66,9 @@ fun SettingsScreen(
     onTimetableColorModeSelected: (TimetableColorMode) -> Unit,
     backendEndpoint: BackendEndpointUiState? = null,
     onUseCourseSource: (String) -> Unit = {},
+    language: AppLanguage = AppLanguage.SYSTEM,
+    // Null hides the section: only hosts that apply a language at runtime offer one (docs/i18n-plan.md, IL).
+    onLanguageSelected: ((AppLanguage) -> Unit)? = null,
 ) {
     Column(
         modifier = modifier
@@ -74,6 +82,27 @@ fun SettingsScreen(
                 color = MpcTheme.colors.destructive,
                 style = MpcTheme.typography.supporting,
             )
+        }
+
+        if (onLanguageSelected != null) {
+            SettingsSectionTitle(
+                title = stringResource(MR.strings.settings_language),
+                description = stringResource(MR.strings.settings_language_description),
+            )
+            AppLanguage.entries.forEach { option ->
+                SettingsChoiceRow(
+                    title = option.nativeName ?: stringResource(MR.strings.settings_language_system),
+                    description = if (option == AppLanguage.SYSTEM) {
+                        stringResource(MR.strings.settings_language_system_description)
+                    } else {
+                        null
+                    },
+                    selected = language == option,
+                    onClick = { onLanguageSelected(option) },
+                )
+            }
+
+            HorizontalDivider()
         }
 
         SettingsSectionTitle(
@@ -179,7 +208,7 @@ private fun SettingsSectionTitle(
 @Composable
 private fun SettingsChoiceRow(
     title: String,
-    description: String,
+    description: String?,
     selected: Boolean,
     enabled: Boolean = true,
     onClick: () -> Unit,
@@ -206,11 +235,13 @@ private fun SettingsChoiceRow(
                 text = title,
                 color = if (enabled) MpcTheme.colors.label else MpcTheme.colors.labelSecondary,
             )
-            Text(
-                text = description,
-                style = MpcTheme.typography.caption,
-                color = MpcTheme.colors.labelSecondary,
-            )
+            if (description != null) {
+                Text(
+                    text = description,
+                    style = MpcTheme.typography.caption,
+                    color = MpcTheme.colors.labelSecondary,
+                )
+            }
         }
     }
 }
