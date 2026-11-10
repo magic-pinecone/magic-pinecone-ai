@@ -3,9 +3,7 @@
 app/androidApp/src/main/kotlin/org/mpc/AndroidShell.kt
 app/androidApp/src/main/kotlin/org/mpc/calendar/CalendarExportButton.kt
 app/androidApp/src/main/kotlin/org/mpc/calendar/ClassCalendar.kt
-app/androidApp/src/main/kotlin/org/mpc/presentation/CourseCatalogScreen.kt
 app/androidApp/src/main/kotlin/org/mpc/presentation/CourseFilterChips.kt
-app/androidApp/src/main/kotlin/org/mpc/presentation/CourseFilterPicker.kt
 app/androidApp/src/main/kotlin/org/mpc/presentation/CourseFilterSheet.kt
 app/androidApp/src/main/kotlin/org/mpc/presentation/CoursePlanningScreen.kt
 app/androidApp/src/main/kotlin/org/mpc/presentation/EeclassBulletinScreen.kt
@@ -21,7 +19,6 @@ app/shared/src/commonMain/kotlin/org/mpc/presentation/model/PortalAccount.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/model/TimetableColorAssignment.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/navigation/AppTab.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/preview/ComposePreviewScenarios.kt
-app/shared/src/commonMain/kotlin/org/mpc/presentation/views/courseFilters/CourseSlotPicker.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/views/coursePlanning/CoursePlanningTimetableSuccessView.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/views/coursePlanning/CourseSearchResultFailureView.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/views/coursePlanning/CourseSearchResultLoadingView.kt

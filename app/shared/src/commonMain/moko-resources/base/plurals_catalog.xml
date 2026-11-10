@@ -1,0 +1,6 @@
+<resources>
+    <plurals name="catalog_label_schedule">
+        <item quantity="one">Schedule: %1$d period</item>
+        <item quantity="other">Schedule: %1$d periods</item>
+    </plurals>
+</resources>

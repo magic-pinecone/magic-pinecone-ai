@@ -1,0 +1,5 @@
+<resources>
+    <plurals name="catalog_label_schedule">
+        <item quantity="other">時段：%1$d 節</item>
+    </plurals>
+</resources>

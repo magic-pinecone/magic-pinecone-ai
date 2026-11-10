@@ -28,11 +28,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.compose.stringResource
+import org.mpc.shared.MR
+import org.mpc.shared.catalog_back_to_filters
+import org.mpc.shared.catalog_no_matches
+import org.mpc.shared.catalog_selected_count
+
+internal class FilterPickerText(
+    val title: StringResource,
+    val searchPlaceholder: StringResource,
+)
 
 /** A searchable multi-select over [options]; toggling applies immediately. */
 @Composable
 internal fun CourseFilterMultiSelect(
-    title: String,
+    text: FilterPickerText,
     options: List<String>,
     selected: Set<String>,
     onToggle: (String) -> Unit,
@@ -47,28 +58,29 @@ internal fun CourseFilterMultiSelect(
     Column(modifier = modifier) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "返回篩選")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(MR.strings.catalog_back_to_filters))
             }
-            Text(title, style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(text.title), style = MaterialTheme.typography.titleMedium)
             if (selected.isNotEmpty()) {
                 Text(
-                    text = "　已選 ${selected.size}",
+                    text = stringResource(MR.strings.catalog_selected_count, selected.size),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(start = 12.dp),
                 )
             }
         }
         OutlinedTextField(
             value = search,
             onValueChange = { search = it },
-            placeholder = { Text("搜尋$title") },
+            placeholder = { Text(stringResource(text.searchPlaceholder)) },
             leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
         )
         if (visible.isEmpty()) {
             Text(
-                text = "沒有符合的項目",
+                text = stringResource(MR.strings.catalog_no_matches),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(16.dp),
