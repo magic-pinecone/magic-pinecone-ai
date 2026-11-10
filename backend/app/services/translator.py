@@ -73,7 +73,12 @@ def status() -> dict[str, object]:
             "error": None,
         }
     except (httpx.HTTPError, ValueError, LookupError, TypeError) as e:
-        return {"available": False, "languages": [], "error": type(e).__name__}
+        # The message tells a missing service (name not resolved) from one still starting (refused).
+        return {
+            "available": False,
+            "languages": [],
+            "error": f"{type(e).__name__}: {e}",
+        }
 
 
 def translate(

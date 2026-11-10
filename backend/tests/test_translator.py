@@ -76,5 +76,5 @@ def test_status_reports_the_languages_or_the_failure(monkeypatch):
     assert translator.status() == {
         "available": False,
         "languages": [],
-        "error": "ConnectError",
+        "error": "ConnectError: refused",
     }
