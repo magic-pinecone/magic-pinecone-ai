@@ -55,4 +55,4 @@ fun ServiceLearning.toSourcedRules() = SourcedRules(
     openQuestions = openQuestions,
 )
 
-private fun ServiceLearningSource.toRuleSource() = RuleSource(url = url, title = title, fetched = fetched, quote = quote)
+internal fun ServiceLearningSource.toRuleSource() = RuleSource(url = url, title = title, fetched = fetched, quote = quote)

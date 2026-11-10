@@ -43,6 +43,7 @@ import org.mpc.domain.model.SourcedRule
 import org.mpc.domain.model.SourcedRules
 import org.mpc.domain.model.degrees
 import org.mpc.domain.model.forDegree
+import org.mpc.domain.model.formatCredits
 import org.mpc.presentation.state.SourcedRulesUiState
 import org.mpc.presentation.theme.MpcShapes
 import org.mpc.presentation.theme.MpcSpacing
@@ -53,6 +54,7 @@ import org.mpc.shared.intl_retry
 import org.mpc.shared.rules_all_degrees
 import org.mpc.shared.rules_contact
 import org.mpc.shared.rules_credits
+import org.mpc.shared.rules_credits_none
 import org.mpc.shared.rules_degree_bachelor
 import org.mpc.shared.rules_degree_graduate
 import org.mpc.shared.rules_failed
@@ -170,7 +172,15 @@ fun SourcedRuleCard(
             color = MpcTheme.colors.label,
             modifier = Modifier.semantics { heading() },
         )
-        val badges = rule.degrees.map { it.label() } + listOfNotNull(rule.credits?.let { stringResource(MR.strings.rules_credits, it) })
+        val badges = rule.degrees.map { it.label() } + listOfNotNull(
+            rule.credits?.let { credits ->
+                if (credits == 0.0) {
+                    stringResource(MR.strings.rules_credits_none)
+                } else {
+                    stringResource(MR.strings.rules_credits, formatCredits(credits))
+                }
+            },
+        )
         if (badges.isNotEmpty()) {
             Text(badges.joinToString(" · "), style = MpcTheme.typography.caption, color = MpcTheme.colors.labelSecondary)
         }

@@ -39,6 +39,8 @@ import org.mpc.domain.model.collegesFor
 import org.mpc.domain.model.rulesFor
 import org.mpc.presentation.ClubsScreen
 import org.mpc.presentation.ClubsView
+import org.mpc.presentation.CreditsRoute
+import org.mpc.presentation.CreditsScreen
 import org.mpc.presentation.GovGuidesRoute
 import org.mpc.presentation.GovGuidesScreen
 import org.mpc.presentation.GraduationLanguageActions
@@ -89,6 +91,11 @@ enum class ComposePreviewScenario {
 
     /** Reads the running backend through [org.mpc.presentation.viewModel.ServiceLearningViewModel]. */
     SERVICE_LEARNING_LIVE,
+
+    CREDITS_POPULATED,
+
+    /** Reads the running backend through [org.mpc.presentation.viewModel.CreditsViewModel]. */
+    CREDITS_LIVE,
 
     CLUBS_POPULATED,
     CLUBS_NO_BACKEND,
@@ -210,6 +217,14 @@ internal fun ComposePreviewScenarioContent(
         )
 
         ComposePreviewScenario.SERVICE_LEARNING_LIVE -> ServiceLearningRoute(modifier = Modifier.fillMaxSize())
+
+        ComposePreviewScenario.CREDITS_POPULATED -> CreditsScreen(
+            state = SourcedRulesUiState.Loaded(ComposePreviewFixtures.credits),
+            onRetry = {},
+            modifier = Modifier.fillMaxSize(),
+        )
+
+        ComposePreviewScenario.CREDITS_LIVE -> CreditsRoute(modifier = Modifier.fillMaxSize())
 
         ComposePreviewScenario.CLUBS_POPULATED -> ClubsView(
             state = ClubUiState.Loaded(ComposePreviewFixtures.clubs.groupBy { it.categoryName }.toList()),
@@ -408,6 +423,72 @@ internal object ComposePreviewFixtures {
             ),
         ),
         openQuestions = listOf("外籍生是否可以用其他活動折抵？"),
+    )
+
+    private val creditsSource = RuleSource(
+        url = "https://pdc.adm.ncu.edu.tw/",
+        title = "教務處課務組",
+        fetched = "2026-11-10",
+        quote = "學士班畢業最低學分數為一百二十八學分。",
+    )
+
+    val credits = SourcedRules(
+        contact = RuleContact(
+            name = LocalizedText("教務處課務組", "Division of Curriculum, Office of Academic Affairs"),
+            website = "https://pdc.adm.ncu.edu.tw/",
+            sources = listOf(creditsSource),
+        ),
+        rules = listOf(
+            SourcedRule(
+                id = "minimum-credits",
+                degrees = listOf(RuleDegree.BACHELOR),
+                title = LocalizedText("學士班畢業至少 128 學分", "Bachelor's degree: at least 128 credits"),
+                summary = LocalizedText(
+                    "學士班學生須修滿至少 128 學分才能畢業。",
+                    "Bachelor's students need at least 128 credits to graduate.",
+                ),
+                credits = 128.0,
+                sources = listOf(creditsSource),
+            ),
+            SourcedRule(
+                id = "micro-courses",
+                degrees = listOf(RuleDegree.BACHELOR),
+                title = LocalizedText("自主學習微課程", "Self-directed micro-courses"),
+                summary = LocalizedText(
+                    "每門微課程可抵通識選修半學分。",
+                    "Each micro-course counts for half a general-education elective credit.",
+                ),
+                credits = 0.5,
+                sources = listOf(creditsSource),
+            ),
+            SourcedRule(
+                id = "service-learning",
+                degrees = listOf(RuleDegree.BACHELOR),
+                title = LocalizedText("服務學習必修二學期，不計學分", "Service learning: two semesters, no credits"),
+                summary = LocalizedText(
+                    "必修，但不計入畢業學分。",
+                    "Required, but it does not count toward the credit total.",
+                ),
+                credits = 0.0,
+                sources = listOf(creditsSource),
+            ),
+            SourcedRule(
+                id = "curriculum-by-cohort",
+                degrees = listOf(RuleDegree.BACHELOR, RuleDegree.GRADUATE),
+                title = LocalizedText("依入學年度的應修科目表修課", "Follow the curriculum table of your entry year"),
+                summary = LocalizedText("各系所依入學年度公告應修科目表。", "Each department publishes a table for every entry year."),
+                sources = listOf(creditsSource),
+            ),
+            SourcedRule(
+                id = "master-minimum-credits",
+                degrees = listOf(RuleDegree.GRADUATE),
+                title = LocalizedText("碩士班畢業至少 24 學分", "Master's degree: at least 24 credits"),
+                summary = LocalizedText("不含論文。", "Thesis excluded."),
+                credits = 24.0,
+                sources = listOf(creditsSource),
+            ),
+        ),
+        openQuestions = listOf("外籍生的國文應修 5 學分還是以華語課 6 學分抵？"),
     )
 
     val clubs = listOf(
