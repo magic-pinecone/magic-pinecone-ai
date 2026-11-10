@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.icerock.moko.resources.compose.stringResource
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.mpc.domain.model.CourseSummary
 import org.mpc.domain.model.SlotMatch
@@ -36,6 +37,10 @@ import org.mpc.presentation.state.CoursePlanUiState
 import org.mpc.presentation.viewModel.CoursePlanViewModel
 import org.mpc.presentation.viewModel.CourseSearchViewModel
 import org.mpc.presentation.views.coursePlanning.CourseSearchResultView
+import org.mpc.shared.MR
+import org.mpc.shared.catalog_clear_search
+import org.mpc.shared.catalog_filters_applied
+import org.mpc.shared.catalog_search_courses
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -83,14 +88,14 @@ fun CourseCatalogScreen(
                 if (value.isEmpty()) runSearch()
             },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-            placeholder = { Text("搜尋課程") },
+            placeholder = { Text(stringResource(MR.strings.catalog_search_courses)) },
             colors = SearchBarDefaults.inputFieldColors(
                 focusedContainerColor = searchContainerColor,
                 unfocusedContainerColor = searchContainerColor,
             ),
             leadingIcon = {
                 IconButton(onClick = { submitSearch() }) {
-                    Icon(Icons.Default.Search, contentDescription = "搜尋課程")
+                    Icon(Icons.Default.Search, contentDescription = stringResource(MR.strings.catalog_search_courses))
                 }
             },
             trailingIcon = {
@@ -100,14 +105,14 @@ fun CourseCatalogScreen(
                             query = ""
                             submitSearch()
                         }) {
-                            Icon(Icons.Default.Close, contentDescription = "清除搜尋")
+                            Icon(Icons.Default.Close, contentDescription = stringResource(MR.strings.catalog_clear_search))
                         }
                     }
                     IconButton(onClick = { showsFilterSheet = true }) {
                         BadgedBox(badge = {
                             if (filterCount > 0) Badge { Text("$filterCount") }
                         }) {
-                            Icon(Icons.Default.FilterList, contentDescription = "篩選條件，已套用 $filterCount 項")
+                            Icon(Icons.Default.FilterList, contentDescription = stringResource(MR.strings.catalog_filters_applied, filterCount))
                         }
                     }
                 }

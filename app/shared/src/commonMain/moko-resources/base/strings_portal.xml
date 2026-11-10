@@ -1,0 +1,17 @@
+<resources>
+    <string name="portal_no_results">No services found for “%1$s”</string>
+    <string name="portal_favorites">Favorites</string>
+    <string name="portal_done">Done</string>
+    <string name="portal_edit">Edit</string>
+    <string name="portal_favorites_empty">Tap “Edit”, then tap ＋ to add services to your favorites</string>
+    <string name="portal_already_favorite">Already in favorites: %1$s</string>
+    <string name="portal_add_favorite">Add to favorites: %1$s</string>
+    <string name="portal_search">Search services</string>
+    <string name="portal_clear_search">Clear search</string>
+    <string name="portal_move_up">Move %1$s up</string>
+    <string name="portal_move_down">Move %1$s down</string>
+    <string name="portal_remove_favorite">Remove %1$s from favorites</string>
+    <string name="portal_sign_in">Sign in</string>
+    <string name="portal_sign_out">Sign out</string>
+    <string name="portal_retry">Retry</string>
+</resources>

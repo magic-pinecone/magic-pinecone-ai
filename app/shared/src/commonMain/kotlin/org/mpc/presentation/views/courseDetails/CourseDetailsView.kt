@@ -33,14 +33,57 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import dev.icerock.moko.resources.compose.localized
+import dev.icerock.moko.resources.compose.stringResource
+import dev.icerock.moko.resources.desc.StringDesc
 import org.mpc.domain.model.CourseDetail
 import org.mpc.domain.model.CourseSummary
+import org.mpc.domain.model.CourseType
 import org.mpc.domain.model.DistributionCondition
+import org.mpc.domain.model.PasswordCardType
 import org.mpc.presentation.formatting.creditLabel
 import org.mpc.presentation.formatting.scheduleDescription
 import org.mpc.presentation.theme.MpcShapes
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
+import org.mpc.shared.MR
+import org.mpc.shared.coursedetail_add
+import org.mpc.shared.coursedetail_basic_info
+import org.mpc.shared.coursedetail_books
+import org.mpc.shared.coursedetail_close_details
+import org.mpc.shared.coursedetail_content
+import org.mpc.shared.coursedetail_course_number
+import org.mpc.shared.coursedetail_course_type
+import org.mpc.shared.coursedetail_credits
+import org.mpc.shared.coursedetail_credits_value
+import org.mpc.shared.coursedetail_department
+import org.mpc.shared.coursedetail_details_title
+import org.mpc.shared.coursedetail_distribution_conditions
+import org.mpc.shared.coursedetail_empty_syllabus
+import org.mpc.shared.coursedetail_enrollment
+import org.mpc.shared.coursedetail_enrollment_count
+import org.mpc.shared.coursedetail_enrollment_info
+import org.mpc.shared.coursedetail_grading_policy
+import org.mpc.shared.coursedetail_instructors
+import org.mpc.shared.coursedetail_list_separator
+import org.mpc.shared.coursedetail_loading_syllabus
+import org.mpc.shared.coursedetail_none
+import org.mpc.shared.coursedetail_not_provided
+import org.mpc.shared.coursedetail_objectives
+import org.mpc.shared.coursedetail_official_page
+import org.mpc.shared.coursedetail_password
+import org.mpc.shared.coursedetail_password_all
+import org.mpc.shared.coursedetail_password_none
+import org.mpc.shared.coursedetail_password_some
+import org.mpc.shared.coursedetail_remove
+import org.mpc.shared.coursedetail_retry
+import org.mpc.shared.coursedetail_schedule
+import org.mpc.shared.coursedetail_serial_number
+import org.mpc.shared.coursedetail_syllabus
+import org.mpc.shared.coursedetail_teaching_method
+import org.mpc.shared.coursedetail_type_elective
+import org.mpc.shared.coursedetail_type_required
+import org.mpc.shared.coursedetail_type_unknown
 
 @Composable
 fun CourseDetailsView(
@@ -64,13 +107,13 @@ fun CourseDetailsView(
                 verticalArrangement = Arrangement.spacedBy(MpcSpacing.space1),
             ) {
                 Text(
-                    text = state.summary?.title ?: "課程詳細資訊",
+                    text = state.summary?.title ?: stringResource(MR.strings.coursedetail_details_title),
                     style = MpcTheme.typography.screenTitle,
                     fontWeight = FontWeight.SemiBold,
                 )
                 state.summary?.let { course ->
                     Text(
-                        text = course.courseType.description,
+                        text = stringResource(course.courseType.labelResource()),
                         style = MpcTheme.typography.supporting,
                         color = MpcTheme.colors.labelSecondary,
                     )
@@ -79,7 +122,7 @@ fun CourseDetailsView(
             IconButton(onClick = actions.onClose) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    contentDescription = "關閉課程詳細資訊",
+                    contentDescription = stringResource(MR.strings.coursedetail_close_details),
                     tint = MpcTheme.colors.labelSecondary,
                 )
             }
@@ -98,11 +141,11 @@ fun CourseDetailsView(
                 }
                 item(key = "enrollment-facts") {
                     CourseFactGroup(
-                        title = "選課資訊",
+                        title = stringResource(MR.strings.coursedetail_enrollment_info),
                         facts = listOf(
-                            "上課時間" to summary.scheduleDescription(),
-                            "選課人數" to "${summary.admitCnt} / ${summary.limitCnt} 人 · 候補 ${summary.waitCnt} 人",
-                            "選課密碼" to summary.passwordCard.description,
+                            stringResource(MR.strings.coursedetail_schedule) to summary.scheduleDescription(),
+                            stringResource(MR.strings.coursedetail_enrollment) to stringResource(MR.strings.coursedetail_enrollment_count, summary.admitCnt, summary.limitCnt, summary.waitCnt),
+                            stringResource(MR.strings.coursedetail_password) to stringResource(summary.passwordCard.labelResource()),
                         ),
                     )
                 }
@@ -110,7 +153,7 @@ fun CourseDetailsView(
                     item(key = "official-course-page") {
                         SheetSection {
                             TextButton(onClick = { actions.onOpenOfficialPage(summary.detailUrl) }) {
-                                Text("查看官方課程頁面")
+                                Text(stringResource(MR.strings.coursedetail_official_page))
                             }
                         }
                     }
@@ -127,7 +170,7 @@ fun CourseDetailsView(
                         ) {
                             CircularProgressIndicator()
                             Text(
-                                text = "正在載入課程大綱…",
+                                text = stringResource(MR.strings.coursedetail_loading_syllabus),
                                 style = MpcTheme.typography.supporting,
                                 color = MpcTheme.colors.labelSecondary,
                             )
@@ -139,9 +182,9 @@ fun CourseDetailsView(
             state.errorMessage?.let { message ->
                 item(key = "error") {
                     SheetSection {
-                        Text(message, color = MpcTheme.colors.destructive)
+                        Text(message.localized(), color = MpcTheme.colors.destructive)
                         TextButton(onClick = actions.onRetry) {
-                            Text("重試")
+                            Text(stringResource(MR.strings.coursedetail_retry))
                         }
                     }
                 }
@@ -150,25 +193,25 @@ fun CourseDetailsView(
             state.detail?.let { detail ->
                 item(key = "syllabus-heading") {
                     Text(
-                        text = "課程大綱",
+                        text = stringResource(MR.strings.coursedetail_syllabus),
                         style = MpcTheme.typography.sectionTitle,
                         fontWeight = FontWeight.SemiBold,
                     )
                 }
                 item(key = "objectives") {
-                    DetailSection("課程目標", detail.objectives)
+                    DetailSection(stringResource(MR.strings.coursedetail_objectives), detail.objectives)
                 }
                 item(key = "content") {
-                    DetailSection("課程內容", detail.content)
+                    DetailSection(stringResource(MR.strings.coursedetail_content), detail.content)
                 }
                 item(key = "books") {
-                    DetailSection("教科書", detail.books)
+                    DetailSection(stringResource(MR.strings.coursedetail_books), detail.books)
                 }
                 item(key = "teaching-method") {
-                    DetailSection("教學方式", detail.teachingMethod)
+                    DetailSection(stringResource(MR.strings.coursedetail_teaching_method), detail.teachingMethod)
                 }
                 item(key = "grading-policy") {
-                    DetailSection("評量方式", detail.gradingPolicy)
+                    DetailSection(stringResource(MR.strings.coursedetail_grading_policy), detail.gradingPolicy)
                 }
                 item(key = "distribution-conditions") {
                     DistributionConditionsSection(detail.distributionConditions)
@@ -184,7 +227,7 @@ fun CourseDetailsView(
                 ) {
                     item(key = "empty-syllabus") {
                         Text(
-                            text = "目前沒有課程大綱資料。",
+                            text = stringResource(MR.strings.coursedetail_empty_syllabus),
                             color = MpcTheme.colors.labelSecondary,
                             style = MpcTheme.typography.supporting,
                         )
@@ -209,7 +252,7 @@ fun CourseDetailsView(
                 ButtonDefaults.buttonColors()
             },
         ) {
-            Text(if (state.isSelected) "從課表移除" else "加入課表")
+            Text(if (state.isSelected) stringResource(MR.strings.coursedetail_remove) else stringResource(MR.strings.coursedetail_add))
         }
     }
 }
@@ -217,18 +260,18 @@ fun CourseDetailsView(
 @Composable
 private fun CourseFactsSection(course: CourseSummary) {
     CourseFactGroup(
-        title = "基本資訊",
+        title = stringResource(MR.strings.coursedetail_basic_info),
         facts = listOf(
-            "學分" to "${course.credit.creditLabel()} 學分",
-            "類別" to course.courseType.description,
-            "授課教師" to course.teachers.filter { it.isNotBlank() }.joinToString("、").ifBlank { "未提供" },
-            "開課單位" to listOf(course.collegeName, course.departmentName)
+            stringResource(MR.strings.coursedetail_credits) to stringResource(MR.strings.coursedetail_credits_value, course.credit.creditLabel()),
+            stringResource(MR.strings.coursedetail_course_type) to stringResource(course.courseType.labelResource()),
+            stringResource(MR.strings.coursedetail_instructors) to course.teachers.filter { it.isNotBlank() }.joinToString(stringResource(MR.strings.coursedetail_list_separator)).ifBlank { stringResource(MR.strings.coursedetail_not_provided) },
+            stringResource(MR.strings.coursedetail_department) to listOf(course.collegeName, course.departmentName)
                 .filter(String::isNotBlank)
                 .distinct()
                 .joinToString(" · ")
-                .ifBlank { "未提供" },
-            "課號" to course.classNo,
-            "課程流水號" to course.serialNo.value,
+                .ifBlank { stringResource(MR.strings.coursedetail_not_provided) },
+            stringResource(MR.strings.coursedetail_course_number) to course.classNo,
+            stringResource(MR.strings.coursedetail_serial_number) to course.serialNo.value,
         ),
     )
 }
@@ -321,13 +364,13 @@ private fun DetailSection(
 private fun DistributionConditionsSection(conditions: List<DistributionCondition>) {
     SheetSection {
         Text(
-            text = "分發條件",
+            text = stringResource(MR.strings.coursedetail_distribution_conditions),
             modifier = Modifier.semantics { heading() },
             style = MpcTheme.typography.headline,
         )
         if (conditions.isEmpty()) {
             Text(
-                text = "無",
+                text = stringResource(MR.strings.coursedetail_none),
                 style = MpcTheme.typography.supporting,
                 color = MpcTheme.colors.labelSecondary,
             )
@@ -359,7 +402,7 @@ data class CourseDetailsUiState(
     val summary: CourseSummary?,
     val detail: CourseDetail?,
     val isLoading: Boolean,
-    val errorMessage: String?,
+    val errorMessage: StringDesc?,
     val isSelected: Boolean,
     val canEditPlan: Boolean = true,
 )
@@ -370,3 +413,15 @@ data class CourseDetailsActions(
     val onClose: () -> Unit,
     val onOpenOfficialPage: (String) -> Unit,
 )
+
+private fun CourseType.labelResource() = when (this) {
+    CourseType.REQUIRED -> MR.strings.coursedetail_type_required
+    CourseType.ELECTIVE -> MR.strings.coursedetail_type_elective
+    CourseType.UNKNOWN -> MR.strings.coursedetail_type_unknown
+}
+
+private fun PasswordCardType.labelResource() = when (this) {
+    PasswordCardType.ALL -> MR.strings.coursedetail_password_all
+    PasswordCardType.OPTIONAL -> MR.strings.coursedetail_password_some
+    PasswordCardType.NONE -> MR.strings.coursedetail_password_none
+}

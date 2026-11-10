@@ -15,7 +15,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
+import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.launch
+import org.mpc.shared.MR
+import org.mpc.shared.planning_calendar_add
 
 /** Asks for calendar access when needed, then runs [onExport]; runs [onPermissionDenied] when access is refused. */
 @Composable
@@ -51,6 +54,6 @@ internal fun CalendarExportButton(
             if (granted) export() else permissionLauncher.launch(ClassCalendar.permissions)
         },
     ) {
-        Icon(Icons.Default.EditCalendar, contentDescription = "加入行事曆")
+        Icon(Icons.Default.EditCalendar, contentDescription = stringResource(MR.strings.planning_calendar_add))
     }
 }

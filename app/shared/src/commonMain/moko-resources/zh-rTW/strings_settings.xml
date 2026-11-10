@@ -1,0 +1,33 @@
+<resources>
+    <string name="settings_write_failed">設定無法儲存，請稍後再試。</string>
+    <string name="settings_appearance">外觀</string>
+    <string name="settings_appearance_description">選擇 App 使用系統、淺色或深色配色。</string>
+    <string name="settings_theme_system">跟隨系統</string>
+    <string name="settings_theme_system_description">使用裝置目前的外觀設定</string>
+    <string name="settings_theme_light">淺色</string>
+    <string name="settings_theme_light_description">固定使用淺色配色</string>
+    <string name="settings_theme_dark">深色</string>
+    <string name="settings_theme_dark_description">固定使用深色配色</string>
+    <string name="settings_timetable_colors">課表配色</string>
+    <string name="settings_timetable_colors_description">選擇課表中課程的配色方式。</string>
+    <string name="settings_timetable_category">依課程類別</string>
+    <string name="settings_timetable_category_description">依課程類別使用對應的配色。</string>
+    <string name="settings_timetable_shuffled">隨機配色</string>
+    <string name="settings_timetable_shuffled_description">隨機為每門課程指定固定顏色；同一門課每次上課及畫面重繪都維持相同顏色。</string>
+    <string name="settings_portal_login">Portal 登入方式</string>
+    <string name="settings_portal_login_description">目前可在 App 內手動登入 Portal。安全儲存登入資訊尚未開放。</string>
+    <string name="settings_portal_secure">安全儲存登入資訊（尚未開放）</string>
+    <string name="settings_portal_secure_description">需要先完成平台憑證儲存與登入整合</string>
+    <string name="settings_portal_manual">Portal 手動登入</string>
+    <string name="settings_portal_manual_description">在 App 內的 Portal WebView 完成登入</string>
+    <string name="settings_course_source">課程資料來源</string>
+    <string name="settings_course_source_description">開發用。填入神奇松果後端的位址，改由後端提供課程資料；留空則使用公開的靜態資料。</string>
+    <string name="settings_source_static_current">目前使用：公開的靜態課程資料</string>
+    <string name="settings_source_current">目前使用：%1$s</string>
+    <string name="settings_backend_address">後端位址</string>
+    <string name="settings_connect_sync">連線並同步</string>
+    <string name="settings_use_static">改用靜態資料</string>
+    <string name="settings_syncing">正在同步課程資料…</string>
+    <string name="settings_invalid_address">請輸入以 http:// 或 https:// 開頭的位址。</string>
+    <string name="settings_source_unavailable">無法從這個來源取得課程資料，已維持原本的資料來源。</string>
+</resources>

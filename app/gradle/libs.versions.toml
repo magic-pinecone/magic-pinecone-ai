@@ -1,4 +1,5 @@
 [versions]
+moko = "0.27.1"
 agp = "9.4.1"
 android-compileSdk = "37"
 android-minSdk = "24"
@@ -41,6 +42,8 @@ ktlintPlugin = "14.2.0"
 testBalloon = "1.0.1-K2.4.0"
 
 [libraries]
+moko-resources = { module = "dev.icerock.moko:resources", version.ref = "moko" }
+moko-resources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "moko" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -83,6 +86,7 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 ktor-client-content-negotiation =  { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor"}
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor"}
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
@@ -101,6 +105,7 @@ testBalloon-frameworkCore = { module = "de.infix.testBalloon:testBalloon-framewo
 
 
 [plugins]
+moko-resources = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko" }
 skie = { id = "co.touchlab.skie", version.ref = "skie" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }

@@ -53,6 +53,16 @@ Open the project in Android Studio and run the `androidApp` configuration, or bu
 2. Open [`iosApp/iosApp.xcodeproj`](iosApp/iosApp.xcodeproj) in Xcode.
 3. Select a target device and run the app.
 
+### Preview shared UI in a browser
+
+The `wasmJs` target renders the shared Compose preview scenarios in a browser, so you can check a UI change without a device. It has no persistence or campus sign-in, and it shows a navigation rail on wide windows and a bottom bar on narrow ones. Start the development server:
+
+```bash
+./gradlew :shared:wasmJsBrowserDevelopmentRun
+```
+
+Open a scenario directly by its name in the URL hash, for example `http://localhost:8080/#TIMETABLE_EMPTY`. Chinese text needs network access the first time, because Compose for Web downloads its CJK fallback font.
+
 ## Use a backend for course data
 
 The app reads the published static course catalog by default. To read from [`backend/`](../backend/) instead, start the backend as described in the [root README](../README.md), then open **Settings** > **課程資料來源** in the app, enter the backend address (`http://10.0.2.2:8000` on the Android emulator, `http://localhost:8000` on the iOS simulator), and select **連線並同步**. See [`docs/api-contract.md`](../docs/api-contract.md) for the API contract.

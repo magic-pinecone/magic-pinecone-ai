@@ -2,8 +2,13 @@ import co.touchlab.skie.configuration.EnumInterop
 import co.touchlab.skie.configuration.FlowInterop
 import co.touchlab.skie.configuration.SealedInterop
 import co.touchlab.skie.configuration.SuspendInterop
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
+import org.jetbrains.kotlin.gradle.targets.js.webpack.WebpackDevtool
+import org.mpc.gradle.i18n.CheckHardcodedUiText
+import org.mpc.gradle.i18n.CheckI18nKeys
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -18,6 +23,7 @@ plugins {
     alias(libs.plugins.ktlint)
     alias(libs.plugins.testBalloon)
     alias(libs.plugins.skie)
+    alias(libs.plugins.moko.resources)
 }
 
 val ktorVersion: String by project
@@ -51,9 +57,13 @@ kotlin {
         iosArm64(),
         iosSimulatorArm64(),
     ).forEach { iosTarget ->
+        iosTarget.compilerOptions {
+            freeCompilerArgs.add("-Xexport-kdoc")
+        }
         iosTarget.binaries.framework {
             baseName = "Shared"
             isStatic = buildType != NativeBuildType.DEBUG
+            export(libs.moko.resources)
             export("com.mohamedrejeb.calf:calf-ui:${libs.versions.calf.get()}")
         }
     }
@@ -83,6 +93,35 @@ kotlin {
         }
     }
 
+    // Browser build of the preview scenarios for quick UI checks; it has no persistence or app graph.
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        outputModuleName = "mpcPreview"
+        browser {
+            commonWebpackConfig {
+                outputFileName = "mpcPreview.js"
+                // kotlinx-io reads import.meta, which webpack's default eval devtool cannot carry.
+                devtool = WebpackDevtool.SOURCE_MAP
+            }
+        }
+        binaries.executable()
+    }
+
+    // Room, DataStore, and the bundled SQLite driver publish no web artifacts, so they live in mobileMain.
+    // materialMain holds the Material actuals Android and the web preview share.
+    applyDefaultHierarchyTemplate {
+        common {
+            group("mobile") {
+                withCompilations { it.target.platformType == KotlinPlatformType.androidJvm }
+                group("ios")
+            }
+            group("material") {
+                withCompilations { it.target.platformType == KotlinPlatformType.androidJvm }
+                withWasmJs()
+            }
+        }
+    }
+
     sourceSets {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
@@ -93,7 +132,19 @@ kotlin {
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
         }
+        getByName("mobileMain").dependencies {
+            implementation(libs.androidx.datastore)
+            implementation(libs.androidx.datastorePreferences)
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundled)
+        }
+        wasmJsMain.dependencies {
+            implementation(libs.ktor.client.js)
+            implementation(libs.compose.material3AdaptiveNavigationSuite)
+        }
         commonMain.dependencies {
+            api(libs.moko.resources)
+            implementation(libs.moko.resources.compose)
             api(libs.calf.ui)
             api(libs.calf.webview)
             implementation(libs.compose.runtime)
@@ -106,10 +157,6 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
-            implementation(libs.androidx.datastore)
-            implementation(libs.androidx.datastorePreferences)
-            implementation(libs.androidx.room.runtime)
-            implementation(libs.androidx.sqlite.bundled)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.client.logging)
@@ -132,10 +179,6 @@ kotlin {
             implementation(libs.testBalloon.frameworkCore)
             implementation(libs.ktor.client.mock)
         }
-    }
-
-    compilerOptions {
-        freeCompilerArgs.add("-Xexport-kdoc")
     }
 }
 
@@ -206,4 +249,27 @@ val checkDesignTokens = tasks.register("checkDesignTokens") {
     }
 }
 
-tasks.named("check") { dependsOn(checkDesignTokens) }
+val checkI18nKeys = tasks.register<CheckI18nKeys>("checkI18nKeys") {
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+    description = "Fails when moko string keys or format placeholders differ across locales."
+    resourceRoot.set(layout.projectDirectory.dir("src/commonMain/moko-resources"))
+}
+
+val appRoot = rootProject.layout.projectDirectory
+val repoRoot = appRoot.dir("..")
+val hardcodedUiAllowlist = repoRoot.file("app/config/i18n/hardcoded-ui-text-allowlist.txt")
+val checkHardcodedUiText = tasks.register<CheckHardcodedUiText>("checkHardcodedUiText") {
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+    description = "Fails when Chinese string literals are added to UI source outside the checked-in allowlist."
+    sharedUiRoot.set(layout.projectDirectory.dir("src/commonMain/kotlin/org/mpc/presentation"))
+    androidUiRoot.set(appRoot.dir("androidApp/src/main/kotlin"))
+    repositoryRoot.set(repoRoot)
+    allowlistFile.set(hardcodedUiAllowlist)
+}
+
+tasks.named("check") { dependsOn(checkDesignTokens, checkI18nKeys, checkHardcodedUiText) }
+
+multiplatformResources {
+    resourcesPackage.set("org.mpc.shared")
+    resourcesSourceSets.getByName("commonMain").srcDir("src/commonMain/moko-resources")
+}

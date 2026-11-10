@@ -1,5 +1,111 @@
-# One command for the whole backend stack: PostgreSQL, Redis, the API, and the
-# Celery worker and beat that scrape NCU. The services are defined in
-# backend/compose.yaml; settings come from backend/.env (see backend/.env.example).
-include:
-  - path: backend/compose.yaml
+
+# Magic Pinecone — Coolify / PR Preview Ready
+
+x-backend: &backend
+  build:
+    context: ./backend
+    dockerfile: Dockerfile
+  environment:
+    POSTGRES_SERVER: db
+    POSTGRES_PORT: "5432"
+    POSTGRES_USER: ${POSTGRES_USER:-postgres}
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in Coolify}
+    POSTGRES_DB: ${POSTGRES_DB:-magic_pinecone}
+    REDIS_HOST: redis
+    REDIS_PORT: "6379"
+    REDIS_DB: "0"
+  depends_on:
+    db:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+  restart: unless-stopped
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in Coolify}
+      POSTGRES_DB: ${POSTGRES_DB:-magic_pinecone}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  api:
+    <<: *backend
+    command:
+      - uvicorn
+      - app.main:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+    expose:
+      - "8000"
+
+  worker:
+    <<: *backend
+    command:
+      - celery
+      - -A
+      - app.core.celery_app
+      - worker
+      - --loglevel=info
+
+  beat:
+    <<: *backend
+    environment:
+      POSTGRES_SERVER: db
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in Coolify}
+      POSTGRES_DB: ${POSTGRES_DB:-magic_pinecone}
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      REDIS_DB: "0"
+      ENABLE_BEAT: ${ENABLE_BEAT:-false}
+    command:
+      - sh
+      - -c
+      - |
+        if [ "$$ENABLE_BEAT" = "true" ]; then
+          exec celery -A app.core.celery_app beat --loglevel=info
+        else
+          echo "Celery Beat disabled in this environment"
+          exec sleep infinity
+        fi
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./app
+      dockerfile: web.Dockerfile
+    expose:
+      - "80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+

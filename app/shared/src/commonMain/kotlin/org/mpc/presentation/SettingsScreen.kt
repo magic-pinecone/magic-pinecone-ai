@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import dev.icerock.moko.resources.compose.stringResource
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.PortalAuthenticationMode
@@ -25,6 +26,30 @@ import org.mpc.domain.model.TimetableColorMode
 import org.mpc.presentation.state.BackendEndpointUiState
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
+import org.mpc.shared.MR
+import org.mpc.shared.settings_appearance
+import org.mpc.shared.settings_appearance_description
+import org.mpc.shared.settings_course_source
+import org.mpc.shared.settings_course_source_description
+import org.mpc.shared.settings_portal_login
+import org.mpc.shared.settings_portal_login_description
+import org.mpc.shared.settings_portal_manual
+import org.mpc.shared.settings_portal_manual_description
+import org.mpc.shared.settings_portal_secure
+import org.mpc.shared.settings_portal_secure_description
+import org.mpc.shared.settings_theme_dark
+import org.mpc.shared.settings_theme_dark_description
+import org.mpc.shared.settings_theme_light
+import org.mpc.shared.settings_theme_light_description
+import org.mpc.shared.settings_theme_system
+import org.mpc.shared.settings_theme_system_description
+import org.mpc.shared.settings_timetable_category
+import org.mpc.shared.settings_timetable_category_description
+import org.mpc.shared.settings_timetable_colors
+import org.mpc.shared.settings_timetable_colors_description
+import org.mpc.shared.settings_timetable_shuffled
+import org.mpc.shared.settings_timetable_shuffled_description
+import org.mpc.shared.settings_write_failed
 
 @Composable
 fun SettingsScreen(
@@ -45,31 +70,31 @@ fun SettingsScreen(
     ) {
         if (settingsWriteFailed) {
             Text(
-                text = "設定無法儲存，請稍後再試。",
+                text = stringResource(MR.strings.settings_write_failed),
                 color = MpcTheme.colors.destructive,
                 style = MpcTheme.typography.supporting,
             )
         }
 
         SettingsSectionTitle(
-            title = "外觀",
-            description = "選擇 App 使用系統、淺色或深色配色。",
+            title = stringResource(MR.strings.settings_appearance),
+            description = stringResource(MR.strings.settings_appearance_description),
         )
         SettingsChoiceRow(
-            title = "跟隨系統",
-            description = "使用裝置目前的外觀設定",
+            title = stringResource(MR.strings.settings_theme_system),
+            description = stringResource(MR.strings.settings_theme_system_description),
             selected = settings.themeMode == AppThemeMode.SYSTEM,
             onClick = { onThemeModeSelected(AppThemeMode.SYSTEM) },
         )
         SettingsChoiceRow(
-            title = "淺色",
-            description = "固定使用淺色配色",
+            title = stringResource(MR.strings.settings_theme_light),
+            description = stringResource(MR.strings.settings_theme_light_description),
             selected = settings.themeMode == AppThemeMode.LIGHT,
             onClick = { onThemeModeSelected(AppThemeMode.LIGHT) },
         )
         SettingsChoiceRow(
-            title = "深色",
-            description = "固定使用深色配色",
+            title = stringResource(MR.strings.settings_theme_dark),
+            description = stringResource(MR.strings.settings_theme_dark_description),
             selected = settings.themeMode == AppThemeMode.DARK,
             onClick = { onThemeModeSelected(AppThemeMode.DARK) },
         )
@@ -77,18 +102,18 @@ fun SettingsScreen(
         HorizontalDivider()
 
         SettingsSectionTitle(
-            title = "課表配色",
-            description = "選擇課表中課程的配色方式。",
+            title = stringResource(MR.strings.settings_timetable_colors),
+            description = stringResource(MR.strings.settings_timetable_colors_description),
         )
         SettingsChoiceRow(
-            title = "依課程類別",
-            description = "依課程類別使用對應的配色。",
+            title = stringResource(MR.strings.settings_timetable_category),
+            description = stringResource(MR.strings.settings_timetable_category_description),
             selected = settings.timetableColorMode == TimetableColorMode.CATEGORY,
             onClick = { onTimetableColorModeSelected(TimetableColorMode.CATEGORY) },
         )
         SettingsChoiceRow(
-            title = "隨機配色",
-            description = "隨機為每門課程指定固定顏色；同一門課每次上課及畫面重繪都維持相同顏色。",
+            title = stringResource(MR.strings.settings_timetable_shuffled),
+            description = stringResource(MR.strings.settings_timetable_shuffled_description),
             selected = settings.timetableColorMode == TimetableColorMode.SHUFFLED,
             onClick = { onTimetableColorModeSelected(TimetableColorMode.SHUFFLED) },
         )
@@ -96,12 +121,12 @@ fun SettingsScreen(
         HorizontalDivider()
 
         SettingsSectionTitle(
-            title = "Portal 登入方式",
-            description = "目前可在 App 內手動登入 Portal。安全儲存登入資訊尚未開放。",
+            title = stringResource(MR.strings.settings_portal_login),
+            description = stringResource(MR.strings.settings_portal_login_description),
         )
         SettingsChoiceRow(
-            title = "安全儲存登入資訊（尚未開放）",
-            description = "需要先完成平台憑證儲存與登入整合",
+            title = stringResource(MR.strings.settings_portal_secure),
+            description = stringResource(MR.strings.settings_portal_secure_description),
             selected = settings.portalAuthenticationMode == PortalAuthenticationMode.SECURE_CREDENTIALS,
             enabled = false,
             onClick = {
@@ -109,8 +134,8 @@ fun SettingsScreen(
             },
         )
         SettingsChoiceRow(
-            title = "Portal 手動登入",
-            description = "在 App 內的 Portal WebView 完成登入",
+            title = stringResource(MR.strings.settings_portal_manual),
+            description = stringResource(MR.strings.settings_portal_manual_description),
             selected = settings.portalAuthenticationMode == PortalAuthenticationMode.MANUAL_PORTAL,
             onClick = {
                 onPortalAuthenticationModeSelected(PortalAuthenticationMode.MANUAL_PORTAL)
@@ -121,8 +146,8 @@ fun SettingsScreen(
             HorizontalDivider()
 
             SettingsSectionTitle(
-                title = "課程資料來源",
-                description = "開發用。填入神奇松果後端的位址，改由後端提供課程資料；留空則使用公開的靜態資料。",
+                title = stringResource(MR.strings.settings_course_source),
+                description = stringResource(MR.strings.settings_course_source_description),
             )
             BackendEndpointSection(
                 state = backendEndpoint,

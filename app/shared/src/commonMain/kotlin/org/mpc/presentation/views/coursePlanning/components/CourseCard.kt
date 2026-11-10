@@ -38,6 +38,7 @@ import com.mohamedrejeb.calf.ui.button.AdaptiveButton
 import com.mohamedrejeb.calf.ui.button.AdaptiveIconButton
 import com.mohamedrejeb.calf.ui.button.LiquidGlassButtonColors
 import com.mohamedrejeb.calf.ui.gesture.adaptiveClickable
+import dev.icerock.moko.resources.compose.stringResource
 import org.mpc.domain.model.CourseDay
 import org.mpc.domain.model.CoursePeriod
 import org.mpc.domain.model.CourseSerialNo
@@ -45,7 +46,8 @@ import org.mpc.domain.model.CourseSummary
 import org.mpc.domain.model.CourseTime
 import org.mpc.domain.model.CourseType
 import org.mpc.domain.model.PasswordCardType
-import org.mpc.presentation.formatting.creditLabel
+import org.mpc.presentation.formatting.creditsLabel
+import org.mpc.presentation.formatting.instructorsLabel
 import org.mpc.presentation.formatting.scheduleDescription
 import org.mpc.presentation.icon.apartment
 import org.mpc.presentation.icon.groups
@@ -54,6 +56,14 @@ import org.mpc.presentation.icon.schedule
 import org.mpc.presentation.theme.MpcShapes
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
+import org.mpc.shared.MR
+import org.mpc.shared.planning_course_add
+import org.mpc.shared.planning_course_add_to_timetable
+import org.mpc.shared.planning_course_enrollment_waitlist
+import org.mpc.shared.planning_course_in_timetable
+import org.mpc.shared.planning_course_not_in_timetable
+import org.mpc.shared.planning_course_remove
+import org.mpc.shared.planning_course_remove_from_timetable
 
 @Composable
 fun CourseCard(
@@ -66,11 +76,14 @@ fun CourseCard(
     canEditPlan: Boolean = true,
 ) {
     val cardShape = MpcShapes.card
+    val selectionDescription = courseSummary.selectionActionDescription(isSelected)
+    val inTimetableDescription = stringResource(MR.strings.planning_course_in_timetable)
+    val notInTimetableDescription = stringResource(MR.strings.planning_course_not_in_timetable)
 
     Surface(
         modifier =
         modifier.semantics {
-            stateDescription = if (isSelected) "已加入課表" else "尚未加入課表"
+            stateDescription = if (isSelected) inTimetableDescription else notInTimetableDescription
         }.adaptiveClickable(
             shape = cardShape,
             role = Role.Button,
@@ -148,7 +161,7 @@ fun CourseCard(
                         onClick = onButtonClick,
                         enabled = canEditPlan,
                         modifier = Modifier.heightIn(min = 48.dp).semantics {
-                            contentDescription = courseSummary.selectionActionDescription(isSelected)
+                            contentDescription = selectionDescription
                         },
                         colors =
                         if (isSelected) {
@@ -166,7 +179,7 @@ fun CourseCard(
                         },
                         contentPadding = ButtonDefaults.ContentPadding,
                     ) {
-                        Text(if (isSelected) "移除" else "加入")
+                        Text(stringResource(if (isSelected) MR.strings.planning_course_remove else MR.strings.planning_course_add))
                     }
                 }
             }
@@ -206,11 +219,12 @@ internal fun CompactCourseSelectionControl(
     courseSummary: CourseSummary,
     onClick: () -> Unit,
 ) {
+    val selectionDescription = courseSummary.selectionActionDescription(isSelected)
     AdaptiveIconButton(
         onClick = onClick,
         enabled = canEditPlan,
         modifier = Modifier.size(48.dp).semantics {
-            contentDescription = courseSummary.selectionActionDescription(isSelected)
+            contentDescription = selectionDescription
         },
         colors = if (isSelected) {
             IconButtonDefaults.filledTonalIconButtonColors(
@@ -233,7 +247,7 @@ internal fun CompactCourseSelectionControl(
     }
 }
 
-/** Removing a course is reversible, so 移除 is tonal red rather than a solid warning fill. */
+/** Removing a course is reversible, so remove is tonal red rather than a solid warning fill. */
 @Composable
 private fun removeLiquidGlassColors() = LiquidGlassButtonColors(
     tintColor = MpcTheme.colors.destructiveContainer,
@@ -297,23 +311,23 @@ private fun CourseInfoBadge(
 /*
     Some helper function to give the information on the card
  */
+@Composable
 private fun CourseSummary.selectionActionDescription(isSelected: Boolean): String = if (isSelected) {
-    "從課表移除 $title"
+    stringResource(MR.strings.planning_course_remove_from_timetable, title)
 } else {
-    "加入課表 $title"
+    stringResource(MR.strings.planning_course_add_to_timetable, title)
 }
 
-private fun CourseSummary.primaryMetadataText(): String {
-    val instructorText = teachers.filter { it.isNotBlank() }.joinToString("、").ifBlank { "未提供授課教師" }
-    return listOf(classNo, "${credit.creditLabel()} 學分", instructorText)
-        .filter { it.isNotBlank() }
-        .joinToString(" · ")
-}
+@Composable
+private fun CourseSummary.primaryMetadataText(): String = listOf(classNo, credit.creditsLabel(), teachers.instructorsLabel())
+    .filter { it.isNotBlank() }
+    .joinToString(" · ")
 
 private fun CourseSummary.departmentText(): String = "$collegeName / $departmentName"
 
+@Composable
 private fun CourseSummary.enrollmentText(): String = if (waitCnt > 0) {
-    "$admitCnt / $limitCnt · 候補 $waitCnt"
+    stringResource(MR.strings.planning_course_enrollment_waitlist, admitCnt, limitCnt, waitCnt)
 } else {
     "$admitCnt / $limitCnt"
 }

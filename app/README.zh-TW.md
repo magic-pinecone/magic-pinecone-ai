@@ -53,6 +53,16 @@ cd mpc-compose
 2. 使用 Xcode 開啟 [`iosApp/iosApp.xcodeproj`](iosApp/iosApp.xcodeproj)。
 3. 選擇目標裝置後執行 App。
 
+### 在瀏覽器預覽共用 UI
+
+`wasmJs` target 會在瀏覽器中顯示共用的 Compose 預覽情境，不需要裝置就能檢查 UI 變更。它沒有本機儲存，也無法登入校園系統；視窗較寬時顯示導覽列（navigation rail），較窄時改為底部導覽列。啟動開發伺服器：
+
+```bash
+./gradlew :shared:wasmJsBrowserDevelopmentRun
+```
+
+可以在網址 hash 中直接指定情境名稱，例如 `http://localhost:8080/#TIMETABLE_EMPTY`。第一次顯示中文時需要網路，因為 Compose for Web 會下載 CJK 備用字型。
+
 ## 使用後端提供課程資料
 
 App 預設讀取公開的靜態課程資料。要改由 [`backend/`](../backend/) 提供，先依[根目錄的 README](../README.md) 啟動後端，再到 App 的「設定」>「課程資料來源」填入後端位址（Android 模擬器為 `http://10.0.2.2:8000`，iOS 模擬器為 `http://localhost:8000`）並按「連線並同步」。API 合約見 [`docs/api-contract.md`](../docs/api-contract.md)。
