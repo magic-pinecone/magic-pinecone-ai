@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>國際生問答示範</title>
+<style>
+  :root {
+    --bg: #f6f5f1; --card: #ffffff; --ink: #1f2328; --muted: #646b73; --line: #dcd9d0;
+    --accent: #0b6e69; --accent-ink: #ffffff; --good: #1a7f37; --bad: #b42318; --warn: #9a6700;
+    --mark: #e3f3f1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15181b; --card: #1e2226; --ink: #e6e8ea; --muted: #9aa3ab; --line: #343a40;
+      --accent: #4fc3bb; --accent-ink: #10201f; --good: #56d364; --bad: #ff7b72; --warn: #e3b341;
+      --mark: #1d3432;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.6 system-ui, -apple-system, "Noto Sans TC", "PingFang TC", sans-serif; }
+  main { max-width: 1080px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  h2 { font-size: 1rem; margin: 0 0 10px; }
+  .sub { color: var(--muted); margin: 0 0 20px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  textarea { width: 100%; min-height: 72px; padding: 10px; border-radius: 8px; resize: vertical;
+    border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; }
+  button, select { font: inherit; border-radius: 8px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink); padding: 8px 12px; }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent);
+    font-weight: 600; cursor: pointer; }
+  button:disabled { opacity: .6; cursor: wait; }
+  select { max-width: 100%; flex: 1 1 280px; min-width: 0; }
+  .steps { display: grid; gap: 16px; margin-top: 16px; grid-template-columns: 1fr; }
+  @media (min-width: 860px) { .steps { grid-template-columns: 1fr 1fr; align-items: start; } }
+  .step-no { display: inline-block; width: 1.6em; height: 1.6em; line-height: 1.6em; text-align: center;
+    border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-size: .85rem;
+    margin-right: 6px; }
+  .passage { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-top: 10px; }
+  .passage.cited { background: var(--mark); border-color: var(--accent); }
+  .passage .title { font-weight: 600; }
+  .passage pre, .answer { white-space: pre-wrap; overflow-wrap: anywhere; margin: 6px 0 0; font: inherit; }
+  .passage pre { font-size: .9rem; color: var(--muted); }
+  .passage a { color: var(--accent); font-size: .85rem; overflow-wrap: anywhere; }
+  .muted { color: var(--muted); }
+  .tag { display: inline-block; font-size: .8rem; padding: 1px 8px; border-radius: 999px;
+    border: 1px solid currentColor; margin: 0 6px 6px 0; }
+  .good { color: var(--good); } .bad { color: var(--bad); } .warn { color: var(--warn); }
+  .query { font-family: ui-monospace, monospace; font-size: .9rem; overflow-wrap: anywhere; }
+  footer { margin-top: 24px; font-size: .85rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>國際生問答示範</h1>
+  <p class="sub" id="status">載入中…</p>
+
+  <div class="card">
+    <div class="row" style="margin-bottom:10px">
+      <select id="examples" aria-label="範例問題"><option value="">選一題範例（黃金題庫）…</option></select>
+    </div>
+    <textarea id="question" maxlength="500" placeholder="用英文、中文、越南文或印尼文提問"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button class="primary" id="ask">送出</button>
+      <span class="muted" id="timing"></span>
+    </div>
+  </div>
+
+  <div class="steps">
+    <section class="card">
+      <h2><span class="step-no">1</span>檢索到的段落</h2>
+      <div class="muted">檢索用的查詢：<span class="query" id="query">—</span></div>
+      <div id="passages"><p class="muted">還沒有提問。</p></div>
+    </section>
+    <section class="card">
+      <h2><span class="step-no">2</span>模型的回答</h2>
+      <div id="checks"></div>
+      <div class="answer" id="answer"><span class="muted">還沒有提問。</span></div>
+    </section>
+  </div>
+
+  <footer>
+    回答只能依據左邊的段落。右上的標籤是程式自動檢查的結果：引用的段落編號是否存在、回答裡的數字是否都出現在段落中。
+    範例問題來自 60 題黃金題庫；越南文、印尼文、中文題目為機器草擬，尚未經母語者審閱。
+  </footer>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const LANG = { en: "English", "zh-TW": "中文", vi: "Tiếng Việt", id: "Bahasa Indonesia" };
+
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
+
+async function loadInfo() {
+  const info = await (await fetch("api/info")).json();
+  $("status").textContent = info.model
+    ? `語料 ${info.documents} 份文件 · 模型 ${info.model}`
+    : `語料 ${info.documents} 份文件 · 尚未接上模型，只顯示檢索結果`;
+  const groups = {};
+  for (const item of info.examples) (groups[item.lang] ||= []).push(item);
+  for (const [lang, items] of Object.entries(groups)) {
+    const group = document.createElement("optgroup");
+    group.label = LANG[lang] || lang;
+    for (const item of items) {
+      const option = el("option", "", (item.answerable ? "" : "［語料沒有答案］") + item.question);
+      option.value = item.question;
+      group.appendChild(option);
+    }
+    $("examples").appendChild(group);
+  }
+}
+
+function showPassages(result) {
+  const box = $("passages");
+  box.replaceChildren();
+  $("query").textContent = result.search_query + (result.translated ? "（由模型轉成英文關鍵字）" : "");
+  if (!result.passages.length) {
+    box.appendChild(el("p", "muted", "沒有找到任何段落。"));
+    return;
+  }
+  const cited = new Set(result.checks ? result.checks.cited : []);
+  result.passages.forEach((passage, index) => {
+    const card = el("div", "passage" + (cited.has(index + 1) ? " cited" : ""));
+    card.appendChild(el("div", "title", `[${index + 1}] ${passage.title}`));
+    const link = el("a", "", passage.url);
+    if (/^https?:\/\//.test(passage.url)) { link.href = passage.url; link.target = "_blank"; link.rel = "noopener"; }
+    card.appendChild(link);
+    card.appendChild(el("pre", "", passage.passage));
+    box.appendChild(card);
+  });
+}
+
+function showAnswer(result) {
+  const checks = $("checks"), answer = $("answer");
+  checks.replaceChildren();
+  answer.replaceChildren();
+  if (result.error) { answer.appendChild(el("span", "bad", "發生錯誤：" + result.error)); return; }
+  if (result.answer === null) {
+    answer.appendChild(el("span", "muted", "尚未接上模型。設定 DEMO_BASE_URL 與 DEMO_MODEL 後重新啟動，這裡才會有回答。"));
+    return;
+  }
+  const c = result.checks;
+  if (c.refused) checks.appendChild(el("span", "tag warn", "拒答：段落裡沒有答案"));
+  else if (c.citations_valid) checks.appendChild(el("span", "tag good", "引用段落 " + c.cited.map((n) => `[${n}]`).join(" ")));
+  else checks.appendChild(el("span", "tag bad", c.cited.length ? "引用了不存在的段落" : "沒有標示來源"));
+  if (c.unsupported_numbers.length)
+    checks.appendChild(el("span", "tag bad", "段落中沒有的數字：" + c.unsupported_numbers.join("、")));
+  else checks.appendChild(el("span", "tag good", "數字都出現在段落中"));
+  answer.textContent = result.answer || "（模型沒有輸出）";
+}
+
+async function ask() {
+  const question = $("question").value.trim();
+  if (!question) return;
+  $("ask").disabled = true;
+  $("timing").textContent = "處理中…";
+  try {
+    const response = await fetch("api/ask", {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question }),
+    });
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    const result = await response.json();
+    showPassages(result);
+    showAnswer(result);
+    $("timing").textContent = result.seconds === null ? "" : `${result.seconds} 秒`;
+  } catch (error) {
+    $("timing").textContent = "失敗：" + error.message;
+  } finally {
+    $("ask").disabled = false;
+  }
+}
+
+$("examples").addEventListener("change", (event) => { if (event.target.value) $("question").value = event.target.value; });
+$("ask").addEventListener("click", ask);
+$("question").addEventListener("keydown", (event) => { if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) ask(); });
+loadInfo().catch(() => { $("status").textContent = "無法載入伺服器資訊"; });
+</script>
+</body>
+</html>

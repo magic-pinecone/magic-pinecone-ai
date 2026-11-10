@@ -72,7 +72,13 @@ class ChatClient:
     report only the status code or the exception type.
     """
 
-    def __init__(self, prefix: str, timeout: float = 180.0, retries: int = 3):
+    def __init__(
+        self,
+        prefix: str,
+        timeout: float = 180.0,
+        retries: int = 3,
+        extra: dict | None = None,
+    ):
         import httpx  # a backend dependency; not needed for --dry-run
 
         base_url = os.environ.get(f"{prefix}_BASE_URL", "").rstrip("/")
@@ -89,6 +95,9 @@ class ChatClient:
         self._url = f"{base_url}/chat/completions"
         self.retries = retries
         self.name = self.model
+        # Extra request fields, e.g. {"reasoning_effort": "none"} to stop a
+        # Gemma 4 behind Ollama from thinking before it answers.
+        self.extra = dict(extra or {})
 
     def chat(
         self, messages: list[dict], temperature: float = 0.0, max_tokens: int = 512
@@ -99,6 +108,7 @@ class ChatClient:
             "messages": messages,
             "temperature": temperature,
             "max_tokens": max_tokens,
+            **self.extra,
         }
         problem = "no attempt"
         for attempt in range(self.retries):

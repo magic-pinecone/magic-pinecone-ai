@@ -273,6 +273,47 @@ Run on the development machine (no GPU, no network access to a model):
   need a native speaker.
 - The dry-run numbers of both scripts come from fake models and mean nothing.
 
+## Demo page
+
+`demo/app.py` serves one page that shows the whole chain for a question typed
+in any of the four languages: the passages the search returns, the model's
+answer, and two automatic checks on it (the cited passage numbers exist; every
+number in the answer appears in the passages).
+
+```bash
+cd backend
+# search only
+uv run --frozen python ../ml/demo/app.py --port 8765
+# with a model behind an OpenAI-compatible endpoint, e.g. Ollama
+DEMO_BASE_URL=http://localhost:11434/v1 DEMO_MODEL=<model name> \
+  DEMO_REASONING_EFFORT=none \
+  uv run --frozen python ../ml/demo/app.py --port 8765
+```
+
+With a model, a question that is not English is first translated by the same
+model, because the pages are in English and the keyword search cannot match
+other languages. Without a model the page shows passages only. It listens on
+127.0.0.1; it has no login and is not meant to be exposed.
+
+Run on 2026-11-11 with an untuned `unsloth/gemma-4-E2B-it-GGUF` (Q4_K_M) behind
+Ollama on a CPU-only server, all 60 golden questions through the page's API,
+search and answer together (one run, temperature 0):
+
+| lang | right document in top 3 | answer passage in top 3 | answer correct | refused when unanswerable |
+|---|---|---|---|---|
+| en | 21/21 | 15/21 | 14/21 | 2/3 |
+| zh-TW | 7/10 | 5/10 | 4/10 | 2/2 |
+| vi | 10/10 | 8/10 | 7/10 | 2/2 |
+| id | 10/10 | 8/10 | 7/10 | 2/2 |
+
+No answer contained a number missing from its passages or cited a passage that
+was not shown. A question took about 3 to 8 seconds when the server was idle.
+"Answer correct" only checks that the expected figures appear, so it can count
+an answer that quotes the right number for the wrong case. The translation
+prompt was chosen after trying three on these same questions, so the non-English
+rows are optimistic; the answer is mostly lost in the search step, which returns
+one passage per document.
+
 ## Documentation used for `train_lora.py` (read 2026-11-10)
 
 - Unsloth, Gemma 4 fine-tuning: <https://unsloth.ai/docs/models/gemma-4/train>
