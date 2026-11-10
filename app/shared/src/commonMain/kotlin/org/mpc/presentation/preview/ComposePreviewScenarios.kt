@@ -8,6 +8,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
@@ -27,18 +29,27 @@ import org.mpc.domain.model.GovGuides
 import org.mpc.domain.model.PasswordCardType
 import org.mpc.domain.model.PortalAuthenticationMode
 import org.mpc.domain.model.TimetableColorMode
+import org.mpc.domain.model.collegesFor
+import org.mpc.domain.model.rulesFor
 import org.mpc.presentation.ClubsScreen
 import org.mpc.presentation.ClubsView
 import org.mpc.presentation.GovGuidesRoute
 import org.mpc.presentation.GovGuidesScreen
+import org.mpc.presentation.GraduationLanguageActions
+import org.mpc.presentation.GraduationLanguageScreen
 import org.mpc.presentation.PortalScreen
 import org.mpc.presentation.SettingsScreen
 import org.mpc.presentation.state.ClubUiState
 import org.mpc.presentation.state.CoursePlanUiState
 import org.mpc.presentation.state.CourseSearchError
 import org.mpc.presentation.state.CourseSearchResultUiState
+import org.mpc.presentation.state.FIRST_COHORT
 import org.mpc.presentation.state.GovGuidesUiState
+import org.mpc.presentation.state.GraduationLanguageFilter
+import org.mpc.presentation.state.GraduationLanguageUiState
+import org.mpc.presentation.state.LAST_COHORT
 import org.mpc.presentation.theme.MpcSpacing
+import org.mpc.presentation.viewModel.GraduationLanguageViewModel
 import org.mpc.presentation.views.courseDetails.CourseDetailsActions
 import org.mpc.presentation.views.courseDetails.CourseDetailsUiState
 import org.mpc.presentation.views.courseDetails.CourseDetailsView
@@ -71,6 +82,15 @@ enum class ComposePreviewScenario {
 
     /** Reads the running backend through [org.mpc.presentation.viewModel.ClubViewModel]. */
     CLUBS_LIVE,
+
+    /** Shows [GraduationLanguagePreviewFixture], an excerpt of the backend's data. */
+    GRADUATION_POPULATED,
+    GRADUATION_LOADING,
+    GRADUATION_FAILURE,
+    GRADUATION_NEEDSBACKEND,
+
+    /** Reads the running backend through [GraduationLanguageViewModel]. */
+    GRADUATION_LIVE,
 }
 
 // One branch per scenario; splitting the dispatch would only scatter it.
@@ -197,7 +217,67 @@ internal fun ComposePreviewScenarioContent(
                 modifier = Modifier.padding(MpcSpacing.space4),
             )
         }
+
+        ComposePreviewScenario.GRADUATION_POPULATED,
+        ComposePreviewScenario.GRADUATION_LOADING,
+        ComposePreviewScenario.GRADUATION_FAILURE,
+        ComposePreviewScenario.GRADUATION_NEEDSBACKEND,
+        -> GraduationLanguagePreview(scenario)
+
+        ComposePreviewScenario.GRADUATION_LIVE -> GraduationLanguageLive()
     }
+}
+
+/** The screen as the app's International tab runs it, on whatever the preview host's backend answers. */
+@Composable
+private fun GraduationLanguageLive() {
+    val viewModel: GraduationLanguageViewModel = metroViewModel()
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+    GraduationLanguageScreen(
+        state = state,
+        actions = remember(viewModel) {
+            GraduationLanguageActions(
+                onSelectDegree = viewModel::selectDegree,
+                onSelectCollege = viewModel::selectCollege,
+                onSelectCohort = viewModel::selectCohort,
+                onRetry = viewModel::refresh,
+            )
+        },
+        modifier = Modifier.fillMaxSize(),
+    )
+}
+
+/**
+ * The screen in the state [scenario] names. The populated one shows the bundled excerpt with working filters,
+ * narrowed the way [GraduationLanguageViewModel] narrows them.
+ */
+@Composable
+private fun GraduationLanguagePreview(scenario: ComposePreviewScenario) {
+    val requirements = GraduationLanguagePreviewFixture.requirements
+    var filter by remember { mutableStateOf(GraduationLanguageFilter()) }
+    GraduationLanguageScreen(
+        state = when (scenario) {
+            ComposePreviewScenario.GRADUATION_FAILURE -> GraduationLanguageUiState.Failed
+
+            ComposePreviewScenario.GRADUATION_NEEDSBACKEND -> GraduationLanguageUiState.NeedsBackend
+
+            ComposePreviewScenario.GRADUATION_POPULATED -> GraduationLanguageUiState.Loaded(
+                requirements = requirements,
+                filter = filter,
+                colleges = requirements.collegesFor(filter.degree),
+                rules = requirements.rulesFor(filter.degree, filter.college, filter.cohort),
+            )
+
+            else -> GraduationLanguageUiState.Loading
+        },
+        actions = GraduationLanguageActions(
+            onSelectDegree = { filter = filter.copy(degree = it, college = null) },
+            onSelectCollege = { filter = filter.copy(college = it) },
+            onSelectCohort = { filter = filter.copy(cohort = it.coerceIn(FIRST_COHORT, LAST_COHORT)) },
+            onRetry = {},
+        ),
+        modifier = Modifier.fillMaxSize(),
+    )
 }
 
 internal object ComposePreviewFixtures {
