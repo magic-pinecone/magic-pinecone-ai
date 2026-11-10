@@ -1,8 +1,10 @@
 package org.mpc.data.repository
 
+import androidx.compose.ui.text.intl.Locale
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.mpc.data.dataSource.CourseDataSource
@@ -17,15 +19,29 @@ import org.mpc.domain.model.CourseSerialNo
 import org.mpc.domain.repository.CourseRepository
 import org.mpc.domain.search.searchCourses
 
-// TODO: Add fetched-at freshness and stale-cache fallback policy.
+// TODO: Add fetched-at freshness policy.
 @ContributesBinding(AppScope::class)
 @Inject
 internal class DefaultCourseRepository(
     private val courseDataSource: CourseDataSource,
     private val courseCatalogDao: CourseCatalogDao,
+    private val currentLanguage: () -> String = { Locale.current.toLanguageTag() },
 ) : CourseRepository {
-    override suspend fun fetchAllCourses(semester: String): CourseResult = courseCatalogDao.findCatalogEntities(semester)?.toDomain()
-        ?: refreshCatalog(semester)
+    @Suppress("TooGenericExceptionCaught")
+    override suspend fun fetchAllCourses(semester: String): CourseResult {
+        val language = currentLanguage()
+        val cached = courseCatalogDao.findCatalogEntities(semester)
+        if (cached?.catalog?.language == language) return cached.toDomain()
+
+        return try {
+            refreshCatalog(semester, language)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            // An offline user keeps the catalog in the language it was fetched in.
+            cached?.toDomain() ?: throw e
+        }
+    }
 
     override suspend fun searchCourses(query: CourseQuery): CourseResult {
         val result = fetchAllCourses(query.semester)
@@ -57,13 +73,15 @@ internal class DefaultCourseRepository(
         courseCatalogDao.findCatalogEntities(semester)?.toDomain()
     }
 
-    override suspend fun refreshCatalog(semester: String): CourseResult {
+    override suspend fun refreshCatalog(semester: String): CourseResult = refreshCatalog(semester, currentLanguage())
+
+    private suspend fun refreshCatalog(semester: String, language: String): CourseResult {
         val remoteResult = courseDataSource.getAllCourses(semester).toDomain()
         require(remoteResult.semester == semester) {
             "Remote catalog semester ${remoteResult.semester} does not match requested semester $semester"
         }
 
-        courseCatalogDao.saveCatalog(remoteResult.toLocalCatalogEntities())
+        courseCatalogDao.saveCatalog(remoteResult.toLocalCatalogEntities(language))
 
         return requireNotNull(courseCatalogDao.findCatalogEntities(semester)?.toDomain()) {
             "Catalog $semester was not available after saving"
