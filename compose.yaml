@@ -14,6 +14,9 @@ x-backend: &backend
     REDIS_HOST: redis
     REDIS_PORT: "6379"
     REDIS_DB: "0"
+    # Optional: live bus arrivals. /transit/bus/* answers 503 while empty.
+    TDX_CLIENT_ID: ${TDX_CLIENT_ID:-}
+    TDX_CLIENT_SECRET: ${TDX_CLIENT_SECRET:-}
   depends_on:
     db:
       condition: service_healthy
