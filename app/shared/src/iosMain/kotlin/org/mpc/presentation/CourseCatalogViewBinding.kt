@@ -5,6 +5,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.icerock.moko.resources.desc.Resource
+import dev.icerock.moko.resources.desc.StringDesc
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.mpc.bridge.CourseCatalogSnapshot
 import org.mpc.bridge.CoursePlanBridge
@@ -16,6 +18,10 @@ import org.mpc.presentation.state.CourseSearchResultUiState
 import org.mpc.presentation.state.CourseSearchUiState
 import org.mpc.presentation.viewModel.CoursePlanViewModel
 import org.mpc.presentation.viewModel.CourseSearchViewModel
+import org.mpc.shared.MR
+import org.mpc.shared.planning_search_error_invalid_semester
+import org.mpc.shared.planning_search_error_network
+import org.mpc.shared.planning_search_error_unknown
 
 @Composable
 fun CourseCatalogViewBinding(
@@ -93,11 +99,13 @@ private fun CourseSearchUiState.toCatalogSnapshot(): CourseCatalogSnapshot {
 
         is CourseSearchResultUiState.Failure -> base.copy(
             isLoading = false,
-            failureMessage = when (result.error) {
-                CourseSearchError.NETWORK -> "目前無法連線，請確認網路狀態後再試一次。"
-                CourseSearchError.INVALID_SEMESTER -> "目前不支援這個學期的課程查詢。"
-                CourseSearchError.UNKNOWN -> "課程資料載入失敗，請稍後再試。"
-            },
+            failureMessage = StringDesc.Resource(
+                when (result.error) {
+                    CourseSearchError.NETWORK -> MR.strings.planning_search_error_network
+                    CourseSearchError.INVALID_SEMESTER -> MR.strings.planning_search_error_invalid_semester
+                    CourseSearchError.UNKNOWN -> MR.strings.planning_search_error_unknown
+                },
+            ).localized(),
         )
     }
 }

@@ -9,7 +9,7 @@ struct CourseFilterToken: Identifiable, Hashable {
 
     init(_ filter: any CourseFilter) {
         self.filter = filter
-        self.label = CourseFilterLabelKt.label(filter)
+        self.label = CourseFilterLabelKt.labelDesc(filter).localized()
     }
 
     var symbol: String {

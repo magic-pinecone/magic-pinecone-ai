@@ -38,17 +38,20 @@ struct CourseDetailSheet: View {
                     Section {
                         HStack(spacing: 12) {
                             ProgressView()
-                            Text("正在載入課程說明…")
+                            Text(MR.strings().coursedetail_loading_syllabus.localized)
                                 .foregroundStyle(.secondary)
                         }
                     }
                 } else if loadFailed {
                     Section {
-                        Label("無法載入完整課程資訊", systemImage: "exclamationmark.circle")
-                        Text("仍可查看基本資訊與加入課表，或稍後重試。")
+                        Label(
+                            MR.strings().coursedetail_detail_load_failed.localized,
+                            systemImage: "exclamationmark.circle"
+                        )
+                        Text(MR.strings().coursedetail_load_failed_hint.localized)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
-                        Button("重新載入", systemImage: "arrow.clockwise") {
+                        Button(MR.strings().planning_search_reload.localized, systemImage: "arrow.clockwise") {
                             retryID += 1
                         }
                     }
@@ -62,13 +65,20 @@ struct CourseDetailSheet: View {
                         // App Transport Security blocks plain http in the in-app browser.
                         if url.scheme?.lowercased() == "https" {
                             NavigationLink {
-                                WebPageView(sharedHost: sharedHost, title: "官方課程頁面", url: url.absoluteString)
+                                WebPageView(
+                                    sharedHost: sharedHost,
+                                    title: MR.strings().shell_official_course_page.localized,
+                                    url: url.absoluteString
+                                )
                             } label: {
-                                Label("查看官方課程頁面", systemImage: "globe")
+                                Label(MR.strings().coursedetail_official_page.localized, systemImage: "globe")
                             }
                         } else {
                             Link(destination: url) {
-                                Label("查看官方課程頁面", systemImage: "arrow.up.right.square")
+                                Label(
+                                    MR.strings().coursedetail_official_page.localized,
+                                    systemImage: "arrow.up.right.square"
+                                )
                             }
                         }
                     }
@@ -77,13 +87,13 @@ struct CourseDetailSheet: View {
             .courseEntityContext(
                 CourseIdentity(semester: selection.semester, serialNumber: selection.course.serialNumber)
             )
-            .navigationTitle("課程資訊")
+            .navigationTitle(MR.strings().coursedetail_details_title.localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("關閉", systemImage: "xmark") { dismiss() }
+                    Button(MR.strings().common_close.localized, systemImage: "xmark") { dismiss() }
                         .labelStyle(.iconOnly)
-                        .accessibilityLabel("關閉課程資訊")
+                        .accessibilityLabel(MR.strings().coursedetail_close_details.localized)
                 }
             }
             .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -127,7 +137,7 @@ private struct CourseDetailHeader: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             if isSelected {
-                Label("已加入課表", systemImage: "checkmark.circle.fill")
+                Label(MR.strings().planning_course_in_timetable.localized, systemImage: "checkmark.circle.fill")
                     .font(.subheadline.weight(.medium))
                     .foregroundStyle(.tint)
             }
@@ -140,33 +150,36 @@ private struct CourseDetailFacts: View {
     let course: CourseSummary
 
     var body: some View {
-        Section("基本資訊") {
-            LabeledContent("課號", value: course.serialNumber)
-            LabeledContent("學分") {
+        Section(MR.strings().coursedetail_basic_info.localized) {
+            LabeledContent(MR.strings().coursedetail_course_number.localized, value: course.serialNumber)
+            LabeledContent(MR.strings().coursedetail_credits.localized) {
                 Text(course.credit, format: .number.precision(.fractionLength(0...1)))
             }
-            LabeledContent("課程類別", value: course.courseType.description_)
+            LabeledContent(MR.strings().coursedetail_course_type.localized, value: course.courseType.localizedLabel)
             LabeledContent(
-                "授課教師",
+                MR.strings().coursedetail_instructors.localized,
                 value: course.teachers
                     .filter { $0.nilIfBlank != nil }
-                    .joined(separator: "、")
-                    .nilIfBlank ?? "未提供"
+                    .joined(separator: MR.strings().planning_list_separator.localized)
+                    .nilIfBlank ?? MR.strings().coursedetail_not_provided.localized
             )
             LabeledContent(
-                "開課單位",
+                MR.strings().coursedetail_department.localized,
                 value: [course.collegeName, course.departmentName]
                     .filter { $0.nilIfBlank != nil }
                     .joined(separator: "／")
             )
         }
-        Section("選課資訊") {
-            LabeledContent("上課時間", value: course.scheduleDescription)
-            LabeledContent("已選／名額", value: "\(course.admitCnt)／\(course.limitCnt)")
+        Section(MR.strings().coursedetail_enrollment_info.localized) {
+            LabeledContent(MR.strings().coursedetail_schedule.localized, value: course.scheduleDescription)
+            LabeledContent(
+                MR.strings().coursedetail_enrolled_quota.localized,
+                value: MR.strings().planning_course_enrollment.localized(course.admitCnt, course.limitCnt)
+            )
             if course.waitCnt > 0 {
-                LabeledContent("候補人數", value: "\(course.waitCnt)")
+                LabeledContent(MR.strings().coursedetail_waitlist.localized, value: "\(course.waitCnt)")
             }
-            LabeledContent("加選密碼卡", value: course.passwordCard.description_)
+            LabeledContent(MR.strings().coursedetail_password.localized, value: course.passwordCard.localizedLabel())
         }
     }
 }
@@ -175,17 +188,17 @@ private struct CourseDetailDescription: View {
     let detail: CourseDetail
 
     var body: some View {
-        CourseDetailTextSection(title: "課程目標", text: detail.objectives)
-        CourseDetailTextSection(title: "課程內容", text: detail.content)
-        CourseDetailTextSection(title: "教科書", text: detail.books)
-        CourseDetailTextSection(title: "教學方式", text: detail.teachingMethod)
-        CourseDetailTextSection(title: "評量方式", text: detail.gradingPolicy)
+        CourseDetailTextSection(title: MR.strings().coursedetail_objectives.localized, text: detail.objectives)
+        CourseDetailTextSection(title: MR.strings().coursedetail_content.localized, text: detail.content)
+        CourseDetailTextSection(title: MR.strings().coursedetail_books.localized, text: detail.books)
+        CourseDetailTextSection(title: MR.strings().coursedetail_teaching_method.localized, text: detail.teachingMethod)
+        CourseDetailTextSection(title: MR.strings().coursedetail_grading_policy.localized, text: detail.gradingPolicy)
         CourseDetailDistributionSection(conditions: detail.distributionConditions)
         if [detail.objectives, detail.content, detail.books, detail.teachingMethod, detail.gradingPolicy]
             .allSatisfy({ $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
             && detail.distributionConditions.isEmpty {
             Section {
-                Text("尚未提供課程說明")
+                Text(MR.strings().coursedetail_empty_syllabus.localized)
                     .foregroundStyle(.secondary)
             }
         }
@@ -196,9 +209,9 @@ private struct CourseDetailDistributionSection: View {
     let conditions: [DistributionCondition]
 
     var body: some View {
-        Section("分發條件") {
+        Section(MR.strings().coursedetail_distribution_conditions.localized) {
             if conditions.isEmpty {
-                Text("無")
+                Text(MR.strings().coursedetail_none.localized)
                     .foregroundStyle(.secondary)
             }
             ForEach(Array(conditions.sorted { $0.priority < $1.priority }.enumerated()), id: \.offset) { entry in
@@ -239,7 +252,7 @@ private struct CourseDetailSelectionAction: View {
     var body: some View {
         Button(role: isSelected ? .destructive : nil, action: onToggle) {
             Label(
-                isSelected ? "從課表移除" : "加入課表",
+                isSelected ? MR.strings().coursedetail_remove.localized : MR.strings().coursedetail_add.localized,
                 systemImage: isSelected ? "minus.circle" : "plus.circle.fill"
             )
             .font(.headline)
@@ -268,6 +281,8 @@ extension CourseSummary {
                 .sorted { $0.key < $1.key }
                 .compactMap { $0.value.first?.description_ }
             return periods.map { "\(day.code)-\($0)" }
-        }.joined(separator: "、").nilIfBlank ?? "未提供上課時間"
+        }
+        .joined(separator: MR.strings().planning_list_separator.localized)
+        .nilIfBlank ?? MR.strings().coursedetail_no_schedule.localized
     }
 }
