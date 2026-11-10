@@ -59,6 +59,10 @@ services:
       - 0.0.0.0
       - --port
       - "8000"
+      # Only the web container's nginx can reach this port, so trust its X-Forwarded-* headers
+      # (keeps redirects on https instead of http).
+      - --proxy-headers
+      - --forwarded-allow-ips=*
     expose:
       - "8000"
 

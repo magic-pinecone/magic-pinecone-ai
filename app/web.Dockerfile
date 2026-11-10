@@ -9,4 +9,7 @@ RUN --mount=type=cache,target=/root/.gradle \
     ./gradlew --no-daemon :shared:wasmJsBrowserDistribution
 
 FROM nginx:1.27-alpine
+# Serves the static site and proxies /api/ to the api service, so the browser stays same-origin.
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
 COPY --from=build /src/shared/build/dist/wasmJs/productionExecutable /usr/share/nginx/html
