@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.LocalLibrary
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.FilterChip
@@ -28,15 +29,21 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import dev.icerock.moko.resources.desc.StringDesc
 import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 import kotlinx.browser.window
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.TimetableColorMode
 import org.mpc.presentation.theme.MpcSpacing
@@ -71,6 +78,11 @@ private enum class PreviewScreen(
     COURSE_DETAILS("詳情", Icons.Filled.Info, listOf(ComposePreviewScenario.COURSE_DETAILS)),
     SLOT_PICKER("節次", Icons.Filled.GridView, listOf(ComposePreviewScenario.SLOT_PICKER)),
     PORTAL("Portal", Icons.Filled.Home, listOf(ComposePreviewScenario.PORTAL)),
+    GOV_GUIDES(
+        "政府資訊",
+        Icons.Filled.LocalLibrary,
+        listOf(ComposePreviewScenario.GUIDES_LIVE, ComposePreviewScenario.GUIDES_POPULATED),
+    ),
     CLUBS(
         "社團",
         Icons.Filled.Groups,
@@ -98,6 +110,7 @@ private val ComposePreviewScenario.stateLabel: String
 fun WebPreviewApp() {
     var scenario by remember { mutableStateOf(scenarioFromHash() ?: ComposePreviewScenario.CATALOG_POPULATED) }
     var darkTheme by remember { mutableStateOf(window.matchMedia("(prefers-color-scheme: dark)").matches) }
+    val language by remember { PreviewSettings.settings.map { it.language } }.collectAsState(AppLanguage.SYSTEM)
     LaunchedEffect(scenario) { window.location.hash = scenario.name }
 
     MpcTheme(
@@ -126,7 +139,16 @@ fun WebPreviewApp() {
                             onToggleTheme = { darkTheme = !darkTheme },
                         )
                         Box(modifier = Modifier.weight(1f)) {
-                            ComposePreviewScenarioContent(scenario)
+                            // moko reads StringDesc.localeType when it resolves a string, and resolves each one once,
+                            // so a new language re-keys the scenario to resolve its text again.
+                            remember(language) { StringDesc.localeType = language.toLocaleType() }
+                            key(language) {
+                                ComposePreviewScenarioContent(
+                                    scenario = scenario,
+                                    language = language,
+                                    onLanguageSelected = { selected -> PreviewSettings.settings.update { it.copy(language = selected) } },
+                                )
+                            }
                         }
                     }
                 }
@@ -174,3 +196,5 @@ private fun scenarioFromHash(): ComposePreviewScenario? {
     val name = window.location.hash.removePrefix("#")
     return ComposePreviewScenario.entries.firstOrNull { it.name == name }
 }
+
+private fun AppLanguage.toLocaleType(): StringDesc.LocaleType = tag.ifEmpty { null }?.let(StringDesc.LocaleType::Custom) ?: StringDesc.LocaleType.System

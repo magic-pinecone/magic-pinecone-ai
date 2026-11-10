@@ -8,7 +8,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import org.mpc.core.createHttpClient
+import org.mpc.data.dataSource.IntlDataSource
 import org.mpc.data.repository.DefaultClubRepository
+import org.mpc.data.repository.DefaultGovGuidesRepository
 import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
@@ -32,6 +34,7 @@ import org.mpc.domain.session.Unavailability
 import org.mpc.presentation.viewModel.AppSettingsViewModel
 import org.mpc.presentation.viewModel.CampusSessionViewModel
 import org.mpc.presentation.viewModel.ClubViewModel
+import org.mpc.presentation.viewModel.GovGuidesViewModel
 import org.mpc.presentation.viewModel.PortalViewModel
 import kotlin.reflect.KClass
 
@@ -40,20 +43,16 @@ internal object WebPreviewViewModelFactory : MetroViewModelFactory() {
     override val viewModelProviders: Map<KClass<out ViewModel>, () -> ViewModel> = mapOf(
         PortalViewModel::class to { PortalViewModel(InMemoryPortalFavoritesRepository()) },
         CampusSessionViewModel::class to { CampusSessionViewModel(SignedOutCampusSessions) },
-        AppSettingsViewModel::class to { AppSettingsViewModel(InMemoryAppSettingsRepository()) },
+        AppSettingsViewModel::class to { AppSettingsViewModel(PreviewSettings) },
         ClubViewModel::class to { ClubViewModel(DefaultClubRepository(createHttpClient(), PreviewBackendEndpoint)) },
+        GovGuidesViewModel::class to {
+            GovGuidesViewModel(DefaultGovGuidesRepository(PreviewBackendEndpoint, IntlDataSource(createHttpClient())))
+        },
     )
 }
 
-/** The backend behind this page: the web container's nginx proxies /api/ to it (see app/nginx.conf). */
-private object PreviewBackendEndpoint : BackendEndpointRepository {
-    override val baseUrl: Flow<String?> = MutableStateFlow(window.location.origin)
-
-    override suspend fun setBaseUrl(baseUrl: String?) = Unit
-}
-
-/** Default settings kept for the page's lifetime; the preview has no persistence. */
-private class InMemoryAppSettingsRepository : AppSettingsRepository {
+/** Settings kept for the page's lifetime; the preview has no persistence. The Settings scenario changes them. */
+internal object PreviewSettings : AppSettingsRepository {
     override val settings = MutableStateFlow(AppSettings())
 
     override suspend fun setLanguage(language: AppLanguage) = settings.update { it.copy(language = language) }
@@ -63,6 +62,13 @@ private class InMemoryAppSettingsRepository : AppSettingsRepository {
     override suspend fun setPortalAuthenticationMode(authenticationMode: PortalAuthenticationMode) = settings.update { it.copy(portalAuthenticationMode = authenticationMode) }
 
     override suspend fun setTimetableColorMode(colorMode: TimetableColorMode) = settings.update { it.copy(timetableColorMode = colorMode) }
+}
+
+/** The backend behind this page: the web container's nginx proxies /api/ to it (see app/nginx.conf). */
+private object PreviewBackendEndpoint : BackendEndpointRepository {
+    override val baseUrl: Flow<String?> = MutableStateFlow(window.location.origin)
+
+    override suspend fun setBaseUrl(baseUrl: String?) = Unit
 }
 
 private class InMemoryPortalFavoritesRepository : PortalFavoritesRepository {

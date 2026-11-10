@@ -44,7 +44,7 @@ struct ContentView: View {
             }
             Tab("Intl", systemImage: "globe", value: AppTab.international) {
                 NavigationStack {
-                    GraduationLanguageComposeView(sharedHost: sharedHost)
+                    InternationalComposeView(sharedHost: sharedHost)
                         .ignoresSafeArea(.container, edges: .bottom)
                         .navigationTitle("International")
                         .navigationBarTitleDisplayMode(.inline)
@@ -107,12 +107,12 @@ struct ContentView: View {
     }
 }
 
-/// The graduation language requirements, drawn by the shared Compose screen.
-private struct GraduationLanguageComposeView: UIViewControllerRepresentable {
+/// The graduation language requirements and government guides, drawn by the shared Compose screen.
+private struct InternationalComposeView: UIViewControllerRepresentable {
     let sharedHost: IosSharedHost
 
     func makeUIViewController(context: Context) -> some UIViewController {
-        sharedHost.graduationLanguageScreenController()
+        sharedHost.internationalScreenController()
     }
 
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {

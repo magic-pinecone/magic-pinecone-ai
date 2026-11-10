@@ -1,0 +1,150 @@
+{
+  "sources": [
+    {
+      "id": "mol-work-permit-simplified",
+      "title": "友善在臺僑外學生，簡化申請工作許可文件",
+      "url": "https://www.mol.gov.tw/1607/1632/1640/20278/",
+      "org": "勞動部",
+      "lang": "zh",
+      "topic": "work",
+      "extract": "html",
+      "selector": ".cp",
+      "blocks": true
+    },
+    {
+      "id": "wda-summer-hours",
+      "title": "僑外生申請工作許可，寒暑打工不限每週20小時",
+      "url": "https://www.wda.gov.tw/News_Content.aspx?n=31&s=3868",
+      "org": "勞動部勞動力發展署",
+      "lang": "zh",
+      "topic": "work",
+      "extract": "html",
+      "selector": ".area-essay",
+      "blocks": true
+    },
+    {
+      "id": "ocac-work-permit",
+      "title": "在學僑生如何申請工作證",
+      "url": "https://www.ocac.gov.tw/OCAC/Pages/Detail.aspx?nodeid=4512&pid=13289460",
+      "org": "僑務委員會",
+      "lang": "zh",
+      "topic": "work",
+      "extract": "html",
+      "selector": "#h_content",
+      "blocks": true
+    },
+    {
+      "id": "wda-ezwp",
+      "title": "外國專業人員工作許可申辦網",
+      "url": "https://ezwp.wda.gov.tw",
+      "org": "勞動部勞動力發展署",
+      "lang": "zh",
+      "topic": "work",
+      "extract": "link"
+    },
+    {
+      "id": "nhi-students",
+      "title": "在臺僑生、外籍生參加全民健康保險須知",
+      "url": "https://www.nhi.gov.tw/ch/dl-72718-2f56651c5a814b4cae4b8176333914e7-1.pdf",
+      "org": "衛生福利部中央健康保險署",
+      "lang": "zh",
+      "topic": "insurance",
+      "extract": "pdf"
+    },
+    {
+      "id": "mol-student-labor-insurance",
+      "title": "工讀生勞（就）保及勞退",
+      "url": "https://www.mol.gov.tw/1607/1632/1640/19421/post",
+      "org": "勞動部",
+      "lang": "zh",
+      "topic": "insurance",
+      "extract": "html",
+      "selector": ".cp",
+      "blocks": true
+    },
+    {
+      "id": "nisa-faq-arc",
+      "title": "境外學生居留證：誰要申請、期限與流程",
+      "url": "https://www.nisa.moe.gov.tw/faq.new/view/sn/1073/menu_sn/0",
+      "org": "教育部境外學生輔導資訊網",
+      "lang": "zh",
+      "topic": "residence",
+      "extract": "html",
+      "selector": ".page-wrapper",
+      "blocks": true
+    },
+    {
+      "id": "nisa-faq-graduation-extension",
+      "title": "居留證申請期限與畢業後延期居留",
+      "url": "https://www.nisa.moe.gov.tw/faq.new/view/menu_sn/0/sn/895",
+      "org": "教育部境外學生輔導資訊網",
+      "lang": "zh",
+      "topic": "residence",
+      "extract": "html",
+      "selector": ".page-wrapper",
+      "blocks": true
+    },
+    {
+      "id": "nia-stay-after-graduation",
+      "title": "留臺築夢，防詐同行（畢業後延期居留）",
+      "url": "https://www.immigration.gov.tw/5385/7229/7238/408701/cp_news",
+      "org": "內政部移民署",
+      "lang": "zh",
+      "topic": "residence",
+      "extract": "html",
+      "selector": ".cp",
+      "blocks": true
+    },
+    {
+      "id": "nia-student-online-guidelines",
+      "title": "Guidelines for online residence applications by foreign and overseas compatriot students",
+      "url": "https://www.immigration.gov.tw/5475/5478/141465/141469/367180/cp_news",
+      "org": "National Immigration Agency",
+      "lang": "en",
+      "topic": "residence",
+      "extract": "html",
+      "selector": ".cp",
+      "blocks": true
+    },
+    {
+      "id": "nia-residence-tips",
+      "title": "What a foreigner should know during residence in Taiwan",
+      "url": "https://servicestation.immigration.gov.tw/media/10309/%E5%A4%96%E5%83%91%E5%B1%85%E7%95%99%E6%9C%9F%E9%96%93%E5%B0%8F%E5%8F%AE%E5%9A%80-%E8%8B%B1%E6%96%87.pdf",
+      "org": "National Immigration Agency",
+      "lang": "en",
+      "topic": "residence",
+      "extract": "pdf"
+    },
+    {
+      "id": "nia-student-system",
+      "title": "移民署學生線上申辦系統",
+      "url": "https://coa.immigration.gov.tw/coa-frontend/student/entry",
+      "org": "內政部移民署",
+      "lang": "zh",
+      "topic": "residence",
+      "extract": "link"
+    },
+    {
+      "id": "taipei-times-graduate-stay",
+      "title": "Number of foreign graduates staying for jobs surges",
+      "url": "https://www.taipeitimes.com/News/taiwan/archives/2026/08/15/2003862542",
+      "org": "Taipei Times",
+      "lang": "en",
+      "topic": "residence",
+      "extract": "html",
+      "selector": ".archives",
+      "blocks": true
+    },
+    {
+      "id": "nia-hotline",
+      "title": "業務諮詢一覽表（1990 外來人士在臺生活諮詢服務熱線）",
+      "url": "https://www.immigration.gov.tw/5385/5388/7181/100924/",
+      "org": "內政部移民署",
+      "lang": "zh",
+      "topic": "help",
+      "extract": "html",
+      "selector": ".table_list",
+      "blocks": true
+    }
+  ]
+}

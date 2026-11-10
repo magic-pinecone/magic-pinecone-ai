@@ -101,8 +101,7 @@ import org.mpc.presentation.EeclassBulletinScreen
 import org.mpc.presentation.EeclassCategoryScreen
 import org.mpc.presentation.EeclassCourseScreen
 import org.mpc.presentation.EeclassHomeScreen
-import org.mpc.presentation.GraduationLanguageActions
-import org.mpc.presentation.GraduationLanguageScreen
+import org.mpc.presentation.InternationalScreen
 import org.mpc.presentation.PortalScreen
 import org.mpc.presentation.PortalWebScreen
 import org.mpc.presentation.SettingsScreen
@@ -111,10 +110,8 @@ import org.mpc.presentation.theme.AndroidMpcTheme
 import org.mpc.presentation.viewModel.AppSettingsViewModel
 import org.mpc.presentation.viewModel.BackendEndpointViewModel
 import org.mpc.presentation.viewModel.CoursePlanViewModel
-import org.mpc.presentation.viewModel.GraduationLanguageViewModel
 import org.mpc.shared.MR
 import org.mpc.shared.clubs_title
-import org.mpc.shared.intl_title
 import org.mpc.shared.shell_app_title
 import org.mpc.shared.shell_back
 import org.mpc.shared.shell_calendar_export_failed
@@ -305,20 +302,7 @@ private fun AndroidPrimaryNavigation(
                 ClubsScreen(modifier = Modifier.fillMaxSize())
             }
             entry<InternationalRoot> {
-                val viewModel: GraduationLanguageViewModel = metroViewModel()
-                val state by viewModel.uiState.collectAsStateWithLifecycle()
-                GraduationLanguageScreen(
-                    state = state,
-                    actions = remember(viewModel) {
-                        GraduationLanguageActions(
-                            onSelectDegree = viewModel::selectDegree,
-                            onSelectCollege = viewModel::selectCollege,
-                            onSelectCohort = viewModel::selectCohort,
-                            onRetry = viewModel::refresh,
-                        )
-                    },
-                    modifier = Modifier.fillMaxSize(),
-                )
+                InternationalScreen(modifier = Modifier.fillMaxSize())
             }
             entry<PortalWebRoute> { route ->
                 PortalWebScreen(
@@ -616,7 +600,7 @@ private data class PrimaryTopBarState(
 
         selectedTopLevelRoute == PortalRoot -> stringResource(MR.strings.shell_tab_portal)
 
-        selectedTopLevelRoute == InternationalRoot -> stringResource(MR.strings.intl_title)
+        selectedTopLevelRoute == InternationalRoot -> stringResource(MR.strings.shell_tab_international)
 
         else -> stringResource(MR.strings.shell_app_title)
     }
