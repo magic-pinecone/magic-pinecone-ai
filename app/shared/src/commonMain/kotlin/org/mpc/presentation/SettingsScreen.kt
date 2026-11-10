@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import dev.icerock.moko.resources.compose.stringResource
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.PortalAuthenticationMode
@@ -31,6 +32,16 @@ import org.mpc.shared.settings_appearance
 import org.mpc.shared.settings_appearance_description
 import org.mpc.shared.settings_course_source
 import org.mpc.shared.settings_course_source_description
+import org.mpc.shared.settings_language
+import org.mpc.shared.settings_language_description
+import org.mpc.shared.settings_language_english
+import org.mpc.shared.settings_language_english_description
+import org.mpc.shared.settings_language_system
+import org.mpc.shared.settings_language_system_description
+import org.mpc.shared.settings_language_traditional_chinese
+import org.mpc.shared.settings_language_traditional_chinese_description
+import org.mpc.shared.settings_language_vietnamese
+import org.mpc.shared.settings_language_vietnamese_description
 import org.mpc.shared.settings_portal_login
 import org.mpc.shared.settings_portal_login_description
 import org.mpc.shared.settings_portal_manual
@@ -61,6 +72,7 @@ fun SettingsScreen(
     onTimetableColorModeSelected: (TimetableColorMode) -> Unit,
     backendEndpoint: BackendEndpointUiState? = null,
     onUseCourseSource: (String) -> Unit = {},
+    onLanguageSelected: (AppLanguage) -> Unit = {},
 ) {
     Column(
         modifier = modifier
@@ -75,6 +87,37 @@ fun SettingsScreen(
                 style = MpcTheme.typography.supporting,
             )
         }
+
+        SettingsSectionTitle(
+            title = stringResource(MR.strings.settings_language),
+            description = stringResource(MR.strings.settings_language_description),
+        )
+        SettingsChoiceRow(
+            title = stringResource(MR.strings.settings_language_system),
+            description = stringResource(MR.strings.settings_language_system_description),
+            selected = settings.language == AppLanguage.SYSTEM,
+            onClick = { onLanguageSelected(AppLanguage.SYSTEM) },
+        )
+        SettingsChoiceRow(
+            title = stringResource(MR.strings.settings_language_english),
+            description = stringResource(MR.strings.settings_language_english_description),
+            selected = settings.language == AppLanguage.ENGLISH,
+            onClick = { onLanguageSelected(AppLanguage.ENGLISH) },
+        )
+        SettingsChoiceRow(
+            title = stringResource(MR.strings.settings_language_traditional_chinese),
+            description = stringResource(MR.strings.settings_language_traditional_chinese_description),
+            selected = settings.language == AppLanguage.TRADITIONAL_CHINESE,
+            onClick = { onLanguageSelected(AppLanguage.TRADITIONAL_CHINESE) },
+        )
+        SettingsChoiceRow(
+            title = stringResource(MR.strings.settings_language_vietnamese),
+            description = stringResource(MR.strings.settings_language_vietnamese_description),
+            selected = settings.language == AppLanguage.VIETNAMESE,
+            onClick = { onLanguageSelected(AppLanguage.VIETNAMESE) },
+        )
+
+        HorizontalDivider()
 
         SettingsSectionTitle(
             title = stringResource(MR.strings.settings_appearance),

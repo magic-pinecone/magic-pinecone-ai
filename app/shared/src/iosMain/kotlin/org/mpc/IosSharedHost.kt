@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.uikit.OnFocusBehavior
 import androidx.compose.ui.window.ComposeUIViewController
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.icerock.moko.resources.desc.StringDesc
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
@@ -18,6 +20,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import org.mpc.bridge.CoursePlanBridge
 import org.mpc.bridge.CourseSearchBridge
@@ -29,6 +32,7 @@ import org.mpc.core.createDatabaseBuilder
 import org.mpc.di.AppGraph
 import org.mpc.di.createAppGraph
 import org.mpc.domain.html.HtmlParser
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.CourseDetail
@@ -60,11 +64,17 @@ class IosSharedHost internal constructor(
     internal val appGraph: AppGraph,
     settingsScope: CoroutineScope = MainScope(),
 ) {
-    private val loadedSettings: StateFlow<AppSettings?> = appGraph.appSettingsRepository.settings.stateIn(
-        scope = settingsScope,
-        started = SharingStarted.Eagerly,
-        initialValue = null,
-    )
+    private val loadedSettings: StateFlow<AppSettings?> = appGraph.appSettingsRepository.settings
+        .onEach { settings -> StringDesc.localeType = settings.language.toStringDescLocaleType() }
+        .stateIn(
+            scope = settingsScope,
+            started = SharingStarted.Eagerly,
+            initialValue = null,
+        )
+    val appLanguage: Flow<AppLanguage> = loadedSettings
+        .filterNotNull()
+        .map { it.language }
+        .distinctUntilChanged()
     val themeMode: Flow<AppThemeMode> = loadedSettings
         .filterNotNull()
         .map { it.themeMode }
@@ -143,6 +153,7 @@ class IosSharedHost internal constructor(
                     onTimetableColorModeSelected = settingsViewModel::setTimetableColorMode,
                     onThemeModeSelected = settingsViewModel::setThemeMode,
                     onPortalAuthenticationModeSelected = settingsViewModel::setPortalAuthenticationMode,
+                    onLanguageSelected = settingsViewModel::setLanguage,
                     backendEndpoint = backendEndpoint,
                     onUseCourseSource = backendEndpointViewModel::useSource,
                 )
@@ -154,18 +165,25 @@ class IosSharedHost internal constructor(
     internal fun ThemedContent(content: @Composable (AppSettings) -> Unit) {
         val settingsState by loadedSettings.collectAsStateWithLifecycle()
         val settings = settingsState ?: return
-        MpcTheme(
-            themeMode = settings.themeMode,
-            timetableColorMode = settings.timetableColorMode,
-        ) {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MpcTheme.colors.background,
+        key(settings.language) {
+            MpcTheme(
+                themeMode = settings.themeMode,
+                timetableColorMode = settings.timetableColorMode,
             ) {
-                content(settings)
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MpcTheme.colors.background,
+                ) {
+                    content(settings)
+                }
             }
         }
     }
+}
+
+private fun AppLanguage.toStringDescLocaleType(): StringDesc.LocaleType = when (this) {
+    AppLanguage.SYSTEM -> StringDesc.LocaleType.System
+    else -> StringDesc.LocaleType.Custom(tag)
 }
 
 fun createIosSharedHost(htmlParser: HtmlParser): IosSharedHost {
