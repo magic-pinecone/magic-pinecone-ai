@@ -1,0 +1,5 @@
+<resources>
+    <plurals name="shell_selected_course_count">
+        <item quantity="other">%1$d môn học</item>
+    </plurals>
+</resources>

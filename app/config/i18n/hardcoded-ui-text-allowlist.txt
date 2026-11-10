@@ -1,6 +1,5 @@
 # Repo-relative Kotlin files with existing Chinese string literals in UI code.
 # Remove a file when its last UI string literal moves to moko-resources.
-app/androidApp/src/main/kotlin/org/mpc/AndroidShell.kt
 app/androidApp/src/main/kotlin/org/mpc/calendar/CalendarExportButton.kt
 app/androidApp/src/main/kotlin/org/mpc/calendar/ClassCalendar.kt
 app/androidApp/src/main/kotlin/org/mpc/presentation/CourseFilterChips.kt
@@ -17,7 +16,6 @@ app/shared/src/commonMain/kotlin/org/mpc/presentation/formatting/ScheduleFormatt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/model/EeclassCourses.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/model/PortalAccount.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/model/TimetableColorAssignment.kt
-app/shared/src/commonMain/kotlin/org/mpc/presentation/navigation/AppTab.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/preview/ComposePreviewScenarios.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/views/coursePlanning/CoursePlanningTimetableSuccessView.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/views/coursePlanning/CourseSearchResultFailureView.kt
