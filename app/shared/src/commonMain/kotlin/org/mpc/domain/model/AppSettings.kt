@@ -1,5 +1,12 @@
 package org.mpc.domain.model
 
+enum class AppLanguage(val tag: String) {
+    SYSTEM(""),
+    ENGLISH("en"),
+    TRADITIONAL_CHINESE("zh-TW"),
+    VIETNAMESE("vi"),
+}
+
 enum class AppThemeMode {
     SYSTEM,
     LIGHT,
@@ -17,6 +24,7 @@ enum class TimetableColorMode {
 }
 
 data class AppSettings(
+    val language: AppLanguage = AppLanguage.SYSTEM,
     val themeMode: AppThemeMode = AppThemeMode.SYSTEM,
     val portalAuthenticationMode: PortalAuthenticationMode = PortalAuthenticationMode.MANUAL_PORTAL,
     val timetableColorMode: TimetableColorMode = TimetableColorMode.CATEGORY,

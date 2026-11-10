@@ -74,6 +74,7 @@ import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.mpc.calendar.CalendarExportButton
 import org.mpc.calendar.ClassCalendar
 import org.mpc.di.AppGraph
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.CourseSummary
 import org.mpc.domain.session.CampusSites
 import org.mpc.domain.session.SitePath
@@ -669,6 +670,15 @@ private fun SettingsDialog(
                 onTimetableColorModeSelected = settingsViewModel::setTimetableColorMode,
                 onThemeModeSelected = settingsViewModel::setThemeMode,
                 onPortalAuthenticationModeSelected = settingsViewModel::setPortalAuthenticationMode,
+                onLanguageSelected = { language ->
+                    val requestedTags = androidx.core.os.LocaleListCompat.forLanguageTags(language.tag).toLanguageTags()
+                    val currentTags = androidx.appcompat.app.AppCompatDelegate.getApplicationLocales().toLanguageTags()
+                    if (requestedTags == currentTags) {
+                        settingsViewModel.setLanguage(language)
+                    } else {
+                        setAndroidAppLanguage(language)
+                    }
+                },
                 backendEndpoint = backendEndpoint,
                 onUseCourseSource = backendEndpointViewModel::useSource,
             )

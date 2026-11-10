@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import org.mpc.di.AppGraph
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.CourseDay
@@ -136,6 +137,8 @@ val iosSharedHostTests by testSuite {
 
 private class HostSettingsRepository : AppSettingsRepository {
     override val settings = MutableSharedFlow<AppSettings>(replay = 1)
+
+    override suspend fun setLanguage(language: AppLanguage): Unit = error("Settings writes are unused")
 
     override suspend fun setThemeMode(themeMode: AppThemeMode): Unit = error("Settings writes are unused by the host")
 

@@ -3,10 +3,12 @@ import SwiftUI
 
 struct SettingsView: View {
     let sharedHost: IosSharedHost
+    let appLanguageTag: String
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         SettingsComposeView(sharedHost: sharedHost)
+            .id(appLanguageTag)
             .ignoresSafeArea(.container, edges: .bottom)
             .navigationTitle("設定")
             .toolbar {
