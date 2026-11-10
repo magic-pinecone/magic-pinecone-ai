@@ -4,8 +4,10 @@ Reads `app/data/<dataset>/sources.json`, downloads every source that has a
 `url`, extracts its text, and writes one Markdown file per source to
 `app/data/<dataset>/corpus/`. Those files are the retrieval corpus. There are
 two datasets: `graduation_language` (the default; `requirements.json` beside it
-is curated by hand from the corpus) and `student_services` (the Office of
-International Affairs pages on insurance, immigration and work permits).
+is curated by hand from the corpus), `student_services` (the Office of
+International Affairs pages on insurance, immigration and work permits) and
+`gov_guides` (central-government pages on work permits, insurance and
+residence for international students).
 
     uv run python scripts/build_graduation_language_corpus.py          # rebuild
     uv run python scripts/build_graduation_language_corpus.py --check  # report drift
@@ -19,6 +21,8 @@ PDF sources need `pdftotext` (poppler-utils) on PATH and Word sources
 (`"extract": "office"`) need `soffice` (LibreOffice). Sources with
 `"extract": "manual"` (images, scanned files) are never overwritten: their
 corpus file is transcribed by hand and only the hash of the original is tracked.
+Sources with `"extract": "link"` are online services listed for their link only
+and are never fetched.
 """
 
 import argparse
@@ -37,7 +41,7 @@ import bs4
 import httpx
 
 DATA_ROOT = Path(__file__).resolve().parent.parent / "app/data"
-DATASETS = ("graduation_language", "student_services")
+DATASETS = ("graduation_language", "student_services", "gov_guides")
 
 HEADERS = {
     "User-Agent": (
@@ -50,6 +54,10 @@ HEADERS = {
 ATTEMPTS = 4
 PAUSE_SECONDS = 1.0
 FRONT_MATTER = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
+BLOCK_TAGS = [
+    "p", "div", "li", "tr", "h1", "h2", "h3", "h4", "h5", "h6",
+    "ul", "ol", "table", "section", "article", "dd", "dt", "blockquote",
+]  # fmt: skip
 
 
 def encode_url(url: str) -> str:
@@ -76,10 +84,14 @@ def fetch(client: httpx.Client, url: str) -> bytes:
 
 
 def html_to_text(
-    raw: bytes, selector: str | None, links_from: str | None = None
+    raw: bytes,
+    selector: str | None,
+    links_from: str | None = None,
+    blocks: bool = False,
 ) -> str:
     """The page's text. With `links_from` (the page URL), links are kept as
-    `text <absolute url>`, for pages that are mostly a list of forms."""
+    `text <absolute url>`, for pages that are mostly a list of forms. With
+    `blocks`, lines break only at block elements, for text meant to be read."""
     soup = bs4.BeautifulSoup(raw, "html.parser")
     for tag in soup(["script", "style", "nav", "header", "footer", "noscript"]):
         tag.decompose()
@@ -91,7 +103,17 @@ def html_to_text(
             href = anchor["href"].strip()
             if href and not href.startswith(("#", "javascript:", "mailto:")):
                 anchor.append(f" <{urljoin(links_from, href)}>")
-    lines = [line.strip() for line in root.get_text("\n").split("\n")]
+    if blocks:
+        # Break lines only between blocks, so a sentence with links or bold text stays whole.
+        for tag in root.find_all(BLOCK_TAGS):
+            tag.insert_before("\n")
+            tag.append("\n")
+        for br in root.find_all("br"):
+            br.replace_with("\n")
+        text = re.sub(r"[^\S\n]+", " ", root.get_text(""))
+    else:
+        text = root.get_text("\n")
+    lines = [line.strip() for line in text.split("\n")]
     return "\n".join(line for line in lines if line and line != "|")
 
 
@@ -130,7 +152,9 @@ def extract(source: dict, raw: bytes) -> str:
     if kind == "office":
         return office_to_text(raw)
     links_from = source["url"] if source.get("links") else None
-    return html_to_text(raw, source.get("selector"), links_from)
+    return html_to_text(
+        raw, source.get("selector"), links_from, source.get("blocks", False)
+    )
 
 
 def read_front_matter(path: Path) -> dict[str, str]:
@@ -183,6 +207,8 @@ def main() -> int:
     with httpx.Client(headers=HEADERS, timeout=60, follow_redirects=True) as client:
         for source in sources:
             if args.only and source["id"] not in args.only:
+                continue
+            if source.get("extract") == "link":  # an online service, not a page to read
                 continue
             path = corpus_dir / f"{source['id']}.md"
             previous = read_front_matter(path)

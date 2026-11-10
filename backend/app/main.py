@@ -8,6 +8,7 @@ from starlette.middleware.cors import CORSMiddleware
 from app.api.main import api_router
 from app.core.config import settings
 from app.core.db import engine, init_db
+from app.tasks.club_scraper import queue_first_club_sync
 
 
 @asynccontextmanager
@@ -15,6 +16,7 @@ async def lifespan(app: FastAPI):
     # Initialize DB tables on startup
     with Session(engine) as session:
         init_db(session)
+        queue_first_club_sync(session)
     yield
 
 

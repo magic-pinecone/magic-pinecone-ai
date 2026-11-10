@@ -107,7 +107,7 @@ fun GraduationLanguageScreen(
 }
 
 @Composable
-private fun Message(
+internal fun Message(
     message: String,
     modifier: Modifier = Modifier,
     action: @Composable () -> Unit = {},

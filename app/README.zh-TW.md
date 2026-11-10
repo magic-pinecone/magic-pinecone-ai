@@ -21,6 +21,7 @@
 - **離線儲存**：使用 Room 將課程資料及已儲存的課表保存在本機的 SQLite 資料庫。
 - **原生平台外殼**：Android 使用 Jetpack Compose，iOS 使用 SwiftUI，並透過 KMP 重複使用核心邏輯、資料以及 Compose UI。
 - **Portal 服務捷徑**：搜尋校園服務，並在 App 內開啟 Portal 頁面，或使用瀏覽器開啟其他服務。
+- **社團**：在 Portal 分頁依類別瀏覽中大學生社團。需要後端；社團資料來自中大社團網站（中文），後端會依 App 語言機器翻譯並快取（`GET /api/v1/clubs?lang=`）。
 
 目前可在 App 內的網頁檢視器手動登入 Portal。自動登入、安全儲存憑證及 session 還原尚未接入 App。
 
