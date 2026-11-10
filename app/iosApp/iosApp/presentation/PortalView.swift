@@ -41,7 +41,7 @@ struct PortalView: View {
                     NavigationLink {
                         ClubsView(sharedHost: sharedHost)
                     } label: {
-                        Label("社團", systemImage: "person.3")
+                        Label(MR.strings().clubs_title.localized, systemImage: "person.3")
                     }
                 }
             }
@@ -55,10 +55,10 @@ struct PortalView: View {
                     .onMove(perform: isSearching ? nil : { moveFavorites(home.favorites, from: $0, to: $1) })
                     .onDelete(perform: isSearching ? nil : { deleteFavorites(home.favorites, at: $0) })
                 } header: {
-                    Text("常用")
+                    Text(MR.strings().portal_favorites.localized)
                 } footer: {
                     if home.favorites.isEmpty {
-                        Text("點「編輯」後按 ＋，即可把服務加入常用。")
+                        Text(MR.strings().portal_favorites_empty.localized)
                     }
                 }
             }
@@ -77,13 +77,17 @@ struct PortalView: View {
         }
         .listStyle(.insetGrouped)
         .environment(\.editMode, $editMode)
-        .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "搜尋服務")
+        .searchable(
+            text: $query,
+            placement: .navigationBarDrawer(displayMode: .always),
+            prompt: MR.strings().portal_search.localized
+        )
         .overlay {
             if isSearching && home.isEmpty {
                 ContentUnavailableView.search(text: query)
             }
         }
-        .navigationTitle("Portal")
+        .navigationTitle(MR.strings().shell_tab_portal.localized)
         .navigationDestination(for: PortalDestination.self) { destination in
             WebPageView(sharedHost: sharedHost, title: destination.title, url: destination.url)
         }
@@ -92,13 +96,13 @@ struct PortalView: View {
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button(editMode.isEditing ? "完成" : "編輯") {
+                Button(editMode.isEditing ? MR.strings().portal_done.localized : MR.strings().portal_edit.localized) {
                     withAnimation { editMode = editMode.isEditing ? .inactive : .active }
                 }
                 .disabled(isSearching)
             }
             ToolbarItem(placement: .topBarTrailing) {
-                Button("設定", systemImage: "gear", action: onOpenSettings)
+                Button(MR.strings().shell_settings.localized, systemImage: "gear", action: onOpenSettings)
                     .labelStyle(.iconOnly)
             }
         }
@@ -151,7 +155,11 @@ struct PortalView: View {
             }
             .buttonStyle(.borderless)
             .disabled(isFavorite)
-            .accessibilityLabel(isFavorite ? "已在常用" : "加入常用")
+            .accessibilityLabel(
+                isFavorite
+                    ? MR.strings().portal_already_favorite.localized(item.label)
+                    : MR.strings().portal_add_favorite.localized(item.label)
+            )
             Label {
                 Text(item.label)
             } icon: {
@@ -163,9 +171,13 @@ struct PortalView: View {
     @ViewBuilder
     private func favoriteButton(_ item: PortalShortcutItem, isFavorite: Bool) -> some View {
         if isFavorite {
-            Button("從常用移除", systemImage: "star.slash") { bridge.removeFavorite(id: item.id) }
+            Button(MR.strings().portal_remove_favorite.localized(item.label), systemImage: "star.slash") {
+                bridge.removeFavorite(id: item.id)
+            }
         } else {
-            Button("加入常用", systemImage: "star") { bridge.addFavorite(id: item.id) }
+            Button(MR.strings().portal_add_favorite.localized(item.label), systemImage: "star") {
+                bridge.addFavorite(id: item.id)
+            }
         }
     }
 
@@ -192,7 +204,7 @@ struct PortalView: View {
         case .signIn:
             Task {
                 guard let url = try? await bridge.signInUrl() else { return }
-                pushedDestination = PortalDestination(title: "Portal 登入", url: url)
+                pushedDestination = PortalDestination(title: MR.strings().portal_sign_in_title.localized, url: url)
             }
         case .signOut:
             bridge.signOut()
@@ -271,9 +283,9 @@ private struct PortalShortcutIconView: View {
 private extension PortalAccountAction {
     var title: String {
         switch self {
-        case .signIn: "登入"
-        case .signOut: "登出"
-        case .retry: "重試"
+        case .signIn: MR.strings().portal_sign_in.localized
+        case .signOut: MR.strings().portal_sign_out.localized
+        case .retry: MR.strings().portal_retry.localized
         }
     }
 }
