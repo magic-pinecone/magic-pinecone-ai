@@ -1,0 +1,433 @@
+{
+  "contact": {
+    "name_zh": "教務處課務組",
+    "name_en": "Division of Curriculum, Office of Academic Affairs",
+    "website": "https://pdc.adm.ncu.edu.tw/p/412-1019-1763.php?Lang=zh-tw",
+    "sources": [
+      {
+        "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/11GuidelinesfortheSelectionofCommonRequiredCoursesatNationalCentralUniversity.pdf",
+        "title": "NCU Regulations on Common Course Selection and Requirements, Article 7",
+        "fetched": "2026-11-11",
+        "quote": "Students should refer to the webpage of the Division of Curriculum for the most updated list of the courses for waiving the elective courses in the general education program."
+      }
+    ]
+  },
+  "requirements": [
+    {
+      "id": "minimum-credits",
+      "degrees": ["bachelor"],
+      "credits": 128,
+      "title_zh": "學士班畢業至少 128 學分",
+      "title_en": "Bachelor's degree: at least 128 credits",
+      "summary_zh": "學士班修業期限為四年，畢業學分總數不得少於 128 學分。各系的畢業學分可能更高，以系上應修科目表為準。",
+      "summary_en": "A bachelor's degree takes four years and at least 128 credits in total. Your department may require more; its curriculum table has the exact number.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/439020843.pdf",
+          "title": "國立中央大學學則 第 13 條",
+          "fetched": "2026-11-11",
+          "quote": "本校採學年學分制，學士班學生修業期限均為四年，所修學分總數，不得少於一百二十八學分。"
+        },
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/1NationalCentralUniversityStudyRegulations.pdf",
+          "title": "National Central University Study Regulations, Article 13",
+          "fetched": "2026-11-11",
+          "quote": "The University adopts the system of academic years and course credits. Undergraduate students are expected to complete their studies within four years, with no fewer than 128 course credits earned in total."
+        }
+      ]
+    },
+    {
+      "id": "equivalent-qualification-extra-credits",
+      "degrees": ["bachelor"],
+      "credits": 12,
+      "title_zh": "以同等學力入學的境外生：另加 12 畢業學分",
+      "title_en": "Admitted on an equivalent qualification: 12 extra credits",
+      "summary_zh": "國外或港澳學校畢業、年級只相當於國內高中二年級，以同等學力就讀學士班者，除一般畢業條件外，須另修 12 個畢業學分（軍訓、體育不算）。",
+      "summary_en": "If you were admitted on an equivalent qualification from a foreign, Hong Kong, or Macau school that ends at the level of Taiwan's second year of senior high school, you need 12 more graduation credits on top of the usual requirements. Military training and PE do not count toward them.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/439020843.pdf",
+          "title": "國立中央大學學則 第 48 條",
+          "fetched": "2026-11-11",
+          "quote": "畢業年級相當於國內高級中等學校二年級之國外或香港澳門地區同級同類學校畢業生，以同等學力就讀本校學士班者，除第一項各款規定外，應另增修十二個畢業學分（軍訓、體育除外）。"
+        },
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/1NationalCentralUniversityStudyRegulations.pdf",
+          "title": "National Central University Study Regulations, Article 48",
+          "fetched": "2026-11-11",
+          "quote": "In addition to meeting each requirement listed in the previous paragraph, foreign, Hong Kong, and Macau undergraduates of the University whose graduating grades and schools are equivalent to second grade of senior high school in Taiwan shall earn 12 more course credits required for graduation (excluding military training and PE) if they applied for the University's admission as applicants of equivalent educational levels."
+        }
+      ]
+    },
+    {
+      "id": "semester-credit-load",
+      "degrees": ["bachelor"],
+      "credits": 16,
+      "title_zh": "每學期至少修 16 學分（大四 9 學分）",
+      "title_en": "At least 16 credits a semester (9 in the fourth year)",
+      "summary_zh": "大一到大三每學期至少修 16 學分，大四每學期至少 9 學分。有特殊原因須經導師及系主管同意才能少修，未經同意少修者應令退學。",
+      "summary_en": "Take at least 16 credits each semester in years one to three and at least 9 in year four. Taking fewer needs approval from your advisor and department head; without it you can be dismissed.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/439020843.pdf",
+          "title": "國立中央大學學則 第 11 條",
+          "fetched": "2026-11-11",
+          "quote": "學生修習學分數，第一學年、第二學年及第三學年每學期至少十六學分，第四學年每學期至少九學分。學生因特殊原因不能修足該學期應修最低學分數，經導師及系（學位學程）主管同意，得酌減應修學分數，違者應令退學。"
+        },
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/1NationalCentralUniversityStudyRegulations.pdf",
+          "title": "National Central University Study Regulations, Article 11",
+          "fetched": "2026-11-11",
+          "quote": "Undergraduate students shall take at least 16 course credits each semester in the first, second, and third academic years and at least 9 course credits each semester in the fourth academic year."
+        }
+      ]
+    },
+    {
+      "id": "curriculum-by-cohort",
+      "degrees": ["bachelor"],
+      "credits": null,
+      "title_zh": "依入學年度的應修科目表修課",
+      "title_en": "Follow the curriculum table of your entry year",
+      "summary_zh": "學生依入學年度的應修科目表修課。大一外文與通識若系上另有規定，寫在應修科目表的備註欄。",
+      "summary_en": "Follow your department's curriculum table for the year you entered. Any department-specific rules for freshman foreign language and general education are in the table's remarks column.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/459504876.pdf",
+          "title": "國立中央大學各學士班應修科目表使用注意事項",
+          "fetched": "2026-11-11",
+          "quote": "一、學生應依入學年度之應修科目表修習。二、共同必修科目請依「國立中央大學共同必修科目選修辦法」之規定修讀。大一外文及通識課程，如各學士班(學位學程)另有規定者，另訂於應修科目表之備註欄中。"
+        }
+      ]
+    },
+    {
+      "id": "common-required-total",
+      "degrees": ["bachelor"],
+      "credits": 25,
+      "title_zh": "共同必修共 25 學分",
+      "title_en": "Common required courses: 25 credits",
+      "summary_zh": "學士班共同必修為國文 5 學分、外文 6 學分、通識 14 學分，共 25 學分；體育與服務學習也是必修，但不計學分。適用 111 學年度起入學的學生。",
+      "summary_en": "Every undergraduate takes 25 credits of common required courses: 5 in Chinese, 6 in a foreign language, and 14 in general education. PE and service learning are also required but carry no credits. This applies to students who entered in academic year 111 (2022) or later.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/364607259.pdf",
+          "title": "國立中央大學共同必修科目選修辦法 第 2 條、第 8 條",
+          "fetched": "2026-11-11",
+          "quote": "第二條 學士班學生應修習之共同必修科目名稱及學分數如下： 科目名稱/領域類別 學分數 國文 5 外文 6 體育課程 0 服務學習課程 0 核心必修 通識課程 14 選修科目 合計 25"
+        },
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/11GuidelinesfortheSelectionofCommonRequiredCoursesatNationalCentralUniversity.pdf",
+          "title": "NCU Regulations on Common Course Selection and Requirements, Articles 2 and 8",
+          "fetched": "2026-11-11",
+          "quote": "The Regulations apply to students who enrolled in and after the 111th academic year."
+        }
+      ]
+    },
+    {
+      "id": "chinese",
+      "degrees": ["bachelor"],
+      "credits": 5,
+      "title_zh": "國文：外籍生修「僑生國文」一學年 5 學分",
+      "title_en": "Chinese: international students take Chinese for Overseas Chinese Students, 5 credits",
+      "summary_zh": "國文共 5 學分。一般生修國文（A）3 學分與國文（B）中文寫作 2 學分；僑生及外籍生改修一學年 5 學分的「僑生國文」，不必修國文（B）。",
+      "summary_en": "The Chinese requirement is 5 credits. Local students take Chinese (A) for 3 credits and Chinese (B): Chinese Writing for 2. Overseas Chinese and international students take the full-year, 5-credit Chinese for Overseas Chinese Students instead and skip Chinese (B).",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/364607259.pdf",
+          "title": "國立中央大學共同必修科目選修辦法 第 3 條",
+          "fetched": "2026-11-11",
+          "quote": "國文含上或下學期共 3 學分之大一國文專業課程及單學期 2 學分之大一國文中文寫作課程；僑生及外籍生則修習「僑生國文」課程一學年 5 學分，修習「僑生國文」者，不需修習大一國文中文寫作課程。"
+        },
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/11GuidelinesfortheSelectionofCommonRequiredCoursesatNationalCentralUniversity.pdf",
+          "title": "NCU Regulations on Common Course Selection and Requirements, Article 3",
+          "fetched": "2026-11-11",
+          "quote": "Overseas Chinese students and international students should take the full-year five-credit course “Chinese for Overseas Chinese Students.” Students who take the “Chinese for Overseas Chinese Students” are not required to take “Chinese (B): Chinese Writing.”"
+        }
+      ]
+    },
+    {
+      "id": "mandarin-substitution",
+      "degrees": ["bachelor"],
+      "credits": 6,
+      "title_zh": "非中文系外籍生：以語言中心華語課 6 學分抵國文",
+      "title_en": "International students outside the Chinese department: 6 credits of Mandarin replace freshman Chinese",
+      "summary_zh": "非中文系的外籍生不必修中文系開的大一國文，改修語言中心開的華語課程 6 學分，並在畢業前辦理國文課程抵修手續。這與共同必修辦法第 3 條（僑生國文 5 學分）寫法不同，見待確認事項。",
+      "summary_en": "If you are an international student outside the Department of Chinese Literature, you do not take freshman Chinese. Take 6 credits of Mandarin courses at the Language Center instead, and file for the Chinese course substitution before you graduate. This differs from Article 3 of the common-course regulations (5 credits of Chinese for Overseas Chinese Students); see the open questions.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/521084208.pdf",
+          "title": "國立中央大學大一國文修課實施辦法 第五點",
+          "fetched": "2026-11-11",
+          "quote": "非中文系外籍生不需修習中文系所開設之大一國文課程，但須修習本校語言中心所開設之華語課程 6 學分，並於畢業前辦理國文課程抵修手續。"
+        }
+      ]
+    },
+    {
+      "id": "chinese-department-foreign-students",
+      "degrees": ["bachelor"],
+      "credits": null,
+      "title_zh": "中文系外籍生：先考中文分級，初級須先修華語且不計畢業學分",
+      "title_en": "International students in the Chinese department: placement test first; beginner Mandarin does not count toward graduation",
+      "summary_zh": "中文系外籍生須參加中文能力分級測驗。初級組除修中文系大一國文外，須依程度先修語言中心課程，這些學分不列入畢業學分，通過後才能修「僑生國文」。中、高級組修中文系大一國文。",
+      "summary_en": "International students in the Department of Chinese Literature take a Chinese placement test. Those placed at beginner level take Language Center courses at their level first, and those credits do not count toward graduation; they then take Chinese for Overseas Chinese Students. Intermediate and advanced students take the department's freshman Chinese.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/521084208.pdf",
+          "title": "國立中央大學大一國文修課實施辦法 第五點",
+          "fetched": "2026-11-11",
+          "quote": "中文系外籍生須參加中文能力分級測驗。測驗結果為初級組者，除修習中文系大一國文課程，，必須依程度選修本校語言中心所開課程(選課標準依語言中心判定)，且此選修學分不列入畢業學分總數。通過之後方得修習「僑生國文」課程。測驗結果為中、高級組者修習中文系大一國文課程。"
+        }
+      ]
+    },
+    {
+      "id": "foreign-language",
+      "degrees": ["bachelor"],
+      "credits": 6,
+      "title_zh": "外文 6 學分",
+      "title_en": "Foreign language: 6 credits",
+      "summary_zh": "外文 6 學分，由各系從三種方式擇一：大一英文、英文系開的其他英文課，或語言中心開設或認定的初級第二外語（同一外語須修滿 6 學分）。系上的選擇寫在應修科目表備註欄。",
+      "summary_en": "The foreign-language requirement is 6 credits. Each department picks one option: Freshman English, other English courses from the Department of English, or a basic second foreign language from the Language Center (6 credits in the same language). Your department's choice is in the remarks of its curriculum table.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/364607259.pdf",
+          "title": "國立中央大學共同必修科目選修辦法 第 4 條",
+          "fetched": "2026-11-11",
+          "quote": "外文課程依各學系(學位學程)就下列各款擇定其一，並訂定於應修科目表備註欄中： (一）「大一英文」。 (二）英文系開設之其他英文課程。 (三）語言中心開設或認定之初級第二外語課程，但同一外語課程必須修滿六學分。"
+        },
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/11GuidelinesfortheSelectionofCommonRequiredCoursesatNationalCentralUniversity.pdf",
+          "title": "NCU Regulations on Common Course Selection and Requirements, Article 4",
+          "fetched": "2026-11-11",
+          "quote": "The department should select one of the following requirements and specify it in the additional remark column in the list of curricula: 1. “Freshman English”; 2. English-related courses provided by the Department of English of National Central University (NCU); 3. courses of a second or third foreign language in basic or upper-basic levels that are provided or recognized by the Language Center at NCU—students must complete at least six credits of the courses of the same foreign language."
+        }
+      ]
+    },
+    {
+      "id": "freshman-english-exemption",
+      "degrees": ["bachelor"],
+      "credits": 6,
+      "title_zh": "大一英文免修：英語系國家外籍生個案審理，核准給 6 學分",
+      "title_en": "Freshman English exemption: case by case for students from English-speaking countries; 6 credits if approved",
+      "summary_zh": "英語系國家的外籍生可向語言中心申請免修大一英文，個案審理。入學第一學期加退選截止前申請並核准者，免修上下學期，給 6 學分並計入畢業學分。",
+      "summary_en": "International students from English-speaking countries can apply to the Language Center to skip Freshman English; each case is reviewed individually. Apply before the add/drop deadline of your first semester: if approved, you skip both semesters and receive 6 credits that count toward graduation.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/786143607.pdf",
+          "title": "國立中央大學大一外文修課及教學實施細則 第七條",
+          "fetched": "2026-11-11",
+          "quote": "（六）英語系國家之外籍生，個案審理。"
+        },
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/786143607.pdf",
+          "title": "國立中央大學大一外文修課及教學實施細則 第七條",
+          "fetched": "2026-11-11",
+          "quote": "（一）於入學第一學期加退選截止日前申請，核准免修者，免修大一英文上、下學期課程，給予 6 學分並計入畢業學分內。"
+        }
+      ]
+    },
+    {
+      "id": "physical-education",
+      "degrees": ["bachelor"],
+      "credits": 0,
+      "title_zh": "體育必修五學期，不計學分",
+      "title_en": "Physical education: five semesters, no credits",
+      "summary_zh": "體育必修五學期（大一體育上下學期加三學期興趣選課），不計學分。興趣選課不得重複選同名課程。修完五學期後可再選 1 學分體育，但該學分不列入畢業學分。",
+      "summary_en": "PE is required for five semesters: Freshman PE I and II plus three PE interest electives. It carries no graduation credits, and you cannot repeat an elective with the same title. After the five semesters you may take a 1-credit PE course, which also does not count toward graduation.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/364607259.pdf",
+          "title": "國立中央大學共同必修科目選修辦法 第 5 條",
+          "fetched": "2026-11-11",
+          "quote": "體育課程必修五學期（含大一體育上、下學期及興趣選課三學期，共計五學期），不計學分。興趣選課不得選修相同名稱之課程（代表隊、適應體育除外）。已修畢前述規定體育課程者，始得選修一學分之體育課程，該學分不列入畢業學分。"
+        },
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/1NationalCentralUniversityStudyRegulations.pdf",
+          "title": "National Central University Study Regulations, Article 13",
+          "fetched": "2026-11-11",
+          "quote": "Students are required to take five physical education (PE) courses in five semesters (including Freshman PE I, Freshman PE II, and three PE interest electives in the following three semesters), but any course credit earned from these five PE courses do not count towards the number of course credits required for graduation."
+        }
+      ]
+    },
+    {
+      "id": "service-learning",
+      "degrees": ["bachelor"],
+      "credits": 0,
+      "title_zh": "服務學習必修二學期，不計學分",
+      "title_en": "Service learning: two semesters, no credits",
+      "summary_zh": "服務學習課程必修兩學期，兩學期課號不得重複，不計學分。詳細規定見服務學習的資料。",
+      "summary_en": "The service-learning course is required for two semesters with different course numbers and carries no credits. See the service-learning rules for details.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/364607259.pdf",
+          "title": "國立中央大學共同必修科目選修辦法 第 6 條",
+          "fetched": "2026-11-11",
+          "quote": "服務學習課程必修二學期(課號不得重複)，不計學分。"
+        },
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/11GuidelinesfortheSelectionofCommonRequiredCoursesatNationalCentralUniversity.pdf",
+          "title": "NCU Regulations on Common Course Selection and Requirements, Article 6",
+          "fetched": "2026-11-11",
+          "quote": "Undergraduate students are required to take Student Service Learning (with separate course serial numbers) for two semesters. The course credits will not count toward the number of credits for graduation."
+        }
+      ]
+    },
+    {
+      "id": "general-education",
+      "degrees": ["bachelor"],
+      "credits": 14,
+      "title_zh": "通識 14 學分：核心必修至少一個領域",
+      "title_en": "General education: 14 credits, core courses in at least one field",
+      "summary_zh": "通識共 14 學分，分核心必修與選修。核心必修有人文與思想、自然科學、應用科學、社會思潮與現象四大領域，至少修一個領域，修哪個領域依系上規定。選修通識以跨領域優先：理、工、地科、資電、生醫學院學生優先選人文與思想、社會思潮與現象；文、管理、客家學院學生優先選自然科學、應用科學。",
+      "summary_en": "General education is 14 credits, split into core and elective courses. Core courses come in four fields: humanities and thought, natural science, applied science, and society and its trends. You take at least one field, and your department says which. Electives favour fields outside your own: science, engineering, earth sciences, EECS, and health sciences students get priority in humanities and society courses; liberal arts, management, and Hakka studies students get priority in natural and applied science courses.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/364607259.pdf",
+          "title": "國立中央大學共同必修科目選修辦法 第 7 條",
+          "fetched": "2026-11-11",
+          "quote": "通識課程共計修習十四學分，其中核心必修（包含人文與思想、自然科學、應用科學、社會思潮與現象等四大領域）至少須修習一個領域，應修習之領域依各學系（學位學程）規定；符合第四項規定者除外。"
+        },
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/11GuidelinesfortheSelectionofCommonRequiredCoursesatNationalCentralUniversity.pdf",
+          "title": "NCU Regulations on Common Course Selection and Requirements, Article 7",
+          "fetched": "2026-11-11",
+          "quote": "Undergraduate students should take and complete 14 credits in the general education program. Students should select at least one of the four major fields below for the required core courses: humanities and thoughts, physical science, applied science, and trends of thought and phenomena of society."
+        },
+        {
+          "url": "https://tc.ncu.edu.tw/?page_id=814",
+          "title": "松濤全人學院：課程資訊",
+          "fetched": "2026-11-11",
+          "quote": "為鼓勵學生自主學習及彈性修課，107學年度起核心必修通識課程（含人文與思想、自然科學、應用科學、社會思潮與現象四大領域）已由原規定至少四選三領域鬆綁為至少四選一領域，以增加學生探索興趣選修課程之機會。"
+        }
+      ]
+    },
+    {
+      "id": "general-education-waiver",
+      "degrees": ["bachelor"],
+      "credits": 6,
+      "title_zh": "修畢第二專長可免修通識選修至多 6 學分",
+      "title_en": "A completed second specialty can waive up to 6 general-education elective credits",
+      "summary_zh": "修畢通識中心審查通過的特定第二專長，可免修通識選修至多 6 學分。修畢任一學分學程或第二專長且其中含 8 學分以上通識課程者，可申請免修全部通識。兩種情形畢業總學分仍須達到系上規定。",
+      "summary_en": "Completing a second specialty approved by the General Education Center waives up to 6 credits of general-education electives. Completing any credit program or second specialty that includes at least 8 general-education credits lets you apply to waive general education entirely. Either way you still need your department's total graduation credits.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/364607259.pdf",
+          "title": "國立中央大學共同必修科目選修辦法 第 7 條",
+          "fetched": "2026-11-11",
+          "quote": "修畢通識中心審查通過之特定第二專長應修科目學分者，得免修通識課程（選修科目）至多 6 學分。"
+        },
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/364607259.pdf",
+          "title": "國立中央大學共同必修科目選修辦法 第 7 條",
+          "fetched": "2026-11-11",
+          "quote": "修畢任一學分學程或第二專長規定之應修科目學分者，且內含 8 學分以上通識課程 （核心必修或選修科目），其所取得該學分學程或第二專長總學分數得申請免修所有 通識課程。 符合前二項規定之學生，總畢業學分仍須滿足各系規定之畢業學分數。"
+        }
+      ]
+    },
+    {
+      "id": "general-education-other-department-courses",
+      "degrees": ["bachelor"],
+      "credits": null,
+      "title_zh": "外系專業課採計通識：先算通識選修",
+      "title_en": "Other departments' courses counted as general education: they fill GE electives first",
+      "summary_zh": "修「外系專業課程採計通識學分」的科目，學分先算入通識選修，通識選修滿了以後，多出的部分才算外系選修。本系學生修本系這類課程不算通識。",
+      "summary_en": "Courses from other departments that are approved to count as general education fill your general-education electives first; only credits beyond that count as electives from other departments. Students cannot count their own department's courses this way.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/364607259.pdf",
+          "title": "國立中央大學共同必修科目選修辦法 第 7 條",
+          "fetched": "2026-11-11",
+          "quote": "另修習「外系專業課程採計通識學分」 之科目，一律先計入通識選修學分，滿足通 識選修學分超出部份，方計入其外系之選修學分。若為主系學生修習則不計入通識選 修學分。"
+        }
+      ]
+    },
+    {
+      "id": "self-directed-micro-courses",
+      "degrees": ["bachelor"],
+      "credits": 2,
+      "title_zh": "自主學習微課程至多抵通識選修 2 學分",
+      "title_en": "Self-directed micro-courses: up to 2 general-education elective credits",
+      "summary_zh": "修習並通過自主學習微課程，至多可算入通識選修 2 學分。",
+      "summary_en": "Passed self-directed learning micro-courses count for up to 2 credits of general-education electives.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/364607259.pdf",
+          "title": "國立中央大學共同必修科目選修辦法 第 7 條",
+          "fetched": "2026-11-11",
+          "quote": "修習並通過自主學習微課程，至多計入通識選修科目2學分。"
+        },
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/11GuidelinesfortheSelectionofCommonRequiredCoursesatNationalCentralUniversity.pdf",
+          "title": "NCU Regulations on Common Course Selection and Requirements, Article 7",
+          "fetched": "2026-11-11",
+          "quote": "Students who take and pass the micro courses in self-directed learning may have up to two credits of microcourses count toward the number of credits of elective courses in the general education program."
+        }
+      ]
+    },
+    {
+      "id": "master-minimum-credits",
+      "degrees": ["graduate"],
+      "credits": 24,
+      "title_zh": "碩士班畢業至少 24 學分（不含論文）",
+      "title_en": "Master's degree: at least 24 credits, thesis excluded",
+      "summary_zh": "研究生畢業條件由各系所自訂，但碩士班至少須修滿 24 學分，不含論文學分。在學期間至少要修一門 1 學分以上的研究所課程（抵免的不算）。",
+      "summary_en": "Each department sets its own graduation rules, but a master's degree needs at least 24 credits, not counting thesis credits. You must also take at least one graduate course of 1 credit or more at NCU (waived courses do not count).",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/439020843.pdf",
+          "title": "國立中央大學學則 第 58 條",
+          "fetched": "2026-11-11",
+          "quote": "研究生畢業條件由各系（所、專班、學位學程）自定，惟畢業應修學分數，碩士班至少須修滿二十四學分；博士班至少須修滿十八學分；逕修讀博士學位研究生至少須修滿三十四學分（內含至少十八個博士班學分）。前項學分均不包括畢業論文學分。研究生在本校修業期間至少要修習一學分以上研究所課程（不含抵免課程）。"
+        },
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/1NationalCentralUniversityStudyRegulations.pdf",
+          "title": "National Central University Study Regulations, Article 58",
+          "fetched": "2026-11-11",
+          "quote": "Requirements for postgraduate students' graduation are determined by their department (graduate institute, in-service program, or degree program), but the number of course credits required for graduation is at least 24 for master's students"
+        }
+      ]
+    },
+    {
+      "id": "doctoral-minimum-credits",
+      "degrees": ["graduate"],
+      "credits": 18,
+      "title_zh": "博士班畢業至少 18 學分（不含論文）",
+      "title_en": "Doctoral degree: at least 18 credits, dissertation excluded",
+      "summary_zh": "博士班至少須修滿 18 學分，不含論文學分。各系所可訂更高的要求。",
+      "summary_en": "A doctoral degree needs at least 18 credits, not counting dissertation credits. Departments may require more.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/1NationalCentralUniversityStudyRegulations.pdf",
+          "title": "National Central University Study Regulations, Article 58",
+          "fetched": "2026-11-11",
+          "quote": "at least 18 for doctoral students, at least 34 for students admitted via direct admission into doctoral programs (including at least 18 course credits from doctoral programs). Each number of course credits listed in the preceding paragraph does not include the course credits of the graduation thesis."
+        }
+      ]
+    },
+    {
+      "id": "direct-doctoral-minimum-credits",
+      "degrees": ["graduate"],
+      "credits": 34,
+      "title_zh": "逕修讀博士：至少 34 學分，其中 18 學分須為博士班學分",
+      "title_en": "Direct-entry PhD: at least 34 credits, 18 of them doctoral",
+      "summary_zh": "逕修讀博士學位的研究生至少須修滿 34 學分，其中至少 18 學分是博士班學分，不含論文學分。",
+      "summary_en": "Students admitted directly into a doctoral program need at least 34 credits, of which at least 18 are doctoral-level, not counting dissertation credits.",
+      "sources": [
+        {
+          "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/1NationalCentralUniversityStudyRegulations.pdf",
+          "title": "National Central University Study Regulations, Article 58",
+          "fetched": "2026-11-11",
+          "quote": "at least 34 for students admitted via direct admission into doctoral programs (including at least 18 course credits from doctoral programs)."
+        }
+      ]
+    }
+  ],
+  "open_questions": [
+    "The two Chinese rules for international students disagree. The common-course regulations (Article 3, approved 2022-01-12) say international students take Chinese for Overseas Chinese Students for 5 credits. The freshman-Chinese rules (point 5, last approved 2018-03-31) say students outside the Chinese department take 6 credits of Language Center Mandarin instead. Which applies, and whether all 6 Mandarin credits count toward graduation, needs confirming with the Division of Curriculum or the Department of Chinese Literature.",
+    "The freshman-Chinese rules require international students to file a Chinese course substitution (國文課程抵修) before graduating. The form, deadline, and handling office were not found on an official page.",
+    "The common-course regulations apply to students who entered in academic year 111 (2022) or later. The rules for earlier cohorts were not read.",
+    "The Chinese Study Regulations mark Article 13 (128 credits, PE, service learning) as still being filed with the Ministry of Education (本條文報部備查中). The English version read here was last filed on 2024-01-05.",
+    "Freshman English exemption for students from English-speaking countries is decided case by case. No official page read here lists the criteria or which countries count.",
+    "Whether core general-education credits beyond a department's requirement count toward general-education electives was seen only in a search excerpt, not in a document read in full. The course-selection guide for general education (pdc.adm.ncu.edu.tw/Course/course/COUR_09.pdf) returns 404.",
+    "No official page read here lists which general-education courses are taught in English."
+  ]
+}
