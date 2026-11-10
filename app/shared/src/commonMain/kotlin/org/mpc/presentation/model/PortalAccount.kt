@@ -1,7 +1,19 @@
 package org.mpc.presentation.model
 
+import dev.icerock.moko.resources.StringResource
 import org.mpc.domain.session.PortalNeed
 import org.mpc.domain.session.PortalStatus
+import org.mpc.shared.MR
+import org.mpc.shared.portal_status_checking
+import org.mpc.shared.portal_status_displaced
+import org.mpc.shared.portal_status_displaced_detail
+import org.mpc.shared.portal_status_needs_portal_page
+import org.mpc.shared.portal_status_signed_in
+import org.mpc.shared.portal_status_signed_out
+import org.mpc.shared.portal_status_signed_out_detail
+import org.mpc.shared.portal_status_unavailable
+import org.mpc.shared.portal_status_unavailable_detail
+import org.mpc.shared.portal_status_user_signed_out
 
 enum class PortalAccountTone {
     CHECKING,
@@ -18,48 +30,48 @@ enum class PortalAccountAction {
 
 /** The Portal tab's account row: what to say about the session and which actions to offer, most important first. */
 data class PortalAccount(
-    val title: String,
-    val detail: String?,
+    val title: StringResource,
+    val detail: StringResource?,
     val tone: PortalAccountTone,
     val actions: List<PortalAccountAction>,
 )
 
 fun PortalStatus.toPortalAccount(): PortalAccount = when (this) {
-    PortalStatus.Unknown -> PortalAccount("正在確認登入狀態", null, PortalAccountTone.CHECKING, emptyList())
+    PortalStatus.Unknown -> PortalAccount(MR.strings.portal_status_checking, null, PortalAccountTone.CHECKING, emptyList())
 
-    PortalStatus.Live -> PortalAccount("已登入 Portal", null, PortalAccountTone.SIGNED_IN, listOf(PortalAccountAction.SIGN_OUT))
+    PortalStatus.Live -> PortalAccount(MR.strings.portal_status_signed_in, null, PortalAccountTone.SIGNED_IN, listOf(PortalAccountAction.SIGN_OUT))
 
-    PortalStatus.SignedOut -> signedOut("尚未登入 Portal")
+    PortalStatus.SignedOut -> signedOut(MR.strings.portal_status_signed_out)
 
     is PortalStatus.Unavailable -> PortalAccount(
-        title = "無法確認登入狀態",
-        detail = "請檢查網路連線後重試",
+        title = MR.strings.portal_status_unavailable,
+        detail = MR.strings.portal_status_unavailable_detail,
         tone = PortalAccountTone.ATTENTION,
         actions = listOf(PortalAccountAction.RETRY, PortalAccountAction.SIGN_IN),
     )
 
     is PortalStatus.Blocked -> when (need) {
         PortalNeed.DISPLACED -> PortalAccount(
-            title = "Portal 已在其他地方登入",
-            detail = "重新登入後，其他地方的 Portal 會被登出",
+            title = MR.strings.portal_status_displaced,
+            detail = MR.strings.portal_status_displaced_detail,
             tone = PortalAccountTone.ATTENTION,
             actions = listOf(PortalAccountAction.SIGN_IN),
         )
 
-        PortalNeed.USER_SIGNED_OUT -> signedOut("已登出 Portal")
+        PortalNeed.USER_SIGNED_OUT -> signedOut(MR.strings.portal_status_user_signed_out)
 
-        PortalNeed.NEEDS_PORTAL_PAGE -> signedOut("請在 Portal 頁面完成登入")
+        PortalNeed.NEEDS_PORTAL_PAGE -> signedOut(MR.strings.portal_status_needs_portal_page)
 
         PortalNeed.MANUAL_SIGN_IN,
         PortalNeed.COOLDOWN,
         PortalNeed.NO_CREDENTIALS,
-        -> signedOut("尚未登入 Portal")
+        -> signedOut(MR.strings.portal_status_signed_out)
     }
 }
 
-private fun signedOut(title: String) = PortalAccount(
+private fun signedOut(title: StringResource) = PortalAccount(
     title = title,
-    detail = "登入後即可直接開啟校務系統",
+    detail = MR.strings.portal_status_signed_out_detail,
     tone = PortalAccountTone.SIGNED_OUT,
     actions = listOf(PortalAccountAction.SIGN_IN),
 )

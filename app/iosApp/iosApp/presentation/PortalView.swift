@@ -225,10 +225,10 @@ private struct PortalAccountRow: View {
                 .frame(width: 30)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
-                Text(account.title)
+                Text(account.title.localized)
                     .font(.headline)
                 if let detail = account.detail {
-                    Text(detail)
+                    Text(detail.localized)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }

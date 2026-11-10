@@ -15,4 +15,14 @@
     <string name="portal_sign_out">Sign out</string>
     <string name="portal_retry">Retry</string>
     <string name="portal_sign_in_title">Portal sign-in</string>
+    <string name="portal_status_checking">Checking sign-in status</string>
+    <string name="portal_status_signed_in">Signed in to Portal</string>
+    <string name="portal_status_signed_out">Not signed in to Portal</string>
+    <string name="portal_status_signed_out_detail">Sign in to open campus systems directly</string>
+    <string name="portal_status_unavailable">Couldn’t check sign-in status</string>
+    <string name="portal_status_unavailable_detail">Check your network connection and try again</string>
+    <string name="portal_status_displaced">Portal is signed in somewhere else</string>
+    <string name="portal_status_displaced_detail">Signing in again signs Portal out everywhere else</string>
+    <string name="portal_status_user_signed_out">Signed out of Portal</string>
+    <string name="portal_status_needs_portal_page">Finish signing in on the Portal page</string>
 </resources>

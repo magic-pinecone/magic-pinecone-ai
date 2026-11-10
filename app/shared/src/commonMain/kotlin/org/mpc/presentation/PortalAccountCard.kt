@@ -94,8 +94,8 @@ private fun PortalAccountRow(
     modifier: Modifier = Modifier,
 ) {
     ListItem(
-        headlineContent = { Text(account.title) },
-        supportingContent = account.detail?.let { detail -> { Text(detail) } },
+        headlineContent = { Text(stringResource(account.title)) },
+        supportingContent = account.detail?.let { detail -> { Text(stringResource(detail)) } },
         leadingContent = { PortalAccountIcon(account.tone) },
         trailingContent = {
             Row(horizontalArrangement = Arrangement.spacedBy(MpcSpacing.space1)) {

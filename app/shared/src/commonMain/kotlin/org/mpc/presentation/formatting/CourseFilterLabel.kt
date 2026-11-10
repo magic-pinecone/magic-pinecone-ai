@@ -20,7 +20,7 @@ import org.mpc.shared.catalog_type_elective
 import org.mpc.shared.catalog_type_required
 import org.mpc.shared.catalog_type_unknown
 
-/** Chinese-only text for SwiftUI, which has not moved to moko-resources yet; Compose uses [labelDesc]. */
+/** Chinese-only text for the App Intents, which have not moved to a string catalog yet; Compose and SwiftUI use [labelDesc]. */
 fun CourseFilter.label(): String = when (this) {
     is CourseFilter.Teacher -> "老師：$name"
 
