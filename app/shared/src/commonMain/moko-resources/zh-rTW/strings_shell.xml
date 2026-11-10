@@ -1,0 +1,25 @@
+<resources>
+    <string name="shell_tab_home">首頁</string>
+    <string name="shell_tab_news">新聞</string>
+    <string name="shell_tab_portal">Portal</string>
+    <string name="shell_tab_course_selection">選課</string>
+    <string name="shell_tab_settings">設定</string>
+    <string name="shell_app_title">神奇松果</string>
+    <string name="shell_settings">設定</string>
+    <string name="shell_close_settings">關閉設定</string>
+    <string name="shell_plan_saved">課表已儲存</string>
+    <string name="shell_plan_save_failed">課表儲存失敗，請重試</string>
+    <string name="shell_official_course_page">官方課程頁面</string>
+    <string name="shell_calendar_export_failed">無法加入行事曆，請稍後再試。</string>
+    <string name="shell_calendar_permission_denied">沒有行事曆權限。請在「設定」允許神奇松果存取行事曆。</string>
+    <string name="shell_back">返回</string>
+    <string name="shell_previous_page">上一頁</string>
+    <string name="shell_save">儲存</string>
+    <string name="shell_view_selected_courses">查看已選課程</string>
+    <string name="shell_display_options">顯示選項</string>
+    <string name="shell_compact_course_cards">精簡課程卡片</string>
+    <string name="shell_enabled">已啟用</string>
+    <string name="shell_more_options">更多選項</string>
+    <string name="shell_share">分享</string>
+    <string name="shell_open_in_browser">在瀏覽器中開啟</string>
+</resources>

@@ -1,0 +1,25 @@
+<resources>
+    <string name="shell_tab_home">Trang chủ</string>
+    <string name="shell_tab_news">Tin tức</string>
+    <string name="shell_tab_portal">Portal</string>
+    <string name="shell_tab_course_selection">Chọn môn</string>
+    <string name="shell_tab_settings">Cài đặt</string>
+    <string name="shell_app_title">Magic Pinecone</string>
+    <string name="shell_settings">Cài đặt</string>
+    <string name="shell_close_settings">Đóng cài đặt</string>
+    <string name="shell_plan_saved">Đã lưu thời khóa biểu</string>
+    <string name="shell_plan_save_failed">Không thể lưu thời khóa biểu. Vui lòng thử lại.</string>
+    <string name="shell_official_course_page">Trang môn học chính thức</string>
+    <string name="shell_calendar_export_failed">Không thể thêm vào lịch. Vui lòng thử lại sau.</string>
+    <string name="shell_calendar_permission_denied">Chưa có quyền truy cập lịch. Hãy cho phép Magic Pinecone truy cập lịch trong Cài đặt.</string>
+    <string name="shell_back">Quay lại</string>
+    <string name="shell_previous_page">Trang trước</string>
+    <string name="shell_save">Lưu</string>
+    <string name="shell_view_selected_courses">Xem các môn đã chọn</string>
+    <string name="shell_display_options">Tùy chọn hiển thị</string>
+    <string name="shell_compact_course_cards">Thẻ môn học thu gọn</string>
+    <string name="shell_enabled">Đã bật</string>
+    <string name="shell_more_options">Tùy chọn khác</string>
+    <string name="shell_share">Chia sẻ</string>
+    <string name="shell_open_in_browser">Mở trong trình duyệt</string>
+</resources>
