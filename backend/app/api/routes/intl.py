@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field
 from sqlmodel import Session
 
 from app.api.deps import SessionDep
-from app.services import gov_guides, student_services, translator
+from app.services import gov_guides, student_services
 from app.services import graduation_language as service
 from app.services.translator import translate
 
@@ -306,18 +306,14 @@ class GuidesResponse(BaseModel):
 
 
 def _translate_guide_lines(
-    session: Session, texts: Iterable[str], lang: str, source: str
+    session: Session, texts: Iterable[str], lang: str
 ) -> dict[str, str]:
-    """The shipped pre-translations, with the live translator filling the lines they lack."""
-    shipped = gov_guides.shipped_translations(translator.engine_code(lang))
-    found: dict[str, str] = {}
-    missing: list[str] = []
-    for text in texts:
-        if text in shipped:
-            found[text] = shipped[text]
-        else:
-            missing.append(text)
-    return found | (translate(session, missing, lang, source) if missing else {})
+    """Google's translations (cached), with the shipped Argos translations filling the
+    lines Google could not translate, e.g. while it rate-limits this server."""
+    texts = list(texts)
+    live = translate(session, texts, lang)
+    shipped = gov_guides.shipped_translations(gov_guides.shipped_code(lang))
+    return {t: shipped[t] for t in texts if t in shipped and t not in live} | live
 
 
 @router.get("/guides", response_model=GuidesResponse)
@@ -343,20 +339,6 @@ def get_guides(
         articles = gov_guides.localize(
             articles,
             lang,
-            lambda texts, source: _translate_guide_lines(session, texts, lang, source),
+            lambda texts, _source: _translate_guide_lines(session, texts, lang),
         )
     return {"topics": topics, "articles": articles}
-
-
-class TranslatorStatus(BaseModel):
-    available: bool
-    # LibreTranslate codes it has models for, e.g. en, vi, zt (Traditional Chinese).
-    languages: list[str]
-    # The kind of failure when it is not available, e.g. ConnectError.
-    error: str | None
-
-
-@router.get("/translator", response_model=TranslatorStatus)
-def get_translator_status() -> Any:
-    """Whether the self-hosted translator behind `/intl/guides?lang=` is up."""
-    return translator.status()

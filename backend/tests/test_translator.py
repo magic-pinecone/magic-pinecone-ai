@@ -1,101 +1,26 @@
-import json
-
 import httpx
 import pytest
 
 from app.services import translator
 
 
-@pytest.fixture(autouse=True)
-def configured(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setattr(translator.settings, "TRANSLATOR_URL", "http://translate:5000")
-
-
-@pytest.mark.parametrize(
-    ("tag", "code"),
-    [
-        ("zh", "zt"),
-        ("zh-TW", "zt"),
-        ("zh-Hant-TW", "zt"),
-        ("zh-CN", "zh"),
-        ("zh-Hans", "zh"),
-        ("vi", "vi"),
-        ("en-US", "en"),
-    ],
-)
-def test_engine_code(tag, code):
-    assert translator.engine_code(tag) == code
-
-
-def test_fetch_sends_the_batch_and_returns_its_translations():
-    sent = []
+def test_rate_limit_pauses_the_endpoint(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setattr(translator, "_paused_until", 0.0)
+    calls = []
 
     def handler(request: httpx.Request) -> httpx.Response:
-        sent.append(json.loads(request.content))
-        return httpx.Response(200, json={"translatedText": ["Hello", "World"]})
+        calls.append(request)
+        return httpx.Response(302, headers={"location": "https://www.google.com/sorry"})
 
     with httpx.Client(transport=httpx.MockTransport(handler)) as client:
-        assert translator._fetch(client, ["你好", "世界"], "zh", "en") == [
-            "Hello",
-            "World",
-        ]
-    assert sent == [
-        {"q": ["你好", "世界"], "source": "zt", "target": "en", "format": "text"}
-    ]
+        assert translator._fetch(client, "學生會", "vi") is None
+        assert translator._fetch(client, "學生會", "vi") is None
+    assert len(calls) == 1  # the second text never reaches Google while paused
 
 
-@pytest.mark.parametrize(
-    "response",
-    [
-        httpx.Response(400, json={"error": "zt is not supported"}),
-        httpx.Response(200, json={"translatedText": ["only one"]}),
-        httpx.Response(200, text="not json"),
-    ],
-)
-def test_fetch_gives_up_on_a_refusal_or_a_short_answer(response):
-    transport = httpx.MockTransport(lambda _: response)
+def test_fetch_joins_sentences(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setattr(translator, "_paused_until", 0.0)
+    body = [[["Hello. ", "你好。"], ["World", "世界"], [None, None]]]
+    transport = httpx.MockTransport(lambda _: httpx.Response(200, json=body))
     with httpx.Client(transport=transport) as client:
-        assert translator._fetch(client, ["你好", "世界"], "zh", "en") is None
-
-
-def test_status_reports_the_languages_or_the_failure(monkeypatch):
-    monkeypatch.setattr(
-        translator.httpx,
-        "get",
-        lambda *_a, **_k: httpx.Response(
-            200,
-            json=[{"code": "vi"}, {"code": "en"}],
-            request=httpx.Request("GET", "http://translate:5000/languages"),
-        ),
-    )
-    assert translator.status() == {
-        "available": True,
-        "languages": ["en", "vi"],
-        "error": None,
-    }
-
-    def refuse(*_a, **_k):
-        raise httpx.ConnectError("refused")
-
-    monkeypatch.setattr(translator.httpx, "get", refuse)
-    assert translator.status() == {
-        "available": False,
-        "languages": [],
-        "error": "ConnectError: refused",
-    }
-
-
-def test_without_a_url_nothing_is_translated_or_called(monkeypatch):
-    monkeypatch.setattr(translator.settings, "TRANSLATOR_URL", "")
-
-    def no_network(*_a, **_k):
-        raise AssertionError("must not call the network")
-
-    monkeypatch.setattr(translator.httpx, "get", no_network)
-    monkeypatch.setattr(translator.httpx, "Client", no_network)
-    assert translator.translate(None, ["你好"], "en", "zh") == {}  # type: ignore[arg-type]
-    assert translator.status() == {
-        "available": False,
-        "languages": [],
-        "error": "TRANSLATOR_URL is not set",
-    }
+        assert translator._fetch(client, "你好。世界", "en") == "Hello. World"

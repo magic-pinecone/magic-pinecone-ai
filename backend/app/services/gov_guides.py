@@ -58,9 +58,19 @@ def topics() -> list[str]:
     return list(dict.fromkeys(article["topic"] for article in load_articles()))
 
 
+def shipped_code(lang: str) -> str:
+    """The file name a language tag's shipped translations use: zt for Traditional
+    Chinese, zh for Simplified, else the base language (en, vi)."""
+    tag = lang.lower()
+    if tag.startswith("zh"):
+        simplified = tag in {"zh-cn", "zh-sg", "zh-hans"} or tag.startswith("zh-hans-")
+        return "zh" if simplified else "zt"
+    return tag.split("-")[0]
+
+
 @lru_cache
 def shipped_translations(code: str) -> dict[str, str]:
-    """Lines pre-translated into a LibreTranslate `code` (en, vi, zt) by
+    """Lines pre-translated into `code` (en, vi, zt; see `shipped_code`) by
     scripts/translate_gov_guides.py; empty when there is no file for it."""
     path = DATA_DIR / "translations" / f"{code}.json"
     return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}

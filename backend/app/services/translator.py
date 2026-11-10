@@ -1,13 +1,8 @@
-"""Translate text with a self-hosted LibreTranslate, caching every result in the database.
-
-LibreTranslate runs Argos Translate's open models on your own server, so text never leaves it and there is no
-rate limit. It is optional and not part of compose.yaml (its image and model download made every deployment
-slow): set TRANSLATOR_URL to an instance you run. Without it, `translate` returns nothing and callers keep
-their text, or use translations they ship (see app/data/gov_guides/translations/).
-"""
+"""Translate text with Google Translate's free web endpoint, caching every result in the database."""
 
 import hashlib
 import logging
+import time
 from collections.abc import Iterable
 from concurrent.futures import ThreadPoolExecutor
 
@@ -15,89 +10,52 @@ import httpx
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 
-from app.core.config import settings
 from app.models.translation import Translation
 
 logger = logging.getLogger(__name__)
 
-# Lines per request; LibreTranslate translates a list in one call.
-BATCH = 40
-# Matches LibreTranslate's default worker threads, so batches do not queue behind each other.
-WORKERS = 4
-# CPU translation of a long batch, pivoting through English, can take tens of seconds.
-TIMEOUT_SECONDS = 180
+# shortcut: unofficial keyless endpoint with no SLA or published rate limit; move to the paid Cloud Translation API if it starts refusing.
+ENDPOINT = "https://translate.googleapis.com/translate_a/single"
+WORKERS = 8
+# Retrying while rate-limited only extends the block, so stop calling for this long.
+BACKOFF_SECONDS = 600
+_paused_until = 0.0  # time.monotonic() before which the endpoint is not called
 
 
 def _hash(text: str) -> str:
     return hashlib.sha256(text.encode()).hexdigest()
 
 
-def engine_code(lang: str) -> str:
-    """The LibreTranslate code for a language tag: zt for Traditional Chinese, else the base language."""
-    tag = lang.lower()
-    if tag.startswith("zh"):
-        simplified = tag in {"zh-cn", "zh-sg", "zh-hans"} or tag.startswith("zh-hans-")
-        return "zh" if simplified else "zt"
-    return tag.split("-")[0]
-
-
-def _fetch(
-    client: httpx.Client, texts: list[str], source: str, lang: str
-) -> list[str] | None:
-    """Translate one batch, or None when the service is down or refuses the pair."""
+def _fetch(client: httpx.Client, text: str, lang: str) -> str | None:
+    """Translate one text, or None when the endpoint fails or is paused."""
+    global _paused_until
+    if time.monotonic() < _paused_until:
+        return None
     try:
         response = client.post(
-            f"{settings.TRANSLATOR_URL}/translate",
-            json={
-                "q": texts,
-                "source": engine_code(source) if source != "auto" else "auto",
-                "target": engine_code(lang),
-                "format": "text",
-            },
+            ENDPOINT,
+            params={"client": "gtx", "sl": "auto", "tl": lang, "dt": "t"},
+            data={"q": text},
         )
+        # Google answers a rate-limited client with 429 or a redirect to its CAPTCHA page.
+        if response.status_code in (302, 429):
+            _paused_until = time.monotonic() + BACKOFF_SECONDS
+            logger.warning(
+                "Google Translate refused with %s; pausing %ss",
+                response.status_code,
+                BACKOFF_SECONDS,
+            )
+            return None
         response.raise_for_status()
-        translated = response.json()["translatedText"]
-        return translated if len(translated) == len(texts) else None
+        # Body is [[[translated, source, ...], ...], ...], one row per sentence.
+        return "".join(row[0] for row in response.json()[0] if row[0])
     except (httpx.HTTPError, ValueError, LookupError, TypeError) as e:
-        logger.warning("Translating %s to %s failed: %s", source, lang, e)
+        logger.warning("Translating to %s failed: %s", lang, e)
         return None
 
 
-def status() -> dict[str, object]:
-    """Whether the service answers, and the language codes it has models for."""
-    if not settings.TRANSLATOR_URL:
-        return {
-            "available": False,
-            "languages": [],
-            "error": "TRANSLATOR_URL is not set",
-        }
-    try:
-        response = httpx.get(f"{settings.TRANSLATOR_URL}/languages", timeout=5)
-        response.raise_for_status()
-        return {
-            "available": True,
-            "languages": sorted(lang["code"] for lang in response.json()),
-            "error": None,
-        }
-    except (httpx.HTTPError, ValueError, LookupError, TypeError) as e:
-        # The message tells a missing service (name not resolved) from one still starting (refused).
-        return {
-            "available": False,
-            "languages": [],
-            "error": f"{type(e).__name__}: {e}",
-        }
-
-
-def translate(
-    session: Session, texts: Iterable[str], lang: str, source: str = "auto"
-) -> dict[str, str]:
-    """Map each non-blank text to its translation into `lang`; texts that failed to translate are left out.
-
-    `source` is the language the texts are written in; "auto" lets the service guess, which is unreliable
-    for short lines.
-    """
-    if not settings.TRANSLATOR_URL:
-        return {}
+def translate(session: Session, texts: Iterable[str], lang: str) -> dict[str, str]:
+    """Map each non-blank text to its translation into `lang`; texts that failed to translate are left out."""
     by_hash = {_hash(t): t for t in texts if t.strip()}
     cached = session.exec(
         select(Translation).where(
@@ -109,18 +67,9 @@ def translate(
 
     missing = [t for t in by_hash.values() if t not in result]
     if missing:
-        batches = [missing[i : i + BATCH] for i in range(0, len(missing), BATCH)]
-        with (
-            httpx.Client(timeout=TIMEOUT_SECONDS) as client,
-            ThreadPoolExecutor(WORKERS) as pool,
-        ):
-            fetched = list(pool.map(lambda b: _fetch(client, b, source, lang), batches))
-        new = {
-            text: translation
-            for batch, translations in zip(batches, fetched, strict=True)
-            if translations is not None
-            for text, translation in zip(batch, translations, strict=True)
-        }
+        with httpx.Client(timeout=10) as client, ThreadPoolExecutor(WORKERS) as pool:
+            fetched = list(pool.map(lambda t: _fetch(client, t, lang), missing))
+        new = {t: tr for t, tr in zip(missing, fetched, strict=True) if tr is not None}
         session.add_all(
             Translation(lang=lang, source_hash=_hash(t), text=tr)
             for t, tr in new.items()

@@ -1,9 +1,9 @@
 """Pre-translate the government guides with Argos Translate, offline, into files the API ships.
 
 Writes `app/data/gov_guides/translations/<code>.json` for en, vi and zt (Traditional Chinese), each mapping a
-source line (title, agency or a line of text) to its translation. GET /api/v1/intl/guides?lang= serves these
-first and asks the live LibreTranslate service only for lines they lack, so guides are translated even on a
-server that cannot run LibreTranslate. These are the same open models LibreTranslate runs.
+source line (title, agency or a line of text) to its translation. GET /api/v1/intl/guides?lang= translates with
+Google first, like the clubs, and serves these for the lines Google could not translate (e.g. while it
+rate-limits the server), so guides never fall back to untranslated text.
 
 Lines already translated in the files are kept; only new lines are translated, and lines no guide uses any
 more are dropped. Re-run after rebuilding the corpus. From backend/:

@@ -6,7 +6,7 @@
 |---|---|---|
 | `sources.json` | 來源清單，每筆有 `topic`（`work`、`insurance`、`residence`、`help`） | 手動維護 |
 | `corpus/<id>.md` | 每個頁面的全文，開頭有來源網址、抓取日與原檔雜湊 | `scripts/build_graduation_language_corpus.py --dataset gov_guides` |
-| `translations/<code>.json` | 預先翻譯好的行（`en`、`vi`、`zt` 繁體中文），原文 → 譯文；API 先用這裡的，缺的才問線上的 LibreTranslate | `scripts/translate_gov_guides.py`（Argos Translate，離線） |
+| `translations/<code>.json` | 預先翻譯好的行（`en`、`vi`、`zt` 繁體中文），原文 → 譯文；Google 翻譯失敗（例如被限流）的行改用這裡的 | `scripts/translate_gov_guides.py`（Argos Translate，離線） |
 
 ## 原則
 
@@ -14,7 +14,7 @@
 - `"extract": "link"` 是線上申辦系統（工作許可申辦網、移民署學生線上申辦），只列連結、不抓內容。
 - HTML 來源都設 `"blocks": true`，只在區塊元素換行，讓句子不會被連結或粗體切開，App 直接顯示這份文字。
 - 這裡是全國通用的規定；中央大學自己的作法在 `../student_services/`。
-- `GET /api/v1/intl/guides?lang=` 會把不是該語言寫的資訊逐行機器翻譯：先用 `translations/` 裡預先翻好的行；缺的行若有設定 `TRANSLATOR_URL`，才交給自架的 LibreTranslate（Argos Translate 開源模型，不在 `compose.yaml` 裡，因為它的映像檔與模型下載會讓每次部署變很慢），結果快取在 `translations` 資料表，原文放在 `original`。App 顯示「機器翻譯，以機關原文為準」並可切換原文。翻譯失敗的行維持原文。
+- `GET /api/v1/intl/guides?lang=` 會把不是該語言寫的資訊逐行機器翻譯：和社團資料一樣用 Google 翻譯（`app/services/translator.py`，結果快取在 `translations` 資料表）；Google 沒翻到的行改用 `translations/` 裡用 Argos Translate 預先翻好的行，原文放在 `original`。App 顯示「機器翻譯，以機關原文為準」並可切換原文。翻譯失敗的行維持原文。
 
 ## 更新
 

@@ -14,8 +14,6 @@ x-backend: &backend
     REDIS_HOST: redis
     REDIS_PORT: "6379"
     REDIS_DB: "0"
-    # Optional self-hosted LibreTranslate for guide lines the shipped translations lack; empty turns it off.
-    TRANSLATOR_URL: ${TRANSLATOR_URL:-}
   depends_on:
     db:
       condition: service_healthy

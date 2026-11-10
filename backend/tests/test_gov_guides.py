@@ -91,19 +91,15 @@ def test_localize_serves_as_written_when_nothing_was_translated():
 
 def test_guides_endpoint_translates_with_lang(client, monkeypatch):
     monkeypatch.setattr(
-        intl,
-        "translate",
-        lambda _session, texts, _lang, source: fake_translate(texts, source),
+        intl, "translate", lambda _session, texts, _lang: fake_translate(texts, "g")
     )
-    # Only the live translator here; shipped translations have their own test.
+    # Only the live translator here; the shipped fallback has its own test.
     monkeypatch.setattr(gov_guides, "shipped_translations", lambda _code: {})
     articles = client.get("/api/v1/intl/guides", params={"lang": "vi"}).json()[
         "articles"
     ]
     assert all(a["original"] for a in articles)
-    assert all(
-        a["title"].startswith(f"[{a['original']['lang']}>vi] ") for a in articles
-    )
+    assert all(a["title"].startswith("[g>vi] ") for a in articles)
     plain = client.get("/api/v1/intl/guides").json()["articles"]
     assert all(a["original"] is None for a in plain)
 
@@ -113,21 +109,37 @@ def test_guides_endpoint_rejects_a_malformed_lang(client):
     assert response.status_code == 422
 
 
-def test_guides_endpoint_serves_shipped_translations_first(client, monkeypatch):
-    asked = []
-
-    def live(_session, texts, _lang, source):
-        texts = list(texts)
-        asked.extend(texts)
-        return fake_translate(texts, source)
-
-    monkeypatch.setattr(intl, "translate", live)
-    title = gov_guides.load_articles()[0]["title"]
+def test_shipped_translations_fill_what_the_live_translator_missed(client, monkeypatch):
+    first, second = (a["title"] for a in gov_guides.load_articles()[:2])
+    # Google translates every line but the first title, as if it gave up on it.
     monkeypatch.setattr(
-        gov_guides, "shipped_translations", lambda code: {title: f"shipped {code}"}
+        intl,
+        "translate",
+        lambda _session, texts, _lang: {
+            t: f"google {t}" for t in fake_translate(texts, "g") if t != first
+        },
+    )
+    monkeypatch.setattr(
+        gov_guides,
+        "shipped_translations",
+        lambda code: {first: f"shipped {code}", second: f"shipped {code}"},
     )
     articles = client.get("/api/v1/intl/guides", params={"lang": "vi"}).json()[
         "articles"
     ]
-    assert articles[0]["title"] == "shipped vi"
-    assert title not in asked and asked  # the live translator only gets the rest
+    assert articles[0]["title"] == "shipped vi"  # Google failed on it
+    assert articles[1]["title"] == f"google {second}"  # Google wins when it answers
+
+
+@pytest.mark.parametrize(
+    ("tag", "code"),
+    [
+        ("zh-TW", "zt"),
+        ("zh-Hant", "zt"),
+        ("zh-CN", "zh"),
+        ("vi", "vi"),
+        ("en-US", "en"),
+    ],
+)
+def test_shipped_code(tag, code):
+    assert gov_guides.shipped_code(tag) == code
