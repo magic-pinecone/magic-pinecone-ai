@@ -110,6 +110,7 @@ import org.mpc.presentation.viewModel.BackendEndpointViewModel
 import org.mpc.presentation.viewModel.CoursePlanViewModel
 import org.mpc.presentation.viewModel.GraduationLanguageViewModel
 import org.mpc.shared.MR
+import org.mpc.shared.intl_title
 import org.mpc.shared.shell_app_title
 import org.mpc.shared.shell_back
 import org.mpc.shared.shell_calendar_export_failed
@@ -607,7 +608,7 @@ private data class PrimaryTopBarState(
 
         selectedTopLevelRoute == PortalRoot -> stringResource(MR.strings.shell_tab_portal)
 
-        selectedTopLevelRoute == InternationalRoot -> stringResource(MR.strings.shell_tab_international)
+        selectedTopLevelRoute == InternationalRoot -> stringResource(MR.strings.intl_title)
 
         else -> stringResource(MR.strings.shell_app_title)
     }

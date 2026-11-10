@@ -1,0 +1,33 @@
+<resources>
+    <string name="intl_title">Yêu cầu ngoại ngữ để tốt nghiệp</string>
+    <string name="intl_show_chinese">中文</string>
+    <string name="intl_show_english">English</string>
+    <string name="intl_degree_bachelor">Đại học</string>
+    <string name="intl_degree_master">Thạc sĩ</string>
+    <string name="intl_degree_phd">Tiến sĩ</string>
+    <string name="intl_all_colleges">Tất cả các học viện</string>
+    <string name="intl_admission_year">Năm nhập học (năm học theo lịch Dân Quốc)</string>
+    <string name="intl_cohort">%1$s (%2$s)</string>
+    <string name="intl_earlier_year">Năm trước</string>
+    <string name="intl_later_year">Năm sau</string>
+    <string name="intl_apply_at">Nơi nộp hồ sơ: %1$s</string>
+    <string name="intl_english_tests">Các bài thi tiếng Anh được chấp nhận (chọn một)</string>
+    <string name="intl_other_languages">Các ngoại ngữ khác được chấp nhận</string>
+    <string name="intl_international_students">Dành cho sinh viên quốc tế</string>
+    <string name="intl_alternatives">Nếu bạn chưa đạt điểm yêu cầu</string>
+    <string name="intl_procedure">Cách xin xác nhận</string>
+    <string name="intl_notes">Ghi chú</string>
+    <string name="intl_sources">Nguồn chính thức</string>
+    <string name="intl_no_rule">Không tìm thấy quy định cho lựa chọn này. Điều đó không có nghĩa là không có yêu cầu: hãy xem quy định riêng của khoa bạn.</string>
+    <string name="intl_no_rule_found">Đã kiểm tra, không có quy định về ngoại ngữ</string>
+    <string name="intl_not_checked">Chưa kiểm tra</string>
+    <string name="intl_chinese">Tiếng Trung</string>
+    <string name="intl_chinese_requirements">Quy định ảnh hưởng đến việc tốt nghiệp</string>
+    <string name="intl_not_graduation_requirements">Thường bị nhầm là điều kiện tốt nghiệp</string>
+    <string name="intl_open_questions">Còn cần xác nhận với nhà trường</string>
+    <string name="intl_unofficial_translation">Bản tiếng Anh là bản dịch không chính thức; bản gốc tiếng Trung có giá trị quyết định.</string>
+    <string name="intl_verified_on">Đã đối chiếu với nguồn chính thức ngày %1$s</string>
+    <string name="intl_needs_backend">Trang này cần máy chủ Magic Pinecone. Hãy nhập địa chỉ tại Cài đặt › %1$s.</string>
+    <string name="intl_failed">Không thể tải các yêu cầu.</string>
+    <string name="intl_retry">Thử lại</string>
+</resources>

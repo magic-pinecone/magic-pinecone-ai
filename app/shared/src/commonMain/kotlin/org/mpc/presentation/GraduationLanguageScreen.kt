@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import org.mpc.domain.model.Degree
 import org.mpc.domain.model.GraduationLanguage
@@ -49,8 +50,9 @@ data class GraduationLanguageActions(
 )
 
 /**
- * The language requirements for graduating, for international students. Labels follow the chosen
- * language; rules quoted from NCU's regulations stay in Chinese, the language they are written in.
+ * The language requirements for graduating, for international students. Labels follow the app's
+ * language. The rules come in Chinese, the language NCU writes them in, with unofficial English
+ * renderings: Chinese-language phones start on the original, every other language on the English.
  */
 @Composable
 fun GraduationLanguageScreen(
@@ -58,8 +60,9 @@ fun GraduationLanguageScreen(
     actions: GraduationLanguageActions,
     modifier: Modifier = Modifier,
 ) {
-    var english by rememberSaveable { mutableStateOf(true) }
-    val text = if (english) EnglishLabels else ChineseLabels
+    val startInEnglish = Locale.current.language != "zh"
+    var english by rememberSaveable { mutableStateOf(startInEnglish) }
+    val text = graduationLanguageLabels()
 
     when (state) {
         GraduationLanguageUiState.Loading -> Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -78,7 +81,7 @@ fun GraduationLanguageScreen(
             verticalArrangement = Arrangement.spacedBy(MpcSpacing.space3),
         ) {
             item {
-                Header(state.requirements.summaryFor(state.filter.degree).pick(english), text, onToggleLanguage = { english = !english })
+                Header(state.requirements.summaryFor(state.filter.degree).pick(english), text, english, onToggleLanguage = { english = !english })
             }
             item { Filters(state, actions, text, english) }
             if (state.rules.isEmpty()) {
@@ -90,8 +93,11 @@ fun GraduationLanguageScreen(
             item { GeneralCards(state.requirements, state.filter.degree, text, english) }
             item {
                 Text(
-                    text = "${state.requirements.disclaimer.pick(english)}\n" +
-                        "${text.verifiedOn} ${state.requirements.verifiedOn}",
+                    text = listOfNotNull(
+                        state.requirements.disclaimer.pick(english),
+                        text.unofficialTranslation.takeIf { english },
+                        verifiedOnLabel(state.requirements.verifiedOn),
+                    ).joinToString("\n"),
                     style = MpcTheme.typography.caption,
                     color = MpcTheme.colors.labelSecondary,
                 )
@@ -125,6 +131,7 @@ private fun Message(
 private fun Header(
     summary: String,
     text: GraduationLanguageLabels,
+    english: Boolean,
     onToggleLanguage: () -> Unit,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(MpcSpacing.space2)) {
@@ -135,7 +142,7 @@ private fun Header(
                 color = MpcTheme.colors.label,
                 modifier = Modifier.weight(1f).semantics { heading() },
             )
-            FilterChip(selected = false, onClick = onToggleLanguage, label = { Text(text.otherLanguage) })
+            FilterChip(selected = false, onClick = onToggleLanguage, label = { Text(if (english) text.showChinese else text.showEnglish) })
         }
         Paragraph(summary)
     }
@@ -187,7 +194,7 @@ private fun Filters(
                 Icon(Icons.Filled.Remove, contentDescription = text.earlierYear)
             }
             Text(
-                text = text.cohort(filter.cohort),
+                text = cohortLabel(filter.cohort),
                 style = MpcTheme.typography.headline,
                 color = MpcTheme.colors.label,
             )
@@ -230,7 +237,7 @@ private fun RuleCard(
         }
         val tr = requirements.translator(english)
         rule.summary?.let { Paragraph(it.pick(english)) }
-        rule.applyAt?.let { Paragraph("${text.applyAt} ${it.pick(english)}", secondary = true) }
+        rule.applyAt?.let { Paragraph(applyAtLabel(it.pick(english)), secondary = true) }
 
         RuleScores(rule, requirements, text, english)
         Callout(text.internationalStudents, rule.internationalStudents.map(tr))

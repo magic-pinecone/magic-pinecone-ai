@@ -8,10 +8,12 @@ import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -68,13 +70,20 @@ class GraduationLanguageViewModel(
         initialValue = GraduationLanguageUiState.Loading,
     )
 
+    private var loading: Job? = null
+
     init {
-        refresh()
+        // Loads once at start and again whenever the backend address is set, changed or cleared in
+        // Settings, so a screen that said "needs a backend" picks the new one up without a restart.
+        viewModelScope.launch {
+            repository.backend.distinctUntilChanged().collect { refresh() }
+        }
     }
 
     fun refresh() {
+        loading?.cancel()
         load.value = Load.Loading
-        viewModelScope.launch {
+        loading = viewModelScope.launch {
             load.value = runCatching { repository.fetchRequirements() }
                 .fold(
                     onSuccess = { requirements -> requirements?.let(Load::Done) ?: Load.NeedsBackend },
