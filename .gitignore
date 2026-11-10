@@ -23,3 +23,18 @@ celerybeat-schedule*
 
 # Agent worktrees
 .claude/worktrees/
+
+# More OS, editor and Python leftovers
+Thumbs.db
+desktop.ini
+*.swp
+*.log
+*.py[cod]
+.coverage
+htmlcov/
+.mypy_cache/
+*.egg-info/
+
+# Local env variants; the committed template stays
+.env.*
+!.env.example
