@@ -1,0 +1,17 @@
+<resources>
+    <string name="clubs_all">All</string>
+    <string name="clubs_no_backend_title">No backend set up</string>
+    <string name="clubs_no_backend_body">Set up a backend in Settings to see clubs</string>
+    <string name="clubs_failed_title">Couldn't load clubs</string>
+    <string name="clubs_failed_body">Check your network connection and backend, then try again</string>
+    <string name="clubs_retry">Retry</string>
+    <string name="clubs_location">Location</string>
+    <string name="clubs_website">Website</string>
+    <string name="club_category_social">Social</string>
+    <string name="club_category_academic">Academic</string>
+    <string name="club_category_recreation">Recreational</string>
+    <string name="club_category_department">Departmental</string>
+    <string name="club_category_sports">Sports</string>
+    <string name="club_category_service">Service</string>
+    <string name="club_category_self_governance">Student Government</string>
+</resources>

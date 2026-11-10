@@ -3,10 +3,12 @@ package org.mpc.data.repository
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
+import androidx.compose.ui.text.intl.Locale
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.expectSuccess
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import kotlinx.coroutines.flow.first
 import org.mpc.data.dto.ClubDto
 import org.mpc.domain.model.Club
@@ -25,6 +27,8 @@ internal class DefaultClubRepository(
         return httpClient
             .get("$baseUrl/api/v1/clubs") {
                 expectSuccess = true
+                // The backend translates the club text into this language.
+                parameter("lang", Locale.current.toLanguageTag())
             }.body<List<ClubDto>>()
             .map {
                 Club(

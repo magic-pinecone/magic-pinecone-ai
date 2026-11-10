@@ -94,3 +94,37 @@ def test_list_clubs(client: TestClient, session: Session):
 
     filtered = client.get("/api/v1/clubs", params={"category": "B"}).json()
     assert [c["club_id"] for c in filtered] == [3]
+
+
+def test_list_clubs_translates_and_caches(
+    client: TestClient, session: Session, monkeypatch: pytest.MonkeyPatch
+):
+    calls: list[str] = []
+
+    def fake_fetch(_client, text: str, lang: str) -> str | None:
+        calls.append(text)
+        return None if text == "壞" else f"{lang}:{text}"
+
+    monkeypatch.setattr("app.services.translator._fetch", fake_fetch)
+    save_clubs(session, [club(1, "A", 1, "甲"), club(2, "A", 2, "壞")])
+
+    body = client.get("/api/v1/clubs", params={"lang": "ja"}).json()
+    assert [c["name"] for c in body] == ["ja:甲", "壞"]  # a failed text stays Chinese
+    assert body[0]["category_name"] == "ja:聯誼性"
+    assert sorted(calls) == ["壞", "甲", "聯誼性"]  # blanks skipped, category once
+
+    calls.clear()
+    client.get("/api/v1/clubs", params={"lang": "ja"})
+    assert calls == ["壞"]  # only the uncached failure is retried
+
+    calls.clear()
+    assert (
+        client.get("/api/v1/clubs", params={"lang": "zh-TW"}).json()[0]["name"] == "甲"
+    )
+    assert calls == []
+    assert client.get("/api/v1/clubs", params={"lang": "ja&x"}).status_code == 422
+
+    save_clubs(session, [{**club(1, "A", 1, "甲"), "name_en": "Jia"}])
+    english = client.get("/api/v1/clubs", params={"lang": "en-US"}).json()[0]
+    assert english["name"] == "Jia"  # the club's own English, not a machine translation
+    assert english["category_name"] == "Social"

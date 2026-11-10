@@ -67,6 +67,15 @@ cd mpc-compose
 
 App 預設讀取公開的靜態課程資料。要改由 [`backend/`](../backend/) 提供，先依[根目錄的 README](../README.md) 啟動後端，再到 App 的「設定」>「課程資料來源」填入後端位址（Android 模擬器為 `http://10.0.2.2:8000`，iOS 模擬器為 `http://localhost:8000`）並按「連線並同步」。API 合約見 [`docs/api-contract.md`](../docs/api-contract.md)。
 
+## 語言
+
+社團頁面會跟隨裝置語言；Android 13 以上也可以在 **設定** > **應用程式** > **神奇松果** > **語言** 單獨設定。瀏覽器預覽則跟隨瀏覽器語言。文字放在 `shared/src/commonMain/composeResources/`：
+
+- `values/strings.xml` 是英文，也是所有沒有對應資料夾的語言的預設。
+- `values-zh/strings.xml` 是繁體中文。
+
+新增語言時，把 `values/strings.xml` 複製成 `values-<代碼>/strings.xml`（例如 `values-ja`），翻譯每一項，再把該語言加進 `androidApp/src/main/res/xml/locales_config.xml`。社團名稱、介紹、地點與類別來自中央大學社團網站，原文為中文。App 會把目前語言傳給後端（`GET /api/v1/clubs?lang=`），由後端機器翻譯並快取；英文使用者會優先看到社團自己提供的英文。
+
 ## 測試與檢查
 
 執行 Android host 與 iOS simulator 上的 shared tests：

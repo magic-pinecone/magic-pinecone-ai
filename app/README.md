@@ -67,6 +67,15 @@ Open a scenario directly by its name in the URL hash, for example `http://localh
 
 The app reads the published static course catalog by default. To read from [`backend/`](../backend/) instead, start the backend as described in the [root README](../README.md), then open **Settings** > **課程資料來源** in the app, enter the backend address (`http://10.0.2.2:8000` on the Android emulator, `http://localhost:8000` on the iOS simulator), and select **連線並同步**. See [`docs/api-contract.md`](../docs/api-contract.md) for the API contract.
 
+## Languages
+
+The club screen follows the device language, or on Android 13 and later the per-app language under **Settings** > **Apps** > **神奇松果** > **Language**. In the browser preview it follows the browser language. Its text lives in `shared/src/commonMain/composeResources/`:
+
+- `values/strings.xml` is English, the fallback for every language without its own folder.
+- `values-zh/strings.xml` is Traditional Chinese.
+
+To add a language, copy `values/strings.xml` to `values-<code>/strings.xml` (for example `values-ja`), translate every entry, and add the locale to `androidApp/src/main/res/xml/locales_config.xml`. Club names, descriptions, locations and categories come from the NCU club site in Chinese. The app sends its language to the backend (`GET /api/v1/clubs?lang=`), which machine-translates them and caches the result; English readers get the club's own English where it has one.
+
 ## Tests and checks
 
 Run the shared Android-hosted and iOS simulator tests:

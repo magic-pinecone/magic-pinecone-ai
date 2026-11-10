@@ -8,6 +8,7 @@ from app.models import (  # noqa: F401
     Course,
     CourseDetail,
     Department,
+    Translation,
 )
 
 engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
