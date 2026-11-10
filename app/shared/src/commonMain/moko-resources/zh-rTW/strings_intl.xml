@@ -47,4 +47,7 @@
     <string name="intl_guides_no_match">沒有提到「%1$s」的資訊。</string>
     <string name="intl_guides_previous">上一篇</string>
     <string name="intl_guides_next">下一篇</string>
+    <string name="intl_guides_machine_translated">機器翻譯，以機關原文為準。</string>
+    <string name="intl_guides_show_original">顯示原文</string>
+    <string name="intl_guides_show_translation">顯示翻譯</string>
 </resources>

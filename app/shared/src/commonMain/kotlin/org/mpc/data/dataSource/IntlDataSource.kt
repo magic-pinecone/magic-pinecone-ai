@@ -5,6 +5,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.expectSuccess
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import org.mpc.domain.model.GovGuides
 import org.mpc.domain.model.GraduationLanguage
 
@@ -18,8 +19,12 @@ internal class IntlDataSource(
             expectSuccess = true
         }.body<GraduationLanguage>()
 
-    suspend fun getGuides(baseUrl: String): GovGuides = httpClient
+    suspend fun getGuides(
+        baseUrl: String,
+        language: String,
+    ): GovGuides = httpClient
         .get("$baseUrl/api/v1/intl/guides") {
             expectSuccess = true
+            parameter("lang", language)
         }.body<GovGuides>()
 }

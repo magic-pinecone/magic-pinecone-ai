@@ -21,8 +21,10 @@ from typing import Any, Literal
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
 
+from app.api.deps import SessionDep
 from app.services import gov_guides, student_services
 from app.services import graduation_language as service
+from app.services.translator import translate
 
 router = APIRouter(prefix="/intl", tags=["intl"])
 
@@ -272,6 +274,13 @@ def estimate_nhi_enrollment_date(request: NhiEnrollmentRequest) -> Any:
         raise HTTPException(status_code=422, detail=str(error)) from error
 
 
+class GuideOriginal(BaseModel):
+    lang: str
+    title: str
+    org: str
+    body: str
+
+
 class GuideArticle(BaseModel):
     id: str
     title: str
@@ -285,6 +294,8 @@ class GuideArticle(BaseModel):
     # The day the text was fetched; empty for a service.
     fetched_on: str
     body: str
+    # The agency's own wording when title, org and body are machine-translated.
+    original: GuideOriginal | None = None
 
 
 class GuidesResponse(BaseModel):
@@ -294,14 +305,25 @@ class GuidesResponse(BaseModel):
 
 @router.get("/guides", response_model=GuidesResponse)
 def get_guides(
+    session: SessionDep,
     topic: str | None = Query(default=None, description="One of `topics`"),
+    lang: str | None = Query(
+        default=None,
+        pattern=r"^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8}){0,3}$",
+        description="Language tag such as en or vi; machine-translates title, org "
+        "and body of the guides written in another language. Text that fails to "
+        "translate stays as written.",
+    ),
 ) -> Any:
     """Government guides for international students, grouped by topic."""
     topics = gov_guides.topics()
     if topic and topic not in topics:
         raise HTTPException(status_code=422, detail="Unknown topic")
-    articles = gov_guides.load_articles()
-    return {
-        "topics": topics,
-        "articles": [a for a in articles if not topic or a["topic"] == topic],
-    }
+    articles = [
+        a for a in gov_guides.load_articles() if not topic or a["topic"] == topic
+    ]
+    if lang:
+        articles = gov_guides.localize(
+            articles, lang, lambda texts: translate(session, texts, lang)
+        )
+    return {"topics": topics, "articles": articles}

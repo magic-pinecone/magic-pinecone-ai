@@ -47,4 +47,7 @@
     <string name="intl_guides_no_match">No guide mentions “%1$s”.</string>
     <string name="intl_guides_previous">Previous</string>
     <string name="intl_guides_next">Next</string>
+    <string name="intl_guides_machine_translated">Machine-translated. The agency\'s own wording prevails.</string>
+    <string name="intl_guides_show_original">Show original</string>
+    <string name="intl_guides_show_translation">Show translation</string>
 </resources>

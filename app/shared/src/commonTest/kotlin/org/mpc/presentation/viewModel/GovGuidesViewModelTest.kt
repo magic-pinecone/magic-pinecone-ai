@@ -29,9 +29,11 @@ private class BackendGuides(
     override val backend = MutableStateFlow(backend)
     var failure: Throwable? = null
     var fetches = 0
+    val languages = mutableListOf<String?>()
 
-    override suspend fun fetchGuides(): GovGuides? {
+    override suspend fun fetchGuides(language: String?): GovGuides? {
         fetches++
+        languages += language
         failure?.let { throw it }
         return guides.takeIf { backend.value != null }
     }
@@ -68,6 +70,17 @@ val govGuidesViewModelTests by testSuite {
 
             assertEquals(GovGuidesUiState.Loaded(guides), viewModel.uiState.value)
             assertEquals(2, repository.fetches)
+        }
+    }
+
+    test("choosing a language reloads the guides in it, once") {
+        govGuidesTest(backend = "http://10.0.2.2:8000") { viewModel, repository ->
+            viewModel.setLanguage("vi")
+            viewModel.setLanguage("vi")
+            testScheduler.advanceUntilIdle()
+
+            assertEquals(listOf(null, "vi"), repository.languages)
+            assertEquals(GovGuidesUiState.Loaded(guides), viewModel.uiState.value)
         }
     }
 

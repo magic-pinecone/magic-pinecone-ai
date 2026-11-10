@@ -8,8 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.zacsweers.metrox.viewmodel.metroViewModel
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.CourseDay
@@ -27,6 +26,7 @@ import org.mpc.domain.model.GovGuides
 import org.mpc.domain.model.PasswordCardType
 import org.mpc.domain.model.PortalAuthenticationMode
 import org.mpc.domain.model.TimetableColorMode
+import org.mpc.presentation.GovGuidesRoute
 import org.mpc.presentation.GovGuidesScreen
 import org.mpc.presentation.PortalScreen
 import org.mpc.presentation.SettingsScreen
@@ -35,7 +35,6 @@ import org.mpc.presentation.state.CourseSearchError
 import org.mpc.presentation.state.CourseSearchResultUiState
 import org.mpc.presentation.state.GovGuidesUiState
 import org.mpc.presentation.theme.MpcSpacing
-import org.mpc.presentation.viewModel.GovGuidesViewModel
 import org.mpc.presentation.views.courseDetails.CourseDetailsActions
 import org.mpc.presentation.views.courseDetails.CourseDetailsUiState
 import org.mpc.presentation.views.courseDetails.CourseDetailsView
@@ -59,14 +58,18 @@ enum class ComposePreviewScenario {
     SLOT_PICKER,
     GUIDES_POPULATED,
 
-    /** Reads the running backend through [GovGuidesViewModel]. */
+    /** Reads the running backend through [org.mpc.presentation.viewModel.GovGuidesViewModel]. */
     GUIDES_LIVE,
 }
 
 // One branch per scenario; splitting the dispatch would only scatter it.
 @Suppress("CyclomaticComplexMethod")
 @Composable
-internal fun ComposePreviewScenarioContent(scenario: ComposePreviewScenario) {
+internal fun ComposePreviewScenarioContent(
+    scenario: ComposePreviewScenario,
+    language: AppLanguage = AppLanguage.SYSTEM,
+    onLanguageSelected: (AppLanguage) -> Unit = {},
+) {
     when (scenario) {
         ComposePreviewScenario.CATALOG_POPULATED -> CourseSearchResultView(
             modifier = Modifier.fillMaxSize(),
@@ -139,8 +142,9 @@ internal fun ComposePreviewScenarioContent(scenario: ComposePreviewScenario) {
         )
 
         ComposePreviewScenario.SETTINGS -> SettingsScreen(
-            settings = ComposePreviewFixtures.settings,
+            settings = ComposePreviewFixtures.settings.copy(language = language),
             modifier = Modifier.fillMaxSize(),
+            onLanguageSelected = onLanguageSelected,
             onThemeModeSelected = {},
             onPortalAuthenticationModeSelected = {},
             onTimetableColorModeSelected = {},
@@ -152,11 +156,7 @@ internal fun ComposePreviewScenarioContent(scenario: ComposePreviewScenario) {
             modifier = Modifier.fillMaxSize(),
         )
 
-        ComposePreviewScenario.GUIDES_LIVE -> {
-            val viewModel: GovGuidesViewModel = metroViewModel()
-            val state by viewModel.uiState.collectAsStateWithLifecycle()
-            GovGuidesScreen(state = state, onRetry = viewModel::refresh, modifier = Modifier.fillMaxSize())
-        }
+        ComposePreviewScenario.GUIDES_LIVE -> GovGuidesRoute(modifier = Modifier.fillMaxSize())
 
         ComposePreviewScenario.SLOT_PICKER -> {
             var selected by remember { mutableStateOf(ComposePreviewFixtures.courses.first().classTimes.toSet()) }

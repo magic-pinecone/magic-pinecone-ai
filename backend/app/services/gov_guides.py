@@ -7,12 +7,15 @@ permits, insurance or residence. Pages are served with their text as of the
 
 import json
 import re
+from collections.abc import Callable, Iterable
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data/gov_guides"
 FRONT_MATTER = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
+# Tags that read the Traditional Chinese the agencies write in, so need no translation.
+TRADITIONAL_CHINESE = {"zh", "zh-tw", "zh-hant", "zh-hant-tw", "zh-hk", "zh-mo"}
 # The display order of topics; a topic missing here sorts last.
 TOPIC_ORDER = ("work", "insurance", "residence", "help")
 
@@ -53,3 +56,53 @@ def load_articles() -> tuple[dict[str, Any], ...]:
 
 def topics() -> list[str]:
     return list(dict.fromkeys(article["topic"] for article in load_articles()))
+
+
+def _reads(article_lang: str, lang: str) -> bool:
+    """Whether a reader of `lang` can read an article written in `article_lang`."""
+    target = lang.lower()
+    if article_lang == "zh":
+        return target in TRADITIONAL_CHINESE
+    return target.split("-")[0] == article_lang
+
+
+def localize(
+    articles: Iterable[dict[str, Any]],
+    lang: str,
+    translate: Callable[[Iterable[str]], dict[str, str]],
+) -> list[dict[str, Any]]:
+    """The articles with title, agency and text in `lang`.
+
+    `translate` maps texts to their translations and may leave some out. Text is
+    translated line by line, so a long page stays within the translator's limits
+    and an unchanged line keeps its cached translation. A translated article keeps
+    its own wording under `original`; one already in `lang` has `original` None.
+    """
+    articles = list(articles)
+    foreign = [a for a in articles if not _reads(a["lang"], lang)]
+    texts = translate(
+        text for a in foreign for text in (a["title"], a["org"], *a["body"].split("\n"))
+    )
+    foreign_ids = {a["id"] for a in foreign}
+    result = []
+    for article in articles:
+        if article["id"] not in foreign_ids:
+            result.append({**article, "original": None})
+            continue
+        result.append(
+            {
+                **article,
+                "title": texts.get(article["title"], article["title"]),
+                "org": texts.get(article["org"], article["org"]),
+                "body": "\n".join(
+                    texts.get(line, line) for line in article["body"].split("\n")
+                ),
+                "original": {
+                    "lang": article["lang"],
+                    "title": article["title"],
+                    "org": article["org"],
+                    "body": article["body"],
+                },
+            }
+        )
+    return result

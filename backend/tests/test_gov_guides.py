@@ -3,6 +3,7 @@ import json
 import pytest
 from fastapi.testclient import TestClient
 
+from app.api.routes import intl
 from app.main import app
 from app.services import gov_guides
 
@@ -45,3 +46,55 @@ def test_guides_endpoint_rejects_an_unknown_topic(client):
     assert (
         client.get("/api/v1/intl/guides", params={"topic": "visa"}).status_code == 422
     )
+
+
+def fake_translate(texts):
+    # Translates everything but the line "skip", as a translator that failed on it would.
+    return {t: f"[vi] {t}" for t in texts if t != "skip"}
+
+
+def test_localize_translates_only_guides_in_another_language():
+    articles = [
+        {
+            "id": "zh",
+            "lang": "zh",
+            "title": "標題",
+            "org": "勞動部",
+            "body": "一\nskip",
+        },
+        {"id": "en", "lang": "en", "title": "Title", "org": "NIA", "body": "One"},
+    ]
+    zh, en = gov_guides.localize(articles, "vi", fake_translate)
+    assert zh["title"] == "[vi] 標題" and zh["org"] == "[vi] 勞動部"
+    assert zh["body"] == "[vi] 一\nskip"  # an untranslated line stays as written
+    assert zh["original"] == {
+        "lang": "zh",
+        "title": "標題",
+        "org": "勞動部",
+        "body": "一\nskip",
+    }
+    assert en["title"] == "[vi] Title"
+
+    zh, en = gov_guides.localize(articles, "zh-TW", fake_translate)
+    assert zh["original"] is None and zh["title"] == "標題"
+    assert en["original"]["title"] == "Title"
+    zh, en = gov_guides.localize(articles, "en-US", fake_translate)
+    assert en["original"] is None and zh["original"] is not None
+
+
+def test_guides_endpoint_translates_with_lang(client, monkeypatch):
+    monkeypatch.setattr(
+        intl, "translate", lambda _session, texts, _lang: fake_translate(texts)
+    )
+    articles = client.get("/api/v1/intl/guides", params={"lang": "vi"}).json()[
+        "articles"
+    ]
+    assert all(a["original"] for a in articles)
+    assert all(a["title"].startswith("[vi] ") for a in articles)
+    plain = client.get("/api/v1/intl/guides").json()["articles"]
+    assert all(a["original"] is None for a in plain)
+
+
+def test_guides_endpoint_rejects_a_malformed_lang(client):
+    response = client.get("/api/v1/intl/guides", params={"lang": "vi;drop"})
+    assert response.status_code == 422

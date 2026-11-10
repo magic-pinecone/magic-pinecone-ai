@@ -1,5 +1,6 @@
 package org.mpc.data.repository
 
+import androidx.compose.ui.text.intl.Locale
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
@@ -18,5 +19,7 @@ internal class DefaultGovGuidesRepository(
 ) : GovGuidesRepository {
     override val backend: Flow<String?> = backendEndpoint.baseUrl
 
-    override suspend fun fetchGuides(): GovGuides? = backendEndpoint.baseUrl.first()?.let { baseUrl -> dataSource.getGuides(baseUrl) }
+    override suspend fun fetchGuides(language: String?): GovGuides? = backendEndpoint.baseUrl.first()?.let { baseUrl ->
+        dataSource.getGuides(baseUrl, language ?: Locale.current.toLanguageTag())
+    }
 }

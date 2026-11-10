@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.icerock.moko.resources.compose.stringResource
 import dev.zacsweers.metrox.viewmodel.metroViewModel
-import org.mpc.presentation.viewModel.GovGuidesViewModel
 import org.mpc.presentation.viewModel.GraduationLanguageViewModel
 import org.mpc.shared.MR
 import org.mpc.shared.intl_section_graduation
@@ -47,9 +46,7 @@ fun InternationalScreen(modifier: Modifier = Modifier) {
                 modifier = Modifier.fillMaxSize(),
             )
         } else {
-            val viewModel: GovGuidesViewModel = metroViewModel()
-            val state by viewModel.uiState.collectAsStateWithLifecycle()
-            GovGuidesScreen(state = state, onRetry = viewModel::refresh, modifier = Modifier.fillMaxSize())
+            GovGuidesRoute(modifier = Modifier.fillMaxSize())
         }
     }
 }

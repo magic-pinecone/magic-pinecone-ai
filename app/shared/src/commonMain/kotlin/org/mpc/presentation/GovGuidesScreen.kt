@@ -25,6 +25,7 @@ import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -35,6 +36,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -51,10 +53,12 @@ import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigationevent.NavigationEventInfo
 import androidx.navigationevent.compose.NavigationBackHandler
 import androidx.navigationevent.compose.rememberNavigationEventState
 import dev.icerock.moko.resources.compose.stringResource
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.mpc.domain.model.GovGuideArticle
 import org.mpc.domain.model.GovGuideShelf
 import org.mpc.domain.model.GovGuides
@@ -66,18 +70,23 @@ import org.mpc.presentation.state.GovGuidesUiState
 import org.mpc.presentation.theme.MpcShapes
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
+import org.mpc.presentation.viewModel.AppSettingsViewModel
+import org.mpc.presentation.viewModel.GovGuidesViewModel
 import org.mpc.shared.MR
 import org.mpc.shared.intl_guides_back
 import org.mpc.shared.intl_guides_clear_search
 import org.mpc.shared.intl_guides_failed
 import org.mpc.shared.intl_guides_fetched_on
 import org.mpc.shared.intl_guides_intro
+import org.mpc.shared.intl_guides_machine_translated
 import org.mpc.shared.intl_guides_next
 import org.mpc.shared.intl_guides_no_match
 import org.mpc.shared.intl_guides_open_original
 import org.mpc.shared.intl_guides_previous
 import org.mpc.shared.intl_guides_search
 import org.mpc.shared.intl_guides_service
+import org.mpc.shared.intl_guides_show_original
+import org.mpc.shared.intl_guides_show_translation
 import org.mpc.shared.intl_guides_topic_help
 import org.mpc.shared.intl_guides_topic_insurance
 import org.mpc.shared.intl_guides_topic_residence
@@ -118,6 +127,18 @@ fun GovGuidesScreen(
 
         is GovGuidesUiState.Loaded -> GuideLibrary(state.guides, modifier)
     }
+}
+
+/** The guides from the backend, in the language chosen in Settings. */
+@Composable
+fun GovGuidesRoute(modifier: Modifier = Modifier) {
+    val viewModel: GovGuidesViewModel = metroViewModel()
+    val settingsViewModel: AppSettingsViewModel = metroViewModel()
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val settings by settingsViewModel.settings.collectAsStateWithLifecycle()
+    // SYSTEM has an empty tag and means the device language.
+    LaunchedEffect(settings.language) { viewModel.setLanguage(settings.language.tag.ifEmpty { null }) }
+    GovGuidesScreen(state = state, onRetry = viewModel::refresh, modifier = modifier)
 }
 
 @Composable
@@ -301,6 +322,11 @@ private fun GuideReader(
     val (previous, next) = remember(guides, article.id) { guides.neighbours(article.id) }
     // A new guide starts at its top, not at the previous guide's scroll position.
     key(article.id) {
+        var showOriginal by rememberSaveable { mutableStateOf(false) }
+        val original = article.original?.takeIf { showOriginal }
+        val title = original?.title ?: article.title
+        val org = original?.org ?: article.org
+        val body = original?.body ?: article.body
         LazyColumn(
             modifier = modifier,
             state = rememberLazyListState(),
@@ -323,23 +349,26 @@ private fun GuideReader(
                         color = MpcTheme.colors.accent,
                     )
                     Text(
-                        text = article.title,
+                        text = title,
                         style = MpcTheme.typography.screenTitle,
                         color = MpcTheme.colors.label,
                         modifier = Modifier.semantics { heading() },
                     )
                     Text(
-                        text = "${article.org} · ${stringResource(MR.strings.intl_guides_fetched_on, article.fetchedOn)}",
+                        text = "$org · ${stringResource(MR.strings.intl_guides_fetched_on, article.fetchedOn)}",
                         style = MpcTheme.typography.caption,
                         color = MpcTheme.colors.labelSecondary,
                     )
                 }
             }
+            if (article.original != null) {
+                item { TranslationNotice(showOriginal, onToggle = { showOriginal = !showOriginal }) }
+            }
             item {
                 GraduationLanguageCard {
                     SelectionContainer {
                         Column(verticalArrangement = Arrangement.spacedBy(MpcSpacing.space2)) {
-                            article.body.split("\n").forEach { Paragraph(it) }
+                            body.split("\n").forEach { Paragraph(it) }
                         }
                     }
                 }
@@ -355,6 +384,34 @@ private fun GuideReader(
                 )
             }
             item { PreviousNext(previous, next, onOpen) }
+        }
+    }
+}
+
+/** Says the guide is a machine translation and switches between it and the agency's own wording. */
+@Composable
+private fun TranslationNotice(
+    showOriginal: Boolean,
+    onToggle: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(MpcShapes.badge)
+            .background(MpcTheme.colors.accentContainer)
+            .padding(start = MpcSpacing.space3),
+        horizontalArrangement = Arrangement.spacedBy(MpcSpacing.space2),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(Icons.Default.Translate, contentDescription = null, tint = MpcTheme.colors.onAccentContainer)
+        Text(
+            text = stringResource(MR.strings.intl_guides_machine_translated),
+            style = MpcTheme.typography.caption,
+            color = MpcTheme.colors.onAccentContainer,
+            modifier = Modifier.weight(1f),
+        )
+        TextButton(onClick = onToggle) {
+            Text(stringResource(if (showOriginal) MR.strings.intl_guides_show_translation else MR.strings.intl_guides_show_original))
         }
     }
 }

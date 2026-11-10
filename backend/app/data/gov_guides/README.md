@@ -13,6 +13,7 @@
 - `"extract": "link"` 是線上申辦系統（工作許可申辦網、移民署學生線上申辦），只列連結、不抓內容。
 - HTML 來源都設 `"blocks": true`，只在區塊元素換行，讓句子不會被連結或粗體切開，App 直接顯示這份文字。
 - 這裡是全國通用的規定；中央大學自己的作法在 `../student_services/`。
+- `GET /api/v1/intl/guides?lang=` 會把不是該語言寫的資訊逐行機器翻譯（`app/services/translator.py`，結果快取在 `translations` 資料表），原文放在 `original`。App 顯示「機器翻譯，以機關原文為準」並可切換原文。翻譯失敗的行維持原文。
 
 ## 更新
 
