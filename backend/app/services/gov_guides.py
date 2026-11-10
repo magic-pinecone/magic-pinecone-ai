@@ -69,20 +69,30 @@ def _reads(article_lang: str, lang: str) -> bool:
 def localize(
     articles: Iterable[dict[str, Any]],
     lang: str,
-    translate: Callable[[Iterable[str]], dict[str, str]],
+    translate: Callable[[Iterable[str], str], dict[str, str]],
 ) -> list[dict[str, Any]]:
     """The articles with title, agency and text in `lang`.
 
-    `translate` maps texts to their translations and may leave some out. Text is
-    translated line by line, so a long page stays within the translator's limits
-    and an unchanged line keeps its cached translation. A translated article keeps
-    its own wording under `original`; one already in `lang` has `original` None.
+    `translate(texts, source)` maps texts written in `source` to their translations
+    and may leave some out. Text is translated line by line, so a long page stays
+    within the translator's limits and an unchanged line keeps its cached
+    translation. A translated article keeps its own wording under `original`; one
+    already in `lang` has `original` None.
     """
     articles = list(articles)
     foreign = [a for a in articles if not _reads(a["lang"], lang)]
-    texts = translate(
-        text for a in foreign for text in (a["title"], a["org"], *a["body"].split("\n"))
-    )
+    texts: dict[str, str] = {}
+    # One call per source language, since the translator needs to know what it reads.
+    for source in dict.fromkeys(a["lang"] for a in foreign):
+        texts |= translate(
+            (
+                text
+                for a in foreign
+                if a["lang"] == source
+                for text in (a["title"], a["org"], *a["body"].split("\n"))
+            ),
+            source,
+        )
     foreign_ids = {a["id"] for a in foreign}
     result = []
     for article in articles:

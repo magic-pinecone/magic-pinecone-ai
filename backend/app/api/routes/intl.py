@@ -324,6 +324,8 @@ def get_guides(
     ]
     if lang:
         articles = gov_guides.localize(
-            articles, lang, lambda texts: translate(session, texts, lang)
+            articles,
+            lang,
+            lambda texts, source: translate(session, texts, lang, source),
         )
     return {"topics": topics, "articles": articles}

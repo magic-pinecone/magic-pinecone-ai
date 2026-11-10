@@ -14,6 +14,7 @@ x-backend: &backend
     REDIS_HOST: redis
     REDIS_PORT: "6379"
     REDIS_DB: "0"
+    TRANSLATOR_URL: http://translate:5000
   depends_on:
     db:
       condition: service_healthy
@@ -99,6 +100,26 @@ services:
         fi
     restart: unless-stopped
 
+  # Machine translation on this server: LibreTranslate with Argos Translate's open models. No text leaves the
+  # host and there is no rate limit. The API does not wait for it; until it is up, guides stay as written.
+  translate:
+    image: libretranslate/libretranslate:v1.9.6
+    environment:
+      # The app's languages: English, Traditional Chinese (zt) and Vietnamese, which pivots through English.
+      LT_LOAD_ONLY: en,zt,vi
+    volumes:
+      # Models are downloaded on first start and kept here.
+      - translate_models:/home/libretranslate/.local
+    expose:
+      - "5000"
+    healthcheck:
+      test: ["CMD-SHELL", "./venv/bin/python scripts/healthcheck.py"]
+      interval: 30s
+      timeout: 10s
+      retries: 20
+      start_period: 300s
+    restart: unless-stopped
+
   web:
     build:
       context: ./app
@@ -112,4 +133,5 @@ services:
 volumes:
   postgres_data:
   redis_data:
+  translate_models:
 
