@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.TimetableColorMode
@@ -46,6 +47,28 @@ val appSettingsRepositoryTests by testSuite {
             val repository = DefaultAppSettingsRepository(dataStore)
 
             assertEquals(TimetableColorMode.CATEGORY, repository.settings.first().timetableColorMode)
+        }
+    }
+
+    test("language survives repository reload and preserves other settings") {
+        runTest {
+            val dataStore = InMemoryPreferencesDataStore()
+            val repository = DefaultAppSettingsRepository(dataStore)
+            repository.setThemeMode(AppThemeMode.DARK)
+            repository.setLanguage(AppLanguage.VIETNAMESE)
+
+            val settings = DefaultAppSettingsRepository(dataStore).settings.first()
+            assertEquals(AppLanguage.VIETNAMESE, settings.language)
+            assertEquals(AppThemeMode.DARK, settings.themeMode)
+        }
+    }
+
+    test("unknown language falls back to system") {
+        runTest {
+            val dataStore = InMemoryPreferencesDataStore(
+                mutablePreferencesOf(stringPreferencesKey("appearance.language") to "FUTURE_LANGUAGE"),
+            )
+            assertEquals(AppLanguage.SYSTEM, DefaultAppSettingsRepository(dataStore).settings.first().language)
         }
     }
 

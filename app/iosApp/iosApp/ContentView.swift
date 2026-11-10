@@ -6,6 +6,7 @@ struct ContentView: View {
     @Environment(AppRouter.self) private var router
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var themeMode = AppThemeMode.system
+    @State private var appLanguageTag = ""
     @State private var isShowingSettings = false
 
     var body: some View {
@@ -42,9 +43,13 @@ struct ContentView: View {
                 .ignoresSafeArea(.container, edges: bottomSafeAreaEdges)
             }
         }
+        .id(appLanguageTag)
         .sheet(isPresented: $isShowingSettings) {
             NavigationStack {
-                SettingsView(sharedHost: sharedHost)
+                SettingsView(
+                    sharedHost: sharedHost,
+                    appLanguageTag: appLanguageTag
+                )
             }
             .preferredColorScheme(preferredColorScheme)
             .presentationDetents([.large])
@@ -56,6 +61,11 @@ struct ContentView: View {
         .task(id: ObjectIdentifier(sharedHost)) {
             for await selectedMode in sharedHost.themeMode {
                 themeMode = selectedMode
+            }
+        }
+        .task(id: ObjectIdentifier(sharedHost)) {
+            for await selectedLanguage in sharedHost.appLanguage {
+                appLanguageTag = selectedLanguage.tag
             }
         }
     }

@@ -1,4 +1,14 @@
 <resources>
+    <string name="settings_language">App language</string>
+    <string name="settings_language_description">Choose the language used for app text.</string>
+    <string name="settings_language_system">Follow system</string>
+    <string name="settings_language_system_description">Use the language selected for this device.</string>
+    <string name="settings_language_english">English</string>
+    <string name="settings_language_english_description">Use English for app text.</string>
+    <string name="settings_language_traditional_chinese">繁體中文</string>
+    <string name="settings_language_traditional_chinese_description">Use Traditional Chinese for app text.</string>
+    <string name="settings_language_vietnamese">Tiếng Việt</string>
+    <string name="settings_language_vietnamese_description">Use Vietnamese for app text.</string>
     <string name="settings_write_failed">Couldn\'t save settings. Please try again later.</string>
     <string name="settings_appearance">Appearance</string>
     <string name="settings_appearance_description">Choose whether the app uses the system, light, or dark color scheme.</string>

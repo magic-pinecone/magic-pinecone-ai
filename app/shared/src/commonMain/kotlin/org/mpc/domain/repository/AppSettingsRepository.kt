@@ -1,6 +1,7 @@
 package org.mpc.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
 import org.mpc.domain.model.PortalAuthenticationMode
@@ -8,6 +9,8 @@ import org.mpc.domain.model.TimetableColorMode
 
 interface AppSettingsRepository {
     val settings: Flow<AppSettings>
+
+    suspend fun setLanguage(language: AppLanguage)
 
     suspend fun setThemeMode(themeMode: AppThemeMode)
 
