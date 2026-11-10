@@ -4,14 +4,21 @@
 to graduate. Every rule names the official sources it was transcribed from, so a
 client can always show where a number comes from. `/intl/programs` lists the
 programs open to international degree students with their teaching language.
+
+`/intl/services/search`, `/intl/contacts` and `/intl/nhi-enrollment-date` cover
+everyday administration: what the Office of International Affairs pages say
+about insurance, immigration and work permits, whom to ask, and when a new
+student can join National Health Insurance.
 """
 
+from datetime import date
 from typing import Any, Literal
 
-from fastapi import APIRouter, Query
-from pydantic import BaseModel
+from fastapi import APIRouter, HTTPException, Query
+from pydantic import BaseModel, Field
 
 from app.services import graduation_language as service
+from app.services import student_services
 
 router = APIRouter(prefix="/intl", tags=["intl"])
 
@@ -153,3 +160,109 @@ def get_graduation_language(
         "sources": [s for s in service.load_sources() if s["id"] in cited],
         "en": service.load_english(),
     }
+
+
+class ServicePassage(BaseModel):
+    id: str
+    title: str
+    topic: str
+    url: str
+    # The day the page was fetched; the passage is the page's text as of then.
+    fetched_on: str
+    matched_words: list[str]
+    passage: str
+
+
+class ServiceSearchResponse(BaseModel):
+    topics: list[str]
+    passages: list[ServicePassage]
+
+
+@router.get("/services/search", response_model=ServiceSearchResponse)
+def search_services(
+    q: str = Query(min_length=1, description="English keywords, e.g. work permit"),
+    topic: str | None = Query(default=None, description="One of `topics`"),
+    limit: int = Query(default=4, ge=1, le=10),
+) -> Any:
+    """Passages of the OIA pages that share words with `q`, best first."""
+    if topic and topic not in student_services.topics():
+        raise HTTPException(status_code=422, detail="Unknown topic")
+    return {
+        "topics": student_services.topics(),
+        "passages": student_services.search(q, topic=topic, limit=limit),
+    }
+
+
+class Office(BaseModel):
+    id: str
+    name: str
+    topics: list[str]
+    phone: str
+    # Dialled after `switchboard`.
+    extension: str
+    duties: list[str]
+    location: str
+    # Id of the building in `GET /campus/places`.
+    place_id: str
+    hours: str
+    url: str
+
+
+class ContactsResponse(BaseModel):
+    verified_on: str
+    switchboard: str
+    # Lists who currently holds each duty; names are not served here.
+    staff_page: str
+    topics: list[str]
+    offices: list[Office]
+
+
+@router.get("/contacts", response_model=ContactsResponse)
+def get_contacts(
+    topic: str | None = Query(default=None, description="One of `topics`"),
+) -> Any:
+    contacts = student_services.load_contacts()
+    return {
+        **contacts,
+        "topics": student_services.contact_topics(),
+        "offices": student_services.find_contacts(topic),
+    }
+
+
+class TripAbroad(BaseModel):
+    departure: date
+    reentry: date
+
+
+class NhiEnrollmentRequest(BaseModel):
+    # First arrival in Taiwan.
+    arrival_date: date
+    trips_abroad: list[TripAbroad] = Field(default=[], max_length=20)
+
+
+class SourceLink(BaseModel):
+    id: str
+    title: str
+    url: str
+
+
+class NhiEnrollmentResponse(BaseModel):
+    arrival: date
+    nhi_enrollment_date: date
+    # The last day the student still needs the private insurance.
+    private_insurance_until: date
+    counting_restarted: bool
+    steps: list[str]
+    assumptions: list[str]
+    disclaimer: str
+    source: SourceLink
+
+
+@router.post("/nhi-enrollment-date", response_model=NhiEnrollmentResponse)
+def estimate_nhi_enrollment_date(request: NhiEnrollmentRequest) -> Any:
+    """Estimate when a new student can enrol in National Health Insurance."""
+    trips = [(trip.departure, trip.reentry) for trip in request.trips_abroad]
+    try:
+        return student_services.nhi_enrollment(request.arrival_date, trips)
+    except ValueError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error

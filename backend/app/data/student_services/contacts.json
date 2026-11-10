@@ -1,0 +1,79 @@
+{
+  "verified_on": "2026-11-10",
+  "note": "Office-level contacts transcribed from the Office of International Affairs website. Extensions are dialled after the university switchboard number. Staff names and personal addresses are deliberately left out; the staff page lists who currently holds each duty.",
+  "switchboard": "+886-3-422-7151",
+  "staff_page": "https://oia.ncu.edu.tw/p/412-1026-2187.php?Lang=en",
+  "offices": [
+    {
+      "id": "oia-degree-students",
+      "name": "OIA International Student Services: international degree students",
+      "topics": [
+        "insurance",
+        "work_permit",
+        "immigration",
+        "degree_students",
+        "general"
+      ],
+      "phone": "+886-3-425-4945",
+      "extension": "57079",
+      "duties": [
+        "Advising and support for international degree students",
+        "Student insurance and work permit applications for international degree students"
+      ],
+      "location": "1F, Teaching and Research Building, No. 300, Zhongda Rd., Zhongli District, Taoyuan City 320317",
+      "place_id": "teaching-research-building",
+      "hours": "Mon-Fri 9:00-17:00 (Taipei time, UTC+8)",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2200.php?Lang=en"
+    },
+    {
+      "id": "oia-exchange-students",
+      "name": "OIA International Student Services: exchange students",
+      "topics": [
+        "exchange",
+        "overseas_chinese_students"
+      ],
+      "phone": "+886-3-425-4945",
+      "extension": "57081",
+      "duties": [
+        "Advising and support for international exchange students",
+        "Advising and support for Overseas Chinese students"
+      ],
+      "location": "1F, Teaching and Research Building, No. 300, Zhongda Rd., Zhongli District, Taoyuan City 320317",
+      "place_id": "teaching-research-building",
+      "hours": "Mon-Fri 9:00-17:00 (Taipei time, UTC+8)",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2226.php?Lang=en"
+    },
+    {
+      "id": "oia-visiting-programs",
+      "name": "OIA International Student Services: visiting student programs",
+      "topics": [
+        "visiting_programs"
+      ],
+      "phone": "+886-3-425-4945",
+      "extension": "57080",
+      "duties": [
+        "Visiting student programs (IIPP, TEEP)"
+      ],
+      "location": "1F, Teaching and Research Building, No. 300, Zhongda Rd., Zhongli District, Taoyuan City 320317",
+      "place_id": "teaching-research-building",
+      "hours": "Mon-Fri 9:00-17:00 (Taipei time, UTC+8)",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2228.php?Lang=en"
+    },
+    {
+      "id": "oia-admissions",
+      "name": "OIA Global Collaboration and Admissions: international degree admissions",
+      "topics": [
+        "admissions"
+      ],
+      "phone": "+886-3-425-4959",
+      "extension": "57082",
+      "duties": [
+        "Recruitment and admissions for international degree and dual-degree students"
+      ],
+      "location": "1F, Teaching and Research Building, No. 300, Zhongda Rd., Zhongli District, Taoyuan City 320317",
+      "place_id": "teaching-research-building",
+      "hours": "Mon-Fri 9:00-17:00 (Taipei time, UTC+8)",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2187.php?Lang=en"
+    }
+  ]
+}

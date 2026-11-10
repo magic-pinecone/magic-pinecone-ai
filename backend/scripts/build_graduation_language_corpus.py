@@ -1,12 +1,15 @@
-"""Fetch the official pages behind the graduation language requirements.
+"""Fetch the official pages behind the international-student data.
 
-Reads `app/data/graduation_language/sources.json`, downloads every source that
-has a `url`, extracts its text, and writes one Markdown file per source to
-`app/data/graduation_language/corpus/`. Those files are the retrieval corpus;
-`requirements.json` in the same folder is curated by hand from them.
+Reads `app/data/<dataset>/sources.json`, downloads every source that has a
+`url`, extracts its text, and writes one Markdown file per source to
+`app/data/<dataset>/corpus/`. Those files are the retrieval corpus. There are
+two datasets: `graduation_language` (the default; `requirements.json` beside it
+is curated by hand from the corpus) and `student_services` (the Office of
+International Affairs pages on insurance, immigration and work permits).
 
     uv run python scripts/build_graduation_language_corpus.py          # rebuild
     uv run python scripts/build_graduation_language_corpus.py --check  # report drift
+    uv run python scripts/build_graduation_language_corpus.py --dataset student_services
 
 `--check` downloads everything but writes nothing, and exits 1 when a source
 changed or could not be fetched, so a scheduled job can flag that the curated
@@ -28,14 +31,13 @@ import tempfile
 import time
 from datetime import date
 from pathlib import Path
-from urllib.parse import quote, urlsplit, urlunsplit
+from urllib.parse import quote, urljoin, urlsplit, urlunsplit
 
 import bs4
 import httpx
 
-DATA_DIR = Path(__file__).resolve().parent.parent / "app/data/graduation_language"
-SOURCES_FILE = DATA_DIR / "sources.json"
-CORPUS_DIR = DATA_DIR / "corpus"
+DATA_ROOT = Path(__file__).resolve().parent.parent / "app/data"
+DATASETS = ("graduation_language", "student_services")
 
 HEADERS = {
     "User-Agent": (
@@ -73,13 +75,22 @@ def fetch(client: httpx.Client, url: str) -> bytes:
     raise RuntimeError(f"{url}: {last_error}")
 
 
-def html_to_text(raw: bytes, selector: str | None) -> str:
+def html_to_text(
+    raw: bytes, selector: str | None, links_from: str | None = None
+) -> str:
+    """The page's text. With `links_from` (the page URL), links are kept as
+    `text <absolute url>`, for pages that are mostly a list of forms."""
     soup = bs4.BeautifulSoup(raw, "html.parser")
     for tag in soup(["script", "style", "nav", "header", "footer", "noscript"]):
         tag.decompose()
     root = (soup.select_one(selector) if selector else None) or soup.body or soup
     for cell in root.find_all(["td", "th"]):
         cell.append(" | ")
+    if links_from:
+        for anchor in root.find_all("a", href=True):
+            href = anchor["href"].strip()
+            if href and not href.startswith(("#", "javascript:", "mailto:")):
+                anchor.append(f" <{urljoin(links_from, href)}>")
     lines = [line.strip() for line in root.get_text("\n").split("\n")]
     return "\n".join(line for line in lines if line and line != "|")
 
@@ -118,7 +129,8 @@ def extract(source: dict, raw: bytes) -> str:
         return pdf_to_text(raw)
     if kind == "office":
         return office_to_text(raw)
-    return html_to_text(raw, source.get("selector"))
+    links_from = source["url"] if source.get("links") else None
+    return html_to_text(raw, source.get("selector"), links_from)
 
 
 def read_front_matter(path: Path) -> dict[str, str]:
@@ -138,7 +150,7 @@ def render(source: dict, sha256: str, fetched_on: str, body: str) -> str:
         "url": source["url"],
         "org": source["org"],
         "lang": source["lang"],
-        "degree_levels": source["degree_levels"],
+        **{key: source[key] for key in ("degree_levels", "topic") if key in source},
         "effective": source.get("effective", ""),
         "extract": source.get("extract", "html"),
         "fetched_on": fetched_on,
@@ -156,10 +168,15 @@ def main() -> int:
         "--check", action="store_true", help="report drift, write nothing"
     )
     parser.add_argument("--only", nargs="*", help="source ids to process")
+    parser.add_argument("--dataset", choices=DATASETS, default=DATASETS[0])
     args = parser.parse_args()
 
-    sources = json.loads(SOURCES_FILE.read_text(encoding="utf-8"))["sources"]
-    CORPUS_DIR.mkdir(exist_ok=True)
+    data_dir = DATA_ROOT / args.dataset
+    corpus_dir = data_dir / "corpus"
+    sources = json.loads((data_dir / "sources.json").read_text(encoding="utf-8"))[
+        "sources"
+    ]
+    corpus_dir.mkdir(exist_ok=True)
     problems = 0
     today = date.today().isoformat()
 
@@ -167,7 +184,7 @@ def main() -> int:
         for source in sources:
             if args.only and source["id"] not in args.only:
                 continue
-            path = CORPUS_DIR / f"{source['id']}.md"
+            path = corpus_dir / f"{source['id']}.md"
             previous = read_front_matter(path)
             try:
                 raw = fetch(client, source["url"])
