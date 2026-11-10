@@ -83,6 +83,12 @@ def test_localize_translates_only_guides_in_another_language():
     assert en["original"] is None and zh["original"] is not None
 
 
+def test_localize_serves_as_written_when_nothing_was_translated():
+    article = {"id": "zh", "lang": "zh", "title": "標題", "org": "勞動部", "body": "一"}
+    [served] = gov_guides.localize([article], "vi", lambda _texts, _source: {})
+    assert served == {**article, "original": None}
+
+
 def test_guides_endpoint_translates_with_lang(client, monkeypatch):
     monkeypatch.setattr(
         intl,

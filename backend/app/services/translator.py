@@ -62,6 +62,20 @@ def _fetch(
         return None
 
 
+def status() -> dict[str, object]:
+    """Whether the service answers, and the language codes it has models for."""
+    try:
+        response = httpx.get(f"{settings.TRANSLATOR_URL}/languages", timeout=5)
+        response.raise_for_status()
+        return {
+            "available": True,
+            "languages": sorted(lang["code"] for lang in response.json()),
+            "error": None,
+        }
+    except (httpx.HTTPError, ValueError, LookupError, TypeError) as e:
+        return {"available": False, "languages": [], "error": type(e).__name__}
+
+
 def translate(
     session: Session, texts: Iterable[str], lang: str, source: str = "auto"
 ) -> dict[str, str]:

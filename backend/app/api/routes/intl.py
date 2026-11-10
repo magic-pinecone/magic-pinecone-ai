@@ -22,7 +22,7 @@ from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
 
 from app.api.deps import SessionDep
-from app.services import gov_guides, student_services
+from app.services import gov_guides, student_services, translator
 from app.services import graduation_language as service
 from app.services.translator import translate
 
@@ -329,3 +329,17 @@ def get_guides(
             lambda texts, source: translate(session, texts, lang, source),
         )
     return {"topics": topics, "articles": articles}
+
+
+class TranslatorStatus(BaseModel):
+    available: bool
+    # LibreTranslate codes it has models for, e.g. en, vi, zt (Traditional Chinese).
+    languages: list[str]
+    # The kind of failure when it is not available, e.g. ConnectError.
+    error: str | None
+
+
+@router.get("/translator", response_model=TranslatorStatus)
+def get_translator_status() -> Any:
+    """Whether the self-hosted translator behind `/intl/guides?lang=` is up."""
+    return translator.status()

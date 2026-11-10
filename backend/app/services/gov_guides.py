@@ -96,17 +96,24 @@ def localize(
     foreign_ids = {a["id"] for a in foreign}
     result = []
     for article in articles:
-        if article["id"] not in foreign_ids:
+        translated = {
+            "title": texts.get(article["title"], article["title"]),
+            "org": texts.get(article["org"], article["org"]),
+            "body": "\n".join(
+                texts.get(line, line) for line in article["body"].split("\n")
+            ),
+        }
+        # An article the translator could not reach is served as written, not as a
+        # "translation" identical to its original.
+        if article["id"] not in foreign_ids or all(
+            translated[field] == article[field] for field in translated
+        ):
             result.append({**article, "original": None})
             continue
         result.append(
             {
                 **article,
-                "title": texts.get(article["title"], article["title"]),
-                "org": texts.get(article["org"], article["org"]),
-                "body": "\n".join(
-                    texts.get(line, line) for line in article["body"].split("\n")
-                ),
+                **translated,
                 "original": {
                     "lang": article["lang"],
                     "title": article["title"],

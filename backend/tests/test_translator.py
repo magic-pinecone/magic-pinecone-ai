@@ -51,3 +51,30 @@ def test_fetch_gives_up_on_a_refusal_or_a_short_answer(response):
     transport = httpx.MockTransport(lambda _: response)
     with httpx.Client(transport=transport) as client:
         assert translator._fetch(client, ["你好", "世界"], "zh", "en") is None
+
+
+def test_status_reports_the_languages_or_the_failure(monkeypatch):
+    monkeypatch.setattr(
+        translator.httpx,
+        "get",
+        lambda *_a, **_k: httpx.Response(
+            200,
+            json=[{"code": "vi"}, {"code": "en"}],
+            request=httpx.Request("GET", "http://translate:5000/languages"),
+        ),
+    )
+    assert translator.status() == {
+        "available": True,
+        "languages": ["en", "vi"],
+        "error": None,
+    }
+
+    def refuse(*_a, **_k):
+        raise httpx.ConnectError("refused")
+
+    monkeypatch.setattr(translator.httpx, "get", refuse)
+    assert translator.status() == {
+        "available": False,
+        "languages": [],
+        "error": "ConnectError",
+    }
