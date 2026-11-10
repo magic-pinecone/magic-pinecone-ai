@@ -1,0 +1,14 @@
+<resources>
+    <plurals name="planning_search_result_count">
+        <item quantity="other">%1$d môn học</item>
+    </plurals>
+    <plurals name="planning_selected_summary">
+        <item quantity="other">%1$d môn · %2$s tín chỉ</item>
+    </plurals>
+    <plurals name="planning_timetable_no_time">
+        <item quantity="other">%1$d môn học chưa có giờ học, xem trong Môn học đã chọn.</item>
+    </plurals>
+    <plurals name="planning_calendar_result_added">
+        <item quantity="other">Đã thêm %1$d buổi học vào lịch \"%2$s\".</item>
+    </plurals>
+</resources>

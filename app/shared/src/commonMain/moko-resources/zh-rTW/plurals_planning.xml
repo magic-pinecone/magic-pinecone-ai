@@ -1,0 +1,14 @@
+<resources>
+    <plurals name="planning_search_result_count">
+        <item quantity="other">共 %1$d 門課程</item>
+    </plurals>
+    <plurals name="planning_selected_summary">
+        <item quantity="other">%1$d 門課 · %2$s 學分</item>
+    </plurals>
+    <plurals name="planning_timetable_no_time">
+        <item quantity="other">%1$d 門課程尚無上課時間，可在已選課程中查看。</item>
+    </plurals>
+    <plurals name="planning_calendar_result_added">
+        <item quantity="other">已將 %1$d 堂課加入「%2$s」行事曆。</item>
+    </plurals>
+</resources>

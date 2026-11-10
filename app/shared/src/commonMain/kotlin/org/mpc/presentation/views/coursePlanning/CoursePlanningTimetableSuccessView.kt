@@ -44,6 +44,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.compose.pluralStringResource
+import dev.icerock.moko.resources.compose.stringResource
 import org.mpc.domain.model.CourseDay
 import org.mpc.domain.model.CoursePeriod
 import org.mpc.domain.model.CoursePlan
@@ -65,6 +68,11 @@ import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.theme.TimetableBlockColors
 import org.mpc.presentation.theme.platformTimetablePalette
+import org.mpc.shared.MR
+import org.mpc.shared.planning_timetable_empty
+import org.mpc.shared.planning_timetable_no_time
+import org.mpc.shared.planning_timetable_open_course
+import org.mpc.shared.planning_timetable_title
 
 @Composable
 fun CoursePlanningTimetableSuccessView(
@@ -106,7 +114,7 @@ fun CoursePlanningTimetableSuccessView(
         ) {
             if (coursesWithoutTime > 0) {
                 Text(
-                    text = "$coursesWithoutTime 門課程尚無上課時間，可在已選課程中查看。",
+                    text = pluralStringResource(MR.plurals.planning_timetable_no_time, coursesWithoutTime, coursesWithoutTime),
                     style = MpcTheme.typography.caption,
                     color = MpcTheme.colors.labelSecondary,
                     modifier = Modifier.padding(bottom = MpcSpacing.space2),
@@ -224,7 +232,7 @@ fun CoursePlanningTimetableSuccessView(
 
                     if (plan.selectedCourses.isEmpty()) {
                         Text(
-                            text = "搜尋課程並加入，開始安排課表",
+                            text = stringResource(MR.strings.planning_timetable_empty),
                             color = MpcTheme.colors.labelSecondary,
                             style = MpcTheme.typography.supporting,
                             modifier = Modifier.align(Alignment.Center),
@@ -244,7 +252,7 @@ private fun timetableCourseAppearance(
     palette: List<TimetableBlockColors>,
     neutralColors: TimetableBlockColors,
     shuffledPaletteIndex: Int,
-): Pair<TimetableBlockColors, String?> = when (colorMode) {
+): Pair<TimetableBlockColors, StringResource?> = when (colorMode) {
     TimetableColorMode.CATEGORY -> {
         val category = course?.timetableCategory() ?: TimetableCourseCategory.UNKNOWN
         categoryColors(category, palette, neutralColors) to category.label
@@ -289,7 +297,7 @@ private fun TimetableCategoryLegend(
                     modifier = Modifier.width(12.dp).height(12.dp),
                 ) {}
                 Text(
-                    text = category.label,
+                    text = stringResource(category.label),
                     color = MpcTheme.colors.labelSecondary,
                     style = MpcTheme.typography.micro,
                 )
@@ -363,17 +371,18 @@ fun TimetableForegroundCell(
         MpcTheme.colors.accentContainer,
         MpcTheme.colors.onAccentContainer,
     ),
-    categoryLabel: String? = null,
+    categoryLabel: StringResource? = null,
 ) {
+    val categoryDescription = categoryLabel?.let { stringResource(it) }
     Surface(
         modifier =
         modifier
-            .semantics { categoryLabel?.let { stateDescription = it } }
+            .semantics { categoryDescription?.let { stateDescription = it } }
             .then(
                 onClick?.let { click ->
                     Modifier.clickable(
                         role = Role.Button,
-                        onClickLabel = "查看課程詳細資訊",
+                        onClickLabel = stringResource(MR.strings.planning_timetable_open_course),
                         onClick = click,
                     )
                 } ?: Modifier,
@@ -454,7 +463,7 @@ internal fun PreviewCoursePlanningTimetableSuccessView(
             topBar = {
                 CenterAlignedTopAppBar(
                     title = {
-                        Text("我的課表")
+                        Text(stringResource(MR.strings.planning_timetable_title))
                     },
                 )
             },

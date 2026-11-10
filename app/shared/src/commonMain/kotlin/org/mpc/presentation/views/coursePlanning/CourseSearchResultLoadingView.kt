@@ -10,8 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.icerock.moko.resources.compose.stringResource
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
+import org.mpc.shared.MR
+import org.mpc.shared.planning_search_loading
 
 @Composable
 fun CourseSearchResultLoadingView(modifier: Modifier) {
@@ -24,7 +27,7 @@ fun CourseSearchResultLoadingView(modifier: Modifier) {
             verticalArrangement = Arrangement.spacedBy(MpcSpacing.space3),
         ) {
             CircularProgressIndicator(modifier = Modifier.size(32.dp))
-            Text("正在載入課程…", style = MpcTheme.typography.supporting)
+            Text(stringResource(MR.strings.planning_search_loading), style = MpcTheme.typography.supporting)
         }
     }
 }

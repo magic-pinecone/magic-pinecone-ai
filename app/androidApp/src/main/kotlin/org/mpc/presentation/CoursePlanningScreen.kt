@@ -39,6 +39,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.compose.stringResource
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -51,6 +53,11 @@ import org.mpc.presentation.views.courseDetails.CourseDetailsBottomSheet
 import org.mpc.presentation.views.courseDetails.CourseDetailsSelection
 import org.mpc.presentation.views.coursePlanning.CoursePlanningTimetableView
 import org.mpc.presentation.views.coursePlanning.SelectedCoursesBottomSheet
+import org.mpc.shared.MR
+import org.mpc.shared.planning_timetable_title
+import org.mpc.shared.planning_view_catalog
+import org.mpc.shared.planning_view_catalog_title
+import org.mpc.shared.planning_view_timetable
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -281,11 +288,12 @@ private fun CoursePlanningSectionPicker(
     selectedView: CoursePlanningView,
     onSelectedViewChange: (CoursePlanningView) -> Unit,
 ) {
+    val labels = CoursePlanningView.entries.associateWith { stringResource(it.label) }
     SectionPicker(
         items = CoursePlanningView.entries,
         selected = selectedView,
         onSelectedChange = onSelectedViewChange,
-        label = { it.label },
+        label = { labels.getValue(it) },
         icon = { it.icon },
     )
 }
@@ -318,10 +326,10 @@ internal fun <T> SectionPicker(
 }
 
 enum class CoursePlanningView(
-    val label: String,
-    val title: String,
+    val label: StringResource,
+    val title: StringResource,
     val icon: ImageVector,
 ) {
-    CATALOG("搜尋", "課程搜尋", Icons.Default.Search),
-    TIMETABLE("課表", "我的課表", Icons.Default.DateRange),
+    CATALOG(MR.strings.planning_view_catalog, MR.strings.planning_view_catalog_title, Icons.Default.Search),
+    TIMETABLE(MR.strings.planning_view_timetable, MR.strings.planning_timetable_title, Icons.Default.DateRange),
 }
