@@ -9,6 +9,10 @@ programs open to international degree students with their teaching language.
 everyday administration: what the Office of International Affairs pages say
 about insurance, immigration and work permits, whom to ask, and when a new
 student can join National Health Insurance.
+
+`/intl/guides` is a small library of central-government pages (Ministry of
+Labor, National Immigration Agency, NHI Administration, Ministry of Education)
+on work permits, insurance and residence, with their text and source links.
 """
 
 from datetime import date
@@ -17,8 +21,8 @@ from typing import Any, Literal
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
 
+from app.services import gov_guides, student_services
 from app.services import graduation_language as service
-from app.services import student_services
 
 router = APIRouter(prefix="/intl", tags=["intl"])
 
@@ -266,3 +270,38 @@ def estimate_nhi_enrollment_date(request: NhiEnrollmentRequest) -> Any:
         return student_services.nhi_enrollment(request.arrival_date, trips)
     except ValueError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
+
+
+class GuideArticle(BaseModel):
+    id: str
+    title: str
+    # The issuing agency, or the newspaper for a news report.
+    org: str
+    lang: str
+    topic: str
+    url: str
+    # An online service to open, not a page to read: `body` is empty.
+    is_service: bool
+    # The day the text was fetched; empty for a service.
+    fetched_on: str
+    body: str
+
+
+class GuidesResponse(BaseModel):
+    topics: list[str]
+    articles: list[GuideArticle]
+
+
+@router.get("/guides", response_model=GuidesResponse)
+def get_guides(
+    topic: str | None = Query(default=None, description="One of `topics`"),
+) -> Any:
+    """Government guides for international students, grouped by topic."""
+    topics = gov_guides.topics()
+    if topic and topic not in topics:
+        raise HTTPException(status_code=422, detail="Unknown topic")
+    articles = gov_guides.load_articles()
+    return {
+        "topics": topics,
+        "articles": [a for a in articles if not topic or a["topic"] == topic],
+    }

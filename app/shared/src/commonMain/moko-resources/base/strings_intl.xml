@@ -30,4 +30,16 @@
     <string name="intl_needs_backend">This page needs a Magic Pinecone backend. Enter its address under Settings › %1$s.</string>
     <string name="intl_failed">Could not load the requirements.</string>
     <string name="intl_retry">Try again</string>
+    <string name="intl_section_graduation">Graduation language</string>
+    <string name="intl_section_guides">Government guides</string>
+    <string name="intl_guides_intro">Official pages from Taiwan's government agencies on working, insurance and residence while you study. Each is a copy from the date shown; the agency's own page prevails.</string>
+    <string name="intl_guides_topic_work">Work permits</string>
+    <string name="intl_guides_topic_insurance">Insurance</string>
+    <string name="intl_guides_topic_residence">Residence and ARC</string>
+    <string name="intl_guides_topic_help">Help lines</string>
+    <string name="intl_guides_service">Online service</string>
+    <string name="intl_guides_fetched_on">Copied from the official page on %1$s</string>
+    <string name="intl_guides_open_original">Open the original page</string>
+    <string name="intl_guides_back">All guides</string>
+    <string name="intl_guides_failed">Could not load the guides.</string>
 </resources>

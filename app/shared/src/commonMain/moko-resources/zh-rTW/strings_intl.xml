@@ -30,4 +30,16 @@
     <string name="intl_needs_backend">這個頁面需要神奇松果後端。請到「設定 › %1$s」填入後端位址。</string>
     <string name="intl_failed">無法載入畢業語言門檻。</string>
     <string name="intl_retry">重試</string>
+    <string name="intl_section_graduation">畢業語言門檻</string>
+    <string name="intl_section_guides">政府資訊</string>
+    <string name="intl_guides_intro">中華民國政府機關針對在臺就學期間工作、保險與居留的官方說明。內容為標示日期當天的副本，以各機關網頁為準。</string>
+    <string name="intl_guides_topic_work">工作許可</string>
+    <string name="intl_guides_topic_insurance">保險</string>
+    <string name="intl_guides_topic_residence">居留與居留證</string>
+    <string name="intl_guides_topic_help">諮詢專線</string>
+    <string name="intl_guides_service">線上申辦</string>
+    <string name="intl_guides_fetched_on">%1$s 自官方網頁複製</string>
+    <string name="intl_guides_open_original">開啟原始網頁</string>
+    <string name="intl_guides_back">全部資訊</string>
+    <string name="intl_guides_failed">無法載入政府資訊。</string>
 </resources>

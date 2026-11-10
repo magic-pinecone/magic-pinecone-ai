@@ -46,8 +46,7 @@ import org.mpc.domain.session.SitePath
 import org.mpc.domain.session.browserEntry
 import org.mpc.presentation.CourseCatalogViewBinding
 import org.mpc.presentation.CoursePlanningTimetableViewBinding
-import org.mpc.presentation.GraduationLanguageActions
-import org.mpc.presentation.GraduationLanguageScreen
+import org.mpc.presentation.InternationalScreen
 import org.mpc.presentation.PortalWebScreen
 import org.mpc.presentation.SettingsScreen
 import org.mpc.presentation.model.EeclassBulletinPage
@@ -60,7 +59,6 @@ import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.viewModel.AppSettingsViewModel
 import org.mpc.presentation.viewModel.BackendEndpointViewModel
-import org.mpc.presentation.viewModel.GraduationLanguageViewModel
 import org.mpc.presentation.views.courseFilters.CourseSlotPicker
 import platform.UIKit.UIViewController
 
@@ -165,22 +163,10 @@ class IosSharedHost internal constructor(
         }
     }
 
-    fun graduationLanguageScreenController(): UIViewController = ComposeUIViewController {
+    fun internationalScreenController(): UIViewController = ComposeUIViewController {
         ProvideAppDependencies(appGraph) {
             ThemedContent {
-                val viewModel: GraduationLanguageViewModel = metroViewModel()
-                val state by viewModel.uiState.collectAsStateWithLifecycle()
-                GraduationLanguageScreen(
-                    state = state,
-                    actions = remember(viewModel) {
-                        GraduationLanguageActions(
-                            onSelectDegree = viewModel::selectDegree,
-                            onSelectCollege = viewModel::selectCollege,
-                            onSelectCohort = viewModel::selectCohort,
-                            onRetry = viewModel::refresh,
-                        )
-                    },
-                )
+                InternationalScreen()
             }
         }
     }

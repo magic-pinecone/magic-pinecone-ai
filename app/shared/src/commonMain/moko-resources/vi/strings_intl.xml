@@ -30,4 +30,16 @@
     <string name="intl_needs_backend">Trang này cần máy chủ Magic Pinecone. Hãy nhập địa chỉ tại Cài đặt › %1$s.</string>
     <string name="intl_failed">Không thể tải các yêu cầu.</string>
     <string name="intl_retry">Thử lại</string>
+    <string name="intl_section_graduation">Ngôn ngữ tốt nghiệp</string>
+    <string name="intl_section_guides">Hướng dẫn của chính phủ</string>
+    <string name="intl_guides_intro">Các trang chính thức của cơ quan chính phủ Đài Loan về việc làm, bảo hiểm và cư trú trong thời gian học. Mỗi trang là bản sao tại ngày ghi bên dưới; trang của cơ quan có giá trị quyết định.</string>
+    <string name="intl_guides_topic_work">Giấy phép lao động</string>
+    <string name="intl_guides_topic_insurance">Bảo hiểm</string>
+    <string name="intl_guides_topic_residence">Cư trú và thẻ ARC</string>
+    <string name="intl_guides_topic_help">Đường dây hỗ trợ</string>
+    <string name="intl_guides_service">Dịch vụ trực tuyến</string>
+    <string name="intl_guides_fetched_on">Sao chép từ trang chính thức ngày %1$s</string>
+    <string name="intl_guides_open_original">Mở trang gốc</string>
+    <string name="intl_guides_back">Tất cả hướng dẫn</string>
+    <string name="intl_guides_failed">Không thể tải các hướng dẫn.</string>
 </resources>
