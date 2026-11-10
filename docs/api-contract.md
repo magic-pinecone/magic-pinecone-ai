@@ -61,6 +61,8 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 | 404 | 後端持有的不是這個學期（訊息會指出目前的學期） |
 | 503 | 後端還沒同步過；先呼叫 `POST /scraper/trigger` |
 
+查詢參數 `lang` 可省略，格式是語言標籤，例如 `en`、`vi-VN`。帶 `en` 或 `vi`（含地區碼）時，後端把 `title`、`college_name`、`department_name` 換成譯文；其他語言（含 `zh*`）與省略時維持中文。回應的欄位與型別不變，沒有譯文的字串留原文。譯表放在 `backend/app/data/course_translations/{catalog,detail}.{en,vi}.json`，檔案不存在時等同沒有譯文。
+
 ## `GET /catalog/{semester}/courses/{serial_no}/detail`
 
 ```json
@@ -76,6 +78,8 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 ```
 
 第一次查詢時後端會即時向 NCU 抓取並存入 `course_details`，之後 `COURSE_DETAIL_CACHE_HOURS`（預設 24）小時內直接回快取。文字欄位沒有內容時回空字串。
+
+查詢參數 `lang` 的規則同上。帶 `en` 或 `vi` 時，`objectives`、`content`、`books`、`teaching_method`、`grading_policy` 依 `detail` 譯表翻譯，`distribution_conditions[].rule` 依 `catalog` 譯表翻譯。長欄位逐行（以 `\n` 分行、去掉行首尾空白後）查表，查不到的行保留原文。快取的大綱一律存中文，翻譯在回應時才套用。
 
 | 狀態碼 | 意義 |
 |---|---|

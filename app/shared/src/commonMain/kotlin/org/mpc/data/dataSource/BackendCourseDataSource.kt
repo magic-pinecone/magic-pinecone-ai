@@ -1,10 +1,12 @@
 package org.mpc.data.dataSource
 
+import androidx.compose.ui.text.intl.Locale
 import dev.zacsweers.metro.Inject
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.expectSuccess
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import org.mpc.data.dto.CourseDetailDto
 import org.mpc.data.dto.CourseResultDto
 
@@ -23,6 +25,7 @@ internal class BackendCourseDataSource(
         .get("$baseUrl/api/v1/catalog/$semester/courses") {
             // An error body is JSON too; fail on the status instead of on a missing field.
             expectSuccess = true
+            parameter("lang", Locale.current.toLanguageTag())
         }.body<CourseResultDto>()
 
     suspend fun getCourseDetails(
@@ -32,5 +35,6 @@ internal class BackendCourseDataSource(
     ): CourseDetailDto = httpClient
         .get("$baseUrl/api/v1/catalog/$semester/courses/$serialNo/detail") {
             expectSuccess = true
+            parameter("lang", Locale.current.toLanguageTag())
         }.body<CourseDetailDto>()
 }

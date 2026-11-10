@@ -11,7 +11,7 @@ from datetime import UTC, datetime, timedelta
 from typing import Literal
 
 import httpx
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from sqlmodel import select
 
@@ -20,6 +20,7 @@ from app.core.config import settings
 from app.models.catalog import CATALOG_STATE_ID, CatalogState, CourseDetail
 from app.models.course import College, Course, Department
 from app.services import course_detail as course_detail_service
+from app.services.course_translations import load_table, normalize_lang, translate
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +28,20 @@ router = APIRouter(prefix="/catalog", tags=["catalog"])
 
 PasswordCard = Literal["ALL", "OPTIONAL", "NONE"]
 CourseType = Literal["REQUIRED", "ELECTIVE", "UNKNOWN"]
+
+LangQuery = Query(
+    None,
+    pattern=r"^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8}){0,3}$",
+    description="Language tag such as en or vi-VN; translates the Chinese text. "
+    "Lines without a translation, and other languages, stay in Chinese.",
+)
+SYLLABUS_FIELDS = (
+    "objectives",
+    "content",
+    "books",
+    "teaching_method",
+    "grading_policy",
+)
 
 
 class CatalogCourse(BaseModel):
@@ -149,7 +164,9 @@ def get_catalog_status(session: SessionDep) -> CatalogStatus:
 
 
 @router.get("/{semester}/courses", response_model=CatalogResponse)
-def get_catalog(semester: str, session: SessionDep) -> CatalogResponse:
+def get_catalog(
+    semester: str, session: SessionDep, lang: str | None = LangQuery
+) -> CatalogResponse:
     """Return every course of a semester in one response."""
     state = _require_semester(session, semester)
     academic_year, _, term = state.semester.partition("-")
@@ -162,11 +179,23 @@ def get_catalog(semester: str, session: SessionDep) -> CatalogResponse:
     }
     courses = session.exec(select(Course).order_by(Course.serial_no)).all()  # type: ignore[arg-type]
 
+    catalog = [_to_catalog_course(c, departments, colleges) for c in courses]
+    if target := normalize_lang(lang):
+        table = load_table("catalog", target)
+        catalog = [
+            c.model_copy(
+                update={
+                    f: translate(getattr(c, f), table)
+                    for f in ("title", "college_name", "department_name")
+                }
+            )
+            for c in catalog
+        ]
     return CatalogResponse(
         last_updated=_as_utc(state.last_synced_at),
         academic_year=academic_year,
         semester=term,
-        courses=[_to_catalog_course(c, departments, colleges) for c in courses],
+        courses=catalog,
     )
 
 
@@ -174,7 +203,7 @@ def get_catalog(semester: str, session: SessionDep) -> CatalogResponse:
     "/{semester}/courses/{serial_no}/detail", response_model=CourseDetailResponse
 )
 def get_course_detail(
-    semester: str, serial_no: str, session: SessionDep
+    semester: str, serial_no: str, session: SessionDep, lang: str | None = LangQuery
 ) -> CourseDetailResponse:
     """Return a course's syllabus, fetched from NCU on first use and then cached."""
     _require_semester(session, semester)
@@ -212,7 +241,7 @@ def get_course_detail(
     if cached is None:
         raise HTTPException(status_code=404, detail="This course has no syllabus")
 
-    return CourseDetailResponse(
+    detail = CourseDetailResponse(
         serial_no=format_serial_no(key),
         objectives=cached.objectives,
         content=cached.content,
@@ -220,4 +249,20 @@ def get_course_detail(
         teaching_method=cached.teaching_method,
         grading_policy=cached.grading_policy,
         distribution_conditions=cached.distribution_conditions,
+    )
+    target = normalize_lang(lang)
+    if target is None:
+        return detail
+    syllabus = load_table("detail", target)
+    rules = load_table("catalog", target)
+    return detail.model_copy(
+        update={f: translate(getattr(detail, f), syllabus) for f in SYLLABUS_FIELDS}
+        | {
+            "distribution_conditions": [
+                DistributionCondition(
+                    priority=c.priority, rule=translate(c.rule, rules)
+                )
+                for c in detail.distribution_conditions
+            ]
+        }
     )
