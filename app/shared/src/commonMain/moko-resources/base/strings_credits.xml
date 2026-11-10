@@ -1,0 +1,5 @@
+<resources>
+    <string name="credits_title">Credits</string>
+    <string name="credits_intro">How many credits NCU asks for and how they break down. These are the rules as the university\'s own pages state them, with the passage each comes from.</string>
+    <string name="intl_section_credits">Credits</string>
+</resources>

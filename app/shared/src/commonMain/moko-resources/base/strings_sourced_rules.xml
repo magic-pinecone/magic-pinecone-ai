@@ -9,6 +9,7 @@
     <string name="rules_all_degrees">All</string>
     <string name="rules_degree_bachelor">Bachelor</string>
     <string name="rules_degree_graduate">Graduate</string>
-    <string name="rules_credits">%1$d credits</string>
+    <string name="rules_credits">%1$s credits</string>
+    <string name="rules_credits_none">No credits</string>
     <string name="rules_failed">Could not load these rules. Check the connection and the backend address, then try again.</string>
 </resources>

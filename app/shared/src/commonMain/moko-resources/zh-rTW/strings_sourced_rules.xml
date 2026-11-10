@@ -9,6 +9,7 @@
     <string name="rules_all_degrees">全部</string>
     <string name="rules_degree_bachelor">學士班</string>
     <string name="rules_degree_graduate">研究所</string>
-    <string name="rules_credits">%1$d 學分</string>
+    <string name="rules_credits">%1$s 學分</string>
+    <string name="rules_credits_none">不計學分</string>
     <string name="rules_failed">無法載入這些規定。請檢查網路與後端位址後再試一次。</string>
 </resources>

@@ -9,6 +9,7 @@
     <string name="rules_all_degrees">Tất cả</string>
     <string name="rules_degree_bachelor">Đại học</string>
     <string name="rules_degree_graduate">Sau đại học</string>
-    <string name="rules_credits">%1$d tín chỉ</string>
+    <string name="rules_credits">%1$s tín chỉ</string>
+    <string name="rules_credits_none">Không tính tín chỉ</string>
     <string name="rules_failed">Không thể tải các quy định này. Hãy kiểm tra kết nối và địa chỉ máy chủ rồi thử lại.</string>
 </resources>

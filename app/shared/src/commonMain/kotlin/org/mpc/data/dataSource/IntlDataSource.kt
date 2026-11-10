@@ -6,6 +6,7 @@ import io.ktor.client.call.body
 import io.ktor.client.plugins.expectSuccess
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
+import org.mpc.domain.model.Credits
 import org.mpc.domain.model.GovGuides
 import org.mpc.domain.model.GraduationLanguage
 import org.mpc.domain.model.ServiceLearning
@@ -24,6 +25,11 @@ internal class IntlDataSource(
         .get("$baseUrl/api/v1/intl/service-learning") {
             expectSuccess = true
         }.body<ServiceLearning>()
+
+    suspend fun getCredits(baseUrl: String): Credits = httpClient
+        .get("$baseUrl/api/v1/intl/credits") {
+            expectSuccess = true
+        }.body<Credits>()
 
     suspend fun getGuides(
         baseUrl: String,

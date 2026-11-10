@@ -21,7 +21,7 @@ data class SourcedRule(
     val title: LocalizedText,
     val summary: LocalizedText,
     /** Credits the rule asks for, when it is a number of credits. */
-    val credits: Int? = null,
+    val credits: Double? = null,
     val sources: List<RuleSource>,
 )
 
@@ -54,3 +54,6 @@ fun SourcedRules.forDegree(degree: RuleDegree?): List<SourcedRule> = if (degree 
 
 /** The degrees any rule names, in declaration order. */
 val SourcedRules.degrees: List<RuleDegree> get() = RuleDegree.entries.filter { degree -> rules.any { degree in it.degrees } }
+
+/** Credits as people write them: 128, not 128.0; 0.5 stays 0.5. */
+fun formatCredits(credits: Double): String = if (credits % 1.0 == 0.0) credits.toLong().toString() else credits.toString()
