@@ -8,6 +8,7 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import org.mpc.domain.model.GovGuides
 import org.mpc.domain.model.GraduationLanguage
+import org.mpc.domain.model.ServiceLearning
 
 /** Reads the international-student endpoints of a Magic Pinecone backend. */
 @Inject
@@ -18,6 +19,11 @@ internal class IntlDataSource(
         .get("$baseUrl/api/v1/intl/graduation-language") {
             expectSuccess = true
         }.body<GraduationLanguage>()
+
+    suspend fun getServiceLearning(baseUrl: String): ServiceLearning = httpClient
+        .get("$baseUrl/api/v1/intl/service-learning") {
+            expectSuccess = true
+        }.body<ServiceLearning>()
 
     suspend fun getGuides(
         baseUrl: String,

@@ -19,34 +19,39 @@ import org.mpc.presentation.viewModel.GraduationLanguageViewModel
 import org.mpc.shared.MR
 import org.mpc.shared.intl_section_graduation
 import org.mpc.shared.intl_section_guides
+import org.mpc.shared.intl_section_service_learning
 
-/** The International tab: graduation language requirements, and the government guides. */
+/** The International tab: graduation language requirements, the government guides and service learning. */
 @Composable
 fun InternationalScreen(modifier: Modifier = Modifier) {
     var section by rememberSaveable { mutableIntStateOf(0) }
     Column(modifier.fillMaxSize()) {
         PrimaryTabRow(selectedTabIndex = section) {
-            listOf(MR.strings.intl_section_graduation, MR.strings.intl_section_guides).forEachIndexed { index, label ->
+            listOf(MR.strings.intl_section_graduation, MR.strings.intl_section_guides, MR.strings.intl_section_service_learning).forEachIndexed { index, label ->
                 Tab(selected = section == index, onClick = { section = index }, text = { Text(stringResource(label)) })
             }
         }
-        if (section == 0) {
-            val viewModel: GraduationLanguageViewModel = metroViewModel()
-            val state by viewModel.uiState.collectAsStateWithLifecycle()
-            GraduationLanguageScreen(
-                state = state,
-                actions = remember(viewModel) {
-                    GraduationLanguageActions(
-                        onSelectDegree = viewModel::selectDegree,
-                        onSelectCollege = viewModel::selectCollege,
-                        onSelectCohort = viewModel::selectCohort,
-                        onRetry = viewModel::refresh,
-                    )
-                },
-                modifier = Modifier.fillMaxSize(),
-            )
-        } else {
-            GovGuidesRoute(modifier = Modifier.fillMaxSize())
+        when (section) {
+            0 -> {
+                val viewModel: GraduationLanguageViewModel = metroViewModel()
+                val state by viewModel.uiState.collectAsStateWithLifecycle()
+                GraduationLanguageScreen(
+                    state = state,
+                    actions = remember(viewModel) {
+                        GraduationLanguageActions(
+                            onSelectDegree = viewModel::selectDegree,
+                            onSelectCollege = viewModel::selectCollege,
+                            onSelectCohort = viewModel::selectCohort,
+                            onRetry = viewModel::refresh,
+                        )
+                    },
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+
+            1 -> GovGuidesRoute(modifier = Modifier.fillMaxSize())
+
+            else -> ServiceLearningRoute(modifier = Modifier.fillMaxSize())
         }
     }
 }

@@ -1,0 +1,14 @@
+<resources>
+    <string name="rules_sources">官方來源</string>
+    <string name="rules_fetched_on">%1$s 查閱</string>
+    <string name="rules_contact">洽詢單位</string>
+    <string name="rules_not_confirmed">尚未確認</string>
+    <string name="rules_not_confirmed_note">官方文件沒有說清楚這些事。沒有寫不代表不需要，請向承辦單位確認。</string>
+    <string name="rules_show">展開</string>
+    <string name="rules_hide">收合</string>
+    <string name="rules_all_degrees">全部</string>
+    <string name="rules_degree_bachelor">學士班</string>
+    <string name="rules_degree_graduate">研究所</string>
+    <string name="rules_credits">%1$d 學分</string>
+    <string name="rules_failed">無法載入這些規定。請檢查網路與後端位址後再試一次。</string>
+</resources>
