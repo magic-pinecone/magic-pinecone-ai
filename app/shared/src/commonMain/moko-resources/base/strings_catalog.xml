@@ -43,4 +43,6 @@
     <string name="catalog_day_saturday">Sat</string>
     <string name="catalog_day_sunday">Sun</string>
     <string name="catalog_day_unknown">None</string>
+    <string name="catalog_filter_mode">Filter mode</string>
+    <string name="catalog_any">Any</string>
 </resources>

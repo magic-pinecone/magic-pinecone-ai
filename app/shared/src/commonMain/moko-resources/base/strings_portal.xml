@@ -14,4 +14,5 @@
     <string name="portal_sign_in">Sign in</string>
     <string name="portal_sign_out">Sign out</string>
     <string name="portal_retry">Retry</string>
+    <string name="portal_sign_in_title">Portal sign-in</string>
 </resources>
