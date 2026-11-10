@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 
-from app.api.routes import catalog, clubs, courses, scraper
-from app.api.routes import campus, catalog, courses, intl, scraper
+from app.api.routes import campus, catalog, clubs, courses, intl, scraper
 from app.core.config import settings
 
 api_router = APIRouter()
