@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.GridView
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.LocalLibrary
 import androidx.compose.material.icons.filled.Search
@@ -91,6 +92,17 @@ private enum class PreviewScreen(
             ComposePreviewScenario.CLUBS_POPULATED,
             ComposePreviewScenario.CLUBS_NO_BACKEND,
             ComposePreviewScenario.CLUBS_FAILURE,
+        ),
+    ),
+    GRADUATION(
+        "國際生",
+        Icons.Filled.Language,
+        listOf(
+            ComposePreviewScenario.GRADUATION_LIVE,
+            ComposePreviewScenario.GRADUATION_POPULATED,
+            ComposePreviewScenario.GRADUATION_LOADING,
+            ComposePreviewScenario.GRADUATION_FAILURE,
+            ComposePreviewScenario.GRADUATION_NEEDSBACKEND,
         ),
     ),
     SETTINGS("設定", Icons.Filled.Settings, listOf(ComposePreviewScenario.SETTINGS)),

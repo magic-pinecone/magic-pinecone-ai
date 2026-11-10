@@ -11,6 +11,7 @@ import org.mpc.core.createHttpClient
 import org.mpc.data.dataSource.IntlDataSource
 import org.mpc.data.repository.DefaultClubRepository
 import org.mpc.data.repository.DefaultGovGuidesRepository
+import org.mpc.data.repository.DefaultGraduationLanguageRepository
 import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
@@ -35,6 +36,7 @@ import org.mpc.presentation.viewModel.AppSettingsViewModel
 import org.mpc.presentation.viewModel.CampusSessionViewModel
 import org.mpc.presentation.viewModel.ClubViewModel
 import org.mpc.presentation.viewModel.GovGuidesViewModel
+import org.mpc.presentation.viewModel.GraduationLanguageViewModel
 import org.mpc.presentation.viewModel.PortalViewModel
 import kotlin.reflect.KClass
 
@@ -47,6 +49,11 @@ internal object WebPreviewViewModelFactory : MetroViewModelFactory() {
         ClubViewModel::class to { ClubViewModel(DefaultClubRepository(createHttpClient(), PreviewBackendEndpoint)) },
         GovGuidesViewModel::class to {
             GovGuidesViewModel(DefaultGovGuidesRepository(PreviewBackendEndpoint, IntlDataSource(createHttpClient())))
+        },
+        GraduationLanguageViewModel::class to {
+            GraduationLanguageViewModel(
+                DefaultGraduationLanguageRepository(PreviewBackendEndpoint, IntlDataSource(createHttpClient())),
+            )
         },
     )
 }
