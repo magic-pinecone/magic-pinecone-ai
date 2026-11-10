@@ -41,3 +41,5 @@ CLAUDE.local.md
 # moko generates these webpack and Karma configurations during Gradle configuration.
 shared/webpack.config.d/moko-resources-generated.js
 shared/karma.config.d/moko-resources-generated.js
+# TestBalloon writes its Karma test parameters the same way.
+shared/karma.config.d/testBalloonParameters.js

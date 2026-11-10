@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.GridView
+import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LightMode
@@ -70,6 +71,16 @@ private enum class PreviewScreen(
     COURSE_DETAILS("詳情", Icons.Filled.Info, listOf(ComposePreviewScenario.COURSE_DETAILS)),
     SLOT_PICKER("節次", Icons.Filled.GridView, listOf(ComposePreviewScenario.SLOT_PICKER)),
     PORTAL("Portal", Icons.Filled.Home, listOf(ComposePreviewScenario.PORTAL)),
+    CLUBS(
+        "社團",
+        Icons.Filled.Groups,
+        listOf(
+            ComposePreviewScenario.CLUBS_LIVE,
+            ComposePreviewScenario.CLUBS_POPULATED,
+            ComposePreviewScenario.CLUBS_NO_BACKEND,
+            ComposePreviewScenario.CLUBS_FAILURE,
+        ),
+    ),
     SETTINGS("設定", Icons.Filled.Settings, listOf(ComposePreviewScenario.SETTINGS)),
 }
 
