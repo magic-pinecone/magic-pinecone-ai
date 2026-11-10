@@ -8,7 +8,7 @@ import Translation
 
 struct Options {
     var liteRepo = URL(fileURLWithPath: "../../../magic-pinecone-lite")
-    var outDir = URL(fileURLWithPath: "../../data/course-translations")
+    var outDir = URL(fileURLWithPath: "../../backend/app/data/course_translations")
     var languages = ["en", "vi"]
     var scopes = Scope.allCases
     var strategy = TranslationSession.Strategy.highFidelity
@@ -124,9 +124,12 @@ func translate(_ scope: Scope, into language: String, options: Options) async th
     let url = options.outDir.appending(path: "\(scope.rawValue).\(language).json")
     var dictionary = (try? JSONDecoder().decode(TranslationTable.self, from: Data(contentsOf: url)))
         ?? TranslationTable(target_language: language, strategy: strategyName)
-    let pending = try sourceLines(scope, liteRepo: options.liteRepo)
-        .filter { dictionary.entries[$0] == nil }
-        .prefix(options.limit)
+    // A table made with the other strategy is retranslated line by line in place, so the
+    // old entries keep serving until replaced. The label flips only once the run finishes.
+    let upgrading = dictionary.strategy != strategyName
+    let missing = try sourceLines(scope, liteRepo: options.liteRepo)
+        .filter { upgrading || dictionary.entries[$0] == nil }
+    let pending = missing.prefix(options.limit)
     print("\(scope.rawValue).\(language): \(dictionary.entries.count) done, \(pending.count) to translate")
 
     let session = TranslationSession(installedSource: source, target: target, preferredStrategy: options.strategy)
@@ -147,6 +150,9 @@ func translate(_ scope: Scope, into language: String, options: Options) async th
             let done = batch + lines.count - pending.startIndex
             print("  \(done)/\(pending.count) in \(ContinuousClock.now - start)")
         }
+    }
+    if pending.count == missing.count {
+        dictionary.strategy = strategyName
     }
     try save(dictionary, to: url)
     print("  wrote \(url.path) in \(ContinuousClock.now - start)")
