@@ -1,0 +1,785 @@
+{
+  "top_k": 3,
+  "summary": {
+    "en": {
+      "answerable": 21,
+      "hit1": 19,
+      "hit3": 21,
+      "ans3": 15,
+      "no_result": 0,
+      "unanswerable": 3,
+      "unanswerable_with_passages": 3
+    },
+    "zh-TW": {
+      "answerable": 10,
+      "hit1": 2,
+      "hit3": 3,
+      "ans3": 2,
+      "no_result": 7,
+      "unanswerable": 2,
+      "unanswerable_with_passages": 0
+    },
+    "vi": {
+      "answerable": 10,
+      "hit1": 5,
+      "hit3": 9,
+      "ans3": 4,
+      "no_result": 0,
+      "unanswerable": 2,
+      "unanswerable_with_passages": 2
+    },
+    "id": {
+      "answerable": 10,
+      "hit1": 5,
+      "hit3": 9,
+      "ans3": 3,
+      "no_result": 0,
+      "unanswerable": 2,
+      "unanswerable_with_passages": 1
+    },
+    "all": {
+      "answerable": 51,
+      "hit1": 31,
+      "hit3": 42,
+      "ans3": 24,
+      "no_result": 7,
+      "unanswerable": 9,
+      "unanswerable_with_passages": 6
+    }
+  },
+  "items": [
+    {
+      "id": "en-001",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-work-permit"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "en-002",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "en-003",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-work-permit"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "en-004",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "oia-scholarship-page"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "en-005",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "en-006",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "oia-insurance",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "en-007",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "oia-scholarship-page",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "en-008",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "en-009",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "oia-scholarship-page",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "en-010",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "en-011",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-exchange-incoming",
+        "oia-insurance",
+        "oia-work-permit"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "en-012",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-immigration",
+        "oia-degree-student-handbook",
+        "oia-exchange-incoming"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "en-013",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-work-permit",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "en-014",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-work-permit",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "en-015",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-degree-student-handbook",
+        "oia-work-permit"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "en-016",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-degree-student-handbook",
+        "oia-incoming-students"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "en-017",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-degree-student-handbook",
+        "oia-immigration"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "en-018",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-immigration",
+        "oia-work-permit"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "en-019",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-work-permit",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "en-020",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "en-021",
+      "lang": "en",
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-work-permit",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "en-022",
+      "lang": "en",
+      "answerable": false,
+      "returned": [
+        "oia-work-permit",
+        "oia-scholarship-page",
+        "oia-insurance"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "en-023",
+      "lang": "en",
+      "answerable": false,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-scholarship-page",
+        "oia-insurance"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "en-024",
+      "lang": "en",
+      "answerable": false,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-insurance",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "vi-001",
+      "lang": "vi",
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "vi-002",
+      "lang": "vi",
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-degree-student-handbook",
+        "oia-work-permit"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "vi-003",
+      "lang": "vi",
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-exchange-incoming",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "vi-004",
+      "lang": "vi",
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-exchange-incoming",
+        "oia-scholarship-page"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": true
+    },
+    {
+      "id": "vi-005",
+      "lang": "vi",
+      "answerable": true,
+      "returned": [
+        "oia-exchange-incoming",
+        "oia-insurance",
+        "oia-work-permit"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "vi-006",
+      "lang": "vi",
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-exchange-incoming",
+        "oia-immigration"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "vi-007",
+      "lang": "vi",
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-degree-student-handbook",
+        "oia-work-permit"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "vi-008",
+      "lang": "vi",
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-scholarship-page",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "vi-009",
+      "lang": "vi",
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-exchange-incoming",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "vi-010",
+      "lang": "vi",
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-scholarship-page",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "vi-011",
+      "lang": "vi",
+      "answerable": false,
+      "returned": [
+        "oia-insurance",
+        "oia-scholarship-page",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "vi-012",
+      "lang": "vi",
+      "answerable": false,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-work-permit",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "id-001",
+      "lang": "id",
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "id-002",
+      "lang": "id",
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "id-003",
+      "lang": "id",
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "oia-work-permit"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "id-004",
+      "lang": "id",
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "oia-scholarship-page",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "id-005",
+      "lang": "id",
+      "answerable": true,
+      "returned": [
+        "oia-incoming-students"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "id-006",
+      "lang": "id",
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-immigration",
+        "oia-insurance"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "id-007",
+      "lang": "id",
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-immigration",
+        "oia-work-permit"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "id-008",
+      "lang": "id",
+      "answerable": true,
+      "returned": [
+        "oia-immigration",
+        "oia-degree-student-handbook",
+        "oia-work-permit"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "id-009",
+      "lang": "id",
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "id-010",
+      "lang": "id",
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "oia-insurance",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "id-011",
+      "lang": "id",
+      "answerable": false,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "oia-scholarship-guidelines"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "id-012",
+      "lang": "id",
+      "answerable": false,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "zh-001",
+      "lang": "zh-TW",
+      "answerable": true,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "zh-002",
+      "lang": "zh-TW",
+      "answerable": true,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "zh-003",
+      "lang": "zh-TW",
+      "answerable": true,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "zh-004",
+      "lang": "zh-TW",
+      "answerable": true,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "zh-005",
+      "lang": "zh-TW",
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-guidelines",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false
+    },
+    {
+      "id": "zh-006",
+      "lang": "zh-TW",
+      "answerable": true,
+      "returned": [
+        "oia-immigration",
+        "oia-degree-student-handbook",
+        "oia-work-permit"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "zh-007",
+      "lang": "zh-TW",
+      "answerable": true,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "zh-008",
+      "lang": "zh-TW",
+      "answerable": false,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "zh-009",
+      "lang": "zh-TW",
+      "answerable": false,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "zh-010",
+      "lang": "zh-TW",
+      "answerable": true,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    },
+    {
+      "id": "zh-011",
+      "lang": "zh-TW",
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-guidelines"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true
+    },
+    {
+      "id": "zh-012",
+      "lang": "zh-TW",
+      "answerable": true,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false
+    }
+  ]
+}

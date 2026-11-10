@@ -1,0 +1,23 @@
+# Dependencies of ml/train_lora.py only. Install them in their own virtual
+# environment or on Colab, never into the backend (backend/pyproject.toml).
+# Untested: this list was written on a machine without a GPU. Install a torch
+# build that matches your CUDA version first (https://pytorch.org/get-started).
+#
+# Minimum versions are the ones named in Google's Gemma 4 QLoRA guide
+# (https://ai.google.dev/gemma/docs/core/huggingface_text_finetune_qlora).
+
+torch
+transformers>=5.10.1
+peft>=0.19.0
+trl
+datasets
+accelerate
+bitsandbytes
+sentencepiece
+protobuf
+
+# Default backend of train_lora.py (--backend unsloth). Unsloth pins its own
+# versions of the packages above; if pip reports a conflict, install only
+# `unsloth` in a fresh environment and let it pull what it needs, or use
+# --backend peft without it.
+unsloth

@@ -1,0 +1,306 @@
+# ml/ — evaluation and fine-tuning kit for the on-device student
+
+Goal: a small on-device model that turns "question + retrieved OIA passages"
+into a short bulleted answer with source numbers, or refuses and points to the
+OIA when the passages do not hold the answer. A large open-weight teacher
+(gpt-oss behind an OpenAI-compatible endpoint) writes the training data;
+students are LoRA fine-tuned on it. Languages: English, Traditional Chinese
+(zh-TW), Vietnamese (vi), Indonesian (id).
+
+Nothing here changes `backend/` or `app/`. The scripts import the backend's
+passage search (`backend/app/services/student_services.py`) and therefore run
+with the backend's environment. No model of PRC origin is used anywhere in this
+kit (teacher, students, and there are no embeddings); keep it that way.
+
+## Files
+
+| File | What it does |
+|---|---|
+| `prompt_format.py` | The one definition of the prompt: system prompt, passage numbering, refusal sentence per language, citation and refusal detection. Used by data generation, training data and evaluation. |
+| `checks.py` | Pure text checks: strip a reasoning channel, numbers not supported by the passages, `must_contain` matching, similarity to golden questions. |
+| `common.py` | Paths, import of the backend service, JSONL helpers, the OpenAI-compatible chat client (`httpx`). |
+| `golden/questions.jsonl` | 60 hand-written test questions (24 en, 12 each zh-TW / vi / id; 9 unanswerable). |
+| `eval_retrieval.py` | hit@1 / hit@3 of the backend's keyword search on the golden set. |
+| `make_teacher_data.py` | Asks the teacher(s) for training examples and cleans them. |
+| `train_lora.py` | LoRA fine-tuning of a student (Unsloth, or PEFT + TRL). |
+| `eval_generation.py` | Runs the golden set through any OpenAI-compatible endpoint and scores it; keeps a comparison table across runs. |
+| `requirements-train.txt` | Heavy dependencies of `train_lora.py` only. |
+| `results/` | Committed result files. `retrieval_baseline.*` is real. |
+| `tests/` | Unit tests, no network. |
+
+`ml/data/` (teacher data) and `ml/runs/` (adapters, merged models) are
+git-ignored.
+
+## Golden set
+
+Fields: `id`, `lang`, `question`, `answerable`, `source_id` (a document id of
+`student_services.load_documents()`, `null` when unanswerable), `must_contain`
+(strings copied verbatim from that document that a correct answer must
+include), `needs_native_review`, and optionally:
+
+- `parallel_of` — id of the English question this one translates. 33 of the 36
+  non-English questions are translations, so languages can be compared on the
+  same facts. Three zh-TW questions are written directly against the Chinese
+  scholarship guidelines.
+- `alt_source_ids` — other documents that state the same fact (for example the
+  Cathay limits are on the insurance page and in the handbook). They count as
+  hits and as correct citations. This field is an addition to the brief.
+
+`must_contain` is mostly numbers and URLs so that it also works for answers in
+other languages. A bare number must appear as a whole number (`20` is not found
+in `2026`; `1,000`, `1000` and `1.000` are the same); other strings are matched
+ignoring case, spaces and dash style. English-only questions also use English
+phrases.
+
+**The vi and id questions, and the vi and id refusal sentences in
+`prompt_format.py`, are machine-drafted. A native speaker must review them
+before any number computed on them is quoted.** They are marked
+`needs_native_review: true`. The zh-TW questions were also written by the
+model and deserve a read by a native speaker, although they are not flagged.
+
+## Order of steps
+
+All commands that touch the backend service are run from `backend/`
+(`uv sync --frozen` once, if the environment does not exist yet).
+
+### 1. Tests (laptop, no network)
+
+```bash
+cd backend && uv run --frozen pytest ../ml/tests -q
+```
+
+### 2. Retrieval baseline (laptop, no network)
+
+```bash
+cd backend && uv run --frozen python ../ml/eval_retrieval.py
+```
+
+Writes `ml/results/retrieval_baseline.md` and `.json`. Current result:
+
+| lang | answerable | hit@1 | hit@3 | ans@3 | no result | unanswerable with passages |
+|---|---|---|---|---|---|---|
+| en | 21 | 19/21 (90%) | 21/21 (100%) | 15/21 (71%) | 0/21 (0%) | 3/3 (100%) |
+| zh-TW | 10 | 2/10 (20%) | 3/10 (30%) | 2/10 (20%) | 7/10 (70%) | 0/2 (0%) |
+| vi | 10 | 5/10 (50%) | 9/10 (90%) | 4/10 (40%) | 0/10 (0%) | 2/2 (100%) |
+| id | 10 | 5/10 (50%) | 9/10 (90%) | 3/10 (30%) | 0/10 (0%) | 1/2 (50%) |
+| all | 51 | 31/51 (61%) | 42/51 (82%) | 24/51 (47%) | 7/51 (14%) | 6/9 (67%) |
+
+How to read it:
+
+- hit@k is about documents, and there are only 8 documents, so three random
+  documents already contain the expected one more than a third of the time.
+  `ans@3` (all `must_contain` strings are in the three returned passages) is
+  the number that matters for the generator.
+- English finds the right document, but in 6 of 21 questions the returned
+  8-line passage is not the one with the answer.
+- vi and id look good on hit@3 only because the search matches substrings:
+  short Vietnamese and Indonesian words occur inside English words, and names
+  such as Cathay, NHI, ARC and NCU are shared. hit@1 is 50% and ans@3 30-40%.
+- zh-TW returns nothing for 7 of 10 questions, because a run of Chinese
+  characters is treated as a single word.
+- Unanswerable questions in Latin script almost always get passages, so the
+  search itself gives no "not covered" signal; refusing is the generator's job.
+
+Consequence: before a non-English student can be judged end to end, retrieval
+needs cross-language support (query translation, or embeddings from a model
+that is not of PRC origin). Until then use `--passages oracle` in step 6 to
+measure the generator separately.
+
+### 3. Teacher data (teacher on Colab, script on the laptop)
+
+Serve gpt-oss on Colab behind an OpenAI-compatible endpoint, then on the
+laptop:
+
+```bash
+cd backend
+uv run --frozen python ../ml/make_teacher_data.py --dry-run -n 40   # plumbing check, fake teacher
+
+export TEACHER_BASE_URL=...   # ends in /v1
+export TEACHER_API_KEY=...    # only if the endpoint needs one
+export TEACHER_MODEL=...      # model name the endpoint expects
+uv run --frozen python ../ml/make_teacher_data.py -n 2000 --out ../ml/data/train.jsonl
+```
+
+The scripts read the endpoint only from these environment variables and never
+print the URL or the key.
+
+- Passages are cut with the backend's `PASSAGE_LINES` / `PASSAGE_STEP`.
+- An answer example shows the passage with the answer plus 1-2 distractor
+  passages from other documents, in random order. (The brief says one
+  distractor; a second is added at random because evaluation prompts hold up to
+  three passages. `--max-distractors 1` restores exactly one.)
+- About 18% are refusal examples (`--refusal-rate`): the teacher sees a hidden
+  passage and writes a question it answers, the student only gets passages of
+  other documents, and the target is the fixed refusal sentence of
+  `prompt_format.py`, not teacher text.
+- Language mix: `--lang-mix en=0.55,zh-TW=0.15,vi=0.15,id=0.15` (default).
+- Cleaning (`clean_example`): reasoning channel removed (`<think>`, Gemma
+  thought channel, gpt-oss harmony `analysis` channel; the API's separate
+  reasoning field is never read); reply must be JSON; every bullet must cite;
+  every `[n]` must be a shown passage and the answering passage must be cited;
+  every number and English month name in the answer must occur in the shown
+  passages; questions equal or similar (ratio >= 0.85 after normalization) to a
+  golden question are dropped. Rejections go to `<out>.rejects.jsonl` with the
+  reason.
+- Resume: rerun the same command. Tasks already written or rejected are
+  skipped; a larger `-n` continues the same plan. A request that fails is not
+  recorded, so it is retried on the next run.
+- More teachers: `--teachers TEACHER,TEACHER2` with `TEACHER2_BASE_URL`,
+  `TEACHER2_API_KEY`, `TEACHER2_MODEL`. Tasks alternate between teachers and
+  each row records `teacher`. To add a teacher to an existing file later, run
+  it alone with a different `--seed` and the same `--out`.
+
+Read a sample of the output before training. The cleaning catches invented
+numbers and broken citations; it cannot tell whether an answer is otherwise
+faithful, whether a "refusal" question is really unanswerable from the shown
+passages, or whether a vi/id question is natural.
+
+### 4. Training (laptop with RTX 4070 8 GB, or Colab)
+
+```bash
+python -m venv .venv-train && . .venv-train/bin/activate   # not the backend environment
+pip install -r ml/requirements-train.txt
+python ml/train_lora.py --check-data --data ml/data/train.jsonl
+python ml/train_lora.py --data ml/data/train.jsonl \
+    --model aisingapore/Gemma-SEA-LION-v4.5-E2B-IT --output ml/runs/sealion-e2b
+python ml/train_lora.py --data ml/data/train.jsonl \
+    --model google/gemma-4-E2B-it --output ml/runs/gemma4-e2b
+python ml/train_lora.py --data ml/data/train.jsonl \
+    --model google/gemma-3-1b-it --output ml/runs/gemma3-1b    # gated: set HF_TOKEN
+```
+
+Defaults: 4-bit loading, batch size 1, gradient accumulation 8, sequence length
+2048, LoRA rank 16, 3 epochs, loss on the assistant turn only, vision layers
+not trained. `--backend peft` uses transformers + PEFT + TRL instead of Unsloth.
+`--merge` also writes merged 16-bit weights; `--gguf q4_k_m` exports a GGUF
+(Unsloth backend).
+
+Manual GGUF export from `<output>/merged` with llama.cpp:
+
+```bash
+git clone https://github.com/ggml-org/llama.cpp
+python llama.cpp/convert_hf_to_gguf.py ml/runs/sealion-e2b/merged \
+    --outfile sealion-e2b-tuned-f16.gguf --outtype f16
+# then quantize with llama.cpp's llama-quantize, e.g. to Q4_K_M
+```
+
+**`train_lora.py` has never been run.** It was written on a machine without a
+GPU; only `--check-data` and `--help` were executed. See "Not tested" below.
+
+### 5. Serve a student
+
+Any OpenAI-compatible server works, for example llama.cpp:
+
+```bash
+llama-server -m sealion-e2b-tuned-q4_k_m.gguf --port 8080 --jinja
+```
+
+Serve the base model the same way to get the "before" numbers. The server must
+apply the model's own chat template; a different template than in training
+makes a tuned model look worse than it is.
+
+### 6. Generation evaluation (laptop)
+
+```bash
+cd backend
+uv run --frozen python ../ml/eval_generation.py --dry-run          # plumbing check, fake model
+
+export EVAL_BASE_URL=http://127.0.0.1:8080/v1
+export EVAL_MODEL=sealion-e2b-tuned
+uv run --frozen python ../ml/eval_generation.py --run-name sealion-e2b-tuned
+uv run --frozen python ../ml/eval_generation.py --run-name sealion-e2b-tuned-oracle --passages oracle
+```
+
+Run it once per model (teacher, each base student, each tuned student); use
+`--endpoint TEACHER` to evaluate the teacher with the `TEACHER_*` variables.
+Every run is saved in `ml/results/generation/<run-name>.json` and
+`ml/results/generation_comparison.md` is rebuilt from all of them.
+
+Columns, per language:
+
+| Column | Meaning |
+|---|---|
+| answer | answerable questions answered with every `must_contain` string |
+| answer (ctx) | the same, only over questions whose prompt passages hold those strings |
+| cite | answerable questions answered with valid `[n]`, at least one pointing to a passage of the expected document |
+| refuse | unanswerable questions that were refused |
+| refuse (no ctx) | answerable questions whose passages lack the answer and that were refused (correct behaviour) |
+| over-refuse | passages hold the answer but the model refused |
+| num-err | replies containing a number that is neither in the passages nor in the question |
+
+A refusal is a reply that contains the OIA e-mail address and no `[n]`.
+With `--passages retrieved`, `answer` is capped by retrieval (`ans@3` above);
+`answer (ctx)` and the oracle run show what the model itself can do.
+
+## What has been tested
+
+Run on the development machine (no GPU, no network access to a model):
+
+- `pytest ml/tests`: 198 passed.
+- `eval_retrieval.py`: real run, numbers above.
+- `make_teacher_data.py --dry-run`, including resume and a larger `-n`.
+- `eval_generation.py --dry-run`, both `--passages` modes.
+- `train_lora.py --check-data` and `--help`.
+
+## Not tested
+
+- **No real endpoint was ever called.** `ChatClient`, the teacher prompts and
+  the JSON reply format have not been tried against gpt-oss or any other model.
+  Expect to adjust `--max-tokens` (a reasoning model spends tokens on thinking
+  before the JSON) and possibly the teacher prompt.
+- **`train_lora.py` was never executed**, in either backend. Uncertain points:
+  - whether Unsloth's `FastModel` loads `aisingapore/Gemma-SEA-LION-v4.5-E2B-IT`
+    (Unsloth documents its own `unsloth/gemma-4-E2B-it` mirror) and whether
+    replacing its chat template with Unsloth's `gemma-4` template is harmless;
+  - whether `train_on_responses_only` with `<|turn>user\n` / `<|turn>model\n`
+    masks correctly when the conversation starts with a system turn (check that
+    a decoded label sequence contains only the answer before a long run);
+  - Gemma 3's template is believed to fold the system prompt into the first
+    user turn; not checked here;
+  - in the PEFT backend: the `dtype=` argument of `from_pretrained`, PEFT's
+    default target modules for Gemma 4, `optim="adamw_torch_fused"` with 4-bit
+    weights, and whether an 8 GB card fits it at all. Google's guide also saves
+    `lm_head` and `embed_tokens` (`modules_to_save`); this script does not,
+    because no tokens are added and it would not fit in 8 GB;
+  - `requirements-train.txt` was never installed; Unsloth may conflict with the
+    minimum versions listed there;
+  - memory: Unsloth states 8-10 GB for E2B LoRA, so 8 GB is at the edge even in
+    4 bit. If it runs out, lower `--max-seq-length` first, or train on Colab;
+  - merging and GGUF export, including whether llama.cpp's converter handles a
+    merged Gemma 4 E2B checkpoint that still contains the vision and audio
+    towers.
+- The golden set has not been reviewed by anyone but its author; vi and id
+  need a native speaker.
+- The dry-run numbers of both scripts come from fake models and mean nothing.
+
+## Documentation used for `train_lora.py` (read 2026-11-10)
+
+- Unsloth, Gemma 4 fine-tuning: <https://unsloth.ai/docs/models/gemma-4/train>
+  — `FastModel.from_pretrained` / `get_peft_model` arguments
+  (`finetune_vision_layers=False` for text only), chat template `gemma-4`
+  (non-thinking, recommended for E2B/E4B), `train_on_responses_only` with
+  `<|turn>user\n` and `<|turn>model\n`, removing the leading `<bos>`,
+  batch size 1 + gradient accumulation, `adamw_8bit`, E2B LoRA at 8-10 GB,
+  a loss of 13-15 being normal for the multimodal E2B/E4B.
+- Unsloth notebooks (Gemma 4 E2B/E4B text, Gemma 3) via Context7
+  `/unslothai/notebooks`: <https://github.com/unslothai/notebooks> — the same
+  calls, and the `gemma-3` template name.
+- Unsloth, saving to GGUF:
+  <https://unsloth.ai/docs/basics/inference-and-deployment/saving-to-gguf> —
+  `save_pretrained_merged(..., save_method="merged_16bit")`,
+  `save_pretrained_gguf(..., quantization_method="q4_k_m")`,
+  `convert_hf_to_gguf.py`.
+- Google, Gemma QLoRA with Hugging Face (now targets Gemma 4):
+  <https://ai.google.dev/gemma/docs/core/huggingface_text_finetune_qlora> —
+  `transformers>=5.10.1`, `peft>=0.19.0`, `AutoModelForMultimodalLM`,
+  `BitsAndBytesConfig` nf4 + double quantization, prompt/completion dataset
+  with loss on the completion, `merge_and_unload`, end-of-turn token `<turn|>`.
+- TRL `SFTTrainer` docs via Context7 `/huggingface/trl`:
+  <https://github.com/huggingface/trl/blob/main/docs/source/sft_trainer.md> —
+  conversational prompt/completion format, `completion_only_loss` (default
+  true), `max_length`, `peft_config`, `processing_class`.
+- Model cards: <https://huggingface.co/google/gemma-4-E2B-it> (system role is
+  native, thinking is off unless enabled, `AutoModelForMultimodalLM`),
+  <https://huggingface.co/aisingapore/Gemma-SEA-LION-v4.5-E2B-IT> (MIT,
+  fine-tune of `google/gemma-4-E2B-it`), `google/gemma-3-1b-it` (gated,
+  text-only `AutoModelForCausalLM`).
