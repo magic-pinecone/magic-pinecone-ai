@@ -93,3 +93,17 @@ def sync_ncu_clubs() -> dict[str, Any]:
         save_clubs(session, clubs)
     logger.info(f"Synced {len(clubs)} clubs from NCU.")
     return {"status": "SUCCESS", "club_count": len(clubs)}
+
+
+def queue_first_club_sync(session: Session) -> None:
+    """Queue a sync when the clubs table is empty, so a fresh deployment has clubs without waiting for beat.
+
+    Beat runs the daily sync only where ENABLE_BEAT is on, which previews leave off.
+    """
+    if session.exec(select(Club).limit(1)).first() is not None:
+        return
+    try:
+        sync_ncu_clubs.delay()
+        logger.info("Clubs table is empty; queued a club sync")
+    except Exception as e:  # noqa: BLE001 - a missing broker must not stop the API from starting
+        logger.warning("Could not queue the first club sync: %s", e)

@@ -6,6 +6,7 @@ from sqlmodel.pool import StaticPool
 from app.api.deps import get_db
 from app.main import app
 from app.models.club import Club
+from app.tasks import club_scraper
 from app.tasks.club_scraper import parse_club, save_clubs
 
 RAW = {
@@ -134,3 +135,17 @@ def test_list_clubs_translates_and_caches(
     save_clubs(session, [{**club(1, "A", 1, "甲"), "description_en": "中文"}])
     english = client.get("/api/v1/clubs", params={"lang": "en"}).json()[0]
     assert english["description"] == ""  # Chinese in the English field is ignored
+
+
+def test_first_sync_is_queued_only_while_the_table_is_empty(
+    session: Session, monkeypatch: pytest.MonkeyPatch
+):
+    queued = []
+    monkeypatch.setattr(club_scraper.sync_ncu_clubs, "delay", lambda: queued.append(1))
+
+    club_scraper.queue_first_club_sync(session)
+    assert queued == [1]
+
+    save_clubs(session, [club(1, "A", 0, "學生會")])
+    club_scraper.queue_first_club_sync(session)
+    assert queued == [1]
