@@ -26,8 +26,14 @@ import org.mpc.domain.model.CourseType
 import org.mpc.domain.model.DistributionCondition
 import org.mpc.domain.model.GovGuideArticle
 import org.mpc.domain.model.GovGuides
+import org.mpc.domain.model.LocalizedText
 import org.mpc.domain.model.PasswordCardType
 import org.mpc.domain.model.PortalAuthenticationMode
+import org.mpc.domain.model.RuleContact
+import org.mpc.domain.model.RuleDegree
+import org.mpc.domain.model.RuleSource
+import org.mpc.domain.model.SourcedRule
+import org.mpc.domain.model.SourcedRules
 import org.mpc.domain.model.TimetableColorMode
 import org.mpc.domain.model.collegesFor
 import org.mpc.domain.model.rulesFor
@@ -38,6 +44,8 @@ import org.mpc.presentation.GovGuidesScreen
 import org.mpc.presentation.GraduationLanguageActions
 import org.mpc.presentation.GraduationLanguageScreen
 import org.mpc.presentation.PortalScreen
+import org.mpc.presentation.ServiceLearningRoute
+import org.mpc.presentation.ServiceLearningScreen
 import org.mpc.presentation.SettingsScreen
 import org.mpc.presentation.state.ClubUiState
 import org.mpc.presentation.state.CoursePlanUiState
@@ -48,6 +56,7 @@ import org.mpc.presentation.state.GovGuidesUiState
 import org.mpc.presentation.state.GraduationLanguageFilter
 import org.mpc.presentation.state.GraduationLanguageUiState
 import org.mpc.presentation.state.LAST_COHORT
+import org.mpc.presentation.state.SourcedRulesUiState
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.viewModel.GraduationLanguageViewModel
 import org.mpc.presentation.views.courseDetails.CourseDetailsActions
@@ -75,6 +84,11 @@ enum class ComposePreviewScenario {
 
     /** Reads the running backend through [org.mpc.presentation.viewModel.GovGuidesViewModel]. */
     GUIDES_LIVE,
+
+    SERVICE_LEARNING_POPULATED,
+
+    /** Reads the running backend through [org.mpc.presentation.viewModel.ServiceLearningViewModel]. */
+    SERVICE_LEARNING_LIVE,
 
     CLUBS_POPULATED,
     CLUBS_NO_BACKEND,
@@ -188,6 +202,14 @@ internal fun ComposePreviewScenarioContent(
         )
 
         ComposePreviewScenario.GUIDES_LIVE -> GovGuidesRoute(modifier = Modifier.fillMaxSize())
+
+        ComposePreviewScenario.SERVICE_LEARNING_POPULATED -> ServiceLearningScreen(
+            state = SourcedRulesUiState.Loaded(ComposePreviewFixtures.serviceLearning),
+            onRetry = {},
+            modifier = Modifier.fillMaxSize(),
+        )
+
+        ComposePreviewScenario.SERVICE_LEARNING_LIVE -> ServiceLearningRoute(modifier = Modifier.fillMaxSize())
 
         ComposePreviewScenario.CLUBS_POPULATED -> ClubsView(
             state = ClubUiState.Loaded(ComposePreviewFixtures.clubs.groupBy { it.categoryName }.toList()),
@@ -348,6 +370,44 @@ internal object ComposePreviewFixtures {
                 body = "外來人士在臺生活諮詢服務熱線 | 1990\n中、英、日語：24小時、全年無休。",
             ),
         ),
+    )
+
+    private val serviceLearningSource = RuleSource(
+        url = "https://service-learning.ncu.edu.tw/",
+        title = "學務處服務學習發展中心",
+        fetched = "2026-11-10",
+        quote = "服務學習課程為零學分必修，修習兩學期。",
+    )
+
+    val serviceLearning = SourcedRules(
+        contact = RuleContact(
+            name = LocalizedText("學務處服務學習發展中心", "Center for Service Learning, Office of Student Affairs"),
+            website = "https://service-learning.ncu.edu.tw/",
+            sources = listOf(serviceLearningSource),
+        ),
+        rules = listOf(
+            SourcedRule(
+                id = "course",
+                degrees = listOf(RuleDegree.BACHELOR),
+                title = LocalizedText(
+                    "服務學習課程：零學分必修，修兩學期",
+                    "Service-learning course: required, zero credits, two semesters",
+                ),
+                summary = LocalizedText(
+                    "學士班學生須修習服務學習課程兩學期，不計學分，但列為畢業條件。",
+                    "Bachelor's students take the course for two semesters. It carries no credits but counts toward graduation.",
+                ),
+                sources = listOf(serviceLearningSource),
+            ),
+            SourcedRule(
+                id = "graduate",
+                degrees = listOf(RuleDegree.GRADUATE),
+                title = LocalizedText("研究所的服務學習", "Service learning for graduate students"),
+                summary = LocalizedText("以官方公告為準。", "Follow the official announcement."),
+                sources = listOf(serviceLearningSource),
+            ),
+        ),
+        openQuestions = listOf("外籍生是否可以用其他活動折抵？"),
     )
 
     val clubs = listOf(
