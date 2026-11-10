@@ -2,6 +2,7 @@ package org.mpc.core
 
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
+import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
@@ -9,6 +10,7 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.io.IOException
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNamingStrategy
@@ -32,6 +34,12 @@ internal fun HttpClientConfig<*>.installAppDefaults() {
         level = LogLevel.HEADERS
     }
     install(HttpCache) {
+    }
+    HttpResponseValidator {
+        // The browser engine reports a failed fetch as kotlin.Error; callers treat Errors as fatal and rethrow them.
+        handleResponseExceptionWithRequest { cause, _ ->
+            if (cause !is Exception) throw IOException(cause.message, cause)
+        }
     }
     install(ContentNegotiation) {
         json(
