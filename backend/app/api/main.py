@@ -5,6 +5,7 @@ from app.api.routes import (
     catalog,
     clubs,
     courses,
+    credits,
     intl,
     scraper,
     service_learning,
@@ -16,6 +17,7 @@ api_router.include_router(campus.router)
 api_router.include_router(catalog.router)
 api_router.include_router(clubs.router)
 api_router.include_router(courses.router)
+api_router.include_router(credits.router)
 api_router.include_router(intl.router)
 api_router.include_router(scraper.router)
 api_router.include_router(service_learning.router)
