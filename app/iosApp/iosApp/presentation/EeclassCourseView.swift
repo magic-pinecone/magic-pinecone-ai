@@ -56,15 +56,15 @@ struct EeclassCourseView: View {
                 .refreshable { await load() }
             case .needsPortal:
                 EeclassUnavailableView(
-                    title: "需要登入 Portal",
+                    title: MR.strings().eeclass_needs_portal_title.localized,
                     systemImage: "person.crop.circle.badge.exclamationmark",
-                    description: "在 Portal 分頁登入後再重新整理。"
+                    description: MR.strings().eeclass_needs_portal_description.localized
                 ) { reloadID += 1 }
             case .unavailable:
                 EeclassUnavailableView(
-                    title: "無法載入課程內容",
+                    title: MR.strings().eeclass_course_unavailable.localized,
                     systemImage: "wifi.exclamationmark",
-                    description: "請稍後再試。"
+                    description: MR.strings().eeclass_try_again_later.localized
                 ) { reloadID += 1 }
             }
         } else {
@@ -76,7 +76,7 @@ struct EeclassCourseView: View {
     @ViewBuilder
     private func seeAll(_ category: EeclassCategory, count: Int) -> some View {
         if count > overviewLimit {
-            NavigationLink("查看全部 \(count) 項", value: category)
+            NavigationLink(MR.strings().eeclass_see_all.localized(count), value: category)
                 .foregroundStyle(.tint)
         }
     }
@@ -115,17 +115,17 @@ enum EeclassCategory: Hashable {
 
     var title: String {
         switch self {
-        case .bulletins: "公告"
-        case .materials: "教材"
-        case .homework: "作業"
+        case .bulletins: MR.strings().eeclass_category_bulletins.localized
+        case .materials: MR.strings().eeclass_category_materials.localized
+        case .homework: MR.strings().eeclass_category_homework.localized
         }
     }
 
     var emptyText: String {
         switch self {
-        case .bulletins: "沒有公告"
-        case .materials: "沒有教材"
-        case .homework: "沒有作業"
+        case .bulletins: MR.strings().eeclass_category_bulletins_empty.localized
+        case .materials: MR.strings().eeclass_category_materials_empty.localized
+        case .homework: MR.strings().eeclass_category_homework_empty.localized
         }
     }
 }
@@ -216,7 +216,7 @@ struct EeclassUnavailableView: View {
         } description: {
             Text(description)
         } actions: {
-            Button("重新整理", action: onRetry)
+            Button(MR.strings().eeclass_refresh.localized, action: onRetry)
         }
     }
 }

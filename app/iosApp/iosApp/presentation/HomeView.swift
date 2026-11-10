@@ -11,10 +11,10 @@ struct HomeView<CourseDestination: View>: View {
 
     var body: some View {
         content
-            .navigationTitle("首頁")
+            .navigationTitle(MR.strings().shell_tab_home.localized)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("設定", systemImage: "gear", action: onOpenSettings)
+                    Button(MR.strings().shell_settings.localized, systemImage: "gear", action: onOpenSettings)
                         .labelStyle(.iconOnly)
                 }
             }
@@ -28,10 +28,10 @@ struct HomeView<CourseDestination: View>: View {
         if let courses {
             switch courses.status {
             case .loaded where courses.courses.isEmpty:
-                ContentUnavailableView("沒有 ee-class 課程", systemImage: "books.vertical")
+                ContentUnavailableView(MR.strings().eeclass_courses_empty.localized, systemImage: "books.vertical")
             case .loaded:
                 List {
-                    Section("ee-class 課程") {
+                    Section(MR.strings().eeclass_courses_header.localized) {
                         ForEach(courses.courses, id: \.number) { course in
                             NavigationLink(
                                 course.name,
@@ -43,15 +43,15 @@ struct HomeView<CourseDestination: View>: View {
                 .refreshable { await load() }
             case .needsPortal:
                 EeclassUnavailableView(
-                    title: "需要登入 Portal",
+                    title: MR.strings().eeclass_needs_portal_title.localized,
                     systemImage: "person.crop.circle.badge.exclamationmark",
-                    description: "在 Portal 分頁登入後再重新整理。"
+                    description: MR.strings().eeclass_needs_portal_description.localized
                 ) { reloadID += 1 }
             case .unavailable:
                 EeclassUnavailableView(
-                    title: "無法載入 ee-class 課程",
+                    title: MR.strings().eeclass_courses_unavailable.localized,
                     systemImage: "wifi.exclamationmark",
-                    description: "請稍後再試。"
+                    description: MR.strings().eeclass_try_again_later.localized
                 ) { reloadID += 1 }
             }
         } else {
