@@ -15,11 +15,13 @@ Labor, National Immigration Agency, NHI Administration, Ministry of Education)
 on work permits, insurance and residence, with their text and source links.
 """
 
+from collections.abc import Iterable
 from datetime import date
 from typing import Any, Literal
 
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
+from sqlmodel import Session
 
 from app.api.deps import SessionDep
 from app.services import gov_guides, student_services, translator
@@ -303,6 +305,21 @@ class GuidesResponse(BaseModel):
     articles: list[GuideArticle]
 
 
+def _translate_guide_lines(
+    session: Session, texts: Iterable[str], lang: str, source: str
+) -> dict[str, str]:
+    """The shipped pre-translations, with the live translator filling the lines they lack."""
+    shipped = gov_guides.shipped_translations(translator.engine_code(lang))
+    found: dict[str, str] = {}
+    missing: list[str] = []
+    for text in texts:
+        if text in shipped:
+            found[text] = shipped[text]
+        else:
+            missing.append(text)
+    return found | (translate(session, missing, lang, source) if missing else {})
+
+
 @router.get("/guides", response_model=GuidesResponse)
 def get_guides(
     session: SessionDep,
@@ -326,7 +343,7 @@ def get_guides(
         articles = gov_guides.localize(
             articles,
             lang,
-            lambda texts, source: translate(session, texts, lang, source),
+            lambda texts, source: _translate_guide_lines(session, texts, lang, source),
         )
     return {"topics": topics, "articles": articles}
 

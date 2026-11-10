@@ -58,6 +58,14 @@ def topics() -> list[str]:
     return list(dict.fromkeys(article["topic"] for article in load_articles()))
 
 
+@lru_cache
+def shipped_translations(code: str) -> dict[str, str]:
+    """Lines pre-translated into a LibreTranslate `code` (en, vi, zt) by
+    scripts/translate_gov_guides.py; empty when there is no file for it."""
+    path = DATA_DIR / "translations" / f"{code}.json"
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+
+
 def _reads(article_lang: str, lang: str) -> bool:
     """Whether a reader of `lang` can read an article written in `article_lang`."""
     target = lang.lower()

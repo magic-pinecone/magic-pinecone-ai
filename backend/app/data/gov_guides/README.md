@@ -6,6 +6,7 @@
 |---|---|---|
 | `sources.json` | 來源清單，每筆有 `topic`（`work`、`insurance`、`residence`、`help`） | 手動維護 |
 | `corpus/<id>.md` | 每個頁面的全文，開頭有來源網址、抓取日與原檔雜湊 | `scripts/build_graduation_language_corpus.py --dataset gov_guides` |
+| `translations/<code>.json` | 預先翻譯好的行（`en`、`vi`、`zt` 繁體中文），原文 → 譯文；API 先用這裡的，缺的才問線上的 LibreTranslate | `scripts/translate_gov_guides.py`（Argos Translate，離線） |
 
 ## 原則
 
@@ -22,6 +23,7 @@
 ```bash
 uv run python scripts/build_graduation_language_corpus.py --dataset gov_guides --check   # 看頁面有沒有變
 uv run python scripts/build_graduation_language_corpus.py --dataset gov_guides           # 重建語料
+uv run --no-project --python 3.12 --with argostranslate python -I scripts/translate_gov_guides.py   # 補翻新的行
 ```
 
 PDF 來源需要 poppler 的 `pdftotext`。部分頁面含點閱次數，每次抓取雜湊都會不同，`--check` 會一直回報 CHANGED，要看內文差異再判斷。

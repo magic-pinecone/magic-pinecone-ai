@@ -14,7 +14,8 @@ x-backend: &backend
     REDIS_HOST: redis
     REDIS_PORT: "6379"
     REDIS_DB: "0"
-    TRANSLATOR_URL: http://translate:5000
+    # Point at a shared LibreTranslate to skip the bundled one, e.g. on a server running many previews.
+    TRANSLATOR_URL: ${TRANSLATOR_URL:-http://translate:5000}
   depends_on:
     db:
       condition: service_healthy

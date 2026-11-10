@@ -95,6 +95,8 @@ def test_guides_endpoint_translates_with_lang(client, monkeypatch):
         "translate",
         lambda _session, texts, _lang, source: fake_translate(texts, source),
     )
+    # Only the live translator here; shipped translations have their own test.
+    monkeypatch.setattr(gov_guides, "shipped_translations", lambda _code: {})
     articles = client.get("/api/v1/intl/guides", params={"lang": "vi"}).json()[
         "articles"
     ]
@@ -109,3 +111,23 @@ def test_guides_endpoint_translates_with_lang(client, monkeypatch):
 def test_guides_endpoint_rejects_a_malformed_lang(client):
     response = client.get("/api/v1/intl/guides", params={"lang": "vi;drop"})
     assert response.status_code == 422
+
+
+def test_guides_endpoint_serves_shipped_translations_first(client, monkeypatch):
+    asked = []
+
+    def live(_session, texts, _lang, source):
+        texts = list(texts)
+        asked.extend(texts)
+        return fake_translate(texts, source)
+
+    monkeypatch.setattr(intl, "translate", live)
+    title = gov_guides.load_articles()[0]["title"]
+    monkeypatch.setattr(
+        gov_guides, "shipped_translations", lambda code: {title: f"shipped {code}"}
+    )
+    articles = client.get("/api/v1/intl/guides", params={"lang": "vi"}).json()[
+        "articles"
+    ]
+    assert articles[0]["title"] == "shipped vi"
+    assert title not in asked and asked  # the live translator only gets the rest
