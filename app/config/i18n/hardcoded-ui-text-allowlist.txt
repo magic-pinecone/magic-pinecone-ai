@@ -3,7 +3,6 @@
 app/androidApp/src/main/kotlin/org/mpc/calendar/ClassCalendar.kt
 app/androidApp/src/main/kotlin/org/mpc/presentation/CourseFilterChips.kt
 app/androidApp/src/main/kotlin/org/mpc/presentation/CourseFilterSheet.kt
-app/shared/src/commonMain/kotlin/org/mpc/presentation/EeclassCourseScreen.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/formatting/CourseFilterLabel.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/formatting/EeclassFormatters.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/model/EeclassCourses.kt
