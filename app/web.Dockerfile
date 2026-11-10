@@ -5,7 +5,9 @@ FROM amazoncorretto:21-al2023 AS build
 RUN dnf install -y findutils libatomic && dnf clean all
 WORKDIR /src
 COPY . .
-RUN --mount=type=cache,target=/root/.gradle \
+# sharing=locked: Gradle cannot share its home between two builds that run at once. With the default
+# (shared) the second build gave up after a minute waiting for the journal cache lock; now it waits.
+RUN --mount=type=cache,target=/root/.gradle,sharing=locked \
     # One 2 GB build JVM with the Kotlin compiler inside it, instead of gradle.properties' 4 GB Gradle
     # plus 3 GB Kotlin daemon: the deploy server ran out of memory when two previews built at once.
     ./gradlew --no-daemon \
