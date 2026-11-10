@@ -1,0 +1,2362 @@
+{
+  "sources": [
+    {
+      "id": "lc-threshold-page",
+      "title": "大學部英外文畢業門檻",
+      "url": "https://www.lc.ncu.edu.tw/zh-TW/article/2022-08-31 16:42:00",
+      "org": "語言中心",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "",
+      "extract": "html",
+      "selector": "main"
+    },
+    {
+      "id": "lc-threshold-chart",
+      "title": "大學部英文畢業門檻（圖表）",
+      "url": "https://www.lc.ncu.edu.tw/files/system/images/self-study/英文畢業門檻英檢成績_R_2061020.png",
+      "org": "語言中心",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "",
+      "extract": "manual"
+    },
+    {
+      "id": "lc-form-general",
+      "title": "國立中央大學大學部「英文能力鑑定」審核申請表",
+      "url": "https://www.lc.ncu.edu.tw/files/system/files/國立中央大學大學部英文畢業門檻審核申請表(1151學期起適用)_0827.pdf",
+      "org": "語言中心",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度第 1 學期起",
+      "extract": "pdf"
+    },
+    {
+      "id": "lc-form-engineering",
+      "title": "工學院「外文能力鑑定」暨「外文能力獎勵」審核申請表",
+      "url": "https://www.lc.ncu.edu.tw/files/system/files/國立中央大學工學院(109學年起適用)「外文能力鑑定」暨「外文能力獎勵」審核申請表_v20241226(2).pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "109 學年度起；2024-12-26 版",
+      "extract": "pdf"
+    },
+    {
+      "id": "lc-form-science",
+      "title": "理學院學生達到外文畢業門檻及獎勵金申請表",
+      "url": "https://www.lc.ncu.edu.tw/files/system/files/理學院學生達到外文畢業門檻及獎勵金申請表(1140610適用)(1).pdf",
+      "org": "理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "2025-06-10 起",
+      "extract": "pdf"
+    },
+    {
+      "id": "lc-form-earth",
+      "title": "地球科學學院大學部「外文能力鑑定」審核申請表",
+      "url": "https://www.lc.ncu.edu.tw/files/system/files/03國立中央大學地球科學學院大學部外文畢業門檻審核申請表1130619(1).pdf",
+      "org": "地球科學學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "2024-06-19 版",
+      "extract": "pdf"
+    },
+    {
+      "id": "lc-form-liberal-arts",
+      "title": "文學院大學部「外文能力鑑定」審核申請表",
+      "url": "https://www.lc.ncu.edu.tw/files/system/files/國立中央大學文學院大學部「外文能力鑑定」審核申請表(公告版).pdf",
+      "org": "文學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "",
+      "extract": "pdf"
+    },
+    {
+      "id": "lc-remedial-english",
+      "title": "大學部進修英文",
+      "url": "https://www.lc.ncu.edu.tw/zh-TW/article/2022-08-31 17:19:16",
+      "org": "語言中心",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "",
+      "extract": "html",
+      "selector": "main"
+    },
+    {
+      "id": "lc-freshman-english",
+      "title": "大一英文（分級、免修）",
+      "url": "https://www.lc.ncu.edu.tw/zh-TW/article/2022-08-31 17:01:08",
+      "org": "語言中心",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度",
+      "extract": "html",
+      "selector": "main"
+    },
+    {
+      "id": "aa-foreign-student-admission",
+      "title": "國立中央大學外國學生入學規定",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/321/919644946.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-scholarship-guidelines",
+      "title": "國立中央大學外籍生獎助學金處理要點",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/279/211322303.pdf",
+      "org": "國際事務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "2025-04-07 修正",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-scholarship-page",
+      "title": "NCU International Student Scholarship",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2205.php?Lang=en",
+      "org": "國際事務處",
+      "lang": "en",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "",
+      "extract": "html"
+    },
+    {
+      "id": "oia-incoming-students",
+      "title": "Information for Incoming Students",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2203.php?Lang=en",
+      "org": "國際事務處",
+      "lang": "en",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "",
+      "extract": "html"
+    },
+    {
+      "id": "oia-degree-student-handbook",
+      "title": "2026 Fall Degree Student Handbook",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/115-1StudentHandbook.pdf",
+      "org": "國際事務處",
+      "lang": "en",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "115 學年度第 1 學期",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-chinese-courses-115-1",
+      "title": "115 學年度第 1 學期華語學分課程總表",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/NCUChineseCoursesforFall2026.pdf",
+      "org": "語言中心華語組",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "115 學年度第 1 學期",
+      "extract": "pdf"
+    },
+    {
+      "id": "clc-degree-student-courses",
+      "title": "國際學位生課程",
+      "url": "https://mandarin.lc.ncu.edu.tw/ChineseLanguageCenter/國際學位生課程/",
+      "org": "語言中心華語組",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "",
+      "extract": "html"
+    },
+    {
+      "id": "clc-tocfl-reward",
+      "title": "國立中央大學外國學生通過華語文能力測驗獎勵金申請暨發放要點",
+      "url": "https://mandarin.lc.ncu.edu.tw/userfiles/files/20250624065634662.pdf",
+      "org": "語言中心華語組",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-study-regulations",
+      "title": "國立中央大學學則",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/439020843.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "115 學年度教務章則彙編；115-07-15 備查",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-english-proficiency-rules",
+      "title": "國立中央大學英文能力鑑定暨進修英文課程實施細則",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/205291087.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "114-06-18 教務會議核備",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-freshman-foreign-language-measures",
+      "title": "國立中央大學大一外文暨進修英文修課及教學實施辦法",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/139156659.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "111-01-12 教務會議修正",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-freshman-foreign-language-rules",
+      "title": "國立中央大學大一外文修課及教學實施細則",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/786143607.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "113-06-19",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-freshman-chinese",
+      "title": "國立中央大學大一國文修課實施辦法",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/521084208.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度教務章則彙編",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-common-required-courses",
+      "title": "國立中央大學共同必修科目選修辦法",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/364607259.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "111-01-12 教務會議通過",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-curriculum-notes",
+      "title": "國立中央大學各學士班應修科目表使用注意事項",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/459504876.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-degree-examination-rules",
+      "title": "國立中央大學博士班、碩士班研究生學位考試細則",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/418/472805553.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "115-07-15 備查",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-degree-certificate-notice-114-2",
+      "title": "114 學年度第 2 學期頒發學位證書相關注意事項（中英對照）",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/258/304301548.pdf",
+      "org": "教務處",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "115-02-12 公告",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-study-regulations-en",
+      "title": "National Central University Study Regulations",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/1NationalCentralUniversityStudyRegulations.pdf",
+      "org": "教務處",
+      "lang": "en",
+      "degree_levels": [
+        "bachelor",
+        "master",
+        "phd"
+      ],
+      "effective": "英譯本，備查日期至 2024-01-05，比中文版舊",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-common-required-courses-en",
+      "title": "NCU Regulations on Common Required Courses",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/11GuidelinesfortheSelectionofCommonRequiredCoursesatNationalCentralUniversity.pdf",
+      "org": "教務處",
+      "lang": "en",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "2022-01-12",
+      "extract": "pdf"
+    },
+    {
+      "id": "aa-degree-examination-rules-en",
+      "title": "NCU Regulations on the Degree Examinations for Postgraduate Students",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/329/16NationalCentralUniversityRegulationsontheDegreeExaminationsforPostgraduateStudents.pdf",
+      "org": "教務處",
+      "lang": "en",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "英譯本，2025-07",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-906824067",
+      "title": "115 學年度中國文學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/906824067.pdf",
+      "org": "文學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-500649507",
+      "title": "115 學年度英美語文學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/500649507.pdf",
+      "org": "文學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-145656399",
+      "title": "115 學年度法國語文學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/145656399.pdf",
+      "org": "文學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-518506883",
+      "title": "115 學年度文學院學士班應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/518506883.pdf",
+      "org": "文學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-453992717",
+      "title": "115 學年度數學系(數學科學組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/453992717.pdf",
+      "org": "理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-746507438",
+      "title": "115 學年度數學系(計算與資料科學組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/746507438.pdf",
+      "org": "理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-479411241",
+      "title": "115 學年度物理學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/479411241.pdf",
+      "org": "理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-346206791",
+      "title": "115 學年度化學學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/346206791.pdf",
+      "org": "理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-377574411",
+      "title": "115 學年度光電科學與工程學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/377574411.pdf",
+      "org": "理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-568979643",
+      "title": "115 學年度理學院學士班應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/568979643.pdf",
+      "org": "理學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-435748891",
+      "title": "115 學年度數學領域專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/435748891.pdf",
+      "org": "理學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-737408689",
+      "title": "115 學年度化學領域專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/737408689.pdf",
+      "org": "理學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-496301445",
+      "title": "115 學年度光電科學與工程領域專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/496301445.pdf",
+      "org": "理學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-139368804",
+      "title": "115 學年度生命科學領域專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/139368804.pdf",
+      "org": "理學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-470714939",
+      "title": "115 學年度生醫科學與工程領域專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/470714939.pdf",
+      "org": "理學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-249312994",
+      "title": "115 學年度物理領域專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/249312994.pdf",
+      "org": "理學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-488872261",
+      "title": "115 學年度土木工程學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/488872261.pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-766512299",
+      "title": "115 學年度機械工程學系(光機電工程組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/766512299.pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-769126069",
+      "title": "115 學年度機械工程學系(先進材料與精密製造組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/769126069.pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-653730890",
+      "title": "115 學年度機械工程學系(智慧系統與永續能源組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/653730890.pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-496022181",
+      "title": "115 學年度機械工程學系(前瞻半導體國際組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/496022181.pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-801606499",
+      "title": "115 學年度機械工程學系課程地圖應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/801606499.pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-651975566",
+      "title": "115 學年度化學工程與材料工程學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/651975566.pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-556793567",
+      "title": "115 學年度工學院學士班應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/556793567.pdf",
+      "org": "工學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-174506928",
+      "title": "115 學年度智慧機械專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/174506928.pdf",
+      "org": "工學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-124603699",
+      "title": "115 學年度能源材料專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/124603699.pdf",
+      "org": "工學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-484565660",
+      "title": "115 學年度永續防災專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/484565660.pdf",
+      "org": "工學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-372899414",
+      "title": "115 學年度綠色科技專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/372899414.pdf",
+      "org": "工學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-461717212",
+      "title": "115 學年度企業管理學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/461717212.pdf",
+      "org": "管理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-465871625",
+      "title": "115 學年度資訊管理學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/465871625.pdf",
+      "org": "管理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-657983460",
+      "title": "115 學年度財務金融學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/657983460.pdf",
+      "org": "管理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-538172646",
+      "title": "115 學年度經濟學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/538172646.pdf",
+      "org": "管理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-543703057",
+      "title": "115 學年度資電學院各系等同課程對照表應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/543703057.pdf",
+      "org": "資訊電機學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-306922019",
+      "title": "115 學年度電機工程學系(含課程流程表)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/306922019.pdf",
+      "org": "資訊電機學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-327274484",
+      "title": "115 學年度資訊工程學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/327274484.pdf",
+      "org": "資訊電機學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-350502994",
+      "title": "115 學年度通訊工程學系(含課程流程表)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/350502994.pdf",
+      "org": "資訊電機學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-378506083",
+      "title": "115 學年度資訊電機學院學士班應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/378506083.pdf",
+      "org": "資訊電機學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-582483517",
+      "title": "115 學年度電機工程專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/582483517.pdf",
+      "org": "資訊電機學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-677307272",
+      "title": "115 學年度資訊工程專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/677307272.pdf",
+      "org": "資訊電機學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-130852954",
+      "title": "115 學年度通訊工程專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/130852954.pdf",
+      "org": "資訊電機學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-676077203",
+      "title": "115 學年度網路工程專長應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/676077203.pdf",
+      "org": "資訊電機學院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-860342863",
+      "title": "115 學年度大氣科學學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/860342863.pdf",
+      "org": "地球科學學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-649516511",
+      "title": "115 學年度地球科學學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/649516511.pdf",
+      "org": "地球科學學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-918496985",
+      "title": "115 學年度太空科學與工程學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/918496985.pdf",
+      "org": "地球科學學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-955940110",
+      "title": "115 學年度地科院學士班應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/955940110.pdf",
+      "org": "地科院學士班",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-101274633",
+      "title": "115 學年度客家語文暨社會科學學系(客家社會及政策組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/101274633.pdf",
+      "org": "客家學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-321365145",
+      "title": "115 學年度客家語文暨社會科學學系(客家語文及傳播組)應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/321365145.pdf",
+      "org": "客家學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-307189846",
+      "title": "115 學年度生命科學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/307189846.pdf",
+      "org": "生醫理工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "curriculum-115-794399332",
+      "title": "115 學年度生醫科學與工程學系應修科目及畢業條件",
+      "url": "https://pdc.adm.ncu.edu.tw/static/file/19/1019/img/419/794399332.pdf",
+      "org": "生醫理工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115 學年度入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "coe-master-english-standard",
+      "title": "國立中央大學工學院碩士班學生英文能力合格標準（115.06.10教務會議核備，中英對照）",
+      "url": "https://www.me.ncu.edu.tw/wp-content/uploads/NCUCE碩士班學生英文能力合格標準_v20260610教務會議核通.pdf",
+      "org": "工學院",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "110學年度起入學碩士班學生適用；115.03.10院會議修正、115.06.10教務會議核備",
+      "extract": "pdf"
+    },
+    {
+      "id": "me-master-rules",
+      "title": "國立中央大學機械工程學系碩士班研究生修業辦法（中英對照，113.08.14公告）",
+      "url": "https://www.me.ncu.edu.tw/wp-content/uploads/機械系_碩士班研究生修業辦法-113.08.14研公告.docx",
+      "org": "工學院／機械工程學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "113.08.14公告版",
+      "extract": "office"
+    },
+    {
+      "id": "me-phd-rules",
+      "title": "國立中央大學機械工程學系、光機電工程博士班暨能源工程研究所博士班研究生修業辦法",
+      "url": "https://www.me.ncu.edu.tw/wp-content/uploads/109博士班修業辦法110.01.19系務會議通過.pdf",
+      "org": "工學院／機械工程學系",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "110.01.19系務會議通過（109學年度版）",
+      "extract": "pdf"
+    },
+    {
+      "id": "cv-master-rules",
+      "title": "國立中央大學土木工程學系碩士班研究生修業辦法（中英對照）",
+      "url": "https://www.cv.ncu.edu.tw/wp-content/文件下載/國立中央大學土木工程學系碩士班研究生修業辦法.pdf",
+      "org": "工學院／土木工程學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "未於擷取文字中確認最新修正日期（不確定）",
+      "extract": "pdf"
+    },
+    {
+      "id": "cv-phd-rules",
+      "title": "國立中央大學土木工程學系博士班研究生修業辦法（中英對照）",
+      "url": "https://www.cv.ncu.edu.tw/wp-content/文件下載/國立中央大學土木工程學系博士班研究生修業辦法.pdf",
+      "org": "工學院／土木工程學系",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "未確認（不確定）",
+      "extract": "pdf"
+    },
+    {
+      "id": "cme-master-rules",
+      "title": "國立中央大學化學工程與材料工程學系碩士班研究生修業辦法（中英對照）",
+      "url": "https://www.cme.ncu.edu.tw/static/file/15/1015/img/284/267648763.doc",
+      "org": "工學院／化學工程與材料工程學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "未確認（.doc以粗略方式擷取文字，不確定）",
+      "extract": "office"
+    },
+    {
+      "id": "cme-phd-rules",
+      "title": "國立中央大學化學工程與材料工程學系博士班及工學博士班研究生修業辦法（中英對照）",
+      "url": "https://www.cme.ncu.edu.tw/static/file/15/1015/img/284/783918252.doc",
+      "org": "工學院／化學工程與材料工程學系",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "英文條款適用101學年度起入學新生；文件修正日期未確認",
+      "extract": "office"
+    },
+    {
+      "id": "env-master-rules",
+      "title": "114國立中央大學環境工程研究所碩士班研究生修業辦法（中英對照）",
+      "url": "https://ev.in.ncu.edu.tw/index.php/index/download/getAttachment.html?filename=Course/20250908/2cbcdc373310c75ddc92c4c1e955e6b9.pdf",
+      "org": "工學院／環境工程研究所",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "114學年度版（2025-09-08上傳）",
+      "extract": "pdf"
+    },
+    {
+      "id": "env-phd-rules",
+      "title": "114國立中央大學環境工程研究所博士班研究生修業辦法（中英對照）",
+      "url": "https://ev.in.ncu.edu.tw/index.php/index/download/getAttachment.html?filename=Course/20250908/5b4767b42006752df3c9375f234326ef.pdf",
+      "org": "工學院／環境工程研究所",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "114學年度版（2025-09-08上傳）",
+      "extract": "pdf"
+    },
+    {
+      "id": "mgt-master-english-115",
+      "title": "國立中央大學管理學院碩士班進修英文課程實施辦法（115學年度新生適用）",
+      "url": "https://mgt.ncu.edu.tw/files/system/files/碩士班進修英文課程實施辦法(115學年度適用).pdf",
+      "org": "管理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "115學年度起入學新生適用；115.03.24教務會議通過",
+      "extract": "pdf"
+    },
+    {
+      "id": "mgt-master-english-110",
+      "title": "國立中央大學管理學院碩士班進修英文課程實施辦法（110學年度入學適用）",
+      "url": "https://mgt.ncu.edu.tw/files/system/files/碩士班進修英文課程實施辦法(110學年適用).pdf",
+      "org": "管理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "110學年度起入學新生適用；111.03.16教務會議討論修正",
+      "extract": "pdf"
+    },
+    {
+      "id": "mgt-cefr-b2-table-115",
+      "title": "《管院》英語免修門檻CEFR B2成績對照表（115學年度新生適用）",
+      "url": "https://mgt.ncu.edu.tw/files/system/files/表格/CEFR B2成績對照表115適用.pdf",
+      "org": "管理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "115.05.05院課程會通過；2026.02.09更新",
+      "extract": "pdf"
+    },
+    {
+      "id": "mgt-master-english-waiver-form-115",
+      "title": "國立中央大學管理學院碩士班進修英文免修申請表（115學年度新生適用）",
+      "url": "https://mgt.ncu.edu.tw/files/system/files/規章/學生/碩士班進修英文免修申請表(115學年度新生適用) _.pdf",
+      "org": "管理學院",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "115學年度新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "imba-rules",
+      "title": "國立中央大學國際經營管理碩士學位學程（IMBA）研究生修業辦法（網頁全文）",
+      "url": "https://imba.mgt.ncu.edu.tw/graduation",
+      "org": "管理學院／IMBA",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "英文頁註記 Approved by Academic Affairs Meeting on January 11, 2023",
+      "extract": "html"
+    },
+    {
+      "id": "imba-rules-en",
+      "title": "Requirements for the International Master of Business Administration Program, NCU (English page)",
+      "url": "https://imba.mgt.ncu.edu.tw/en/graduation",
+      "org": "管理學院／IMBA",
+      "lang": "en",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "Approved by Academic Affairs Meeting on January 11, 2023",
+      "extract": "html"
+    },
+    {
+      "id": "ba-master-rules",
+      "title": "國立中央大學企業管理學系碩士班研究生修業辦法（115學年度起入學新生適用）",
+      "url": "https://ba.mgt.ncu.edu.tw/upfile/course/2/2026/202606181020443516093.pdf",
+      "org": "管理學院／企業管理學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "115學年度起入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "ba-phd-rules",
+      "title": "國立中央大學企業管理學系博士班研究生修業辦法",
+      "url": "https://ba.mgt.ncu.edu.tw/upfile/course/2/2026/202606181020141500061.pdf",
+      "org": "管理學院／企業管理學系",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "111.09.20系務會議通過等（最新修正日未逐一確認）",
+      "extract": "pdf"
+    },
+    {
+      "id": "im-master-rules",
+      "title": "國立中央大學資訊管理學系碩士班研究生修業辦法（114學年起適用）",
+      "url": "https://im.mgt.ncu.edu.tw/download/course/rules/國立中央大學資訊管理學系碩士班研究生修業辦法(修正後).pdf",
+      "org": "管理學院／資訊管理學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "114學年起適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "im-phd-rules",
+      "title": "國立中央大學資訊管理學系博士班研究生修業辦法（115學年度起適用）",
+      "url": "https://im.mgt.ncu.edu.tw/download/course/rules/資訊管理學系博士班研究生修業辦法_1150610.pdf",
+      "org": "管理學院／資訊管理學系",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "115學年度起適用（115.06.10）",
+      "extract": "pdf"
+    },
+    {
+      "id": "fm-master-rules",
+      "title": "國立中央大學財務金融學系碩士班研究生修業辦法（114學年度起入學適用）",
+      "url": "https://fm.mgt.ncu.edu.tw/files/system/files/修課事宜/114學年度 - 管理學院 財務金融學系 碩士班修業規定.docx",
+      "org": "管理學院／財務金融學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "114學年度起入學之學生適用",
+      "extract": "office"
+    },
+    {
+      "id": "fm-phd-rules",
+      "title": "國立中央大學財務金融學系博士班研究生修業辦法（115.03.24版）",
+      "url": "https://fm.mgt.ncu.edu.tw/files/system/files/PhD class/115財金系博士班研究生修業辦法1150324.docx",
+      "org": "管理學院／財務金融學系",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "檔名115（1150324）；內文載「適用114學年度起入學之學生」（不一致，需確認）",
+      "extract": "office"
+    },
+    {
+      "id": "hr-master-rules",
+      "title": "國立中央大學人力資源管理研究所碩士班研究生修業辦法（115學年度入學適用）",
+      "url": "https://hr.mgt.ncu.edu.tw/files/system/files/相關法規/人資所_碩士班研究生修業辦法(115_06_10教務會議核備).pdf",
+      "org": "管理學院／人力資源管理研究所",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "115.06.10教務會議核備；115學年度入學適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "hr-phd-rules",
+      "title": "國立中央大學人力資源管理研究所博士班研究生修業辦法（115學年度入學適用）",
+      "url": "https://hr.mgt.ncu.edu.tw/files/system/files/相關法規/人資所_博士班研究生修業辦法(115_06_10教務會議核備).pdf",
+      "org": "管理學院／人力資源管理研究所",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "115.06.10教務會議核備；115學年度入學適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "igpai-rules",
+      "title": "國立中央大學人工智慧國際碩士學位學程研究生修業辦法（112-115學年度入學適用）",
+      "url": "https://igpai.ncu.edu.tw/Upload/ConstitutionData/20260720155425521.pdf",
+      "org": "資訊電機學院／人工智慧國際碩士學位學程",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "112-115學年度入學學生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "csie-master-rules",
+      "title": "國立中央大學資訊工程學系碩士班研究生修業辦法（108學年度起入學適用）",
+      "url": "https://www.csie.ncu.edu.tw/static/file/13/1013/img/212485707.pdf",
+      "org": "資訊電機學院／資訊工程學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "108學年度起入學之學生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "csie-master-rules-en",
+      "title": "Regulations Governing Master's Students of the Department of CSIE, NCU (English version)",
+      "url": "https://www.csie.ncu.edu.tw/static/file/13/1013/img/838912190.pdf",
+      "org": "資訊電機學院／資訊工程學系",
+      "lang": "en",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "同中文版（108學年度起）",
+      "extract": "pdf"
+    },
+    {
+      "id": "csie-phd-rules",
+      "title": "國立中央大學資訊工程學系博士班研究生修業辦法",
+      "url": "https://www.csie.ncu.edu.tw/static/file/13/1013/img/170730747.pdf",
+      "org": "資訊電機學院／資訊工程學系",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "101.05.25系務會議修正等（最新日期未逐一確認）",
+      "extract": "pdf"
+    },
+    {
+      "id": "csie-phd-rules-en",
+      "title": "Regulations Governing Doctoral Students of the Department of CSIE, NCU (English version)",
+      "url": "https://www.csie.ncu.edu.tw/static/file/13/1013/img/793835443.pdf",
+      "org": "資訊電機學院／資訊工程學系",
+      "lang": "en",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "同中文版",
+      "extract": "pdf"
+    },
+    {
+      "id": "csie-phd-graduation-rules",
+      "title": "國立中央大學資訊工程學系博士班畢業辦法",
+      "url": "https://www.csie.ncu.edu.tw/static/file/13/1013/img/173324299.pdf",
+      "org": "資訊電機學院／資訊工程學系",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "96.01.16系務會議修正等",
+      "extract": "pdf"
+    },
+    {
+      "id": "csie-ai-master-rules",
+      "title": "國立中央大學資訊工程學系AI碩士班研究生修業辦法",
+      "url": "https://www.csie.ncu.edu.tw/static/file/13/1013/img/216048934.pdf",
+      "org": "資訊電機學院／資訊工程學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "108學年度起入學之學生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "ee-master-rules",
+      "title": "國立中央大學電機工程學系碩士班研究生修業辦法（114學年度起入學適用）",
+      "url": "https://data.ee.ncu.edu.tw/ApproachTableFile?id=171",
+      "org": "資訊電機學院／電機工程學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "114學年度起入學學生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "ce-master-rules",
+      "title": "國立中央大學通訊工程學系碩士班研究生修業辦法（115學年度起入學適用）",
+      "url": "https://www.ce.ncu.edu.tw/file/碩士班修業辦法-115.pdf",
+      "org": "資訊電機學院／通訊工程學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "115學年度起入學學生適用（115.04.29系務會議）",
+      "extract": "pdf"
+    },
+    {
+      "id": "ce-phd-rules",
+      "title": "國立中央大學通訊工程學系博士班學生修業辦法（中英文，109學年起適用）",
+      "url": "https://www.ce.ncu.edu.tw/file/通訊系_博班修業辦法_中英文_109學年起適用.pdf",
+      "org": "資訊電機學院／通訊工程學系",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "109學年起適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "phy-tigp-mst-rules",
+      "title": "國立中央大學物理學系與中央研究院合作辦理國際研究生學程（TIGP-MST）修業辦法（英中對照）",
+      "url": "https://www.phy.ncu.edu.tw/wp-content/uploads/2022/11/國立中央大學物理學系與中央研究院合作辦理國際研究生學程修業辦法111.01.12教務會議通過.pdf",
+      "org": "理學院／物理學系（TIGP 分子科學與技術學程）",
+      "lang": "en",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "111.01.12教務會議通過",
+      "extract": "pdf"
+    },
+    {
+      "id": "chem-master-rules",
+      "title": "國立中央大學化學學系碩士班研究生修業辦法（108.06.19）",
+      "url": "https://www.chem.ncu.edu.tw/xhr/archive/download?file=5e7dd7a01d41c859c300004d",
+      "org": "理學院／化學學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "108.06.19",
+      "extract": "pdf"
+    },
+    {
+      "id": "chem-phd-rules",
+      "title": "國立中央大學化學學系博士班研究生修業辦法（107.03.21）",
+      "url": "https://www.chem.ncu.edu.tw/xhr/archive/download?file=5e7dd79d1d41c859c300003e",
+      "org": "理學院／化學學系",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "107.03.21",
+      "extract": "pdf"
+    },
+    {
+      "id": "astro-rules",
+      "title": "國立中央大學天文研究所博士班、碩士班研究生修業辦法（102.06.18）",
+      "url": "https://www.astro.ncu.edu.tw/regulation/file/碩博士班研究生修業辦法1020618.pdf",
+      "org": "理學院／天文研究所",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "102.06.18",
+      "extract": "pdf"
+    },
+    {
+      "id": "dop-phd-rules",
+      "title": "國立中央大學光電科學與工程學系博士班研究生、光電博士學位學程(台灣聯合大學系統)暨產博生修業辦法（115學年度，中英對照）",
+      "url": "https://www.dop.ncu.edu.tw/uploads/editor_doc/1793087800_6ae0593800e76.pdf",
+      "org": "理學院／光電科學與工程學系",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "115學年度版",
+      "extract": "pdf"
+    },
+    {
+      "id": "geophysics-master-rules",
+      "title": "國立中央大學地球科學學系地球物理碩士班修業辦法（113.03.20）",
+      "url": "https://www.gep.ncu.edu.tw/storage/regulation/student/地球科學學系地球物理碩士班修業辦法(113.03.20).pdf",
+      "org": "地球科學學院／地球科學學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "113.03.20",
+      "extract": "pdf"
+    },
+    {
+      "id": "atm-master-rules",
+      "title": "國立中央大學大氣科學學系大氣物理碩士班研究生修業辦法（115.07.30）",
+      "url": "https://cloud.atm.ncu.edu.tw/share.cgi?ssid=0OEFpVY&fid=1Y3Z4x4&filename=atm_master.pdf&openfolder=forcedownload&ep=",
+      "org": "地球科學學院／大氣科學學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "115.07.30",
+      "extract": "pdf"
+    },
+    {
+      "id": "atm-phd-rules",
+      "title": "國立中央大學大氣科學學系大氣物理博士班研究生修業辦法（115.07.30）",
+      "url": "https://cloud.atm.ncu.edu.tw/share.cgi?ssid=0OEFpVY&fid=3083fng&filename=atm_phd.pdf&openfolder=forcedownload&ep=",
+      "org": "地球科學學院／大氣科學學系",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "115.07.30",
+      "extract": "pdf"
+    },
+    {
+      "id": "tigp-ess-phd-rules",
+      "title": "國立中央大學地球系統科學國際研究生博士學位學程（TIGP-ESS）修業辦法（113.03.20）",
+      "url": "https://escollege.ncu.edu.tw/app/index.php?Action=downloadfile&file=WVhSMFlXTm9Mell4TDNCMFlWODRNakZmTnpBMk16UTRORjgzTWpreU5DNXdaR1k9&fname=0054RPA0SS00NPXXVSXSJGHGSTNK25YSYSFGTSGC0025IGB5A0QOA0FGWSHGB0PKGCCCCCMLB0ZSFCWW34TWMOXSIGICDGMKNPRLXWA0SWECCDSWFHA445PKICXW55ZXDGA0IG14VWNK4025USB0QKICQP35QPVWYSDCFCDGIGHG01USTWLKB5JH44LKNPGDMO3054XS20ROWSWS01A104VSOKB4KOTWOO5401SSMKLK11MPEDXWWWMOXSPKOOMKWSJCGDYSNPIDPOTSFCB44554YSOKJGROMKPOGDYXTSZSA4WWQOSW30HCSTICWTZWA1JD44B0UWDCFGSWPKOOCDRKTWPOJDKK44JCWWXTVWSWDGYSSSROA110&cg=1510",
+      "org": "地球科學學院／TIGP-ESS",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "檔名1130320；112.09.19學程委員會修正",
+      "extract": "pdf"
+    },
+    {
+      "id": "cla-foreign-language-guidelines",
+      "title": "國立中央大學文學院學生外文能力鑑定實施要點（115.1.21施行）",
+      "url": "https://liberal.ncu.edu.tw/xhr/archive/download?file=69c399c2085777a6e1017313",
+      "org": "文學院",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115.1.21施行",
+      "extract": "pdf"
+    },
+    {
+      "id": "english-ma-rules",
+      "title": "英美語文學系碩士班研究生修業辦法（114.1.7教務會議核備）",
+      "url": "https://english.ncu.edu.tw/wp-content/uploads/2025/01/英美語文學系碩士班研究生修業辦法113學年第2次系務會議修正通過_114.1.7教務會議核備.doc",
+      "org": "文學院／英美語文學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "114.1.7教務會議核備；追溯適用所有在學學生",
+      "extract": "office"
+    },
+    {
+      "id": "english-ma-thesis-rules",
+      "title": "國立中央大學英美語文學系碩士班論文撰寫辦法（111.01.05修正）",
+      "url": "https://english.ncu.edu.tw/wp-content/uploads/2022/11/國立中央大學英美語文學系碩士班論文撰寫辦法一一O學年第二次系務會議修正通過-111.01.05.docx",
+      "org": "文學院／英美語文學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "111.01.05",
+      "extract": "office"
+    },
+    {
+      "id": "french-ma-rules",
+      "title": "國立中央大學法國語文學系碩士班研究生修業辦法（114學年度入學新生適用）",
+      "url": "https://french.ncu.edu.tw/wp-content/uploads/法國語文研究所碩士班修業辦法20240619教務會議修訂版）.pdf",
+      "org": "文學院／法國語文學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "114學年度入學新生適用；113.06.19教務會議修訂版",
+      "extract": "pdf"
+    },
+    {
+      "id": "french-ma-qualification-rules",
+      "title": "國立中央大學法國語文學系研究所碩士學位資格檢定辦法（112.06.06系務會議修訂）",
+      "url": "https://french.ncu.edu.tw/wp-content/uploads/學位資格檢定辦法（1120606系務會議修訂通過版）.pdf",
+      "org": "文學院／法國語文學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "112.06.06",
+      "extract": "pdf"
+    },
+    {
+      "id": "chinese-master-rules",
+      "title": "國立中央大學中國文學系碩士班研究生修業辦法（112學年度入學適用，中英文版）",
+      "url": "https://www.chinese.ncu.edu.tw/xhr/archive/download?file=65094c5036737614ed8ca24e",
+      "org": "文學院／中國文學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "112學年度入學學生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "chinese-phd-rules",
+      "title": "國立中央大學中國文學系博士班研究生修業辦法",
+      "url": "https://www.chinese.ncu.edu.tw/xhr/archive/download?file=65094d1e36737614ed8ca270",
+      "org": "文學院／中國文學系",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "107.02.27系務會議修正等",
+      "extract": "pdf"
+    },
+    {
+      "id": "hakka-phd-rules",
+      "title": "國立中央大學客家語文暨社會科學學系客家研究博士班研究生修業辦法（114.06.10系院通過版）",
+      "url": "https://ncu.edu.tw/hakkadepartment/uploads/download/tw/1140610 客家研究博士班研究生修業辦法_系院通過 (4).pdf",
+      "org": "客家學院／客家語文暨社會科學學系",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "114.06.10系院通過（教務會議核備版未取得，不確定是否為最終版）",
+      "extract": "pdf"
+    },
+    {
+      "id": "hakka-master-rules",
+      "title": "國立中央大學客家語文暨社會科學學系碩士班研究生修業辦法（114.10.08教務核備）",
+      "url": "https://ncu.edu.tw/hakkadepartment/uploads/download/tw/1141008 客家系碩士班研究生修業辦法_教務核備.pdf",
+      "org": "客家學院／客家語文暨社會科學學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "114.10.08教務會議核備",
+      "extract": "pdf"
+    },
+    {
+      "id": "ls-master-rules",
+      "title": "國立中央大學生命科學系碩士班研究生修業辦法",
+      "url": "https://nculs.in.ncu.edu.tw/index.php/ch/readfile/index.html?p=course&n=667a891b1fb1f.pdf",
+      "org": "生醫理工學院／生命科學系",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "111.05等修正（最新日期未逐一確認）",
+      "extract": "pdf"
+    },
+    {
+      "id": "ls-phd-rules",
+      "title": "國立中央大學生命科學系博士班研究生修業辦法（113學年度適用）",
+      "url": "https://nculs.in.ncu.edu.tw/index.php/ch/readfile/index.html?p=course&n=667a891f294c1.pdf",
+      "org": "生醫理工學院／生命科學系",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "113學年度適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "sage-english-standard",
+      "title": "國立中央大學永續與綠能科技研究學院學生英文能力合格標準",
+      "url": "https://sage.ncu.edu.tw/static/file/11/1011/img/385/380021623.pdf",
+      "org": "永續與綠能科技研究學院",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "116學年度起入學之學生適用；115.01.13管理會核備",
+      "extract": "pdf"
+    },
+    {
+      "id": "sage-remedial-english-rules",
+      "title": "國立中央大學永續與綠能科技研究學院進修英文課程施行細則",
+      "url": "https://sage.ncu.edu.tw/static/file/11/1011/img/385/715670971.pdf",
+      "org": "永續與綠能科技研究學院",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "114.12.02院課程委員會議通過",
+      "extract": "pdf"
+    },
+    {
+      "id": "sage-green-energy-master-rules",
+      "title": "永續綠能科技碩士學位學程修業辦法（114學年度入學起適用）",
+      "url": "https://sage.ncu.edu.tw/static/file/11/1011/img/388/275007608.pdf",
+      "org": "永續與綠能科技研究學院／永續綠能科技學位學程",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "114學年度入學起適用；英文條款自116學年度入學起適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "sage-leadership-phd-rules",
+      "title": "永續領導力博士學位學程修業辦法",
+      "url": "https://sage.ncu.edu.tw/static/file/11/1011/img/386/647028951.pdf",
+      "org": "永續與綠能科技研究學院／永續領導力學位學程",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "英文條款自116學年度起入學新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "sage-graduate-rules",
+      "title": "國立中央大學永續與綠能科技研究學院研究生修業辦法（SA-1）",
+      "url": "https://sage.ncu.edu.tw/static/file/11/1011/img/385/760650318.pdf",
+      "org": "永續與綠能科技研究學院",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "113.11.21等通過（更新日期113.12.13）",
+      "extract": "pdf"
+    },
+    {
+      "id": "ome-master-rules",
+      "title": "國立中央大學機械工程學系光機電工程碩士班研究生修業辦法",
+      "url": "https://www.me.ncu.edu.tw/wp-content/uploads/機械系_光機電碩士班研究生修業辦法_113.08.14研公告.docx",
+      "org": "工學院／機械工程學系光機電工程碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "113.08.14 公告版（中英對照）",
+      "extract": "office"
+    },
+    {
+      "id": "energy-master-rules",
+      "title": "國立中央大學能源工程研究所碩士班研究生修業辦法",
+      "url": "https://www.me.ncu.edu.tw/wp-content/uploads/能源所_碩士班研究生修業辦法_113.08.14研公告.docx",
+      "org": "工學院／能源工程研究所碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "113.08.14 公告版（中英對照）",
+      "extract": "office"
+    },
+    {
+      "id": "me-phd-rules-en",
+      "title": "Explanations on Degree Requirements for Ph.D. in Mechanical Engineering, Opto-Mechatronics Engineering, and Energy Engineering (NCU ME)",
+      "url": "https://www.me.ncu.edu.tw/wp-content/uploads/2018051032302.pdf",
+      "org": "工學院／機械工程學系／光機電工程博士班／能源工程研究所博士班",
+      "lang": "en",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "英文說明版（約 2018 年上傳，For Reference Only）",
+      "extract": "pdf"
+    },
+    {
+      "id": "mse-master-rules",
+      "title": "國立中央大學材料科學與工程研究所碩士班學生修業辦法",
+      "url": "https://in.ncu.edu.tw/mse/pdf/002.pdf",
+      "org": "工學院／材料科學與工程研究所碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "110.03.24 教務會議核備；110.09.07 所務會議通過",
+      "extract": "pdf"
+    },
+    {
+      "id": "mse-phd-rules",
+      "title": "國立中央大學材料科學與工程研究所博士班暨工學博士班學生修業辦法",
+      "url": "https://in.ncu.edu.tw/mse/pdf/001.pdf",
+      "org": "工學院／材料科學與工程研究所博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "113.06.19 教務會議核備",
+      "extract": "pdf"
+    },
+    {
+      "id": "ee-phd-rules",
+      "title": "(110-113適用)國立中央大學電機工程學系博士班研究生修業辦法",
+      "url": "https://data.ee.ncu.edu.tw/ApproachTableFile?id=57",
+      "org": "資訊電機學院／電機工程學系博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "110.03.24 教務會議核備；系網標示 110-113 學年度入學適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "ee-phd-rules-en",
+      "title": "Study Regulations for the Doctoral Program of the Department of Electrical Engineering at National Central University",
+      "url": "https://data.ee.ncu.edu.tw/ApproachTableFile?id=146",
+      "org": "資訊電機學院／電機工程學系博士班",
+      "lang": "en",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "英文版，標示適用 111 學年度入學生",
+      "extract": "pdf"
+    },
+    {
+      "id": "lst-phd-rules",
+      "title": "國立中央大學網路學習科技研究所博士班研究生修業辦法(第十一版)",
+      "url": "https://www.lst.ncu.edu.tw/download_file/網學所_博士班研究生修業辦法(第十一版).pdf",
+      "org": "資訊電機學院／網路學習科技研究所博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "112.06.04 教務會議核備；第七條適用 112 學年度起入學學生",
+      "extract": "pdf"
+    },
+    {
+      "id": "lst-phd-rules-en",
+      "title": "Rules for Graduated Students Studying for the PhD Program of Network Learning Technology, NCU (9th edition, English)",
+      "url": "https://www.lst.ncu.edu.tw/download_file/網學所_博班研究生修業辦法(第九版）-(English).pdf",
+      "org": "資訊電機學院／網路學習科技研究所博士班",
+      "lang": "en",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "第九版英文版（舊版；現行為第十一版）",
+      "extract": "pdf"
+    },
+    {
+      "id": "lst-master-rules",
+      "title": "國立中央大學網路學習科技研究所碩士班研究生修業辦法(第十三版)",
+      "url": "https://www.lst.ncu.edu.tw/download_file/網學_碩士班修業辦法(第十三版).pdf",
+      "org": "資訊電機學院／網路學習科技研究所碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "112.03.15 教務會議核備；適用 110 學年度起入學學生",
+      "extract": "pdf"
+    },
+    {
+      "id": "ceecs-graduate-rules",
+      "title": "資訊電機學院 學生獎勵及補助／組織章程 法規頁",
+      "url": "https://www.ceecs.ncu.edu.tw/S_reward.aspx",
+      "org": "資訊電機學院／資訊電機學院（院級）",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "查閱日 2026-11-09",
+      "extract": "html"
+    },
+    {
+      "id": "math-master-rules",
+      "title": "國立中央大學數學系碩士班研究生修業辦法",
+      "url": "https://w2.math.ncu.edu.tw/drive/files/105_master_rule.pdf",
+      "org": "理學院／數學系碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "104.06.24 教務會議核備",
+      "extract": "pdf"
+    },
+    {
+      "id": "math-phd-rules",
+      "title": "國立中央大學數學系博士班研究生修業辦法",
+      "url": "https://w2.math.ncu.edu.tw/drive/files/105_phd_rule.pdf",
+      "org": "理學院／數學系博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "104.06.24 教務會議核備",
+      "extract": "pdf"
+    },
+    {
+      "id": "math-graduate-rules",
+      "title": "國立中央大學數學系碩、博士生修課及資格考核辦法",
+      "url": "https://w2.math.ncu.edu.tw/drive/files/100_qualifications.pdf",
+      "org": "理學院／數學系碩士班／博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "100.06.23 教務會議核備",
+      "extract": "pdf"
+    },
+    {
+      "id": "stat-graduate-rules",
+      "title": "國立中央大學統計研究所博士班、碩士班研究生修業辦法",
+      "url": "https://drive.google.com/uc?export=download&id=1varcx10YSOzMdVNz0PdKv2ZREnr-TpJb",
+      "org": "理學院／統計研究所碩士班／博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "106.03.15 教務會議核備；107 學年度起入學之學生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "stat-phd-rules",
+      "title": "國立中央大學統計研究所博士資格考核辦法",
+      "url": "https://drive.google.com/uc?export=download&id=1Uj0uC4URM0NKRLCE5PaWclPVt8CpNAc0",
+      "org": "理學院／統計研究所博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "所務會議歷次修正（見檔案）",
+      "extract": "pdf"
+    },
+    {
+      "id": "phy-graduate-rules",
+      "title": "國立中央大學物理學系碩、博士班研究生修業辦法 Regulation of Course Requirements for Master and PhD Programs",
+      "url": "https://www.phy.ncu.edu.tw/wp-content/uploads/2021/01/%E5%9C%8B%EF%A7%B7%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8%E7%89%A9%EF%A7%A4%E5%AD%B8%E7%B3%BB%E7%A2%A9%E3%80%81%E5%8D%9A%E5%A3%AB%E7%8F%AD%E7%A0%94%E7%A9%B6%E7%94%9F%E4%BF%AE%E6%A5%AD%E8%BE%A6%E6%B3%951050615%E6%95%99%E5%8B%99%E6%9C%83%E8%AD%B0%E9%80%9A%E9%81%8E.pdf",
+      "org": "理學院／物理學系碩士班／博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "105.06.15 教務會議通過（系網現行唯一版本）",
+      "extract": "pdf"
+    },
+    {
+      "id": "phy-phd-rules",
+      "title": "國立中央大學物理學系博士學位候選人之資格與資格考試辦法",
+      "url": "https://www.phy.ncu.edu.tw/wp-content/uploads/2022/01/國立中央大學物理學系博士學位候選人之資格與資格考試辦法（111.01.12教務會議通過.pdf",
+      "org": "理學院／物理學系博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "111.01.12 教務會議通過",
+      "extract": "pdf"
+    },
+    {
+      "id": "dop-master-rules",
+      "title": "國立中央大學光電科學與工程學系碩士班研究生修業辦法",
+      "url": "https://www.dop.ncu.edu.tw/uploads/editor_doc/1793088096_6ae05a6014105.pdf",
+      "org": "理學院／光電科學與工程學系碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "本辦法自 112 學年度開始實施（系網 112–115 學年度連結皆為同一內容）",
+      "extract": "pdf"
+    },
+    {
+      "id": "dop-semiconductor-master-rules",
+      "title": "國立中央大學光電科學與工程學系半導體光電科技碩士班研究生修業辦法",
+      "url": "https://www.dop.ncu.edu.tw/uploads/editor_doc/1777361439_69f0621f1c570.pdf",
+      "org": "理學院／光電科學與工程學系半導體光電科技碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "2025.10 教務會議核備；115 學年度起入學學生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "dop-lighting-master-rules",
+      "title": "國立中央大學光電科學與工程學系照明與顯示科技碩士班研究生修業辦法",
+      "url": "https://www.dop.ncu.edu.tw/uploads/editor_doc/1777361296_69f0619047210.pdf",
+      "org": "理學院／光電科學與工程學系照明與顯示科技碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "本辦法自 112 學年度開始實施",
+      "extract": "pdf"
+    },
+    {
+      "id": "cos-bachelor-foreign-language-standard",
+      "title": "國立中央大學理學院外文能力鑑定考試合格標準",
+      "url": "https://science.ncu.edu.tw/static/file/28/1028/img/196/733018384.pdf",
+      "org": "理學院／理學院（院級）",
+      "lang": "zh",
+      "degree_levels": [
+        "bachelor"
+      ],
+      "effective": "115.03.24 教務會議通過",
+      "extract": "pdf"
+    },
+    {
+      "id": "icn-master-rules",
+      "title": "國立中央大學認知神經科學研究所碩士班研究生修業辦法",
+      "url": "https://icn.ncu.edu.tw/Uploads/files/20260224135650.pdf",
+      "org": "生醫理工學院／認知神經科學研究所碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "115.01.14 院務會議審議通過",
+      "extract": "pdf"
+    },
+    {
+      "id": "icn-master-rules-en",
+      "title": "認知神經科學研究所碩士班研究生修業辦法 Master’s Program Course Requirements（中英對照）",
+      "url": "https://icn.ncu.edu.tw/Uploads/files/20241014082526.pdf",
+      "org": "生醫理工學院／認知神經科學研究所碩士班",
+      "lang": "en",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "中英對照版（2024-10 上傳，對應 111.03.16 教務會議核備版）",
+      "extract": "pdf"
+    },
+    {
+      "id": "icn-phd-rules",
+      "title": "國立中央大學認知神經科學研究所博士班研究生修業辦法",
+      "url": "https://icn.ncu.edu.tw/Uploads/files/20210721125736.pdf",
+      "org": "生醫理工學院／認知神經科學研究所博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "110.03.24 教務會議核備；適用所有在學學生",
+      "extract": "pdf"
+    },
+    {
+      "id": "icn-phd-rules-en",
+      "title": "認知神經科學研究所博士班研究生修業辦法 Regulations of Course Requirements for the PhD Program（中英對照）",
+      "url": "https://icn.ncu.edu.tw/Uploads/files/20210607124258.pdf",
+      "org": "生醫理工學院／認知神經科學研究所博士班",
+      "lang": "en",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "中英對照版（109.11.03 所務會議通過版）",
+      "extract": "pdf"
+    },
+    {
+      "id": "tigp-ins-phd-rules",
+      "title": "國立中央大學跨領域神經科學國際研究生博士學位學程修業辦法(中央研究院與中央大學認知神經科學研究所合作)",
+      "url": "https://icn.ncu.edu.tw/Uploads/files/20240904180659.pdf",
+      "org": "生醫理工學院／跨領域神經科學國際研究生博士學位學程(TIGP-INS，中央研究院)",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "111.02.23 生醫理工學院院課程委員會通過",
+      "extract": "pdf"
+    },
+    {
+      "id": "ust-neuroscience-phd-rules",
+      "title": "國立中央大學跨領域神經科學博士學位學程(台灣聯合大學系統)研究生修業辦法",
+      "url": "https://icn.ncu.edu.tw/Uploads/files/20240904180930.pdf",
+      "org": "生醫理工學院／跨領域神經科學博士學位學程(台灣聯合大學系統)",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "107.10.09 教務會議核備；適用 105 學年度起入學之學生",
+      "extract": "pdf"
+    },
+    {
+      "id": "geophysics-phd-rules",
+      "title": "國立中央大學地球科學學系地球物理博士班修業辦法（106.05.17 舊版）",
+      "url": "https://www.gep.ncu.edu.tw/storage/regulation/student/地球科學學系地球物理博士班研修規定(106.05.17).pdf",
+      "org": "地球科學學院／地球科學學系地球物理博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "106.05.17 系務會議修訂通過（舊版）",
+      "extract": "pdf"
+    },
+    {
+      "id": "geo-master-rules",
+      "title": "國立中央大學應用地質研究所碩士班研究生修業辦法 Academic Guidelines for Master Program",
+      "url": "https://geo.ncu.edu.tw/static/file/5/1005/img/128/244263537.pdf",
+      "org": "地球科學學院／應用地質研究所碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "110.01.13 教務會議核備（中英對照）",
+      "extract": "pdf"
+    },
+    {
+      "id": "geo-phd-rules",
+      "title": "國立中央大學應用地質研究所博士班研究生修業辦法 Academic Guidelines for Ph.D. Program",
+      "url": "https://geo.ncu.edu.tw/static/file/5/1005/img/128/894281872.pdf",
+      "org": "地球科學學院／應用地質研究所博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "110.06.23 教務會議核備（中英對照）",
+      "extract": "pdf"
+    },
+    {
+      "id": "ihos-master-rules",
+      "title": "國立中央大學地球科學學院水文與海洋科學研究所碩士班研修辦法 Academic Guidelines for Master Program",
+      "url": "https://www.ihos.ncu.edu.tw/var/file/4/1004/attach/82/pta_41_387171_46719.pdf",
+      "org": "地球科學學院／水文與海洋科學研究所碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "101.10.17 教務會議核備通過（中英對照）",
+      "extract": "pdf"
+    },
+    {
+      "id": "ihos-phd-rules",
+      "title": "國立中央大學地球科學學院水文與海洋科學研究所博士班研修辦法 Academic Guidelines for Ph.D. Program",
+      "url": "https://www.ihos.ncu.edu.tw/var/file/4/1004/attach/83/pta_612_3256164_74126.pdf",
+      "org": "地球科學學院／水文與海洋科學研究所博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "105.06.15 教務會議核備通過（中英對照）",
+      "extract": "pdf"
+    },
+    {
+      "id": "rsst-master-rules",
+      "title": "國立中央大學太空及遙測研究中心遙測科技碩士學位學程研究生修業辦法 Academic Regulation for Master of Science Program in Remote Sensing Science and Technology",
+      "url": "https://www.csrsr.ncu.edu.tw/degree/doc/遙測科技碩士學位學程修業辦法_115核備.pdf",
+      "org": "中心、處室（太空及遙測研究中心）／遙測科技碩士學位學程",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "115.03.24 教務會議核備（中英對照）",
+      "extract": "pdf"
+    },
+    {
+      "id": "ust-est-phd-rules",
+      "title": "國立中央大學太空及遙測研究中心環境科技博士學位學程(台灣聯合大學系統)修業辦法 Academic Regulation for International Ph.D. Program in Environmental Science and Technology (UST)",
+      "url": "https://www.csrsr.ncu.edu.tw/degree/doc/環境科技博士學位學程修業辦法_112.03.15教務會議核備.pdf",
+      "org": "中心、處室（太空及遙測研究中心）／環境科技博士學位學程(台灣聯合大學系統)",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "112.03.15 教務會議核備（中英對照）",
+      "extract": "pdf"
+    },
+    {
+      "id": "csrsr-graduate-rules",
+      "title": "國立中央大學環境科技博士學位學程/遙測科技碩士學位學程學位論文品質與管考準則",
+      "url": "https://www.csrsr.ncu.edu.tw/degree/doc/太遙中心學位學程論文品管準則_中英文版_1130701.pdf",
+      "org": "中心、處室（太空及遙測研究中心）／遙測科技碩士學位學程／環境科技博士學位學程",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "113.07.01（中英文版）",
+      "extract": "pdf"
+    },
+    {
+      "id": "econ-graduate-rules",
+      "title": "國立中央大學經濟學系碩士班、博士班研究生修業辦法(115學年度入學生適用)",
+      "url": "https://ec.mgt.ncu.edu.tw/files/system/files/Regulations/經濟系研究所修業規定(115學年入學生適用)-115年06月10日教務會議核備.pdf",
+      "org": "管理學院／經濟學系碩士班／博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "115.06.10 教務會議核備；115 學年度入學生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "econ-graduate-rules-2",
+      "title": "國立中央大學經濟學系碩士班、博士班研究生修業辦法(追溯至114學年度起入學生適用)",
+      "url": "https://ec.mgt.ncu.edu.tw/files/system/files/Regulations/經濟系研究所修業規定(追溯適用114學年入學生)-1141217教務會議通過.pdf",
+      "org": "管理學院／經濟學系碩士班／博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "114.12.17 教務會議核備；追溯至 114 學年度起入學生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "iim-master-rules",
+      "title": "國立中央大學工業管理研究所碩士班研究生修業辦法",
+      "url": "https://ia.mgt.ncu.edu.tw/docs/工管所_碩士班研究生修業辦法-1140618教務會議核備.pdf",
+      "org": "管理學院／工業管理研究所碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "114.06.18 教務會議核備",
+      "extract": "pdf"
+    },
+    {
+      "id": "iim-phd-rules",
+      "title": "國立中央大學工業管理研究所博士班研究生修業辦法",
+      "url": "https://ia.mgt.ncu.edu.tw/uploads/cms/0325ed83363e494f9823fac6c4da8858.pdf",
+      "org": "管理學院／工業管理研究所博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "系網標示 115.10.14 教務會議核備",
+      "extract": "pdf"
+    },
+    {
+      "id": "acc-master-rules",
+      "title": "國立中央大學會計研究所碩士班研究生修業辦法(115學年度(含)以後入學生適用)",
+      "url": "https://acc.mgt.ncu.edu.tw/files/system/files/會計所_碩士班研究生修業辦法1150610教務會議核備(115學年入學適用).pdf",
+      "org": "管理學院／會計研究所碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "115.06.10 教務會議核備；115 學年度(含)以後入學生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "acc-master-rules-2",
+      "title": "國立中央大學會計研究所碩士班研究生修業辦法(112學年度(含)以後入學生適用)",
+      "url": "https://acc.mgt.ncu.edu.tw/files/system/files/會計所_碩士班研究生修業辦法1130110教務會議核備(112學年入學適用).pdf",
+      "org": "管理學院／會計研究所碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "113.01.10 教務會議核備；112 學年度(含)以後入學生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "ie-master-rules",
+      "title": "國立中央大學產業經濟研究所碩士班研究生修業辦法(114入學適用)",
+      "url": "https://ie.mgt.ncu.edu.tw/files/system/files/碩士班修業辦法(114入學適用).pdf",
+      "org": "管理學院／產業經濟研究所碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "114.05.06 所務會議第十一次修正通過；適用於 114 學年度(含)以後入學生",
+      "extract": "pdf"
+    },
+    {
+      "id": "ie-master-rules-en",
+      "title": "Regulations for Master Degree of Graduate Institute of Industrial Economics, National Central University（110 入學適用英文版）",
+      "url": "https://ie.mgt.ncu.edu.tw/files/system/files/國立中央大學產業經濟研究所碩士班研究生修業辦法 (1100113校通過)英文版本1130814.pdf",
+      "org": "管理學院／產業經濟研究所碩士班",
+      "lang": "en",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "110.01.13 校通過版之英文譯本（1130814）；適用 110 學年度(含)以後入學生",
+      "extract": "pdf"
+    },
+    {
+      "id": "ie-phd-rules",
+      "title": "國立中央大學產業經濟研究所博士班研究生修業辦法",
+      "url": "https://ie.mgt.ncu.edu.tw/files/system/files/產經所_博士班修業辦法(20140611教務會議核備).pdf",
+      "org": "管理學院／產業經濟研究所博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "103.06.11 教務會議核備（系網中文版）",
+      "extract": "pdf"
+    },
+    {
+      "id": "phi-master-rules",
+      "title": "國立中央大學哲學研究所碩士班研究生修業辦法",
+      "url": "https://in.ncu.edu.tw/phi/docs/master/masterAttendanceWay0614.pdf",
+      "org": "文學院／哲學研究所碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "103.10.15 教務會議核備通過（檔內最末日期）",
+      "extract": "pdf"
+    },
+    {
+      "id": "phi-phd-rules",
+      "title": "國立中央大學哲學研究所博士班研究生修業辦法",
+      "url": "https://phi.ncu.edu.tw/storage/documents/bNfs40I68QXf3Nrc7UQm7FLQucm21xvCcqFzgrNk.pdf",
+      "org": "文學院／哲學研究所博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "本規定追溯自 110 學年度起入學學生",
+      "extract": "pdf"
+    },
+    {
+      "id": "his-master-rules",
+      "title": "國立中央大學歷史研究所碩士班研究生修業辦法（追溯至 109 學年度起入學生適用）",
+      "url": "https://his.ncu.edu.tw/var/file/18/1018/attach/60/pta_945_5378276_11455.pdf",
+      "org": "文學院／歷史研究所碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "114.10.08 教務會議核備；追溯至 109 學年度起入學生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "his-master-rules-2",
+      "title": "國立中央大學歷史研究所研究生修業辦法（108.2.25 所務會議通過修訂，舊版）",
+      "url": "https://his.ncu.edu.tw/var/file/18/1018/attach/60/pta_695_8948906_56656.pdf",
+      "org": "文學院／歷史研究所碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "108.03.20 教務會議核備（舊版；適用 108 學年度(含)以前入學生）",
+      "extract": "pdf"
+    },
+    {
+      "id": "art-master-rules",
+      "title": "國立中央大學藝術學研究所碩士班研究生修業辦法（113 學年度入學起新生適用）",
+      "url": "https://art.ncu.edu.tw/word/藝研所_碩士班研究生修業辦法_官網公告.pdf",
+      "org": "文學院／藝術學研究所碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "113.10.09 教務會議核備；113 學年度入學起新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "lrn-graduate-rules",
+      "title": "國立中央大學學習與教學研究所碩士班、博士班研究生修業辦法（第13版）",
+      "url": "https://lrn.ncu.edu.tw/wp-content/uploads/2025/10/學習所_博碩士班研究生修業辦法_第13版-教務會議核備_1120315.pdf",
+      "org": "文學院／學習與教學研究所碩士班／博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "112.03.15 教務會議核備",
+      "extract": "pdf"
+    },
+    {
+      "id": "lawgov-master-rules",
+      "title": "國立中央大學法律與政府學系碩士班研究生修業辦法",
+      "url": "https://www.lawgov.ncu.edu.tw/p/406-1002-4989,r271.php?Lang=zh-tw",
+      "org": "客家學院／法律與政府學系碩士班（原法律與政府研究所）",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "115.06.10 教務會議核備",
+      "extract": "html"
+    },
+    {
+      "id": "sbb-graduate-rules",
+      "title": "國立中央大學生醫科學與工程學系系統生物與生物資訊研究生修業辦法",
+      "url": "https://ncu.edu.tw/dbse/upload/page/1140319生醫系_系統生物與生物資訊研究生修業辦法.pdf",
+      "org": "生醫理工學院／生醫科學與工程學系系統生物與生物資訊碩士班／博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "114.03.19 教務會議核備；113 學年度起入學之新生適用",
+      "extract": "pdf"
+    },
+    {
+      "id": "bme-master-rules",
+      "title": "國立中央大學生醫科學與工程學系生物醫學工程碩士班研究生修業辦法",
+      "url": "https://ncu.edu.tw/dbse/upload/page/1140319生醫系_生物醫學工程碩士班研究生修業辦法.pdf",
+      "org": "生醫理工學院／生醫科學與工程學系生物醫學工程碩士班",
+      "lang": "zh",
+      "degree_levels": [
+        "master"
+      ],
+      "effective": "114.03.19 教務會議核備",
+      "extract": "pdf"
+    },
+    {
+      "id": "bme-phd-rules",
+      "title": "國立中央大學生醫科學與工程學系生物醫學工程博士班研究生修業辦法",
+      "url": "https://ncu.edu.tw/dbse/upload/page/1140319生醫系_生物醫學工程博士班研究生修業辦法.pdf",
+      "org": "生醫理工學院／生醫科學與工程學系生物醫學工程博士班",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "114.03.19 教務會議核備",
+      "extract": "pdf"
+    },
+    {
+      "id": "tim-phd-rules",
+      "title": "國立中央大學生醫科學與工程學系跨領域轉譯醫學博士班研究生修業辦法",
+      "url": "https://ncu.edu.tw/dbse/upload/page/1140319生醫系_跨領域轉譯醫學博士班研究生修業辦法.pdf",
+      "org": "生醫理工學院／生醫科學與工程學系跨領域轉譯醫學博士班（原跨領域轉譯醫學研究所）",
+      "lang": "zh",
+      "degree_levels": [
+        "phd"
+      ],
+      "effective": "114.03.19 教務會議核備",
+      "extract": "pdf"
+    },
+    {
+      "id": "chst-graduate-rules",
+      "title": "生醫理工學院 下載專區－學生相關（法規清單，網站 API 回傳內容）",
+      "url": "https://ncu.edu.tw/chst/spec/api/web/download/f0a2693c-4bb6-4adb-8352-98d33564ae9f",
+      "org": "生醫理工學院／生醫理工學院（院級）",
+      "lang": "zh",
+      "degree_levels": [
+        "master",
+        "phd"
+      ],
+      "effective": "查閱日 2026-11-09",
+      "extract": "html"
+    }
+  ]
+}

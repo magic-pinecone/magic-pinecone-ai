@@ -1,0 +1,33 @@
+<resources>
+    <string name="intl_title">Graduation language requirements</string>
+    <string name="intl_show_chinese">中文</string>
+    <string name="intl_show_english">English</string>
+    <string name="intl_degree_bachelor">Bachelor</string>
+    <string name="intl_degree_master">Master</string>
+    <string name="intl_degree_phd">PhD</string>
+    <string name="intl_all_colleges">All colleges</string>
+    <string name="intl_admission_year">Admission year (ROC academic year)</string>
+    <string name="intl_cohort">%1$s (%2$s)</string>
+    <string name="intl_earlier_year">Earlier year</string>
+    <string name="intl_later_year">Later year</string>
+    <string name="intl_apply_at">Where to apply: %1$s</string>
+    <string name="intl_english_tests">English tests accepted (any one)</string>
+    <string name="intl_other_languages">Other languages accepted</string>
+    <string name="intl_international_students">For international students</string>
+    <string name="intl_alternatives">If you do not reach the score</string>
+    <string name="intl_procedure">How to get it verified</string>
+    <string name="intl_notes">Notes</string>
+    <string name="intl_sources">Official sources</string>
+    <string name="intl_no_rule">No rule was found for this selection. That does not mean there is no requirement: check your department\'s own regulations.</string>
+    <string name="intl_no_rule_found">Checked, no language rule found</string>
+    <string name="intl_not_checked">Not checked yet</string>
+    <string name="intl_chinese">Chinese language</string>
+    <string name="intl_chinese_requirements">What affects graduation</string>
+    <string name="intl_not_graduation_requirements">Often mistaken for graduation requirements</string>
+    <string name="intl_open_questions">Still to confirm with the university</string>
+    <string name="intl_unofficial_translation">English text is an unofficial translation; the Chinese original prevails.</string>
+    <string name="intl_verified_on">Checked against official sources on %1$s</string>
+    <string name="intl_needs_backend">This page needs a Magic Pinecone backend. Enter its address under Settings › %1$s.</string>
+    <string name="intl_failed">Could not load the requirements.</string>
+    <string name="intl_retry">Try again</string>
+</resources>

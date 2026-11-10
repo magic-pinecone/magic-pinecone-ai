@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -85,6 +86,7 @@ import org.mpc.navigation.EeclassBulletinRoute
 import org.mpc.navigation.EeclassCategoryRoute
 import org.mpc.navigation.EeclassCourseRoute
 import org.mpc.navigation.HomeRoot
+import org.mpc.navigation.InternationalRoot
 import org.mpc.navigation.PortalRoot
 import org.mpc.navigation.PortalWebRoute
 import org.mpc.navigation.SettingsRoute
@@ -97,6 +99,8 @@ import org.mpc.presentation.EeclassBulletinScreen
 import org.mpc.presentation.EeclassCategoryScreen
 import org.mpc.presentation.EeclassCourseScreen
 import org.mpc.presentation.EeclassHomeScreen
+import org.mpc.presentation.GraduationLanguageActions
+import org.mpc.presentation.GraduationLanguageScreen
 import org.mpc.presentation.PortalScreen
 import org.mpc.presentation.PortalWebScreen
 import org.mpc.presentation.SettingsScreen
@@ -105,7 +109,9 @@ import org.mpc.presentation.theme.AndroidMpcTheme
 import org.mpc.presentation.viewModel.AppSettingsViewModel
 import org.mpc.presentation.viewModel.BackendEndpointViewModel
 import org.mpc.presentation.viewModel.CoursePlanViewModel
+import org.mpc.presentation.viewModel.GraduationLanguageViewModel
 import org.mpc.shared.MR
+import org.mpc.shared.intl_title
 import org.mpc.shared.shell_app_title
 import org.mpc.shared.shell_back
 import org.mpc.shared.shell_calendar_export_failed
@@ -126,6 +132,7 @@ import org.mpc.shared.shell_settings
 import org.mpc.shared.shell_share
 import org.mpc.shared.shell_tab_course_selection
 import org.mpc.shared.shell_tab_home
+import org.mpc.shared.shell_tab_international
 import org.mpc.shared.shell_tab_portal
 import org.mpc.shared.shell_view_selected_courses
 
@@ -288,6 +295,22 @@ private fun AndroidPrimaryNavigation(
                             ),
                         )
                     },
+                )
+            }
+            entry<InternationalRoot> {
+                val viewModel: GraduationLanguageViewModel = metroViewModel()
+                val state by viewModel.uiState.collectAsStateWithLifecycle()
+                GraduationLanguageScreen(
+                    state = state,
+                    actions = remember(viewModel) {
+                        GraduationLanguageActions(
+                            onSelectDegree = viewModel::selectDegree,
+                            onSelectCollege = viewModel::selectCollege,
+                            onSelectCohort = viewModel::selectCohort,
+                            onRetry = viewModel::refresh,
+                        )
+                    },
+                    modifier = Modifier.fillMaxSize(),
                 )
             }
             entry<PortalWebRoute> { route ->
@@ -586,6 +609,8 @@ private data class PrimaryTopBarState(
 
         selectedTopLevelRoute == PortalRoot -> stringResource(MR.strings.shell_tab_portal)
 
+        selectedTopLevelRoute == InternationalRoot -> stringResource(MR.strings.intl_title)
+
         else -> stringResource(MR.strings.shell_app_title)
     }
 
@@ -672,4 +697,5 @@ private val topLevelNavigationItems =
         TopLevelNavigationItem(HomeRoot, MR.strings.shell_tab_home, Icons.Default.Home),
         TopLevelNavigationItem(CoursePlanningRoot, MR.strings.shell_tab_course_selection, Icons.Default.DateRange),
         TopLevelNavigationItem(PortalRoot, MR.strings.shell_tab_portal, Icons.Default.AccountCircle),
+        TopLevelNavigationItem(InternationalRoot, MR.strings.shell_tab_international, Icons.Default.Language),
     )

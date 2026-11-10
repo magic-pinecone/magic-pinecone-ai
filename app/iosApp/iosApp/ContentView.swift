@@ -42,6 +42,19 @@ struct ContentView: View {
                 }
                 .ignoresSafeArea(.container, edges: bottomSafeAreaEdges)
             }
+            Tab("Intl", systemImage: "globe", value: AppTab.international) {
+                NavigationStack {
+                    GraduationLanguageComposeView(sharedHost: sharedHost)
+                        .ignoresSafeArea(.container, edges: .bottom)
+                        .navigationTitle("International")
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar {
+                            ToolbarItem(placement: .topBarTrailing) {
+                                Button("設定", systemImage: "gearshape", action: openSettings)
+                            }
+                        }
+                }
+            }
         }
         .id(appLanguageTag)
         .sheet(isPresented: $isShowingSettings) {
@@ -91,6 +104,18 @@ struct ContentView: View {
 
     private func openSettings() {
         isShowingSettings = true
+    }
+}
+
+/// The graduation language requirements, drawn by the shared Compose screen.
+private struct GraduationLanguageComposeView: UIViewControllerRepresentable {
+    let sharedHost: IosSharedHost
+
+    func makeUIViewController(context: Context) -> some UIViewController {
+        sharedHost.graduationLanguageScreenController()
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
     }
 }
 
