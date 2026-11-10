@@ -8,5 +8,6 @@ app/shared/src/commonMain/kotlin/org/mpc/presentation/formatting/EeclassFormatte
 app/shared/src/commonMain/kotlin/org/mpc/presentation/model/EeclassCourses.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/model/PortalAccount.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/preview/ComposePreviewScenarios.kt
+app/shared/src/commonMain/kotlin/org/mpc/presentation/preview/GraduationLanguagePreviewFixture.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/views/coursePlanning/CoursePlanningTimetableSuccessView.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/views/coursePlanning/components/CourseCard.kt

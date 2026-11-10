@@ -20,14 +20,23 @@ import org.mpc.domain.model.CourseSummary
 import org.mpc.domain.model.CourseTime
 import org.mpc.domain.model.CourseType
 import org.mpc.domain.model.DistributionCondition
+import org.mpc.domain.model.GraduationLanguage
 import org.mpc.domain.model.PasswordCardType
 import org.mpc.domain.model.PortalAuthenticationMode
 import org.mpc.domain.model.TimetableColorMode
+import org.mpc.domain.model.collegesFor
+import org.mpc.domain.model.rulesFor
+import org.mpc.presentation.GraduationLanguageActions
+import org.mpc.presentation.GraduationLanguageScreen
 import org.mpc.presentation.PortalScreen
 import org.mpc.presentation.SettingsScreen
 import org.mpc.presentation.state.CoursePlanUiState
 import org.mpc.presentation.state.CourseSearchError
 import org.mpc.presentation.state.CourseSearchResultUiState
+import org.mpc.presentation.state.FIRST_COHORT
+import org.mpc.presentation.state.GraduationLanguageFilter
+import org.mpc.presentation.state.GraduationLanguageUiState
+import org.mpc.presentation.state.LAST_COHORT
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.views.courseDetails.CourseDetailsActions
 import org.mpc.presentation.views.courseDetails.CourseDetailsUiState
@@ -50,10 +59,21 @@ enum class ComposePreviewScenario {
     PORTAL,
     SETTINGS,
     SLOT_PICKER,
+    GRADUATION_POPULATED,
+    GRADUATION_LOADING,
+    GRADUATION_FAILURE,
+    GRADUATION_NEEDSBACKEND,
 }
 
+/**
+ * [graduationLanguage] is what [ComposePreviewScenario.GRADUATION_POPULATED] shows: the bundled excerpt unless a
+ * host has better, and null while a host is still fetching it.
+ */
 @Composable
-internal fun ComposePreviewScenarioContent(scenario: ComposePreviewScenario) {
+internal fun ComposePreviewScenarioContent(
+    scenario: ComposePreviewScenario,
+    graduationLanguage: GraduationLanguage? = GraduationLanguagePreviewFixture.requirements,
+) {
     when (scenario) {
         ComposePreviewScenario.CATALOG_POPULATED -> CourseSearchResultView(
             modifier = Modifier.fillMaxSize(),
@@ -141,7 +161,50 @@ internal fun ComposePreviewScenarioContent(scenario: ComposePreviewScenario) {
                 modifier = Modifier.padding(MpcSpacing.space4),
             )
         }
+
+        ComposePreviewScenario.GRADUATION_POPULATED,
+        ComposePreviewScenario.GRADUATION_LOADING,
+        ComposePreviewScenario.GRADUATION_FAILURE,
+        ComposePreviewScenario.GRADUATION_NEEDSBACKEND,
+        -> GraduationLanguagePreview(scenario, graduationLanguage)
     }
+}
+
+/**
+ * The screen in the state [scenario] names. The populated one shows [requirements] with working filters, narrowed
+ * the way GraduationLanguageViewModel narrows them.
+ */
+@Composable
+private fun GraduationLanguagePreview(
+    scenario: ComposePreviewScenario,
+    requirements: GraduationLanguage?,
+) {
+    var filter by remember { mutableStateOf(GraduationLanguageFilter()) }
+    GraduationLanguageScreen(
+        state = when (scenario) {
+            ComposePreviewScenario.GRADUATION_FAILURE -> GraduationLanguageUiState.Failed
+
+            ComposePreviewScenario.GRADUATION_NEEDSBACKEND -> GraduationLanguageUiState.NeedsBackend
+
+            ComposePreviewScenario.GRADUATION_POPULATED -> requirements?.let {
+                GraduationLanguageUiState.Loaded(
+                    requirements = it,
+                    filter = filter,
+                    colleges = it.collegesFor(filter.degree),
+                    rules = it.rulesFor(filter.degree, filter.college, filter.cohort),
+                )
+            } ?: GraduationLanguageUiState.Loading
+
+            else -> GraduationLanguageUiState.Loading
+        },
+        actions = GraduationLanguageActions(
+            onSelectDegree = { filter = filter.copy(degree = it, college = null) },
+            onSelectCollege = { filter = filter.copy(college = it) },
+            onSelectCohort = { filter = filter.copy(cohort = it.coerceIn(FIRST_COHORT, LAST_COHORT)) },
+            onRetry = {},
+        ),
+        modifier = Modifier.fillMaxSize(),
+    )
 }
 
 internal object ComposePreviewFixtures {
