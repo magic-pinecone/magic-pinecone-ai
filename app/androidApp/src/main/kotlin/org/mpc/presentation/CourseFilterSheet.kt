@@ -42,28 +42,52 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowSizeClass
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.compose.localized
+import dev.icerock.moko.resources.compose.stringResource
 import org.mpc.domain.model.CourseFilter
 import org.mpc.domain.model.CourseTime
 import org.mpc.domain.model.CourseType
 import org.mpc.domain.model.SeatAvailability
-import org.mpc.presentation.formatting.label
+import org.mpc.presentation.formatting.labelDesc
 import org.mpc.presentation.state.CourseFilterOptions
 import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.views.courseFilters.CourseSlotPicker
+import org.mpc.shared.MR
+import org.mpc.shared.catalog_all
+import org.mpc.shared.catalog_clear
+import org.mpc.shared.catalog_picker_college
+import org.mpc.shared.catalog_picker_department
+import org.mpc.shared.catalog_picker_teacher
+import org.mpc.shared.catalog_schedule_hint
+import org.mpc.shared.catalog_search_colleges
+import org.mpc.shared.catalog_search_departments
+import org.mpc.shared.catalog_search_teachers
+import org.mpc.shared.catalog_seats_full
+import org.mpc.shared.catalog_seats_open
+import org.mpc.shared.catalog_section_credits
+import org.mpc.shared.catalog_section_seats
+import org.mpc.shared.catalog_section_type
+import org.mpc.shared.catalog_selected_count
+import org.mpc.shared.catalog_sheet_title
+import org.mpc.shared.catalog_tab_filters
+import org.mpc.shared.catalog_tab_schedule
+import org.mpc.shared.catalog_type_elective
+import org.mpc.shared.catalog_type_required
 
 internal enum class FilterTab(
-    val label: String,
+    val label: StringResource,
 ) {
-    FILTERS("篩選"),
-    SCHEDULE("時段"),
+    FILTERS(MR.strings.catalog_tab_filters),
+    SCHEDULE(MR.strings.catalog_tab_schedule),
 }
 
 private enum class OptionPicker(
-    val title: String,
+    val text: FilterPickerText,
 ) {
-    DEPARTMENT("系所"),
-    COLLEGE("學院"),
-    TEACHER("老師"),
+    DEPARTMENT(FilterPickerText(MR.strings.catalog_picker_department, MR.strings.catalog_search_departments)),
+    COLLEGE(FilterPickerText(MR.strings.catalog_picker_college, MR.strings.catalog_search_colleges)),
+    TEACHER(FilterPickerText(MR.strings.catalog_picker_teacher, MR.strings.catalog_search_teachers)),
 }
 
 internal class CourseFilterActions(
@@ -118,8 +142,8 @@ internal fun CourseFilterSheetContent(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text("篩選課程", style = MaterialTheme.typography.titleLarge)
-            TextButton(onClick = actions.onClear, enabled = filters.isNotEmpty()) { Text("清除") }
+            Text(stringResource(MR.strings.catalog_sheet_title), style = MaterialTheme.typography.titleLarge)
+            TextButton(onClick = actions.onClear, enabled = filters.isNotEmpty()) { Text(stringResource(MR.strings.catalog_clear)) }
         }
         val filtersPane = @Composable { modifier: Modifier ->
             FiltersPane(
@@ -141,11 +165,12 @@ internal fun CourseFilterSheetContent(
                 schedulePane(Modifier.weight(1f))
             }
         } else {
+            val tabLabels = FilterTab.entries.associateWith { stringResource(it.label) }
             SectionPicker(
                 items = FilterTab.entries,
                 selected = tab,
                 onSelectedChange = { tab = it },
-                label = { it.label },
+                label = { tabLabels.getValue(it) },
                 icon = { if (it == FilterTab.FILTERS) Icons.Default.FilterList else Icons.Default.Schedule },
             )
             when (tab) {
@@ -170,7 +195,7 @@ private fun FiltersPane(
 ) {
     if (picker != null) {
         CourseFilterMultiSelect(
-            title = picker.title,
+            text = picker.text,
             options = picker.choices(options),
             selected = selectedNames(picker, filters),
             onToggle = { name ->
@@ -188,9 +213,13 @@ private fun FiltersPane(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         val type = filters.filterIsInstance<CourseFilter.Type>()
-        FilterSection("課程類型") {
+        FilterSection(MR.strings.catalog_section_type) {
             ExclusiveChoice(
-                choices = listOf(null to "全部", CourseFilter.Type(CourseType.REQUIRED) to "必修", CourseFilter.Type(CourseType.ELECTIVE) to "選修"),
+                choices = listOf(
+                    null to MR.strings.catalog_all,
+                    CourseFilter.Type(CourseType.REQUIRED) to MR.strings.catalog_type_required,
+                    CourseFilter.Type(CourseType.ELECTIVE) to MR.strings.catalog_type_elective,
+                ),
                 isSelected = { choice -> if (choice == null) type.isEmpty() else type == listOf(choice) },
                 onSelect = { choice ->
                     type.forEach(actions.onRemove)
@@ -199,9 +228,13 @@ private fun FiltersPane(
             )
         }
         val seats = filters.filterIsInstance<CourseFilter.Seats>()
-        FilterSection("名額") {
+        FilterSection(MR.strings.catalog_section_seats) {
             ExclusiveChoice(
-                choices = listOf(null to "全部", CourseFilter.Seats(SeatAvailability.OPEN) to "尚有名額", CourseFilter.Seats(SeatAvailability.FULL) to "已額滿"),
+                choices = listOf(
+                    null to MR.strings.catalog_all,
+                    CourseFilter.Seats(SeatAvailability.OPEN) to MR.strings.catalog_seats_open,
+                    CourseFilter.Seats(SeatAvailability.FULL) to MR.strings.catalog_seats_full,
+                ),
                 isSelected = { choice -> if (choice == null) seats.isEmpty() else seats == listOf(choice) },
                 onSelect = { choice ->
                     seats.forEach(actions.onRemove)
@@ -210,7 +243,7 @@ private fun FiltersPane(
             )
         }
         if (options.credits.isNotEmpty()) {
-            FilterSection("學分") {
+            FilterSection(MR.strings.catalog_section_credits) {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     options.credits.forEach { credits ->
                         val filter = CourseFilter.Credits(credits)
@@ -218,7 +251,7 @@ private fun FiltersPane(
                         FilterChip(
                             selected = isSelected,
                             onClick = { if (isSelected) actions.onRemove(filter) else actions.onAdd(filter) },
-                            label = { Text(filter.label()) },
+                            label = { Text(filter.labelDesc().localized()) },
                         )
                     }
                 }
@@ -227,8 +260,12 @@ private fun FiltersPane(
         OptionPicker.entries.forEach { entry ->
             val count = selectedNames(entry, filters).size
             ListItem(
-                headlineContent = { Text(entry.title) },
-                supportingContent = { Text(if (count == 0) "全部" else "已選 $count") },
+                headlineContent = { Text(stringResource(entry.text.title)) },
+                supportingContent = {
+                    Text(
+                        if (count == 0) stringResource(MR.strings.catalog_all) else stringResource(MR.strings.catalog_selected_count, count),
+                    )
+                },
                 trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
                 colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                 modifier = Modifier.clickable { onPickerChange(entry) },
@@ -271,7 +308,7 @@ private fun SchedulePane(
     ) {
         CourseSlotPicker(selected = slots, onSelectedChange = onScheduleChange)
         Text(
-            text = "只顯示上課時間完全落在所選時段內的課程。",
+            text = stringResource(MR.strings.catalog_schedule_hint),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -280,21 +317,21 @@ private fun SchedulePane(
 
 @Composable
 private fun FilterSection(
-    title: String,
+    title: StringResource,
     content: @Composable () -> Unit,
 ) {
     Column(
         modifier = Modifier.padding(horizontal = 24.dp, vertical = 4.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Text(title, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(stringResource(title), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
         content()
     }
 }
 
 @Composable
 private fun <T : CourseFilter> ExclusiveChoice(
-    choices: List<Pair<T?, String>>,
+    choices: List<Pair<T?, StringResource>>,
     isSelected: (T?) -> Boolean,
     onSelect: (T?) -> Unit,
 ) {
@@ -304,7 +341,7 @@ private fun <T : CourseFilter> ExclusiveChoice(
                 selected = isSelected(choice),
                 onClick = { onSelect(choice) },
                 shape = SegmentedButtonDefaults.itemShape(index, choices.size),
-                label = { Text(label) },
+                label = { Text(stringResource(label)) },
             )
         }
     }
@@ -319,7 +356,7 @@ private val PreviewOptions = CourseFilterOptions(
 
 private val PreviewActions = CourseFilterActions({}, {}, {}, {})
 
-@Preview(showBackground = true, name = "篩選")
+@Preview(showBackground = true, name = "Filters")
 @Composable
 internal fun PreviewCourseFilterSheetFilters() {
     MpcTheme {
@@ -327,7 +364,7 @@ internal fun PreviewCourseFilterSheetFilters() {
     }
 }
 
-@Preview(showBackground = true, name = "時段")
+@Preview(showBackground = true, name = "Schedule")
 @Composable
 internal fun PreviewCourseFilterSheetSchedule() {
     MpcTheme {
@@ -335,7 +372,7 @@ internal fun PreviewCourseFilterSheetSchedule() {
     }
 }
 
-@Preview(showBackground = true, widthDp = 840, name = "寬螢幕")
+@Preview(showBackground = true, widthDp = 840, name = "Wide")
 @Composable
 internal fun PreviewCourseFilterSheetWide() {
     MpcTheme {
