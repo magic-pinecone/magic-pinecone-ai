@@ -15,7 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import org.mpc.domain.model.CourseSummary
-import org.mpc.presentation.formatting.creditLabel
+import org.mpc.presentation.formatting.creditsLabel
+import org.mpc.presentation.formatting.instructorsLabel
 import org.mpc.presentation.formatting.scheduleDescription
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
@@ -59,11 +60,8 @@ internal fun CompactCourseCardContent(
 
 @Composable
 private fun CompactCourseMetadata(course: CourseSummary, accessibilityTextSize: Boolean) {
-    val teachers = course.teachers
-        .filter { it.isNotBlank() }
-        .joinToString("、")
-        .ifBlank { "未提供授課教師" }
-    val credits = "${course.credit.creditLabel()} 學分"
+    val teachers = course.teachers.instructorsLabel()
+    val credits = course.credit.creditsLabel()
     val metadata: @Composable (String, Modifier) -> Unit = { text, modifier ->
         Text(
             text = text,

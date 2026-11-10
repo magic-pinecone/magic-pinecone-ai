@@ -1,7 +1,21 @@
 package org.mpc.presentation.model
 
+import dev.icerock.moko.resources.StringResource
 import org.mpc.domain.model.CourseSummary
 import org.mpc.domain.model.CourseType
+import org.mpc.shared.MR
+import org.mpc.shared.planning_category_chinese
+import org.mpc.shared.planning_category_core_general_education
+import org.mpc.shared.planning_category_elective
+import org.mpc.shared.planning_category_english
+import org.mpc.shared.planning_category_general_education
+import org.mpc.shared.planning_category_history
+import org.mpc.shared.planning_category_national_defense
+import org.mpc.shared.planning_category_other
+import org.mpc.shared.planning_category_physical_education
+import org.mpc.shared.planning_category_required
+import org.mpc.shared.planning_category_reserved_time
+import org.mpc.shared.planning_category_service_learning
 import kotlin.random.Random
 
 /**
@@ -9,19 +23,19 @@ import kotlin.random.Random
  * CC/GS conventions: https://course.ncu.edu.tw/static/file/14/1014/img/371/crs_info.pdf
  * Other prefixes mirror the course-search common-category choices.
  */
-enum class TimetableCourseCategory(val label: String) {
-    REQUIRED("必修"),
-    ELECTIVE("選修"),
-    CORE_GENERAL_EDUCATION("核心通識 CC"),
-    GENERAL_EDUCATION("通識選修 GS"),
-    NATIONAL_DEFENSE("國防通識 MN"),
-    CHINESE("共同國文 CL0"),
-    ENGLISH("共同英文 LN1"),
-    HISTORY("共同歷史 HI0"),
-    PHYSICAL_EDUCATION("體育 PE"),
-    SERVICE_LEARNING("服務學習 SC"),
-    RESERVED_TIME("預留時段 RV"),
-    UNKNOWN("其他"),
+enum class TimetableCourseCategory(val label: StringResource) {
+    REQUIRED(MR.strings.planning_category_required),
+    ELECTIVE(MR.strings.planning_category_elective),
+    CORE_GENERAL_EDUCATION(MR.strings.planning_category_core_general_education),
+    GENERAL_EDUCATION(MR.strings.planning_category_general_education),
+    NATIONAL_DEFENSE(MR.strings.planning_category_national_defense),
+    CHINESE(MR.strings.planning_category_chinese),
+    ENGLISH(MR.strings.planning_category_english),
+    HISTORY(MR.strings.planning_category_history),
+    PHYSICAL_EDUCATION(MR.strings.planning_category_physical_education),
+    SERVICE_LEARNING(MR.strings.planning_category_service_learning),
+    RESERVED_TIME(MR.strings.planning_category_reserved_time),
+    UNKNOWN(MR.strings.planning_category_other),
 }
 
 /** Specific common categories take precedence over the general required/elective flag. */

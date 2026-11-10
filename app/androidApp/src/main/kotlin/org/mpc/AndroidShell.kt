@@ -360,7 +360,7 @@ private fun AndroidPrimaryNavigation(
                             val semester = (planUiState as? CoursePlanUiState.Success)?.plan?.semester
                             val message = semester?.let {
                                 runCatching { ClassCalendar.exportSavedPlan(context, appGraph, it) }
-                                    .fold(ClassCalendar::resultMessage) { calendarExportFailedMessage }
+                                    .fold({ count -> ClassCalendar.resultMessage(context, count) }) { calendarExportFailedMessage }
                             }
                             message?.let { snackbarHostState.showSnackbar(it) }
                         },
@@ -579,7 +579,7 @@ private data class PrimaryTopBarState(
         selectedTopLevelRoute == CoursePlanningRoot && isExpanded ->
             stringResource(MR.strings.shell_tab_course_selection)
 
-        selectedTopLevelRoute == CoursePlanningRoot -> selectedCoursePlanningView.title
+        selectedTopLevelRoute == CoursePlanningRoot -> stringResource(selectedCoursePlanningView.title)
 
         selectedTopLevelRoute == HomeRoot -> stringResource(MR.strings.shell_tab_home)
 
