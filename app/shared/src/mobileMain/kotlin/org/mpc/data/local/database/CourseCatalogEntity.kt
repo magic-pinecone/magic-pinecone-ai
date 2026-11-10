@@ -1,5 +1,6 @@
 package org.mpc.data.local.database
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -8,4 +9,6 @@ data class CourseCatalogEntity(
     @PrimaryKey
     val semester: String,
     val lastUpdatedEpochMillis: Long,
+    @ColumnInfo(defaultValue = "")
+    val language: String,
 )

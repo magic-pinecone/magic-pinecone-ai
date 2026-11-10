@@ -17,7 +17,7 @@ data class LocalCatalogEntities(
     val courseTimes: List<CourseTimeEntity>,
 )
 
-internal fun CourseResult.toLocalCatalogEntities(): LocalCatalogEntities {
+internal fun CourseResult.toLocalCatalogEntities(language: String): LocalCatalogEntities {
     val courseEntities = courses.map { it.toEntity(semester) }
 
     val timeEntities =
@@ -47,6 +47,7 @@ internal fun CourseResult.toLocalCatalogEntities(): LocalCatalogEntities {
         CourseCatalogEntity(
             semester = semester,
             lastUpdatedEpochMillis = lastUpdated.toEpochMilliseconds(),
+            language = language,
         ),
         courses = courseEntities,
         teachers = teacherEntities,
