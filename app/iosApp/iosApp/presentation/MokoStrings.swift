@@ -14,8 +14,9 @@ extension StringResource {
 }
 
 extension PluralsResource {
+    /// Every plural in the catalog prints its count as `%1$d`, so `quantity` is also the first format argument.
     func localized(_ quantity: Int, _ args: Any...) -> String {
-        IosStringsKt.localizedPlural(resource: self, quantity: Int32(quantity), args: args)
+        IosStringsKt.localizedPlural(resource: self, quantity: Int32(quantity), args: [quantity] + args)
     }
 }
 
