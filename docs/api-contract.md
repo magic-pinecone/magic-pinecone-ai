@@ -11,6 +11,7 @@ App（`app/`）會一次下載整個學期的課程目錄，存進裝置上的 R
 | `GET /catalog/{semester}/courses/{serial_no}/detail` | 單一課程大綱 | `BackendCourseDataSource.getCourseDetails` |
 | `GET /intl/graduation-language` | 畢業語言門檻（外籍生服務） | `IntlDataSource.getGraduationLanguage` |
 | `GET /intl/programs` | 招收外國學位生的系所與授課語言 | （尚未接上） |
+| `GET /intl/credits` | 全校學分架構：畢業學分、共同必修、通識、華語抵國文 | （尚未接上） |
 | `GET /intl/services/search` | 國際處頁面的段落檢索（保險、居留、工作證） | （尚未接上，供 AI 助理與之後的問答畫面） |
 | `GET /intl/contacts` | 依主題查承辦窗口 | （尚未接上） |
 | `POST /intl/nhi-enrollment-date` | 估算健保加保日 | （尚未接上） |
@@ -62,6 +63,8 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 | 404 | 後端持有的不是這個學期（訊息會指出目前的學期） |
 | 503 | 後端還沒同步過；先呼叫 `POST /scraper/trigger` |
 
+查詢參數 `lang` 可省略，格式是語言標籤，例如 `en`、`vi-VN`。帶 `en` 或 `vi`（含地區碼）時，後端把 `title`、`college_name`、`department_name` 換成譯文；其他語言（含 `zh*`）與省略時維持中文。回應的欄位與型別不變，沒有譯文的字串留原文。譯表放在 `backend/app/data/course_translations/{catalog,detail}.{en,vi}.json`，檔案不存在時等同沒有譯文。
+
 ## `GET /catalog/{semester}/courses/{serial_no}/detail`
 
 ```json
@@ -77,6 +80,8 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 ```
 
 第一次查詢時後端會即時向 NCU 抓取並存入 `course_details`，之後 `COURSE_DETAIL_CACHE_HOURS`（預設 24）小時內直接回快取。文字欄位沒有內容時回空字串。
+
+查詢參數 `lang` 的規則同上。帶 `en` 或 `vi` 時，`objectives`、`content`、`books`、`teaching_method`、`grading_policy` 依 `detail` 譯表翻譯，`distribution_conditions[].rule` 依 `catalog` 譯表翻譯。長欄位逐行（以 `\n` 分行、去掉行首尾空白後）查表，查不到的行保留原文。快取的大綱一律存中文，翻譯在回應時才套用。
 
 | 狀態碼 | 意義 |
 |---|---|
@@ -205,6 +210,36 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 - `regulation_url`（系所自己的修業規定）與 `website` 可能是 `null`。
 - `admission_language_note` 是入學申請要繳的語言證明，不是畢業條件；系所沒填時是空字串。
 
+## `GET /intl/service-learning`
+
+服務學習規定，給外籍生看的整理。資料是人工整理的 `backend/app/data/service_learning/requirements.json`，不連資料庫，也不連外。可用 `degree` 篩選：`bachelor`（學士班）或 `graduate`（研究所）；其他值回 422。
+
+```json
+{
+  "contact": {
+    "name_zh": "學務處服務學習發展中心",
+    "name_en": "Center for Service Learning, Office of Student Affairs",
+    "website": "https://service-learning.ncu.edu.tw/",
+    "sources": [{ "url": "…", "title": "…", "fetched": "2026-11-10", "quote": "…" }]
+  },
+  "requirements": [
+    {
+      "id": "course",
+      "degrees": ["bachelor"],
+      "title_zh": "服務學習課程：零學分必修，修兩學期",
+      "title_en": "Service-learning course: required, zero credits, two semesters",
+      "summary_zh": "…",
+      "summary_en": "…",
+      "sources": [{ "url": "…", "title": "…", "fetched": "2026-11-10", "quote": "…" }]
+    }
+  ],
+  "open_questions": ["…"]
+}
+```
+
+- 每條規則至少有一個 ncu.edu.tw 來源與原文引述。
+- `open_questions` 列出官方文件還沒確認的事。App 顯示規則時應一併顯示，避免把「沒寫」當成「不需要」。
+
 ## 既有端點
 
 上游原本的 `/courses`（伺服器端搜尋與分頁）、`/courses/colleges`、`/courses/departments`、`/scraper/*` 都保留不變；App 目前沒有使用搜尋端點。
@@ -306,6 +341,38 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 - 頁面沒有寫清楚的地方列在 `assumptions`：重新起算之後是否還能有一次短期出境（程式假設可以）。
 - 日期不合理（入境早於出境、出境早於抵台、兩趟重疊）回 422。
 - `backend/tests/test_student_services.py` 用頁面上的四個範例驗證，並檢查語料裡的範例文字還在；頁面改了，測試會先失敗。
+
+## `GET /intl/credits`
+
+全校層級的學分規定，給外籍生看的整理：學士班最低畢業學分、共同必修（國文、外文、體育、服務學習、通識）、外籍生以華語抵國文，以及研究生最低學分。各系的畢業學分在 `GET /intl/programs`，這裡不重複。資料是人工整理的 `backend/app/data/credits/requirements.json`，不連資料庫，也不連外。可用 `degree` 篩選：`bachelor`（學士班）或 `graduate`（研究所）；其他值回 422。
+
+```json
+{
+  "contact": {
+    "name_zh": "教務處課務組",
+    "name_en": "Division of Curriculum, Office of Academic Affairs",
+    "website": "https://pdc.adm.ncu.edu.tw/p/412-1019-1763.php?Lang=zh-tw",
+    "sources": [{ "url": "…", "title": "…", "fetched": "2026-11-11", "quote": "…" }]
+  },
+  "requirements": [
+    {
+      "id": "minimum-credits",
+      "degrees": ["bachelor"],
+      "credits": 128,
+      "title_zh": "學士班畢業至少 128 學分",
+      "title_en": "Bachelor's degree: at least 128 credits",
+      "summary_zh": "…",
+      "summary_en": "…",
+      "sources": [{ "url": "…", "title": "…", "fetched": "2026-11-11", "quote": "…" }]
+    }
+  ],
+  "open_questions": ["…"]
+}
+```
+
+- 形狀與 `GET /intl/service-learning` 相同，只多了 `credits`：該條規則講的學分數（數字），規則沒有單一數字時為 `null`。體育、服務學習是 `0`，表示必修但不計學分。
+- 每條規則至少有一個 ncu.edu.tw 來源與原文引述。
+- `open_questions` 列出官方文件還沒確認的事，例如兩份國文規定對外籍生的學分數寫法不一致（5 或 6 學分）。App 顯示規則時應一併顯示，避免把「沒寫」當成「不需要」。
 
 ## `GET /campus/places`
 

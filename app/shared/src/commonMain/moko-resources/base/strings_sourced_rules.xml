@@ -1,0 +1,15 @@
+<resources>
+    <string name="rules_sources">Official sources</string>
+    <string name="rules_fetched_on">read on %1$s</string>
+    <string name="rules_contact">Who to ask</string>
+    <string name="rules_not_confirmed">Not yet confirmed</string>
+    <string name="rules_not_confirmed_note">The official documents do not settle these. Not being written down does not mean it is not required: ask the office.</string>
+    <string name="rules_show">Show</string>
+    <string name="rules_hide">Hide</string>
+    <string name="rules_all_degrees">All</string>
+    <string name="rules_degree_bachelor">Bachelor</string>
+    <string name="rules_degree_graduate">Graduate</string>
+    <string name="rules_credits">%1$s credits</string>
+    <string name="rules_credits_none">No credits</string>
+    <string name="rules_failed">Could not load these rules. Check the connection and the backend address, then try again.</string>
+</resources>

@@ -1,5 +1,6 @@
 package org.mpc.data.local.database
 
+import androidx.room.AutoMigration
 import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
@@ -16,7 +17,8 @@ import org.mpc.data.local.dao.CoursePlanDao
         CoursePlanEntity::class,
         CoursePlanItemEntity::class,
     ],
-    version = 1,
+    version = 2,
+    autoMigrations = [AutoMigration(from = 1, to = 2)],
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {

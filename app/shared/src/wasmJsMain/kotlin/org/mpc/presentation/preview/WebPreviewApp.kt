@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.GridView
@@ -21,6 +22,7 @@ import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.LocalLibrary
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.VolunteerActivism
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -83,6 +85,16 @@ private enum class PreviewScreen(
         "政府資訊",
         Icons.Filled.LocalLibrary,
         listOf(ComposePreviewScenario.GUIDES_LIVE, ComposePreviewScenario.GUIDES_POPULATED),
+    ),
+    SERVICE_LEARNING(
+        "服務學習",
+        Icons.Filled.VolunteerActivism,
+        listOf(ComposePreviewScenario.SERVICE_LEARNING_LIVE, ComposePreviewScenario.SERVICE_LEARNING_POPULATED),
+    ),
+    CREDITS(
+        "學分",
+        Icons.Filled.Calculate,
+        listOf(ComposePreviewScenario.CREDITS_LIVE, ComposePreviewScenario.CREDITS_POPULATED),
     ),
     CLUBS(
         "社團",
