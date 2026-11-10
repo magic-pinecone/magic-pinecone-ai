@@ -593,9 +593,10 @@ private data class PrimaryTopBarState(
             selectedTopLevelRoute == CoursePlanningRoot
 }
 
+@Composable
 private fun NavKey.pushedTitle(): String? = when (this) {
     is EeclassCourseRoute -> name
-    is EeclassCategoryRoute -> category.title
+    is EeclassCategoryRoute -> stringResource(category.titleResource)
     else -> null
 }
 

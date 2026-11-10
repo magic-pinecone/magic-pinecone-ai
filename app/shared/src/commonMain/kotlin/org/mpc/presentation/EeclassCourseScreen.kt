@@ -34,10 +34,10 @@ import org.mpc.shared.eeclass_see_all
 /** How many items each section of the course overview shows before "see all". */
 private const val OVERVIEW_LIMIT = 5
 
-enum class EeclassCategory(val title: String, val titleResource: StringResource, val emptyResource: StringResource) {
-    BULLETINS("公告", MR.strings.eeclass_category_bulletins, MR.strings.eeclass_category_bulletins_empty),
-    MATERIALS("教材", MR.strings.eeclass_category_materials, MR.strings.eeclass_category_materials_empty),
-    HOMEWORK("作業", MR.strings.eeclass_category_homework, MR.strings.eeclass_category_homework_empty),
+enum class EeclassCategory(val titleResource: StringResource, val emptyResource: StringResource) {
+    BULLETINS(MR.strings.eeclass_category_bulletins, MR.strings.eeclass_category_bulletins_empty),
+    MATERIALS(MR.strings.eeclass_category_materials, MR.strings.eeclass_category_materials_empty),
+    HOMEWORK(MR.strings.eeclass_category_homework, MR.strings.eeclass_category_homework_empty),
 }
 
 /** One course's announcements, materials, and homework, up to a few of each. */
