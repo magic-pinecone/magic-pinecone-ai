@@ -1,0 +1,12 @@
+<resources>
+    <string name="clubs_title">社團</string>
+    <string name="clubs_portal_description">中央大學學生社團一覽</string>
+    <string name="clubs_all">全部</string>
+    <string name="clubs_no_backend_title">尚未設定後端</string>
+    <string name="clubs_no_backend_body">請在設定中設定後端以查看社團</string>
+    <string name="clubs_failed_title">無法載入社團資料</string>
+    <string name="clubs_failed_body">請確認網路連線與後端狀態後再試一次</string>
+    <string name="clubs_retry">重試</string>
+    <string name="clubs_location">地點</string>
+    <string name="clubs_website">網站</string>
+</resources>
