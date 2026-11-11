@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Literal
 from urllib.parse import urlencode
 
-from pydantic import BaseModel, Field, computed_field
+from pydantic import BaseModel, Field, computed_field, model_validator
 
 DATA_FILE = Path(__file__).resolve().parent.parent / "data" / "campus_places.json"
 
@@ -28,7 +28,35 @@ PlaceCategory = Literal[
     "service",
     "transit",
     "landmark",
+    "shop",
 ]
+
+PlaceTag = Literal[
+    "vegetarian",
+    "halal",
+    "open_24h",
+    "late_night",
+    "cash_only",
+    "card_accepted",
+    "english_menu",
+]
+
+
+class LocalizedText(BaseModel):
+    zh: str
+    en: str
+    vi: str
+
+
+class PriceRange(BaseModel):
+    min: int = Field(ge=0)
+    max: int = Field(ge=0)
+
+    @model_validator(mode="after")
+    def _min_not_above_max(self):
+        if self.min > self.max:
+            raise ValueError("price range min is above max")
+        return self
 
 
 class MapLinks(BaseModel):
@@ -41,6 +69,8 @@ class CampusPlace(BaseModel):
     id: str
     name_zh: str
     name_en: str
+    # None until someone has translated the name.
+    name_vi: str | None = None
     # Building code from the NCU course system, the prefix of a classroom
     # number such as "E6-A203". None for places that hold no classes.
     code: str | None
@@ -51,7 +81,15 @@ class CampusPlace(BaseModel):
     # None when the point was located by hand.
     osm_id: str | None
     aliases: list[str]
-    note_en: str | None
+    description: LocalizedText | None = None
+    # OpenStreetMap opening_hours syntax, e.g. "Mo-Fr 08:00-17:00".
+    opening_hours: str | None = None
+    price_range_twd: PriceRange | None = None
+    # Sample menu items with prices.
+    price_note: LocalizedText | None = None
+    tags: list[PlaceTag] = []
+    # URLs the data came from.
+    sources: list[str] = []
 
     @computed_field
     @property
@@ -77,6 +115,7 @@ class CampusPlace(BaseModel):
                 for value in (
                     self.name_zh,
                     self.name_en,
+                    self.name_vi or "",
                     self.code or "",
                     *self.aliases,
                 )

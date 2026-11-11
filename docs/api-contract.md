@@ -380,8 +380,8 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 
 | 查詢參數 | 說明 |
 |---|---|
-| `q` | 比對中文名、英文名、建築代碼與別名，不分大小寫。例如 `工程五館`、`E6`、`OIA` |
-| `category` | `academic`、`administration`、`library`、`dormitory`、`dining`、`sports`、`service`、`transit`、`landmark` 其中之一 |
+| `q` | 比對中文名、英文名、越南文名、建築代碼與別名，不分大小寫。例如 `工程五館`、`E6`、`OIA` |
+| `category` | `academic`、`administration`、`library`、`dormitory`、`dining`、`sports`、`service`、`transit`、`landmark`、`shop`（便利商店、書店、文具店）其中之一 |
 
 兩個參數都給時取交集；都不給時回傳全部。有 `q` 時最貼近的排最前面：整個名稱、代碼或別名相符的先，其次是開頭相符，最後是包含。所以 `q=E` 的第一筆是代碼為 `E` 的工程一館。
 
@@ -399,7 +399,13 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
       "longitude": 121.187598,
       "osm_id": "way/268561940",
       "aliases": ["工五館", "工五"],
-      "note_en": null,
+      "name_vi": null,
+      "description": null,
+      "opening_hours": null,
+      "price_range_twd": null,
+      "price_note": null,
+      "tags": [],
+      "sources": [],
       "map_links": {
         "google_maps": "https://www.google.com/maps/search/?api=1&query=24.967014%2C121.187598",
         "google_walking_directions": "https://www.google.com/maps/dir/?api=1&destination=24.967014%2C121.187598&travelmode=walking",
@@ -410,6 +416,14 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 }
 ```
 
+- 新增欄位都是選填，沒有資料時分別是 `null` 或空陣列：
+  - `name_vi`：越南文名稱，尚未翻譯時為 `null`。
+  - `description`：`{zh, en, vi}`，三個值都是字串，取代原本的 `note_en`（已移除）。尚未翻譯的語言先放英文原文。
+  - `opening_hours`：OpenStreetMap `opening_hours` 語法的字串，例如 `Mo-Fr 08:00-17:00`。
+  - `price_range_twd`：`{min, max}`，新台幣整數，`0 <= min <= max`；不合的資料在載入時就會被拒絕。
+  - `price_note`：`{zh, en, vi}`，附價格的範例品項。
+  - `tags`：`vegetarian`、`halal`、`open_24h`、`late_night`、`cash_only`、`card_accepted`、`english_menu` 其中的零到多個。
+  - `sources`：資料來源網址。
 - 座標取自 OpenStreetMap，畫面上顯示這些資料時必須一併顯示 `attribution`。
 - `name_en` 只有少數來自 OpenStreetMap，其餘是自行翻譯，尚未與學校的官方英文館名核對。
 - `code` 與有代碼建築的 `name_zh` 以選課系統（課程列表的「時間/教室」欄，例如 `E6-A203 (工程五館-A203)`）為準；OpenStreetMap 上不同的名稱放在 `aliases`。沒有排課的地點 `code` 為 `null`。

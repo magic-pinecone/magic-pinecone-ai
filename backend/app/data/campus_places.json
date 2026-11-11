@@ -13,8 +13,7 @@
       "osm_id": "way/202691228",
       "aliases": [
         "文一館"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "liberal-arts-building-2",
@@ -27,8 +26,7 @@
       "osm_id": "way/202691227",
       "aliases": [
         "文二館"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "engineering-building-1",
@@ -42,8 +40,7 @@
       "aliases": [
         "工一館",
         "工一"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "engineering-building-2",
@@ -59,8 +56,7 @@
         "電機館",
         "電機系",
         "Electrical Engineering"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "mechanical-engineering-building",
@@ -75,8 +71,7 @@
         "工程三館(機械館)",
         "工三館",
         "工程三館"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "environmental-chemical-engineering-building",
@@ -91,8 +86,7 @@
         "環工所",
         "環工館",
         "化工館"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "large-scale-mechanics-laboratory",
@@ -105,8 +99,7 @@
       "osm_id": "way/268561934",
       "aliases": [
         "大型力學實驗室"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "engineering-building-5",
@@ -120,8 +113,7 @@
       "aliases": [
         "工五館",
         "工五"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "hakka-college-building",
@@ -134,8 +126,7 @@
       "osm_id": "way/268561421",
       "aliases": [
         "客家學院"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "zhi-xi-hall",
@@ -146,8 +137,7 @@
       "latitude": 24.970225,
       "longitude": 121.193658,
       "osm_id": "way/217833431",
-      "aliases": [],
-      "note_en": null
+      "aliases": []
     },
     {
       "id": "management-building-2",
@@ -161,8 +151,7 @@
       "aliases": [
         "管理學院二館",
         "管二館"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "kuo-ting-optoelectronics-building",
@@ -175,8 +164,7 @@
       "osm_id": "way/202690841",
       "aliases": [
         "光電大樓"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "history-museum-lecture-hall",
@@ -190,8 +178,7 @@
       "aliases": [
         "大講堂",
         "校史館"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "humanities-social-sciences-building",
@@ -204,8 +191,7 @@
       "osm_id": "way/268845976",
       "aliases": [
         "人社大樓"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "hong-jing-hall",
@@ -219,8 +205,7 @@
       "aliases": [
         "數學系",
         "Mathematics"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "language-center",
@@ -235,8 +220,7 @@
         "綜教館(語言中心)",
         "語言中心",
         "Chinese class"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "space-remote-sensing-center",
@@ -250,8 +234,7 @@
       "aliases": [
         "太遙中心",
         "CSRSR"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "research-center-building-phase-2",
@@ -265,8 +248,7 @@
       "aliases": [
         "研究中心二期",
         "二期館"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "science-building-1",
@@ -280,8 +262,7 @@
       "aliases": [
         "科一館",
         "地球科學院"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "science-building-2",
@@ -297,8 +278,7 @@
         "科二館",
         "理學院",
         "理學院大樓"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "science-building-3",
@@ -311,8 +291,7 @@
       "osm_id": "way/268846332",
       "aliases": [
         "科三館"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "science-building-4",
@@ -327,8 +306,7 @@
         "科學四館",
         "科四館",
         "健雄館"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "science-building-5",
@@ -341,8 +319,7 @@
       "osm_id": "way/268846328",
       "aliases": [
         "科五館"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "teaching-research-building",
@@ -360,7 +337,11 @@
         "Office of International Affairs",
         "International Student Affairs"
       ],
-      "note_en": "The Office of International Affairs (OIA) is on the 1st floor."
+      "description": {
+        "zh": "國際事務處（OIA）在一樓。",
+        "en": "The Office of International Affairs (OIA) is on the 1st floor.",
+        "vi": "Văn phòng Quốc tế (OIA) ở tầng 1."
+      }
     },
     {
       "id": "yi-ren-gymnasium",
@@ -375,8 +356,7 @@
         "依仁堂",
         "體育館",
         "Gym"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "administration-building",
@@ -389,8 +369,7 @@
       "osm_id": "way/270806669",
       "aliases": [
         "Admin Building"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "second-administration-center",
@@ -404,8 +383,7 @@
       "aliases": [
         "中正圖書館",
         "舊圖"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "main-library",
@@ -419,8 +397,7 @@
       "aliases": [
         "圖書館",
         "Library"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "kuo-ting-library",
@@ -433,8 +410,7 @@
       "osm_id": "way/268851049",
       "aliases": [
         "國鼎圖書館"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "auditorium",
@@ -445,8 +421,7 @@
       "latitude": 24.968298,
       "longitude": 121.192362,
       "osm_id": "way/996613837",
-      "aliases": [],
-      "note_en": null
+      "aliases": []
     },
     {
       "id": "indoor-swimming-pool",
@@ -459,8 +434,7 @@
       "osm_id": "way/268851917",
       "aliases": [
         "游泳池"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "international-student-dormitory",
@@ -474,8 +448,7 @@
       "aliases": [
         "國際宿舍",
         "dorm"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "dormitory-service-center",
@@ -489,8 +462,7 @@
       "aliases": [
         "宿服中心",
         "dorm office"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "song-yuan-dining-hall",
@@ -505,8 +477,7 @@
         "松苑",
         "cafeteria",
         "food"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "pinecone-dining-hall",
@@ -522,8 +493,7 @@
         "七餐",
         "cafeteria",
         "food"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "midnight-snack-street",
@@ -538,7 +508,11 @@
         "後門宵夜街",
         "food"
       ],
-      "note_en": "Street of eateries by the back gate."
+      "description": {
+        "zh": "後門旁的小吃街。",
+        "en": "Street of eateries by the back gate.",
+        "vi": "Con phố ẩm thực gần cổng sau."
+      }
     },
     {
       "id": "ncu-post-office",
@@ -552,8 +526,7 @@
       "aliases": [
         "郵局",
         "ATM"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "ncu-guesthouse",
@@ -566,8 +539,7 @@
       "osm_id": "way/202805967",
       "aliases": [
         "hotel"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "ncu-lake",
@@ -578,8 +550,7 @@
       "latitude": 24.970867,
       "longitude": 121.191177,
       "osm_id": "relation/7211880",
-      "aliases": [],
-      "note_en": null
+      "aliases": []
     },
     {
       "id": "bus-stop-ncu",
@@ -594,8 +565,7 @@
         "公車",
         "bus",
         "校門"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "bus-stop-guard-room",
@@ -610,8 +580,7 @@
         "公車",
         "bus",
         "警衛室"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "bus-stop-yi-ren-hall",
@@ -625,8 +594,7 @@
       "aliases": [
         "公車",
         "bus"
-      ],
-      "note_en": null
+      ]
     },
     {
       "id": "bus-stop-back-gate",
@@ -641,8 +609,7 @@
         "公車",
         "bus",
         "後門"
-      ],
-      "note_en": null
+      ]
     }
   ]
 }

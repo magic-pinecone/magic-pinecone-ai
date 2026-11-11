@@ -3,6 +3,7 @@ import json
 
 import pytest
 from fastapi.testclient import TestClient
+from pydantic import ValidationError
 
 from app.main import app
 from app.mcp_server import mcp
@@ -120,3 +121,98 @@ def test_an_exact_building_code_comes_first(client: TestClient, query, expected_
     places = client.get("/api/v1/campus/places", params={"q": query}).json()["places"]
 
     assert places[0]["code"] == expected_code
+
+
+FULL_PLACE = {
+    "id": "noodle-shop",
+    "name_zh": "麵店",
+    "name_en": "Noodle Shop",
+    "name_vi": "Quán mì",
+    "code": None,
+    "category": "dining",
+    "latitude": 24.967,
+    "longitude": 121.19,
+    "osm_id": None,
+    "aliases": [],
+    "description": {"zh": "牛肉麵", "en": "Beef noodles", "vi": "Mì bò"},
+    "opening_hours": "Mo-Sa 11:00-20:00",
+    "price_range_twd": {"min": 80, "max": 150},
+    "price_note": {"zh": "牛肉麵 120", "en": "Beef noodles 120", "vi": "Mì bò 120"},
+    "tags": ["halal", "english_menu"],
+    "sources": ["https://example.com/noodle-shop"],
+}
+
+
+@pytest.fixture(name="custom_places")
+def custom_places_fixture(tmp_path, monkeypatch):
+    def use(*places):
+        data_file = tmp_path / "places.json"
+        data_file.write_text(
+            json.dumps(
+                {"source": "test", "attribution": "test", "places": list(places)}
+            ),
+            encoding="utf-8",
+        )
+        monkeypatch.setattr(campus_places, "DATA_FILE", data_file)
+        campus_places.load.cache_clear()
+
+    yield use
+    campus_places.load.cache_clear()
+
+
+def test_a_place_with_every_new_field_round_trips(client: TestClient, custom_places):
+    custom_places(FULL_PLACE)
+
+    [place] = client.get("/api/v1/campus/places").json()["places"]
+
+    assert {key: place[key] for key in FULL_PLACE} == FULL_PLACE
+    assert place["map_links"]["apple_maps"].startswith("https://maps.apple.com/")
+
+
+def test_new_fields_default_when_a_place_omits_them(client: TestClient, custom_places):
+    bare = {
+        key: FULL_PLACE[key]
+        for key in (
+            "id", "name_zh", "name_en", "code", "category",
+            "latitude", "longitude", "osm_id", "aliases",
+        )
+    }  # fmt: skip
+    custom_places({**bare, "category": "shop"})
+
+    [place] = client.get("/api/v1/campus/places", params={"category": "shop"}).json()[
+        "places"
+    ]
+
+    assert place["name_vi"] is None
+    assert place["description"] is None
+    assert place["opening_hours"] is None
+    assert place["price_range_twd"] is None
+    assert place["price_note"] is None
+    assert place["tags"] == []
+    assert place["sources"] == []
+
+
+def test_search_matches_a_vietnamese_name(client: TestClient, custom_places):
+    custom_places(FULL_PLACE)
+
+    found = client.get("/api/v1/campus/places", params={"q": "quán mì"})
+
+    assert ids(found) == ["noodle-shop"]
+
+
+@pytest.mark.parametrize(
+    "price_range",
+    [{"min": 200, "max": 100}, {"min": -1, "max": 100}, {"min": 0, "max": -5}],
+)
+def test_an_invalid_price_range_is_rejected_at_load(custom_places, price_range):
+    custom_places({**FULL_PLACE, "price_range_twd": price_range})
+
+    with pytest.raises(ValidationError):
+        campus_places.load()
+
+
+def test_an_unknown_tag_is_rejected_at_load(custom_places):
+    custom_places({**FULL_PLACE, "tags": ["gluten_free"]})
+
+    with pytest.raises(ValidationError):
+        campus_places.load()
