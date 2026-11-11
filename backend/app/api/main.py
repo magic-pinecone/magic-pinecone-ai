@@ -9,6 +9,7 @@ from app.api.routes import (
     intl,
     scraper,
     service_learning,
+    transit,
 )
 from app.core.config import settings
 
@@ -21,6 +22,7 @@ api_router.include_router(credits.router)
 api_router.include_router(intl.router)
 api_router.include_router(scraper.router)
 api_router.include_router(service_learning.router)
+api_router.include_router(transit.router)
 
 if settings.ENVIRONMENT == "dev":
     # Dev-oriented routes

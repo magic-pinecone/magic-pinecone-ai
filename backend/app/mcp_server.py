@@ -3,8 +3,10 @@
 Lets an AI client look things up instead of recalling them: NCU's graduation
 language requirements, the Office of International Affairs pages on insurance,
 immigration and work permits, whom to contact, when National Health Insurance
-starts, and where a building is. The tools only read the curated data under
-`app/data/`; numbers and dates come from there, never from the model.
+starts, where a building is, when the next campus bus comes and how to reach
+places off campus. The tools read the curated data under `app/data/`, and bus
+arrivals come live from TDX; numbers, dates and times come from there, never
+from the model.
 
     uv run python -m app.mcp_server        # stdio transport
 
@@ -14,15 +16,16 @@ Example client entry:
 """
 
 import re
-from datetime import date
+from datetime import UTC, date, datetime
 from typing import Any, Literal
 
 from mcp.server.mcpserver import MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
 
-from app.services import campus_places, student_services
+from app.services import campus_places, destinations, student_services, tdx
 from app.services import graduation_language as service
 from app.services.campus_places import PlaceCategory
+from app.services.destinations import DestinationCategory
 
 mcp = MCPServer(
     "ncu-international",
@@ -30,8 +33,9 @@ mcp = MCPServer(
         "Official information for international students at National Central "
         "University (NCU): graduation language requirements, insurance, "
         "immigration and work-permit rules from the Office of International "
-        "Affairs (OIA), contacts, and campus places. Quote thresholds, amounts "
-        "and dates exactly as returned and cite the source URLs. Search in "
+        "Affairs (OIA), contacts, campus places, live arrivals of the campus "
+        "buses and off-campus destinations. Quote thresholds, amounts, dates "
+        "and times exactly as returned and cite the source URLs. Search in "
         "English or Chinese whatever language the student writes in, then "
         "answer in the student's language. When a tool returns nothing, say so "
         "and give the OIA contact; do not infer a rule. For overstayed visas, "
@@ -276,6 +280,84 @@ def find_place(query: str = "", category: PlaceCategory | None = None) -> dict:
         "places": [
             place.model_dump() for place in campus_places.search(query, category)
         ],
+    }
+
+
+@mcp.tool()
+def get_bus_arrivals(route: str, campus_only: bool = True) -> dict[str, Any]:
+    """Live estimated arrivals of a bus route at the NCU campus stops.
+
+    Args:
+        route: 132 or 133 (Zhongli), 172 or 173 (THSR Taoyuan Station), or
+            9025A (Taipei).
+        campus_only: false to get every stop of the route, not only those on
+            campus.
+
+    Each stop has a `status`. EN_ROUTE: a bus is running and reaches the stop
+    in `estimate_seconds`. NOT_DEPARTED: no bus is on the way yet and
+    `next_bus_time` is the next scheduled departure. LAST_BUS_GONE and
+    NO_SERVICE: no more buses today. `sequence` orders the stops along the
+    route; a loop route passes the same stop name twice. The data comes from
+    TDX and is at most half a minute old; give `fetched_at` with the times.
+
+    When this tool fails, because the server has no TDX key, TDX is rate
+    limiting or TDX cannot be reached, tell the student that live arrivals
+    are unavailable right now and why. Never guess or estimate a bus time.
+    """
+    if route not in tdx.ROUTES:
+        raise ToolError(
+            f"Unknown bus route {route!r}. Available routes: {', '.join(tdx.ROUTES)}"
+        )
+    try:
+        stops = tdx.tdx_client.arrivals_with_positions(route, campus_only)
+    except tdx.TdxNotConfiguredError as error:
+        raise ToolError(
+            "Live bus arrivals are unavailable: this server has no TDX API key "
+            "configured. Do not guess arrival times."
+        ) from error
+    except tdx.TdxRateLimitedError as error:
+        raise ToolError(
+            "Live bus arrivals are unavailable: TDX is rate limiting this "
+            f"server. Try again in about {error.retry_after} seconds. Do not "
+            "guess arrival times."
+        ) from error
+    except tdx.TdxError as error:
+        raise ToolError(
+            "Live bus arrivals are unavailable: TDX could not be reached or "
+            "sent an unusable answer. Do not guess arrival times."
+        ) from error
+    return {
+        "route": route,
+        "fetched_at": datetime.now(UTC).isoformat(),
+        "source": "TDX (tdx.transportdata.tw)",
+        "stops": [stop.model_dump(mode="json") for stop in stops],
+    }
+
+
+@mcp.tool()
+def find_destination(
+    query: str = "", category: DestinationCategory | None = None
+) -> dict[str, Any]:
+    """Find places off campus that students need to reach, and how to get there.
+
+    Covers the Zhongli train station, the THSR (high-speed rail) Taoyuan
+    station, Taoyuan airport, the immigration office (ARC) and the National
+    Health Insurance office. For buildings on campus use `find_place`.
+
+    `query` matches a Chinese or English name or address, e.g. "airport",
+    "高鐵" or "immigration"; leave it empty to list a whole category or
+    everything. Each result has `getting_there` in Chinese and English, the
+    bus routes to take (their live arrivals come from `get_bus_arrivals`), a
+    `maps_url` that opens public-transport directions from NCU, and the
+    sources with the date they were checked. Address, phone and hours can be
+    null: say they are not on file instead of filling them in. An empty result
+    means the place is not in the list, not that it does not exist.
+    """
+    return {
+        "destinations": [
+            destination.model_dump(mode="json")
+            for destination in destinations.search(query, category)
+        ]
     }
 
 

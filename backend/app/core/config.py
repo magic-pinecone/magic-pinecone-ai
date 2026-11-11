@@ -56,6 +56,13 @@ class Settings(BaseSettings):
     SCRAPER_INTERVAL_MINUTES: int = 360  # Default every 6 hours
     COURSE_DETAIL_CACHE_HOURS: int = 24
 
+    # TDX credentials for live bus arrivals; /transit/bus/* answers 503 until
+    # both are set.
+    TDX_CLIENT_ID: str | None = None
+    TDX_CLIENT_SECRET: str | None = None
+    TDX_ARRIVAL_CACHE_SECONDS: int = 30
+    TDX_STOP_CACHE_HOURS: int = 24
+
     @property
     def celery_broker_url(self) -> str:
         if self.REDIS_PASSWORD:

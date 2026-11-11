@@ -1,0 +1,920 @@
+[
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO2548",
+  "StopID": "2548",
+  "StopName": {
+   "Zh_tw": "中壢公車站",
+   "En": "Zhongli Bus Station"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 1,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:00:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO2549",
+  "StopID": "2549",
+  "StopName": {
+   "Zh_tw": "中壢公車站",
+   "En": "Zhongli Bus Station"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 34,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:48:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO2619",
+  "StopID": "2619",
+  "StopName": {
+   "Zh_tw": "中大湖",
+   "En": "Zhongda Lake"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 16,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:22:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO269",
+  "StopID": "269",
+  "StopName": {
+   "Zh_tw": "中央大學正門",
+   "En": "The Front Door of Central University"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 14,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:18:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO270",
+  "StopID": "270",
+  "StopName": {
+   "Zh_tw": "中央大學警衛室",
+   "En": "National Central University Guard Room"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 15,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:19:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO272",
+  "StopID": "272",
+  "StopName": {
+   "Zh_tw": "中央大學依仁堂",
+   "En": "Yiren Hall, National Central University"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 17,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:22:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO273",
+  "StopID": "273",
+  "StopName": {
+   "Zh_tw": "中央大學後門",
+   "En": "The Back Door of Central University"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 18,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:23:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO274",
+  "StopID": "274",
+  "StopName": {
+   "Zh_tw": "中央大學觀景台",
+   "En": "National Central University Observatory"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 19,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:25:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO275",
+  "StopID": "275",
+  "StopName": {
+   "Zh_tw": "中央大學正門",
+   "En": "The Front Door of Central University"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 20,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:26:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO289",
+  "StopID": "289",
+  "StopName": {
+   "Zh_tw": "青果市場",
+   "En": "Qingguo Market"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 8,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:07:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO291",
+  "StopID": "291",
+  "StopName": {
+   "Zh_tw": "五權",
+   "En": "Wuchiuan"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 9,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:09:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO305",
+  "StopID": "305",
+  "StopName": {
+   "Zh_tw": "高雙里",
+   "En": "Gaoshuang Village"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 10,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:12:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO353",
+  "StopID": "353",
+  "StopName": {
+   "Zh_tw": "高雙里",
+   "En": "Gaoshuang Village"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 24,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:34:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO355",
+  "StopID": "355",
+  "StopName": {
+   "Zh_tw": "祐民醫院",
+   "En": "Youmin Hospital"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 25,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:37:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO357",
+  "StopID": "357",
+  "StopName": {
+   "Zh_tw": "五權",
+   "En": "Wuchiuan"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 26,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:38:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO359",
+  "StopID": "359",
+  "StopName": {
+   "Zh_tw": "青果市場",
+   "En": "Qingguo Market"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 27,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:38:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO361",
+  "StopID": "361",
+  "StopName": {
+   "Zh_tw": "廣興",
+   "En": "Guangxing"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 29,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:40:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO363",
+  "StopID": "363",
+  "StopName": {
+   "Zh_tw": "新明國中(民族路)",
+   "En": "Xinming Junior High School(Minzu Rd.)"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 30,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:41:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO365",
+  "StopID": "365",
+  "StopName": {
+   "Zh_tw": "舊社",
+   "En": "Jiushe"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 31,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:42:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO369",
+  "StopID": "369",
+  "StopName": {
+   "Zh_tw": "河川教育中心",
+   "En": "River Education Center"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 32,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:45:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO4157",
+  "StopID": "4157",
+  "StopName": {
+   "Zh_tw": "第一銀行",
+   "En": "First Bank"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 2,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:00:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO4615",
+  "StopID": "4615",
+  "StopName": {
+   "Zh_tw": "三民中正路口",
+   "En": "Sanmin and Zhongzheng Rd. Intersection"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 13,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:15:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO4616",
+  "StopID": "4616",
+  "StopName": {
+   "Zh_tw": "三民中正路口",
+   "En": "Sanmin and Zhongzheng Rd. Intersection"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 21,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:29:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO4996",
+  "StopID": "4996",
+  "StopName": {
+   "Zh_tw": "舊社",
+   "En": "Jiushe"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 4,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:03:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO5001",
+  "StopID": "5001",
+  "StopName": {
+   "Zh_tw": "新明國中(民族路)",
+   "En": "Xinming Junior High School(Minzu Rd.)"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 5,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:05:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO5005",
+  "StopID": "5005",
+  "StopName": {
+   "Zh_tw": "廣興",
+   "En": "Guangxing"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 6,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:05:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO5770",
+  "StopID": "5770",
+  "StopName": {
+   "Zh_tw": "三民五興路口",
+   "En": "Sanmin and Wuxing Road Intersection"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 11,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:13:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO5771",
+  "StopID": "5771",
+  "StopName": {
+   "Zh_tw": "土地公廟",
+   "En": "Tudigong Temple"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 12,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:15:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO5804",
+  "StopID": "5804",
+  "StopName": {
+   "Zh_tw": "土地公廟",
+   "En": "Tudigong Temple"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 22,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:30:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO5805",
+  "StopID": "5805",
+  "StopName": {
+   "Zh_tw": "三民五興路口",
+   "En": "Sanmin and Wuxing Road Intersection"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 23,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:30:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO64880",
+  "StopID": "64880",
+  "StopName": {
+   "Zh_tw": "第一銀行",
+   "En": "First Bank"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 33,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:46:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO64908",
+  "StopID": "64908",
+  "StopName": {
+   "Zh_tw": "第一市場",
+   "En": "First Market"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 3,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:01:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO903",
+  "StopID": "903",
+  "StopName": {
+   "Zh_tw": "仁愛新村",
+   "En": "Renai Village"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 7,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:06:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ },
+ {
+  "PlateNumb": "",
+  "StopUID": "TAO905",
+  "StopID": "905",
+  "StopName": {
+   "Zh_tw": "仁愛新村",
+   "En": "Renai Village"
+  },
+  "RouteUID": "TAO3220",
+  "RouteID": "3220",
+  "RouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "SubRouteUID": "TAO3220",
+  "SubRouteID": "3220",
+  "SubRouteName": {
+   "Zh_tw": "132",
+   "En": "132"
+  },
+  "Direction": 0,
+  "StopSequence": 28,
+  "StopStatus": 1,
+  "NextBusTime": "2026-11-10T07:39:00+08:00",
+  "SrcUpdateTime": "2026-11-10T04:52:43+08:00",
+  "UpdateTime": "2026-11-10T04:52:51+08:00"
+ }
+]

@@ -16,6 +16,8 @@ App（`app/`）會一次下載整個學期的課程目錄，存進裝置上的 R
 | `GET /intl/contacts` | 依主題查承辦窗口 | （尚未接上） |
 | `POST /intl/nhi-enrollment-date` | 估算健保加保日 | （尚未接上） |
 | `GET /campus/places` | 校園地點與地圖連結 | （尚未接上） |
+| `GET /transit/bus/{route}/arrivals` | 中大校園公車即時到站（TDX） | （尚未接上） |
+| `GET /transit/destinations` | 校外常去地點與前往方式 | （尚未接上） |
 
 `{semester}` 的格式是 `<學年>-<學期>`，例如 `115-1`。
 
@@ -418,6 +420,82 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 
 `GET /campus/places/{id}` 回傳單一地點，形狀與上面 `places` 的元素相同；找不到時回 404。
 
+## `GET /transit/bus/{route}/arrivals`
+
+中大校園公車的即時到站資訊，由後端向 [TDX](https://tdx.transportdata.tw) 查詢後轉送。App 目前還沒有使用。
+
+可查的路線由 `GET /transit/bus/routes` 列出：`132`、`133`（往中壢）、`172`、`173`（往高鐵桃園站）、`9025A`（往臺北）。加上 `?campus_only=true` 只回傳校內與校門口的站牌。
+
+```json
+{
+  "route": "132",
+  "fetched_at": "2026-11-10T08:01:40Z",
+  "source": "TDX (tdx.transportdata.tw)",
+  "stops": [
+    {
+      "stop_uid": "TAO269",
+      "stop_name": { "zh": "中央大學正門", "en": "NCU Main Gate" },
+      "position": { "lat": 24.968268, "lon": 121.200395 },
+      "sequence": 14,
+      "direction": 0,
+      "on_campus": true,
+      "status": "EN_ROUTE",
+      "estimate_seconds": 1140,
+      "next_bus_time": "2026-11-10T16:19:00+08:00",
+      "plate_number": "EAL-0563",
+      "updated_at": "2026-11-10T16:01:36+08:00"
+    }
+  ]
+}
+```
+
+- `stops` 依 `direction`、`sequence` 排序。132、133 是循環線，整條都是 `direction` 0，同一個地點會出現兩次（例如正門是第 14 與第 20 站），要靠 `sequence` 分辨。172、173、9025A 有兩個方向，校內站牌在兩個方向各出現一次。
+- `status` 對應 TDX 的 `StopStatus`：`EN_ROUTE`（0，正常營運、有車在路上；車還有多久到要看 `estimate_seconds`，可能是幾十秒也可能是二十分鐘）、`NOT_DEPARTED`（1，尚未發車，看 `next_bus_time`）、`SKIPPED`（2，交管不停靠）、`LAST_BUS_GONE`（3，末班車已過）、`NO_SERVICE`（4，今日未營運）、`UNKNOWN`。後端不提供「即將進站」這種狀態，由畫面依 `estimate_seconds` 決定。
+- `on_campus` 以中文站名判斷：站名含「中央大學」或「中大湖」。同一個站牌在不同路線的 `stop_uid` 不一樣，所以不能用 `stop_uid` 判斷。
+- 校內站牌的英文名稱由後端改寫成一致的 `NCU …`（TDX 的譯名每條路線都不同）；其他站牌沿用 TDX 的英文名稱。
+- `9025A` 在 TDX 是公路客運（InterCity）路線 `9025` 底下的附屬路線：後端查 `InterCity/9025`，只留下 `SubRouteName` 為 `9025A` 的資料。
+- `position` 是 WGS84 經緯度，來自 TDX 的站牌清單，成功讀到後保留 `TDX_STOP_CACHE_HOURS` 小時（預設 24）。站牌清單讀不到、被限流或是空的時候，`position` 是 `null`，到站資訊照常回傳，後端 60 秒後才會再問一次。
+- 同一路線的到站結果會重複使用 `TDX_ARRIVAL_CACHE_SECONDS` 秒（預設 30）。
+
+| 狀態碼 | 意義 |
+|---|---|
+| 404 | 不是可查的路線 |
+| 502 | TDX 連不上，或回了無法解讀的內容（不是 JSON、token 回應缺欄位、時間格式錯誤） |
+| 503 | 後端沒有設定 `TDX_CLIENT_ID`／`TDX_CLIENT_SECRET`；或 TDX 正在限流（HTTP 429），這時回應帶 `Retry-After` 標頭（秒），`detail` 會寫明是 rate limiting |
+
+## `GET /transit/destinations`
+
+外籍生常需要前往的**校外**地點（中壢火車站、高鐵桃園站、桃園機場、移民署服務站、健保署），以及從中大怎麼去，目前 5 筆。資料是人工維護的 `backend/app/data/destinations.json`，不需要 TDX 金鑰。App 目前還沒有使用。
+
+校內的建築與設施不在這裡，請用 [`GET /campus/places`](#get-campusplaces)；兩者的 JSON 形狀不同。
+
+`?category=` 可以篩選：`station`、`airport`、`immigration`、`health_insurance`、`hospital`（目前還沒有 `hospital` 的資料）。`GET /transit/destinations/{id}` 回傳單一地點，找不到時是 404。
+
+```json
+[
+  {
+    "id": "nia-taoyuan-service-center",
+    "category": "immigration",
+    "name": { "zh": "移民署桃園市服務站", "en": "National Immigration Agency, Taoyuan City Service Center (ARC)" },
+    "address": { "zh": "桃園市桃園區縣府路106號1樓", "en": "1F, No. 106, Xianfu Rd., Taoyuan Dist., Taoyuan City 330026" },
+    "position": { "lat": 24.9943647, "lon": 121.3027015 },
+    "phone": "03-331-0409",
+    "hours": { "zh": "週一至週五 08:00–17:00，中午不休息", "en": "Mon–Fri 08:00–17:00, open through lunch" },
+    "official_url": "https://servicestation.immigration.gov.tw/3411",
+    "getting_there": { "zh": "…", "en": "…" },
+    "bus_routes": ["132", "133"],
+    "sources": ["https://servicestation.immigration.gov.tw/3411"],
+    "checked_on": "2026-11-10",
+    "maps_url": "https://www.google.com/maps/dir/?api=1&origin=24.9684%2C121.1916&destination=24.9943647%2C121.3027015&travelmode=transit"
+  }
+]
+```
+
+- `address`、`position`、`phone`、`hours`、`official_url` 都可能是 `null`。
+- `maps_url` 會開啟 Google Maps 從中大出發的大眾運輸路線；沒有座標的地點改用地址當目的地。
+- `bus_routes` 裡的路線都可以拿去查 `/transit/bus/{route}/arrivals`。
+- 新增或修改地點時，`sources` 要填資料出處，`checked_on` 填查證日期；座標必須是 WGS84 且落在臺灣範圍內，否則後端載入時會失敗。
+
 ## MCP 工具
 
 同一批資料也透過 MCP 提供給 AI 客戶端，以 stdio 啟動：
@@ -435,3 +513,7 @@ cd backend && uv run python -m app.mcp_server
 | `get_student_service_contact` | `GET /intl/contacts`，另附辦公室所在建築與地圖連結 |
 | `estimate_nhi_enrollment_date` | `POST /intl/nhi-enrollment-date` |
 | `find_place` | `GET /campus/places` |
+| `get_bus_arrivals` | `GET /transit/bus/{route}/arrivals`，預設只回校內站牌（`campus_only=True`） |
+| `find_destination` | `GET /transit/destinations`，另可用 `query` 比對名稱與地址 |
+
+`get_bus_arrivals` 在後端沒有 TDX 金鑰、TDX 限流或 TDX 連不上時會回工具錯誤並寫明原因；工具說明要求模型照實告知學生，不可以自行推測到站時間。

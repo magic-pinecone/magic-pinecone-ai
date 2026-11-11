@@ -21,7 +21,10 @@
 - 新增 `tests/test_catalog.py`。
 - 新增 `app/data/campus_places.json`、`app/services/campus_places.py`、`app/api/routes/campus.py`、`tests/test_campus.py`：校園地點 API。
 - 新增 `app/data/student_services/`、`app/services/student_services.py`、`tests/test_student_services.py`：國際處頁面檢索、承辦窗口、健保加保日估算；端點在 `app/api/routes/intl.py`。
-- `app/mcp_server.py`：以 MCP 提供畢業語言門檻、國際生行政事項與校園地點共 8 個工具；依賴新增 `mcp`。
+- `app/mcp_server.py`：以 MCP 提供畢業語言門檻、國際生行政事項、校園地點、公車到站與校外地點共 10 個工具；依賴新增 `mcp`。
+- 新增 `app/services/tdx.py`、`app/api/routes/transit.py`、`tests/test_transit.py`、`tests/fixtures/`：向 TDX 查中大校園公車（132、133、172、173、9025A）的即時到站，端點 `/transit/bus/*`。
+- 新增 `app/data/destinations.json`、`app/services/destinations.py`：校外常去地點與前往方式，端點 `/transit/destinations`；`app/services/localized.py` 是兩者共用的中英文字串型別。
+- `app/core/config.py`、`.env.example`：新增 `TDX_CLIENT_ID`、`TDX_CLIENT_SECRET`、`TDX_ARRIVAL_CACHE_SECONDS`、`TDX_STOP_CACHE_HOURS`；沒填金鑰時 `/transit/bus/*` 回 503。
 
 ### `app/`
 
