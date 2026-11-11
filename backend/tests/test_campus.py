@@ -73,13 +73,17 @@ def test_category_filter_combines_with_search(client: TestClient):
     assert transit.json()["places"]
     assert {place["category"] for place in transit.json()["places"]} == {"transit"}
 
-    # 依仁堂 is both a gymnasium and a bus stop.
+    # 依仁堂 is a gymnasium, a bus stop and a YouBike station.
     both = client.get("/api/v1/campus/places", params={"q": "依仁堂"})
-    assert set(ids(both)) == {"yi-ren-gymnasium", "bus-stop-yi-ren-hall"}
-    only_stop = client.get(
-        "/api/v1/campus/places", params={"q": "依仁堂", "category": "transit"}
+    assert set(ids(both)) == {
+        "yi-ren-gymnasium",
+        "bus-stop-yi-ren-hall",
+        "yiren-youbike",
+    }
+    only_gym = client.get(
+        "/api/v1/campus/places", params={"q": "依仁堂", "category": "sports"}
     )
-    assert ids(only_stop) == ["bus-stop-yi-ren-hall"]
+    assert ids(only_gym) == ["yi-ren-gymnasium"]
 
 
 def test_unknown_category_is_rejected(client: TestClient):
@@ -216,3 +220,39 @@ def test_an_unknown_tag_is_rejected_at_load(custom_places):
 
     with pytest.raises(ValidationError):
         campus_places.load()
+
+
+def test_a_shop_inside_a_building_names_its_host(client: TestClient, custom_places):
+    hall = {**FULL_PLACE, "id": "dining-hall", "osm_id": "way/1"}
+    custom_places(hall, {**FULL_PLACE, "located_in": "dining-hall"})
+
+    place = client.get("/api/v1/campus/places/noodle-shop").json()
+
+    assert place["located_in"] == "dining-hall"
+
+
+@pytest.mark.parametrize("host", ["nowhere", "kiosk"])
+def test_located_in_must_name_a_top_level_place(custom_places, host):
+    nested = {**FULL_PLACE, "id": "kiosk", "located_in": "noodle-shop"}
+    custom_places({**FULL_PLACE, "located_in": host}, nested)
+
+    with pytest.raises(ValueError, match="not a top-level place"):
+        campus_places.load()
+
+
+def test_campus_map_is_geojson_linked_to_places(client: TestClient):
+    response = client.get("/api/v1/campus/map.geojson")
+
+    assert response.headers["content-type"] == "application/geo+json"
+    collection = response.json()
+    assert collection["type"] == "FeatureCollection"
+    assert "OpenStreetMap" in collection["attribution"]
+    kinds = {feature["properties"]["kind"] for feature in collection["features"]}
+    assert {"campus", "building"} <= kinds
+    place_ids = {place.id for place in campus_places.load().places}
+    linked = {
+        feature["properties"]["place_id"]
+        for feature in collection["features"]
+        if feature["properties"]["place_id"]
+    }
+    assert linked and linked <= place_ids

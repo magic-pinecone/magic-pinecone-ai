@@ -90,6 +90,9 @@ class CampusPlace(BaseModel):
     tags: list[PlaceTag] = []
     # URLs the data came from.
     sources: list[str] = []
+    # Id of the building this place is inside, such as a shop in a dining
+    # hall. It shares the host's coordinates, so maps list it under the host.
+    located_in: str | None = None
 
     @computed_field
     @property
@@ -142,7 +145,24 @@ def load() -> CampusPlaceData:
     ids = [place.id for place in data.places]
     if len(ids) != len(set(ids)):
         raise ValueError(f"Duplicate place ids in {DATA_FILE.name}")
+    hosts = {place.id: place for place in data.places}
+    for place in data.places:
+        host = hosts.get(place.located_in) if place.located_in else None
+        if place.located_in and (host is None or host.located_in):
+            raise ValueError(
+                f"{place.id} is located in {place.located_in}, which is not a top-level place"
+            )
     return data
+
+
+MAP_FILE = DATA_FILE.with_name("campus_map.geojson")
+
+
+@lru_cache
+def load_map() -> dict:
+    """The campus boundary, building footprints and sports grounds from
+    OpenStreetMap, as written by scripts/fetch_campus_osm.py."""
+    return json.loads(MAP_FILE.read_text(encoding="utf-8"))
 
 
 def search(

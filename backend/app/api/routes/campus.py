@@ -1,6 +1,7 @@
 """Campus endpoints: where buildings and resources are, with links to a maps app."""
 
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from app.services import campus_places
@@ -21,6 +22,13 @@ def list_places(q: str | None = None, category: PlaceCategory | None = None):
         attribution=campus_places.load().attribution,
         places=campus_places.search(q, category),
     )
+
+
+@router.get("/map.geojson")
+def get_map() -> JSONResponse:
+    """Return campus outlines as a GeoJSON FeatureCollection. A feature whose
+    `place_id` is set opens that place from GET /campus/places."""
+    return JSONResponse(campus_places.load_map(), media_type="application/geo+json")
 
 
 @router.get("/places/{place_id}", response_model=CampusPlace)

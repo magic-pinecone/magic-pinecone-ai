@@ -16,6 +16,7 @@ App（`app/`）會一次下載整個學期的課程目錄，存進裝置上的 R
 | `GET /intl/contacts` | 依主題查承辦窗口 | （尚未接上） |
 | `POST /intl/nhi-enrollment-date` | 估算健保加保日 | （尚未接上） |
 | `GET /campus/places` | 校園地點與地圖連結 | （尚未接上） |
+| `GET /campus/map.geojson` | 校園邊界與建築輪廓（OpenStreetMap） | （尚未接上） |
 | `GET /transit/bus/{route}/arrivals` | 中大校園公車即時到站（TDX） | （尚未接上） |
 | `GET /transit/destinations` | 校外常去地點與前往方式 | （尚未接上） |
 
@@ -376,7 +377,7 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 
 ## `GET /campus/places`
 
-校園地點清單：建築、餐廳、宿舍、公車站等，目前 43 筆，資料在 `backend/app/data/campus_places.json`。這個端點不需要資料庫，也不需要先同步。
+校園地點清單：建築、餐廳、宿舍、公車站等，目前 84 筆，資料在 `backend/app/data/campus_places.json`。這個端點不需要資料庫，也不需要先同步。
 
 | 查詢參數 | 說明 |
 |---|---|
@@ -424,15 +425,40 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
   - `price_note`：`{zh, en, vi}`，附價格的範例品項。
   - `tags`：`vegetarian`、`halal`、`open_24h`、`late_night`、`cash_only`、`card_accepted`、`english_menu` 其中的零到多個。
   - `sources`：資料來源網址。
+  - `located_in`：所在建築的地點 `id`，例如餐廳裡的店家。店家與所在建築共用座標，地圖上只畫建築，店家列在建築底下。只能指向本身沒有 `located_in` 的地點，否則載入時拒絕。
+- 價格與營業時間目前全部是 `null`：新生網與學校網頁都沒有可引用的價格，不自行填寫。
 - 座標取自 OpenStreetMap，畫面上顯示這些資料時必須一併顯示 `attribution`。
 - `name_en` 只有少數來自 OpenStreetMap，其餘是自行翻譯，尚未與學校的官方英文館名核對。
 - `code` 與有代碼建築的 `name_zh` 以選課系統（課程列表的「時間/教室」欄，例如 `E6-A203 (工程五館-A203)`）為準；OpenStreetMap 上不同的名稱放在 `aliases`。沒有排課的地點 `code` 為 `null`。
 - 選課系統有、但這裡還沒收錄的代碼：`E4` 機電實驗室，位置尚未確認。
-- `osm_id` 是座標來源的 OpenStreetMap 物件；人工定位的地點（目前只有 `R3`）為 `null`。
+- `osm_id` 是座標來源的 OpenStreetMap 物件；人工定位的地點（`R3`，以及放在所在建築座標上的店家與辦公室）為 `null`。
 - `E1` 工程二館的座標取自 OpenStreetMap 上標為「電機系」的建築，這個對應是推定的。
 - 路線不由後端計算：`map_links` 會在手機的地圖 App 開啟步行導航。
 
 `GET /campus/places/{id}` 回傳單一地點，形狀與上面 `places` 的元素相同；找不到時回 404。
+
+## `GET /campus/map.geojson`
+
+校園邊界、建築輪廓與運動場地的 GeoJSON `FeatureCollection`（`Content-Type: application/geo+json`），給 App 把建築畫成可點的形狀。資料在 `backend/app/data/campus_map.geojson`，由 `backend/scripts/fetch_campus_osm.py` 從 Overpass 抓取 OpenStreetMap 校園範圍（relation 18727079）內的物件產生；重新執行就會更新。
+
+```json
+{
+  "type": "FeatureCollection",
+  "attribution": "© OpenStreetMap contributors, ODbL 1.0",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "way/268561940",
+      "geometry": { "type": "Polygon", "coordinates": [[[121.1874, 24.9671], "…"]] },
+      "properties": { "osm_id": "way/268561940", "kind": "building", "name": "工程五館", "name_en": null, "place_id": "engineering-building-5" }
+    }
+  ]
+}
+```
+
+- `kind` 是 `campus`（校園邊界，只有一筆）、`building` 或 `sports`。
+- `place_id` 是 `osm_id` 相同的 `GET /campus/places` 地點；沒有對應地點時為 `null`。
+- 只保留外環，中庭等內環不畫。
 
 ## `GET /transit/bus/{route}/arrivals`
 
