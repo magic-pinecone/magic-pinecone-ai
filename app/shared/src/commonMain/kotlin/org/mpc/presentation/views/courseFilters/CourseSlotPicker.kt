@@ -41,11 +41,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import dev.icerock.moko.resources.StringResource
 import dev.icerock.moko.resources.compose.stringResource
 import org.mpc.domain.model.CourseDay
 import org.mpc.domain.model.CoursePeriod
 import org.mpc.domain.model.CourseTime
+import org.mpc.presentation.formatting.shortName
 import org.mpc.presentation.preview.ComposePreviewScenario
 import org.mpc.presentation.preview.ComposePreviewScenarioContent
 import org.mpc.presentation.theme.MpcShapes
@@ -53,14 +53,6 @@ import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
 import org.mpc.shared.MR
 import org.mpc.shared.catalog_clear_slots
-import org.mpc.shared.catalog_day_friday
-import org.mpc.shared.catalog_day_monday
-import org.mpc.shared.catalog_day_saturday
-import org.mpc.shared.catalog_day_sunday
-import org.mpc.shared.catalog_day_thursday
-import org.mpc.shared.catalog_day_tuesday
-import org.mpc.shared.catalog_day_unknown
-import org.mpc.shared.catalog_day_wednesday
 import org.mpc.shared.catalog_full_week
 import org.mpc.shared.catalog_slot_description
 import org.mpc.shared.catalog_weekdays
@@ -242,17 +234,6 @@ private fun SlotCell(
                 }
             },
     )
-}
-
-private fun CourseDay.shortName(): StringResource = when (this) {
-    CourseDay.MONDAY -> MR.strings.catalog_day_monday
-    CourseDay.TUESDAY -> MR.strings.catalog_day_tuesday
-    CourseDay.WEDNESDAY -> MR.strings.catalog_day_wednesday
-    CourseDay.THURSDAY -> MR.strings.catalog_day_thursday
-    CourseDay.FRIDAY -> MR.strings.catalog_day_friday
-    CourseDay.SATURDAY -> MR.strings.catalog_day_saturday
-    CourseDay.SUNDAY -> MR.strings.catalog_day_sunday
-    CourseDay.UNKNOWN -> MR.strings.catalog_day_unknown
 }
 
 private fun slotAt(

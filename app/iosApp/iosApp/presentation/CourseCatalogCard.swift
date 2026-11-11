@@ -56,8 +56,12 @@ struct CourseCatalogCard: View {
         }
         .buttonStyle(CourseCatalogDetailsButtonStyle())
         .accessibilityIdentifier("course-details-\(course.serialNumber)")
-        .accessibilityValue(isSelected ? "已加入課表" : "尚未加入課表")
-        .accessibilityHint("查看課程詳細資料")
+        .accessibilityValue(
+            isSelected
+                ? MR.strings().planning_course_in_timetable.localized
+                : MR.strings().planning_course_not_in_timetable.localized
+        )
+        .accessibilityHint(MR.strings().planning_timetable_open_course.localized)
         .overlay(alignment: isCompact ? .trailing : .bottomTrailing) {
             CourseCatalogSelectionControl(
                 course: course,
@@ -115,10 +119,13 @@ private struct CourseCatalogCompactContent: View {
                     .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 1)
                     .layoutPriority(1)
                     .accessibilityIdentifier("course-schedule-\(course.serialNumber)")
-                Text(course.teachers.filter { !$0.isEmpty }.joined(separator: "、"))
+                Text(
+                    course.teachers.filter { !$0.isEmpty }
+                        .joined(separator: MR.strings().planning_list_separator.localized)
+                )
                     .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 1)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text("\(course.credit, format: .number.precision(.fractionLength(0...2))) 學分")
+                Text(MR.strings().planning_credits_value.localized(course.credit.creditString))
                     .fixedSize()
             }
             .font(.caption)
@@ -133,7 +140,7 @@ private struct CourseCatalogTypeBadge: View {
 
     var body: some View {
         if courseType != .unknown {
-            Text(courseType.description_)
+            Text(courseType.localizedLabel)
                 .font(.caption.weight(.medium))
                 .foregroundStyle(.secondary)
                 .padding(.horizontal, 8)
@@ -148,7 +155,8 @@ private struct CourseCatalogHeading: View {
     let course: CourseSummary
     let isSelected: Bool
     private var teacherSuffix: String {
-        let teachers = course.teachers.filter { !$0.isEmpty }.joined(separator: "、")
+        let separator = MR.strings().planning_list_separator.localized
+        let teachers = course.teachers.filter { !$0.isEmpty }.joined(separator: separator)
         return teachers.isEmpty ? "" : " · \(teachers)"
     }
 
@@ -170,7 +178,7 @@ private struct CourseCatalogHeading: View {
             Text(
                 """
                 \(course.classNo) · \
-                \(course.credit, format: .number.precision(.fractionLength(0...2))) 學分\(teacherSuffix)
+                \(MR.strings().planning_credits_value.localized(course.credit.creditString))\(teacherSuffix)
                 """
             )
                 .font(.subheadline)
@@ -188,16 +196,22 @@ private struct CourseCatalogInfoRail: View {
         ScrollView(.horizontal) {
             HStack(spacing: 12) {
                 CourseCatalogInfoBadge(symbol: "building.2", text: "\(course.collegeName)／\(course.departmentName)")
-                CourseCatalogInfoBadge(symbol: "person.3", text: "\(course.admitCnt)／\(course.limitCnt) 人")
-                CourseCatalogInfoBadge(symbol: "key", text: course.passwordCard.description_)
+                CourseCatalogInfoBadge(
+                    symbol: "person.3",
+                    text: MR.strings().planning_course_admit_badge.localized(course.admitCnt, course.limitCnt)
+                )
+                CourseCatalogInfoBadge(symbol: "key", text: course.passwordCard.localizedLabel())
                 if course.waitCnt > 0 {
-                    CourseCatalogInfoBadge(symbol: "clock", text: "候補 \(course.waitCnt) 人")
+                    CourseCatalogInfoBadge(
+                        symbol: "clock",
+                        text: MR.strings().planning_course_waitlist_badge.localized(course.waitCnt)
+                    )
                 }
             }
         }
         .scrollIndicators(.hidden)
         .accessibilityIdentifier("course-info-\(course.serialNumber)")
-        .accessibilityHint("左右滑動查看課程資訊")
+        .accessibilityHint(MR.strings().planning_course_info_swipe_hint.localized)
     }
 }
 
@@ -224,7 +238,12 @@ private struct CourseCatalogSelectionControl: View {
 
     var body: some View {
         Button(role: isSelected ? .destructive : nil, action: action) {
-            Label(isSelected ? "移除" : "加入", systemImage: isSelected ? "minus" : "plus")
+            Label(
+                isSelected
+                    ? MR.strings().planning_course_remove.localized
+                    : MR.strings().planning_course_add.localized,
+                systemImage: isSelected ? "minus" : "plus"
+            )
                 .labelStyle(isCompact ? CourseSelectionLabelStyle.iconOnly : .titleOnly)
                 .frame(minWidth: isCompact ? 28 : 44, minHeight: 28)
         }
@@ -233,8 +252,8 @@ private struct CourseCatalogSelectionControl: View {
         .accessibilityIdentifier("course-toggle-\(course.serialNumber)")
         .accessibilityLabel(
             isSelected
-                ? "從課表移除 \(course.title)，\(course.classNo)"
-                : "加入課表 \(course.title)，\(course.classNo)"
+                ? MR.strings().planning_course_remove_from_timetable_labeled.localized(course.title, course.classNo)
+                : MR.strings().planning_course_add_to_timetable_labeled.localized(course.title, course.classNo)
         )
     }
 }

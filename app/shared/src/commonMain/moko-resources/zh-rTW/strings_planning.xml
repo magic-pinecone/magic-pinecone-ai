@@ -63,4 +63,12 @@
     <string name="planning_calendar_result_no_term">還沒有本學期的上課日期，暫時無法加入行事曆。</string>
     <string name="planning_calendar_result_cleared">已儲存的課表沒有課程，已清空這學期的「%1$s」。</string>
     <string name="planning_view_catalog_title">課程搜尋</string>
+    <string name="planning_calendar_add_hint">把已儲存的課表加入「%1$s」行事曆</string>
+    <string name="planning_view_picker">選課檢視</string>
+    <string name="planning_search_failed_title">課程載入失敗</string>
+    <string name="planning_course_admit_badge">%1$d／%2$d 人</string>
+    <string name="planning_course_waitlist_badge">候補 %1$d 人</string>
+    <string name="planning_course_info_swipe_hint">左右滑動查看課程資訊</string>
+    <string name="planning_course_add_to_timetable_labeled">加入課表 %1$s，%2$s</string>
+    <string name="planning_course_remove_from_timetable_labeled">從課表移除 %1$s，%2$s</string>
 </resources>

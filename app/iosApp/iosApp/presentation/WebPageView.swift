@@ -24,7 +24,10 @@ struct WebPageView: View {
             .toolbar {
                 if canGoBack {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button("上一頁", systemImage: "arrow.uturn.backward") { page.goBack() }
+                        Button(
+                            MR.strings().shell_previous_page.localized,
+                            systemImage: "arrow.uturn.backward"
+                        ) { page.goBack() }
                     }
                 }
                 if let pageURL = URL(string: url) {
@@ -32,10 +35,10 @@ struct WebPageView: View {
                         Menu {
                             ShareLink(item: pageURL)
                             Link(destination: pageURL) {
-                                Label("在瀏覽器中開啟", systemImage: "safari")
+                                Label(MR.strings().shell_open_in_browser.localized, systemImage: "safari")
                             }
                         } label: {
-                            Label("更多選項", systemImage: "ellipsis")
+                            Label(MR.strings().shell_more_options.localized, systemImage: "ellipsis")
                         }
                     }
                 }

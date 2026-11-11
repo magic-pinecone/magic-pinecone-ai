@@ -75,7 +75,7 @@ struct CourseCatalogResultsView: View {
     private var header: some View {
         HStack {
             if let snapshot, !snapshot.isLoading, snapshot.failureMessage == nil, !snapshot.courses.isEmpty {
-                Text("共 \(snapshot.courses.count) 門課程")
+                Text(MR.plurals().planning_search_result_count.localized(snapshot.courses.count))
                     .font(.subheadline.weight(.medium))
                     .foregroundStyle(.secondary)
                     .padding(.horizontal, 12)
@@ -85,7 +85,7 @@ struct CourseCatalogResultsView: View {
             Spacer()
             Button(action: onShowFilters) {
                 Label(
-                    "篩選",
+                    MR.strings().catalog_tab_filters.localized,
                     systemImage: filterCount > 0
                         ? "line.3.horizontal.decrease.circle.fill"
                         : "line.3.horizontal.decrease.circle"
@@ -110,7 +110,7 @@ struct CourseCatalogResultsView: View {
             if snapshot.isLoading {
                 CourseCatalogFeedbackView(
                     symbol: nil,
-                    title: "正在載入課程",
+                    title: MR.strings().planning_search_loading.localized,
                     message: nil,
                     actionTitle: nil,
                     action: nil,
@@ -119,17 +119,17 @@ struct CourseCatalogResultsView: View {
             } else if let failureMessage = snapshot.failureMessage {
                 CourseCatalogFeedbackView(
                     symbol: "exclamationmark.triangle",
-                    title: "課程載入失敗",
+                    title: MR.strings().planning_search_failed_title.localized,
                     message: failureMessage,
-                    actionTitle: "重新載入",
+                    actionTitle: MR.strings().planning_search_reload.localized,
                     action: onRetry,
                     showsProgress: false
                 )
             } else if snapshot.courses.isEmpty {
                 CourseCatalogFeedbackView(
                     symbol: "magnifyingglass",
-                    title: "找不到符合的課程",
-                    message: "試試其他關鍵字，或清除搜尋條件查看全部課程。",
+                    title: MR.strings().planning_search_empty_title.localized,
+                    message: MR.strings().planning_search_empty_hint.localized,
                     actionTitle: nil,
                     action: nil,
                     showsProgress: false
@@ -160,7 +160,7 @@ struct CourseCatalogResultsView: View {
         } else {
             CourseCatalogFeedbackView(
                 symbol: nil,
-                title: "正在載入課程",
+                title: MR.strings().planning_search_loading.localized,
                 message: nil,
                 actionTitle: nil,
                 action: nil,
@@ -183,7 +183,7 @@ private struct CourseCatalogFeedbackView: View {
             if showsProgress {
                 ProgressView()
                     .controlSize(.large)
-                    .accessibilityLabel("正在載入課程")
+                    .accessibilityLabel(MR.strings().planning_search_loading.localized)
             } else if let symbol {
                 Image(systemName: symbol)
                     .font(.system(size: 30, weight: .regular))

@@ -14,4 +14,15 @@
     <string name="portal_sign_in">登入</string>
     <string name="portal_sign_out">登出</string>
     <string name="portal_retry">重試</string>
+    <string name="portal_sign_in_title">Portal 登入</string>
+    <string name="portal_status_checking">正在確認登入狀態</string>
+    <string name="portal_status_signed_in">已登入 Portal</string>
+    <string name="portal_status_signed_out">尚未登入 Portal</string>
+    <string name="portal_status_signed_out_detail">登入後即可直接開啟校務系統</string>
+    <string name="portal_status_unavailable">無法確認登入狀態</string>
+    <string name="portal_status_unavailable_detail">請檢查網路連線後重試</string>
+    <string name="portal_status_displaced">Portal 已在其他地方登入</string>
+    <string name="portal_status_displaced_detail">重新登入後，其他地方的 Portal 會被登出</string>
+    <string name="portal_status_user_signed_out">已登出 Portal</string>
+    <string name="portal_status_needs_portal_page">請在 Portal 頁面完成登入</string>
 </resources>

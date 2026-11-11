@@ -23,4 +23,5 @@
     <string name="shell_more_options">Tùy chọn khác</string>
     <string name="shell_share">Chia sẻ</string>
     <string name="shell_open_in_browser">Mở trong trình duyệt</string>
+    <string name="shell_calendar_full_access_denied">Chưa có quyền truy cập lịch. Hãy cho phép Magic Pinecone truy cập đầy đủ vào lịch trong Cài đặt.</string>
 </resources>

@@ -97,9 +97,9 @@ struct CoursePlanningView: View {
             .animation(reduceMotion ? nil : .snappy, value: swipeTranslation)
             .coursePlanningTopBar {
                 if !isWide && !isSearchPresented {
-                    Picker("選課檢視", selection: $activeSection) {
-                        Text("搜尋").tag(Section.catalog)
-                        Text("課表").tag(Section.timetable)
+                    Picker(MR.strings().planning_view_picker.localized, selection: $activeSection) {
+                        Text(MR.strings().planning_view_catalog.localized).tag(Section.catalog)
+                        Text(MR.strings().planning_view_timetable.localized).tag(Section.timetable)
                     }
                     .pickerStyle(.segmented)
                     .accessibilityIdentifier("course-planning-section")
@@ -112,7 +112,7 @@ struct CoursePlanningView: View {
                 tokens: tokensBinding,
                 isPresented: $isSearchPresented,
                 placement: .navigationBarDrawer(displayMode: .always),
-                prompt: "搜尋課程名稱"
+                prompt: MR.strings().catalog_search_courses.localized
             ) { token in
                 Label(token.label, systemImage: token.symbol)
             }
@@ -145,12 +145,12 @@ struct CoursePlanningView: View {
                 }
             }
             .background(Color(uiColor: .systemGroupedBackground).ignoresSafeArea())
-            .navigationTitle(isWide ? "選課" : (activeSection == .catalog ? "課程搜尋" : "我的課表"))
+            .navigationTitle(navigationTitleText(isWide: isWide))
             // The panes scroll independently, so a large title has no single scroll view to collapse with.
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("儲存", systemImage: "square.and.arrow.down") {
+                    Button(MR.strings().shell_save.localized, systemImage: "square.and.arrow.down") {
                         planBridge.requestSave()
                     }
                 }
@@ -159,23 +159,23 @@ struct CoursePlanningView: View {
                     Button {
                         isShowingSelectedCourses = true
                     } label: {
-                        Label("已選課程", systemImage: "cart")
+                        Label(MR.strings().planning_selected_title.localized, systemImage: "cart")
                     }
                     .badge(selectedCourses.count)
-                    .accessibilityLabel("已選課程")
-                    .accessibilityValue("\(selectedCourses.count) 門課")
-                    .accessibilityHint("顯示目前已加入的課程")
+                    .accessibilityLabel(MR.strings().planning_selected_title.localized)
+                    .accessibilityValue(MR.plurals().shell_selected_course_count.localized(selectedCourses.count))
+                    .accessibilityHint(MR.strings().shell_view_selected_courses.localized)
                 }
 
                 if isWide || activeSection == .catalog {
                     ToolbarItem(placement: .topBarTrailing) {
                         Menu {
                             Toggle(
-                                "精簡課程卡片", systemImage: "rectangle.compress.vertical",
-                                isOn: $isCompactCatalog
+                                MR.strings().shell_compact_course_cards.localized,
+                                systemImage: "rectangle.compress.vertical", isOn: $isCompactCatalog
                             )
                         } label: {
-                            Label("顯示選項", systemImage: "slider.horizontal.3")
+                            Label(MR.strings().shell_display_options.localized, systemImage: "slider.horizontal.3")
                         }
                         .accessibilityIdentifier("course-display-options")
                     }
@@ -186,7 +186,7 @@ struct CoursePlanningView: View {
                 }
 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("設定", systemImage: "gear", action: onOpenSettings)
+                    Button(MR.strings().shell_settings.localized, systemImage: "gear", action: onOpenSettings)
                         .labelStyle(.iconOnly)
                 }
 
@@ -281,6 +281,13 @@ struct CoursePlanningView: View {
 }
 
 private extension CoursePlanningView {
+    func navigationTitleText(isWide: Bool) -> String {
+        if isWide { return MR.strings().shell_tab_course_selection.localized }
+        return activeSection == .catalog
+            ? MR.strings().planning_view_catalog_title.localized
+            : MR.strings().planning_timetable_title.localized
+    }
+
     func openPendingRoute() async {
         if let query = router.take(\.catalogSearch) {
             // Results the user asked for should not open behind a sheet left from earlier.

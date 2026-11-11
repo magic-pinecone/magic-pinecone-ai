@@ -39,4 +39,7 @@
     <string name="coursedetail_password_all">全部</string>
     <string name="coursedetail_password_some">部分</string>
     <string name="coursedetail_password_none">無</string>
+    <string name="coursedetail_load_failed_hint">仍可查看基本資訊與加入課表，或稍後重試。</string>
+    <string name="coursedetail_enrolled_quota">已選／名額</string>
+    <string name="coursedetail_waitlist">候補人數</string>
 </resources>

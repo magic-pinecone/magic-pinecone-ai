@@ -14,4 +14,15 @@
     <string name="portal_sign_in">Đăng nhập</string>
     <string name="portal_sign_out">Đăng xuất</string>
     <string name="portal_retry">Thử lại</string>
+    <string name="portal_sign_in_title">Đăng nhập Portal</string>
+    <string name="portal_status_checking">Đang kiểm tra trạng thái đăng nhập</string>
+    <string name="portal_status_signed_in">Đã đăng nhập Portal</string>
+    <string name="portal_status_signed_out">Chưa đăng nhập Portal</string>
+    <string name="portal_status_signed_out_detail">Đăng nhập để mở trực tiếp các hệ thống của trường</string>
+    <string name="portal_status_unavailable">Không thể kiểm tra trạng thái đăng nhập</string>
+    <string name="portal_status_unavailable_detail">Hãy kiểm tra kết nối mạng rồi thử lại</string>
+    <string name="portal_status_displaced">Portal đang được đăng nhập ở nơi khác</string>
+    <string name="portal_status_displaced_detail">Đăng nhập lại sẽ đăng xuất Portal ở những nơi khác</string>
+    <string name="portal_status_user_signed_out">Đã đăng xuất Portal</string>
+    <string name="portal_status_needs_portal_page">Hãy hoàn tất đăng nhập trên trang Portal</string>
 </resources>
