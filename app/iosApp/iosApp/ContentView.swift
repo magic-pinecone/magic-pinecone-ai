@@ -51,7 +51,7 @@ struct ContentView: View {
             }
             Tab(MR.strings().shell_tab_map.localized, systemImage: "map", value: AppTab.map) {
                 NavigationStack {
-                    CampusMapView(sharedHost: sharedHost)
+                    CampusMapView(sharedHost: sharedHost, onOpenSettings: openSettings)
                 }
                 .ignoresSafeArea(.container, edges: bottomSafeAreaEdges)
             }
