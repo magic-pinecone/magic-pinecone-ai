@@ -80,7 +80,11 @@ struct EeclassBulletinSheet: View {
 
     @ViewBuilder
     private var translateButton: some View {
-        if showsTranslation {
+        if translationRequest != nil {
+            // A request stays set until its translation finishes or fails.
+            ProgressView()
+                .accessibilityLabel(MR.strings().eeclass_translate.localized)
+        } else if showsTranslation {
             Button(MR.strings().eeclass_show_original.localized, systemImage: "character.bubble") {
                 showsTranslation = false
             }
