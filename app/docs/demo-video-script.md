@@ -2,7 +2,7 @@
 
 A shot list for a 2–3 minute walkthrough of the core app actions on the iOS simulator. Each step names the control to tap, so the same list drives a manual recording or an automated one (XcodeBuildMCP / `simctl`).
 
-Labels are written as `English (正體中文)`. The app language is switchable in Settings, so record in one language and switch on screen in scene 7.
+Labels are written as `English (正體中文)`. The app language is switchable in Settings, so record in one language and switch on screen in scene 9.
 
 ## Before recording
 
@@ -10,7 +10,7 @@ Labels are written as `English (正體中文)`. The app language is switchable i
 - [ ] Freeze the status bar:
   `xcrun simctl status_bar booted override --time 9:41 --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3`
 - [ ] Set the simulator to light mode, and the app language to English (or 繁體中文, if the audience is local).
-- [ ] Start the backend with seeded data (see the root README). Clubs, the international pages, and Ask need it. In the app, open **Settings** > **Course data source (課程資料來源)**, enter `http://localhost:8000`, and select **Connect and sync (連線並同步)**. Do this before you start recording.
+- [ ] Start the backend with seeded data (see the root README). Clubs, the map places, the international pages, and Ask need it. In the app, open **Settings** > **Course data source (課程資料來源)**, enter `http://localhost:8000`, and select **Connect and sync (連線並同步)**. Do this before you start recording.
 - [ ] Pick the demo data during a dry run, and write it here:
   - Course search keyword: `____` (for example 微積分). It needs several sections, with one full section.
   - Second course with no time conflict: `____`
@@ -85,42 +85,59 @@ The calendar permission prompt is a system dialog. Grant it once before recordin
 
 **6b (only with a test account):** sign in on the Portal page, then go back to **Home**. Pull to refresh, and the ee-class courses load. Open one course and a bulletin.
 
-### 7. International students and Ask (AI) · ~35 s
+### 7. Campus map — Map (地圖) · ~30 s
+
+This tab is on `feat/campus-map`, not on `main` yet. Record it from a build of that branch, or after it merges.
+
+| # | Action | Target | Hold |
+|---|--------|--------|------|
+| 7.1 | Tap the **Map** tab. Let the campus map finish loading, then pinch to zoom in on the main campus. | tab bar | 3 s |
+| 7.2 | Tap the category chips in turn: **Academic**, **Library**, **Dormitory**. The markers change with each chip. Return to **All**. | category chips | 1.5 s each |
+| 7.3 | Type `E6` in **Search places**. Tap the building in the results; the map moves to it. | search field | 2 s |
+| 7.4 | Show the building card: **Building code**, and **Departments and offices** under **Inside this building**. | place card | 3 s |
+| 7.5 | Tap **Walk there with Google Maps** to show walking directions (on iOS, **Open in Apple Maps** is also offered). Go back to the app. | place card | 3 s |
+| 7.6 | Turn on **Food nearby**, then **Halal only**. Tap a restaurant to show its tags (Halal, Vegetarian, English menu), opening hours, and price per person. | food layer | 3 s |
+
+Caption: *Find any building, the offices inside it, and food nearby, including halal places.*
+
+PR #41 adds a separate food map tab with halal places. If that PR merges instead of the food layer in this branch, record 7.6 on that tab.
+
+### 8. International students and Ask (AI) · ~35 s
 
 This is the main AI feature, so give it the most time.
 
 | # | Action | Target | Hold |
 |---|--------|--------|------|
-| 7.1 | Go back to **Home** and open **Graduation language**. Pick a degree and college, then step through the admission year. | intl page | 3 s |
-| 7.2 | Tap **中文 / English** to switch the rule text. | toggle | 2 s |
-| 7.3 | Go back and open **Government guides**. Open **Insurance**. | intl page | 2 s |
-| 7.4 | Go back and open **Ask**. Tap the example `Where is E6-A203?` | example chip | 4 s |
-| 7.5 | Scroll to **What this is based on** to show the sources, and tap **Walking directions**. Go back. | answer | 3 s |
-| 7.6 | Type a question in Vietnamese or Chinese, for example `Xe buýt 132 tiếp theo khi nào?`, and tap **Ask**. | question field | 4 s |
+| 8.1 | Go back to **Home** and open **Graduation language**. Pick a degree and college, then step through the admission year. | intl page | 3 s |
+| 8.2 | Tap **中文 / English** to switch the rule text. | toggle | 2 s |
+| 8.3 | Go back and open **Government guides**. Open **Insurance**. | intl page | 2 s |
+| 8.4 | Go back and open **Ask**. Tap the example `Where is E6-A203?` | example chip | 4 s |
+| 8.5 | Scroll to **What this is based on** to show the sources, and tap **Walking directions**. Go back. | answer | 3 s |
+| 8.6 | Type a question in Vietnamese or Chinese, for example `Xe buýt 132 tiếp theo khi nào?`, and tap **Ask**. | question field | 4 s |
 
 Caption: *Answers come only from the app's own data, and every answer shows its sources.*
 
-### 8. Make it yours — Settings (設定) · ~15 s
+### 9. Make it yours — Settings (設定) · ~15 s
 
 | # | Action | Target | Hold |
 |---|--------|--------|------|
-| 8.1 | Tap the gear (⚙) on any tab. | toolbar | 1 s |
-| 8.2 | Under **App language**, select **Tiếng Việt**. The UI switches immediately. Then select **繁體中文**, then back to the recording language. | settings | 2 s each |
-| 8.3 | Under **Appearance**, select **Dark**. | settings | 2 s |
-| 8.4 | Under **Timetable colors**, select **Random colors**. Close Settings and show the timetable in dark mode. | settings | 3 s |
+| 9.1 | Tap the gear (⚙) on any tab. | toolbar | 1 s |
+| 9.2 | Under **App language**, select **Tiếng Việt**. The UI switches immediately. Then select **繁體中文**, then back to the recording language. | settings | 2 s each |
+| 9.3 | Under **Appearance**, select **Dark**. | settings | 2 s |
+| 9.4 | Under **Timetable colors**, select **Random colors**. Close Settings and show the timetable in dark mode. | settings | 3 s |
 
-### 9. Siri and Shortcuts (optional, iOS only) · ~15 s
+### 10. Siri and Shortcuts (optional, iOS only) · ~15 s
 
 The app ships App Shortcuts (`下一堂課`, `今天的課`, `找課`, `近期作業`, `最新公告`, `課程資訊`, `加入行事曆`).
 
 | # | Action | Hold |
 |---|--------|------|
-| 9.1 | Go to the Home Screen and open Spotlight. Type a course name and show the course result from the app. | 2 s |
-| 9.2 | Open the Shortcuts app and run **Next class (下一堂課)**. Show the snippet. | 3 s |
+| 10.1 | Go to the Home Screen and open Spotlight. Type a course name and show the course result from the app. | 2 s |
+| 10.2 | Open the Shortcuts app and run **Next class (下一堂課)**. Show the snippet. | 3 s |
 
 Spoken Siri can't be triggered reliably on the simulator. Use Spotlight and Shortcuts on camera, or record Siri on a real device.
 
-### 10. End card · ~4 s
+### 11. End card · ~4 s
 
 Return to the timetable in light mode. Show the app icon and name. Add the end title in editing.
 
@@ -144,6 +161,7 @@ ffmpeg -f concat -safe 0 -i clips.txt -c copy demo.mp4
 ## Known gaps
 
 - **Home ee-class courses** need a Portal sign-in. Without a test account, Home shows *Sign in to Portal (需要登入 Portal)*. Start scene 1 on the international section instead.
+- **Map** places and the food layer come from the backend (`/api/v1/campus/places`, `/api/v1/campus/food`). Without it the tab shows *Couldn’t load the campus places*. Map tiles come from OpenFreeMap, so the simulator needs internet.
 - **Clubs, international pages, and Ask** need the backend. Without it they show a *needs a backend* message.
 - **Live bus times** in Ask need the bus API to be set up on the server. Without it the answer says live arrivals aren't set up. Choose another example question if so.
 - The simulator records no audio. Add narration or music when editing.
