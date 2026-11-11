@@ -15,10 +15,13 @@ import kotlinx.coroutines.launch
 import org.mpc.data.portal.PortalHome
 import org.mpc.data.portal.addingFavorite
 import org.mpc.data.portal.portalHome
+import org.mpc.data.portal.portalShortcutSections
 import org.mpc.data.portal.removingFavorite
+import org.mpc.domain.model.PortalShortcutSection
 import org.mpc.domain.repository.PortalFavoritesRepository
 import org.mpc.domain.session.CampusSessions
 import org.mpc.domain.session.PortalSignIn
+import org.mpc.presentation.formatting.localized
 import org.mpc.presentation.model.PortalAccount
 import org.mpc.presentation.model.toPortalAccount
 
@@ -38,7 +41,10 @@ class PortalBridge internal constructor(
         .onStart { emit(Unit) }
         .flatMapLatest { favorites.favoriteIds }
 
-    fun home(favoriteIds: List<String>, query: String): PortalHome = portalHome(favoriteIds, query)
+    fun home(favoriteIds: List<String>, query: String): PortalHome = portalHome(favoriteIds, query, catalog())
+
+    /** The catalog in the app language at the time of the call. */
+    private fun catalog(): List<PortalShortcutSection> = portalShortcutSections(::localized)
 
     fun refresh() {
         scope.launch { sessions.refreshPortal() }

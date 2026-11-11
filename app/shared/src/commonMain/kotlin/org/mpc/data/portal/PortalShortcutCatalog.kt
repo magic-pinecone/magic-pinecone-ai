@@ -1,5 +1,6 @@
 package org.mpc.data.portal
 
+import dev.icerock.moko.resources.StringResource
 import org.mpc.domain.model.PORTAL_HOME_URL
 import org.mpc.domain.model.PortalShortcutDestination
 import org.mpc.domain.model.PortalShortcutIcon
@@ -7,61 +8,107 @@ import org.mpc.domain.model.PortalShortcutItem
 import org.mpc.domain.model.PortalShortcutSection
 import org.mpc.domain.model.PortalShortcutTint
 import org.mpc.domain.model.portalUrl
+import org.mpc.shared.MR
+import org.mpc.shared.portal_section_accounts
+import org.mpc.shared.portal_section_campus
+import org.mpc.shared.portal_section_courses
+import org.mpc.shared.portal_section_records
+import org.mpc.shared.portal_section_tuition
+import org.mpc.shared.portal_shortcut_counseling
+import org.mpc.shared.portal_shortcut_course_selection
+import org.mpc.shared.portal_shortcut_dorm_network
+import org.mpc.shared.portal_shortcut_eeclass
+import org.mpc.shared.portal_shortcut_google_workspace
+import org.mpc.shared.portal_shortcut_grades
+import org.mpc.shared.portal_shortcut_graduation_review
+import org.mpc.shared.portal_shortcut_it_help
+import org.mpc.shared.portal_shortcut_library
+import org.mpc.shared.portal_shortcut_lost_student_id
+import org.mpc.shared.portal_shortcut_mail
+import org.mpc.shared.portal_shortcut_midterm_warnings
+import org.mpc.shared.portal_shortcut_office365
+import org.mpc.shared.portal_shortcut_payouts
+import org.mpc.shared.portal_shortcut_personnel
+import org.mpc.shared.portal_shortcut_scholarships
+import org.mpc.shared.portal_shortcut_service_desk
+import org.mpc.shared.portal_shortcut_student_records
+import org.mpc.shared.portal_shortcut_study_subsidies
+import org.mpc.shared.portal_shortcut_tuition_bill
+import org.mpc.shared.portal_shortcut_tuition_receipt
 
 /** Every Portal service the app lists, each once, grouped by what it is for. */
-val defaultPortalShortcutSections: List<PortalShortcutSection> = listOf(
-    section(
-        title = "課務",
+private val catalog: List<CatalogSection> = listOf(
+    CatalogSection(
+        title = MR.strings.portal_section_courses,
         tint = PortalShortcutTint.BLUE,
         items = listOf(
-            portalShortcut("新 ee-class", PortalShortcutIcon.BOOK, "/system/ncueeclass"),
-            shortcut("選課系統", PortalShortcutIcon.EVENT, "https://cis.ncu.edu.tw/Course/"),
-            portalShortcut("成績查詢", PortalShortcutIcon.GRADE, "/system/incu-studentscore"),
-            portalShortcut("期中預警查詢", PortalShortcutIcon.WARNING, "/system/incu-ewarningstudent"),
+            portalShortcut(MR.strings.portal_shortcut_eeclass, PortalShortcutIcon.BOOK, "/system/ncueeclass"),
+            CatalogItem(MR.strings.portal_shortcut_course_selection, PortalShortcutIcon.EVENT, "https://cis.ncu.edu.tw/Course/"),
+            portalShortcut(MR.strings.portal_shortcut_grades, PortalShortcutIcon.GRADE, "/system/incu-studentscore"),
+            portalShortcut(MR.strings.portal_shortcut_midterm_warnings, PortalShortcutIcon.WARNING, "/system/incu-ewarningstudent"),
         ),
     ),
-    section(
-        title = "學籍",
+    CatalogSection(
+        title = MR.strings.portal_section_records,
         tint = PortalShortcutTint.PURPLE,
         items = listOf(
-            portalShortcut("學籍系統", PortalShortcutIcon.ACCOUNT_BALANCE, "/system/incu-registrationflow"),
-            portalShortcut("畢業資格審查", PortalShortcutIcon.SCHOOL, "/system/incu-graduate-2"),
-            portalShortcut("學生證掛失", PortalShortcutIcon.CREDIT_CARD_OFF, "/system/32"),
+            portalShortcut(MR.strings.portal_shortcut_student_records, PortalShortcutIcon.ACCOUNT_BALANCE, "/system/incu-registrationflow"),
+            portalShortcut(MR.strings.portal_shortcut_graduation_review, PortalShortcutIcon.SCHOOL, "/system/incu-graduate-2"),
+            portalShortcut(MR.strings.portal_shortcut_lost_student_id, PortalShortcutIcon.CREDIT_CARD_OFF, "/system/32"),
         ),
     ),
-    section(
-        title = "學費與補助",
+    CatalogSection(
+        title = MR.strings.portal_section_tuition,
         tint = PortalShortcutTint.GREEN,
         items = listOf(
-            portalShortcut("學費繳費單", PortalShortcutIcon.REQUEST_QUOTE, "/system/82"),
-            portalShortcut("學費繳費證明", PortalShortcutIcon.REQUEST_QUOTE, "/system/tuition"),
-            portalShortcut("獎助學金暨工讀管理系統", PortalShortcutIcon.WORKSPACE_PREMIUM, "/system/134"),
-            portalShortcut("就學補助系統", PortalShortcutIcon.SAVINGS, "/system/42"),
-            portalShortcut("撥帳系統", PortalShortcutIcon.ACCOUNT_BALANCE, "/system/46"),
+            portalShortcut(MR.strings.portal_shortcut_tuition_bill, PortalShortcutIcon.REQUEST_QUOTE, "/system/82"),
+            portalShortcut(MR.strings.portal_shortcut_tuition_receipt, PortalShortcutIcon.REQUEST_QUOTE, "/system/tuition"),
+            portalShortcut(MR.strings.portal_shortcut_scholarships, PortalShortcutIcon.WORKSPACE_PREMIUM, "/system/134"),
+            portalShortcut(MR.strings.portal_shortcut_study_subsidies, PortalShortcutIcon.SAVINGS, "/system/42"),
+            portalShortcut(MR.strings.portal_shortcut_payouts, PortalShortcutIcon.ACCOUNT_BALANCE, "/system/46"),
         ),
     ),
-    section(
-        title = "校園服務",
+    CatalogSection(
+        title = MR.strings.portal_section_campus,
         tint = PortalShortcutTint.ORANGE,
         items = listOf(
-            portalShortcut("服務櫃台", PortalShortcutIcon.SUPPORT_AGENT, "/system/incu"),
-            portalShortcut("圖書館服務平台", PortalShortcutIcon.LOCAL_LIBRARY, "/system/library-cloud-services"),
-            portalShortcut("個別諮商", PortalShortcutIcon.SUPPORT_AGENT, "/system/consult"),
-            portalShortcut("人事系統", PortalShortcutIcon.BADGE, "/system/humanoauth"),
+            portalShortcut(MR.strings.portal_shortcut_service_desk, PortalShortcutIcon.SUPPORT_AGENT, "/system/incu"),
+            portalShortcut(MR.strings.portal_shortcut_library, PortalShortcutIcon.LOCAL_LIBRARY, "/system/library-cloud-services"),
+            portalShortcut(MR.strings.portal_shortcut_counseling, PortalShortcutIcon.SUPPORT_AGENT, "/system/consult"),
+            portalShortcut(MR.strings.portal_shortcut_personnel, PortalShortcutIcon.BADGE, "/system/humanoauth"),
         ),
     ),
-    section(
-        title = "網路與帳號",
+    CatalogSection(
+        title = MR.strings.portal_section_accounts,
         tint = PortalShortcutTint.TEAL,
         items = listOf(
-            portalShortcut("NCU Mail", PortalShortcutIcon.MAIL, "/system/129"),
-            portalShortcut("宿舍網路", PortalShortcutIcon.WIFI, "/system/dormnet"),
-            portalShortcut("Office 365", PortalShortcutIcon.WORKSPACES, "/system/office365"),
-            portalShortcut("Google Workspace", PortalShortcutIcon.APPS, "/system/gsuite"),
-            portalShortcut("電算中心客服", PortalShortcutIcon.HEADSET, "/system/sdsystem"),
+            portalShortcut(MR.strings.portal_shortcut_mail, PortalShortcutIcon.MAIL, "/system/129"),
+            portalShortcut(MR.strings.portal_shortcut_dorm_network, PortalShortcutIcon.WIFI, "/system/dormnet"),
+            portalShortcut(MR.strings.portal_shortcut_office365, PortalShortcutIcon.WORKSPACES, "/system/office365"),
+            portalShortcut(MR.strings.portal_shortcut_google_workspace, PortalShortcutIcon.APPS, "/system/gsuite"),
+            portalShortcut(MR.strings.portal_shortcut_it_help, PortalShortcutIcon.HEADSET, "/system/sdsystem"),
         ),
     ),
 )
+
+/** Every text the catalog shows, so Compose can resolve them all with `stringResource`. */
+val portalShortcutTexts: List<StringResource> = catalog.flatMap { section -> listOf(section.title) + section.items.map { it.label } }
+
+/** The catalog with its titles and labels resolved by [text], normally in the app language. */
+fun portalShortcutSections(text: (StringResource) -> String): List<PortalShortcutSection> = catalog.map { section ->
+    PortalShortcutSection(
+        title = text(section.title),
+        items = section.items.map { item ->
+            val label = text(item.label)
+            PortalShortcutItem(
+                label = label,
+                icon = item.icon,
+                tint = section.tint,
+                destination = PortalShortcutDestination(title = label, url = item.url),
+            )
+        },
+    )
+}
 
 /** Favorites for someone who has not customized them yet. */
 val defaultPortalFavoriteIds: List<String> = listOf(
@@ -88,34 +135,25 @@ fun filterPortalShortcutSections(
     }
 }
 
-fun portalLoginDestination(url: String = PORTAL_HOME_URL): PortalShortcutDestination = PortalShortcutDestination(
-    title = "Portal 登入",
+fun portalLoginDestination(title: String, url: String = PORTAL_HOME_URL): PortalShortcutDestination = PortalShortcutDestination(
+    title = title,
     url = url,
 )
 
-private typealias TintedShortcut = (PortalShortcutTint) -> PortalShortcutItem
+private class CatalogSection(
+    val title: StringResource,
+    val tint: PortalShortcutTint,
+    val items: List<CatalogItem>,
+)
 
-private fun section(
-    title: String,
-    tint: PortalShortcutTint,
-    items: List<TintedShortcut>,
-): PortalShortcutSection = PortalShortcutSection(title = title, items = items.map { it(tint) })
+private class CatalogItem(
+    val label: StringResource,
+    val icon: PortalShortcutIcon,
+    val url: String,
+)
 
 private fun portalShortcut(
-    label: String,
+    label: StringResource,
     icon: PortalShortcutIcon,
     path: String,
-): TintedShortcut = shortcut(label, icon, portalUrl(path))
-
-private fun shortcut(
-    label: String,
-    icon: PortalShortcutIcon,
-    url: String,
-): TintedShortcut = { tint ->
-    PortalShortcutItem(
-        label = label,
-        icon = icon,
-        tint = tint,
-        destination = PortalShortcutDestination(title = label, url = url),
-    )
-}
+): CatalogItem = CatalogItem(label, icon, portalUrl(path))

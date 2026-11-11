@@ -15,7 +15,7 @@ data class PortalHome(
 fun portalHome(
     favoriteIds: List<String>,
     query: String,
-    catalog: List<PortalShortcutSection> = defaultPortalShortcutSections,
+    catalog: List<PortalShortcutSection>,
 ): PortalHome {
     val itemsById = catalog.flatMap { it.items }.associateBy { it.id }
     val normalizedQuery = query.trim()

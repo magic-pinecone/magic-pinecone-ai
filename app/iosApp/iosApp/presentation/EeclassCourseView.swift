@@ -144,7 +144,7 @@ private struct EeclassCategoryRows: View {
             if page.bulletins.isEmpty { empty }
             ForEach(limited(page.bulletins), id: \.number) { bulletin in
                 Button { onOpenBulletin(bulletin) } label: {
-                    EeclassRowLabel(title: bulletin.title, detail: bulletin.detail)
+                    EeclassRowLabel(title: bulletin.title, detailParts: bulletin.detailParts)
                 }
                 .foregroundStyle(.primary)
             }
@@ -160,7 +160,7 @@ private struct EeclassCategoryRows: View {
         if rows.isEmpty { empty }
         ForEach(Array(limited(rows).enumerated()), id: \.offset) { _, row in
             NavigationLink(value: EeclassPageLink(title: row.title, path: row.path)) {
-                EeclassRowLabel(title: row.title, detail: row.detail)
+                EeclassRowLabel(title: row.title, detailParts: row.detailParts, due: row.due)
             }
         }
     }
@@ -189,7 +189,13 @@ struct EeclassPageLink: Hashable {
 
 private struct EeclassRowLabel: View {
     let title: String
-    let detail: String
+    let detailParts: [String]
+    var due = ""
+
+    private var detail: String {
+        let dueText = due.isEmpty ? [] : [MR.strings().eeclass_homework_due.localized(due)]
+        return (dueText + detailParts).joined(separator: EeclassCoursesKt.EECLASS_DETAIL_SEPARATOR)
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
