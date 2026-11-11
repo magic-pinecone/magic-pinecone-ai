@@ -236,7 +236,7 @@ With `--passages retrieved`, `answer` is capped by retrieval (`ans@3` above);
 
 Run on the development machine (no GPU, no network access to a model):
 
-- `pytest ml/tests`: 198 passed.
+- `pytest ml/tests`: 201 passed.
 - `eval_retrieval.py`: real run, numbers above.
 - `make_teacher_data.py --dry-run`, including resume and a larger `-n`.
 - `eval_generation.py --dry-run`, both `--passages` modes.
@@ -279,7 +279,9 @@ Run on the development machine (no GPU, no network access to a model):
   — `FastModel.from_pretrained` / `get_peft_model` arguments
   (`finetune_vision_layers=False` for text only), chat template `gemma-4`
   (non-thinking, recommended for E2B/E4B), `train_on_responses_only` with
-  `<|turn>user\n` and `<|turn>model\n`, removing the leading `<bos>`,
+  `<|turn>user\n` and `<|turn>model\n`, removing the leading `<bos>` (wrong for
+  Gemma 4 in practice: its processor does not add `<bos>` again, so the script
+  keeps it; see `strip_bos` in `train_lora.py`),
   batch size 1 + gradient accumulation, `adamw_8bit`, E2B LoRA at 8-10 GB,
   a loss of 13-15 being normal for the multimodal E2B/E4B.
 - Unsloth notebooks (Gemma 4 E2B/E4B text, Gemma 3) via Context7

@@ -46,13 +46,26 @@ FAMILIES = {  # Unsloth chat template name and the turn markers of the template
         "chat_template": "gemma-4",  # the non-thinking template
         "instruction_part": "<|turn>user\n",
         "response_part": "<|turn>model\n",
+        # The Gemma 4 processor does not add <bos> when it tokenises the training text, so the one
+        # from the chat template has to stay (checked on Colab, 2026-11-10: exactly one <bos>).
+        "strip_bos": False,
     },
     "gemma3": {
         "chat_template": "gemma-3",
         "instruction_part": "<start_of_turn>user\n",
         "response_part": "<start_of_turn>model\n",
+        # The Gemma 3 tokenizer adds <bos> itself, according to the Unsloth Gemma 3 notebook. Not
+        # checked here: decode one training example before a real run and expect exactly one <bos>.
+        "strip_bos": True,
     },
 }
+
+
+def training_text(rendered: str, strip_bos: bool) -> str:
+    """The chat-template output as it goes into training, with exactly one <bos> after tokenising."""
+    return rendered.removeprefix("<bos>") if strip_bos else rendered
+
+
 LORA_TARGETS = [
     "q_proj",
     "k_proj",
@@ -134,9 +147,12 @@ def train_unsloth(args, family: dict, train_rows: list[dict], eval_rows: list[di
 
     def to_text(rows: list[dict]):
         texts = [
-            tokenizer.apply_chat_template(
-                row["messages"], tokenize=False, add_generation_prompt=False
-            ).removeprefix("<bos>")  # the tokenizer adds <bos> again when training
+            training_text(
+                tokenizer.apply_chat_template(
+                    row["messages"], tokenize=False, add_generation_prompt=False
+                ),
+                family["strip_bos"],
+            )
             for row in rows
         ]
         return Dataset.from_dict({"text": texts})
