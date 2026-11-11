@@ -1,3 +1,5 @@
 <resources>
     <string name="common_app_name">Magic Pinecone</string>
+    <string name="common_ok">OK</string>
+    <string name="common_close">Close</string>
 </resources>

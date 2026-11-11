@@ -10,10 +10,10 @@ struct SettingsView: View {
         SettingsComposeView(sharedHost: sharedHost)
             .id(appLanguageTag)
             .ignoresSafeArea(.container, edges: .bottom)
-            .navigationTitle("設定")
+            .navigationTitle(MR.strings().shell_settings.localized)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("關閉", systemImage: "xmark") {
+                    Button(MR.strings().common_close.localized, systemImage: "xmark") {
                         dismiss()
                     }
                 }

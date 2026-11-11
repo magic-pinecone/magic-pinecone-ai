@@ -2,7 +2,6 @@
     <string name="shell_tab_home">Home</string>
     <string name="shell_tab_news">News</string>
     <string name="shell_tab_portal">Portal</string>
-    <string name="shell_tab_international">Intl</string>
     <string name="shell_tab_course_selection">Courses</string>
     <string name="shell_tab_settings">Settings</string>
     <string name="shell_app_title">Magic Pinecone</string>
@@ -23,4 +22,5 @@
     <string name="shell_more_options">More options</string>
     <string name="shell_share">Share</string>
     <string name="shell_open_in_browser">Open in browser</string>
+    <string name="shell_calendar_full_access_denied">Calendar access is off. Allow Magic Pinecone full access to your calendar in Settings.</string>
 </resources>

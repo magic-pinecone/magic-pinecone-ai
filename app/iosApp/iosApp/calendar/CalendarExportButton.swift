@@ -8,11 +8,11 @@ struct CalendarExportButton: View {
     @State private var message: String?
 
     var body: some View {
-        Button("加入行事曆", systemImage: "calendar.badge.plus") {
+        Button(MR.strings().planning_calendar_add.localized, systemImage: "calendar.badge.plus") {
             Task { await export() }
         }
         .disabled(isExporting)
-        .accessibilityHint("把已儲存的課表加入「\(ClassCalendar.title)」行事曆")
+        .accessibilityHint(MR.strings().planning_calendar_add_hint.localized(ClassCalendar.title))
         .alert(
             message ?? "",
             isPresented: Binding(
@@ -20,7 +20,7 @@ struct CalendarExportButton: View {
                 set: { if !$0 { message = nil } }
             )
         ) {
-            Button("好") {}
+            Button(MR.strings().common_ok.localized) {}
         }
     }
 
@@ -34,9 +34,9 @@ struct CalendarExportButton: View {
             )
             message = ClassCalendar.resultMessage(classCount: count)
         } catch let error as ClassCalendarError {
-            message = String(localized: error.localizedStringResource)
+            message = error.message
         } catch {
-            message = "無法加入行事曆，請稍後再試。"
+            message = MR.strings().shell_calendar_export_failed.localized
         }
     }
 }

@@ -71,7 +71,7 @@ fun AssistantScreen(
     val submit = { text: String ->
         question = text
         // The answer appears where the keyboard is. Focus stays in the field: clearing it lets a hardware Enter
-        // travel on to the section row.
+        // travel on to another control.
         keyboard?.hide()
         onAsk(text)
     }

@@ -1,14 +1,14 @@
-# Repo-relative Kotlin files with existing Chinese string literals in UI code.
+# Repo-relative Kotlin and Swift files with existing Chinese string literals in UI code.
 # Remove a file when its last UI string literal moves to moko-resources.
 app/androidApp/src/main/kotlin/org/mpc/calendar/ClassCalendar.kt
 app/androidApp/src/main/kotlin/org/mpc/presentation/CourseFilterChips.kt
 app/androidApp/src/main/kotlin/org/mpc/presentation/CourseFilterSheet.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/formatting/CourseFilterLabel.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/formatting/EeclassFormatters.kt
-app/shared/src/commonMain/kotlin/org/mpc/presentation/model/EeclassCourses.kt
-app/shared/src/commonMain/kotlin/org/mpc/presentation/model/PortalAccount.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/preview/AssistantPreviewFixture.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/preview/ComposePreviewScenarios.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/preview/GraduationLanguagePreviewFixture.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/views/coursePlanning/CoursePlanningTimetableSuccessView.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/views/coursePlanning/components/CourseCard.kt
+app/iosApp/iosApp/presentation/composeView/CourseCatalogPreviews.swift
+app/iosApp/iosApp/presentation/composeView/TabPreviews.swift

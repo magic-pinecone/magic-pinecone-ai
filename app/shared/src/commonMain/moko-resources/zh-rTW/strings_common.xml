@@ -1,3 +1,5 @@
 <resources>
     <string name="common_app_name">神奇松果</string>
+    <string name="common_ok">好</string>
+    <string name="common_close">關閉</string>
 </resources>
