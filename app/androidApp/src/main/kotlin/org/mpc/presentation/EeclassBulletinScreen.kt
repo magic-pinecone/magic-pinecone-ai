@@ -57,10 +57,12 @@ fun EeclassBulletinScreen(
         val body = remember(loaded.bodyHtml) {
             AnnotatedString.fromHtml(loaded.bodyHtml) { link -> (link as? LinkAnnotation.Url)?.let { openLink(it.url) } }
         }
+        val translation = rememberBulletinTranslation(title, body.text).takeIf { body.isNotBlank() }
+        val shown = translation?.shown
         Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
             Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                 Text(
-                    text = title,
+                    text = shown?.title ?: title,
                     style = MpcTheme.typography.sectionTitle,
                     modifier = Modifier.semantics { heading() },
                 )
@@ -72,11 +74,17 @@ fun EeclassBulletinScreen(
                         modifier = Modifier.padding(top = 8.dp),
                     )
                 }
+                translation?.let { BulletinTranslateButton(it, modifier = Modifier.padding(top = 8.dp)) }
                 if (body.isNotBlank()) {
                     SelectionContainer {
-                        Text(text = body, style = MpcTheme.typography.body, modifier = Modifier.padding(top = 16.dp))
+                        Text(
+                            text = shown?.body?.let(::AnnotatedString) ?: body,
+                            style = MpcTheme.typography.body,
+                            modifier = Modifier.padding(top = 16.dp),
+                        )
                     }
                 }
+                translation?.let { BulletinTranslationNote(it, modifier = Modifier.padding(top = 16.dp)) }
             }
             if (loaded.attachments.isNotEmpty()) {
                 EeclassSectionHeader(stringResource(MR.strings.eeclass_attachments))

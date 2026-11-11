@@ -51,6 +51,7 @@ struct ContentView: View {
             }
         }
         .id(appLanguageTag)
+        .environment(\.appLanguageTag, appLanguageTag)
         .sheet(isPresented: $isShowingSettings) {
             NavigationStack {
                 SettingsView(

@@ -17,6 +17,7 @@ kotlinx-coroutines = "1.11.0"
 kotlix-serialization = "1.11.0"
 kotlinx-datetime = "0.7.1"
 desugarJdkLibs = "2.1.5"
+mlkitTranslate = "17.0.3"
 composeMultiplatform = "1.12.0"
 calf = "0.14.0"
 junit = "4.13.2"
@@ -80,6 +81,7 @@ calf-webview = { module = "com.mohamedrejeb.calf:calf-webview", version.ref = "c
 
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref="kotlix-serialization" }
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJdkLibs" }
+mlkit-translate = { module = "com.google.mlkit:translate", version.ref = "mlkitTranslate" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref="kotlix-serialization" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }

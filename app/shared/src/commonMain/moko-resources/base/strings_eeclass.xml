@@ -17,4 +17,8 @@
     <string name="eeclass_attachments">Attachments</string>
     <string name="eeclass_see_all">See all %1$d items</string>
     <string name="eeclass_homework_due">Due %1$s</string>
+    <string name="eeclass_translate">Translate</string>
+    <string name="eeclass_show_original">Show original</string>
+    <string name="eeclass_translated_on_device">Translated on this device. The original announcement prevails.</string>
+    <string name="eeclass_translation_failed">Couldn’t translate this announcement on this device.</string>
 </resources>

@@ -1,5 +1,6 @@
 import Shared
 import SwiftUI
+import Translation
 import UIKit
 
 /// Which announcement the course screen shows in a sheet.
@@ -15,6 +16,12 @@ private struct EeclassBodyLink: Hashable {
     let url: String
 }
 
+/// An announcement's title and body in the reader's language, translated on the device.
+private struct EeclassBulletinTranslation {
+    let title: String
+    let body: String
+}
+
 /// One announcement: its title, ee-class's summary line, the body as rich text, and its attachments.
 struct EeclassBulletinSheet: View {
     let sharedHost: IosSharedHost
@@ -24,7 +31,17 @@ struct EeclassBulletinSheet: View {
     @State private var bodyText: AttributedString?
     @State private var reloadID = 0
     @State private var path = NavigationPath()
+    @State private var canTranslate = false
+    @State private var translationRequest: TranslationSession.Configuration?
+    @State private var translation: EeclassBulletinTranslation?
+    @State private var showsTranslation = false
+    @State private var translationFailed = false
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.appLanguageTag) private var appLanguageTag
+
+    private var translationTarget: Locale.Language? {
+        OnDeviceTranslation.target(appLanguageTag: appLanguageTag)
+    }
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -35,6 +52,9 @@ struct EeclassBulletinSheet: View {
                     ToolbarItem(placement: .cancellationAction) {
                         Button(MR.strings().common_close.localized, systemImage: "xmark") { dismiss() }
                             .labelStyle(.iconOnly)
+                    }
+                    if canTranslate, bodyText != nil {
+                        ToolbarItem(placement: .primaryAction) { translateButton }
                     }
                 }
                 .navigationDestination(for: EeclassPageLink.self) { link in
@@ -49,6 +69,35 @@ struct EeclassBulletinSheet: View {
                 }
         }
         .task(id: reloadID) { await load() }
+        .task(id: appLanguageTag) {
+            guard let translationTarget else { return canTranslate = false }
+            canTranslate = await OnDeviceTranslation.isAvailable(to: translationTarget)
+        }
+        .translationTask(translationRequest) { session in
+            await translate(with: session)
+        }
+    }
+
+    @ViewBuilder
+    private var translateButton: some View {
+        if showsTranslation {
+            Button(MR.strings().eeclass_show_original.localized, systemImage: "character.bubble") {
+                showsTranslation = false
+            }
+        } else {
+            Button(MR.strings().eeclass_translate.localized, systemImage: "translate") {
+                if translation != nil {
+                    showsTranslation = true
+                } else if let translationTarget {
+                    translationFailed = false
+                    // The system asks to download the languages on first use, then translates on the device.
+                    translationRequest = TranslationSession.Configuration(
+                        source: OnDeviceTranslation.source,
+                        target: translationTarget
+                    )
+                }
+            }
+        }
     }
 
     @ViewBuilder
@@ -59,7 +108,7 @@ struct EeclassBulletinSheet: View {
                 List {
                     Section {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text(selection.bulletin.title)
+                            Text((showsTranslation ? translation?.title : nil) ?? selection.bulletin.title)
                                 .font(.title3.weight(.semibold))
                                 .accessibilityAddTraits(.isHeader)
                             if !page.info.isEmpty {
@@ -68,7 +117,10 @@ struct EeclassBulletinSheet: View {
                                     .foregroundStyle(.secondary)
                             }
                         }
-                        if let bodyText {
+                        if showsTranslation, let translation {
+                            Text(translation.body)
+                                .textSelection(.enabled)
+                        } else if let bodyText {
                             Text(bodyText)
                                 .textSelection(.enabled)
                                 .environment(\.openURL, OpenURLAction { url in
@@ -79,6 +131,12 @@ struct EeclassBulletinSheet: View {
                                     path.append(EeclassBodyLink(url: entry))
                                     return .handled
                                 })
+                        }
+                    } footer: {
+                        if showsTranslation {
+                            Label(MR.strings().eeclass_translated_on_device.localized, systemImage: "translate")
+                        } else if translationFailed {
+                            Text(MR.strings().eeclass_translation_failed.localized)
                         }
                     }
                     if !page.attachments.isEmpty {
@@ -116,7 +174,21 @@ struct EeclassBulletinSheet: View {
             bulletin: selection.bulletin.number
         ) else { return }
         bodyText = result.status == .loaded ? EeclassRichText.attributed(html: result.bodyHtml) : nil
+        translation = nil
+        showsTranslation = false
         page = result
+    }
+
+    private func translate(with session: TranslationSession) async {
+        let body = bodyText.map { String($0.characters) } ?? ""
+        do {
+            let translated = try await OnDeviceTranslation.translate([selection.bulletin.title, body], with: session)
+            translation = EeclassBulletinTranslation(title: translated[0], body: translated[1])
+            showsTranslation = true
+        } catch {
+            translationFailed = true
+        }
+        translationRequest = nil
     }
 }
 
