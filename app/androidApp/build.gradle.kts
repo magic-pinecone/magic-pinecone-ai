@@ -19,6 +19,7 @@ kotlin {
 dependencies {
     implementation(projects.shared)
     implementation(libs.moko.resources.compose)
+    runtimeOnly(libs.maplibre.compose.runtime.opengl.android)
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)

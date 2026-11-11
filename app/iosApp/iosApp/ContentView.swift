@@ -49,6 +49,12 @@ struct ContentView: View {
                 }
                 .ignoresSafeArea(.container, edges: bottomSafeAreaEdges)
             }
+            Tab(MR.strings().shell_tab_map.localized, systemImage: "map", value: AppTab.map) {
+                NavigationStack {
+                    CampusMapView(sharedHost: sharedHost)
+                }
+                .ignoresSafeArea(.container, edges: bottomSafeAreaEdges)
+            }
         }
         .id(appLanguageTag)
         .sheet(isPresented: $isShowingSettings) {

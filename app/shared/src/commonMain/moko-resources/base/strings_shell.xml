@@ -2,6 +2,7 @@
     <string name="shell_tab_home">Home</string>
     <string name="shell_tab_news">News</string>
     <string name="shell_tab_portal">Portal</string>
+    <string name="shell_tab_map">Map</string>
     <string name="shell_tab_course_selection">Courses</string>
     <string name="shell_tab_settings">Settings</string>
     <string name="shell_app_title">Magic Pinecone</string>

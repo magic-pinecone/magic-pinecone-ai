@@ -44,6 +44,7 @@ import org.mpc.domain.model.SlotMatch
 import org.mpc.domain.session.CampusSites
 import org.mpc.domain.session.SitePath
 import org.mpc.domain.session.browserEntry
+import org.mpc.presentation.CampusMapScreen
 import org.mpc.presentation.ClubsScreen
 import org.mpc.presentation.CourseCatalogViewBinding
 import org.mpc.presentation.CoursePlanningTimetableViewBinding
@@ -161,6 +162,14 @@ class IosSharedHost internal constructor(
                     backendEndpoint = backendEndpoint,
                     onUseCourseSource = backendEndpointViewModel::useSource,
                 )
+            }
+        }
+    }
+
+    fun campusMapScreenController(): UIViewController = ComposeUIViewController {
+        ProvideAppDependencies(appGraph) {
+            ThemedContent {
+                CampusMapScreen()
             }
         }
     }

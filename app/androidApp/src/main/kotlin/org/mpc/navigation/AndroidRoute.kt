@@ -59,9 +59,13 @@ data class EeclassBulletinRoute(
 @Serializable
 data object CoursePlanningRoot : TopLevelRoute
 
+@Serializable
+data object MapRoot : TopLevelRoute
+
 val topLevelRoutes: Set<TopLevelRoute> =
     linkedSetOf(
         HomeRoot,
         CoursePlanningRoot,
         PortalRoot,
+        MapRoot,
     )

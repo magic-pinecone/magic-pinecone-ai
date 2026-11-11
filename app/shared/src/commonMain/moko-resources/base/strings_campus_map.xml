@@ -1,0 +1,33 @@
+<resources>
+    <string name="campus_map_search">Search places</string>
+    <string name="campus_map_clear_search">Clear search</string>
+    <string name="campus_map_all">All</string>
+    <string name="campus_map_no_results">No places match your search.</string>
+    <string name="campus_map_failed">Couldn’t load the campus places. Check your connection and try again.</string>
+    <string name="campus_map_attribution">© OpenStreetMap contributors · OpenFreeMap</string>
+    <string name="campus_map_category_academic">Academic</string>
+    <string name="campus_map_category_administration">Administration</string>
+    <string name="campus_map_category_library">Library</string>
+    <string name="campus_map_category_dormitory">Dormitory</string>
+    <string name="campus_map_category_dining">Food</string>
+    <string name="campus_map_category_shop">Shops</string>
+    <string name="campus_map_category_sports">Sports</string>
+    <string name="campus_map_category_service">Services</string>
+    <string name="campus_map_category_transit">Transit</string>
+    <string name="campus_map_category_landmark">Landmarks</string>
+    <string name="campus_map_tag_vegetarian">Vegetarian</string>
+    <string name="campus_map_tag_halal">Halal</string>
+    <string name="campus_map_tag_open_24h">Open 24 hours</string>
+    <string name="campus_map_tag_late_night">Late night</string>
+    <string name="campus_map_tag_cash_only">Cash only</string>
+    <string name="campus_map_tag_card_accepted">Cards accepted</string>
+    <string name="campus_map_tag_english_menu">English menu</string>
+    <string name="campus_map_inside">Inside this building</string>
+    <string name="campus_map_code">Building code %1$s</string>
+    <string name="campus_map_opening_hours">Opening hours</string>
+    <string name="campus_map_price">Price per person</string>
+    <string name="campus_map_price_range">NT$%1$d–%2$d</string>
+    <string name="campus_map_price_single">NT$%1$d</string>
+    <string name="campus_map_walk_google">Walk there with Google Maps</string>
+    <string name="campus_map_open_apple">Open in Apple Maps</string>
+</resources>
