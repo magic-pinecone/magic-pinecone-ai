@@ -19,20 +19,17 @@ import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.mpc.presentation.viewModel.GraduationLanguageViewModel
 import org.mpc.shared.MR
 import org.mpc.shared.intl_section_credits
-import org.mpc.shared.intl_section_food
 import org.mpc.shared.intl_section_graduation
 import org.mpc.shared.intl_section_guides
 import org.mpc.shared.intl_section_service_learning
 
-private const val CREDITS_SECTION = 3
-
-/** The International tab: graduation language requirements, the government guides, service learning, credits and the food map. */
+/** The International tab: graduation language requirements, the government guides, service learning and credits. */
 @Composable
 fun InternationalScreen(modifier: Modifier = Modifier) {
     var section by rememberSaveable { mutableIntStateOf(0) }
     Column(modifier.fillMaxSize()) {
         PrimaryScrollableTabRow(selectedTabIndex = section, edgePadding = 0.dp) {
-            listOf(MR.strings.intl_section_graduation, MR.strings.intl_section_guides, MR.strings.intl_section_service_learning, MR.strings.intl_section_credits, MR.strings.intl_section_food).forEachIndexed { index, label ->
+            listOf(MR.strings.intl_section_graduation, MR.strings.intl_section_guides, MR.strings.intl_section_service_learning, MR.strings.intl_section_credits).forEachIndexed { index, label ->
                 Tab(selected = section == index, onClick = { section = index }, text = { Text(stringResource(label)) })
             }
         }
@@ -58,9 +55,7 @@ fun InternationalScreen(modifier: Modifier = Modifier) {
 
             2 -> ServiceLearningRoute(modifier = Modifier.fillMaxSize())
 
-            CREDITS_SECTION -> CreditsRoute(modifier = Modifier.fillMaxSize())
-
-            else -> FoodMapScreen(modifier = Modifier.fillMaxSize())
+            else -> CreditsRoute(modifier = Modifier.fillMaxSize())
         }
     }
 }

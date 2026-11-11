@@ -56,10 +56,15 @@ data object CoursePlanningRoot : TopLevelRoute
 @Serializable
 data object InternationalRoot : TopLevelRoute
 
+/** Places to eat around campus, with the halal-certified ones marked. */
+@Serializable
+data object FoodMapRoot : TopLevelRoute
+
 val topLevelRoutes: Set<TopLevelRoute> =
     linkedSetOf(
         HomeRoot,
         CoursePlanningRoot,
         PortalRoot,
         InternationalRoot,
+        FoodMapRoot,
     )

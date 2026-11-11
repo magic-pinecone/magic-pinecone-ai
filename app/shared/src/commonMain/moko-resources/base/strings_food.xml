@@ -1,5 +1,5 @@
 <resources>
-    <string name="intl_section_food">Food map</string>
+    <string name="shell_tab_food">Food</string>
     <string name="food_halal">Halal</string>
     <string name="food_halal_only">Halal only</string>
     <string name="food_cert_mr">Muslim Restaurant (MR)</string>

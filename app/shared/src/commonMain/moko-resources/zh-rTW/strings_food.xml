@@ -1,5 +1,5 @@
 <resources>
-    <string name="intl_section_food">美食地圖</string>
+    <string name="shell_tab_food">美食</string>
     <string name="food_halal">清真</string>
     <string name="food_halal_only">只看清真</string>
     <string name="food_cert_mr">穆斯林餐廳（MR）</string>

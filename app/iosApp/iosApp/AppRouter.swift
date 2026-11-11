@@ -5,6 +5,7 @@ enum AppTab: Hashable {
     case coursePlanning
     case portal
     case international
+    case food
 }
 
 /// The semester and serial number that identify one course in the Course Catalog.

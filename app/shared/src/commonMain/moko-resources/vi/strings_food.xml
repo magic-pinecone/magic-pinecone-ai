@@ -1,5 +1,5 @@
 <resources>
-    <string name="intl_section_food">Bản đồ ẩm thực</string>
+    <string name="shell_tab_food">Ẩm thực</string>
     <string name="food_halal">Halal</string>
     <string name="food_halal_only">Chỉ halal</string>
     <string name="food_cert_mr">Nhà hàng Hồi giáo (MR)</string>

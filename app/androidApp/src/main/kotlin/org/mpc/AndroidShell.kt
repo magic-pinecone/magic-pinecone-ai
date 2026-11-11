@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Badge
@@ -86,6 +87,7 @@ import org.mpc.navigation.CoursePlanningRoot
 import org.mpc.navigation.EeclassBulletinRoute
 import org.mpc.navigation.EeclassCategoryRoute
 import org.mpc.navigation.EeclassCourseRoute
+import org.mpc.navigation.FoodMapRoot
 import org.mpc.navigation.HomeRoot
 import org.mpc.navigation.InternationalRoot
 import org.mpc.navigation.PortalRoot
@@ -101,6 +103,7 @@ import org.mpc.presentation.EeclassBulletinScreen
 import org.mpc.presentation.EeclassCategoryScreen
 import org.mpc.presentation.EeclassCourseScreen
 import org.mpc.presentation.EeclassHomeScreen
+import org.mpc.presentation.FoodMapScreen
 import org.mpc.presentation.InternationalScreen
 import org.mpc.presentation.PortalScreen
 import org.mpc.presentation.PortalWebScreen
@@ -131,6 +134,7 @@ import org.mpc.shared.shell_selected_course_count
 import org.mpc.shared.shell_settings
 import org.mpc.shared.shell_share
 import org.mpc.shared.shell_tab_course_selection
+import org.mpc.shared.shell_tab_food
 import org.mpc.shared.shell_tab_home
 import org.mpc.shared.shell_tab_international
 import org.mpc.shared.shell_tab_portal
@@ -303,6 +307,9 @@ private fun AndroidPrimaryNavigation(
             }
             entry<InternationalRoot> {
                 InternationalScreen(modifier = Modifier.fillMaxSize())
+            }
+            entry<FoodMapRoot> {
+                FoodMapScreen(modifier = Modifier.fillMaxSize())
             }
             entry<PortalWebRoute> { route ->
                 PortalWebScreen(
@@ -602,6 +609,8 @@ private data class PrimaryTopBarState(
 
         selectedTopLevelRoute == InternationalRoot -> stringResource(MR.strings.shell_tab_international)
 
+        selectedTopLevelRoute == FoodMapRoot -> stringResource(MR.strings.shell_tab_food)
+
         else -> stringResource(MR.strings.shell_app_title)
     }
 
@@ -690,4 +699,5 @@ private val topLevelNavigationItems =
         TopLevelNavigationItem(CoursePlanningRoot, MR.strings.shell_tab_course_selection, Icons.Default.DateRange),
         TopLevelNavigationItem(PortalRoot, MR.strings.shell_tab_portal, Icons.Default.AccountCircle),
         TopLevelNavigationItem(InternationalRoot, MR.strings.shell_tab_international, Icons.Default.Language),
+        TopLevelNavigationItem(FoodMapRoot, MR.strings.shell_tab_food, Icons.Default.Restaurant),
     )
