@@ -10,8 +10,10 @@ import kotlinx.coroutines.flow.update
 import org.mpc.core.createHttpClient
 import org.mpc.data.dataSource.IntlDataSource
 import org.mpc.data.repository.DefaultClubRepository
+import org.mpc.data.repository.DefaultCreditsRepository
 import org.mpc.data.repository.DefaultGovGuidesRepository
 import org.mpc.data.repository.DefaultGraduationLanguageRepository
+import org.mpc.data.repository.DefaultServiceLearningRepository
 import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
@@ -35,9 +37,11 @@ import org.mpc.domain.session.Unavailability
 import org.mpc.presentation.viewModel.AppSettingsViewModel
 import org.mpc.presentation.viewModel.CampusSessionViewModel
 import org.mpc.presentation.viewModel.ClubViewModel
+import org.mpc.presentation.viewModel.CreditsViewModel
 import org.mpc.presentation.viewModel.GovGuidesViewModel
 import org.mpc.presentation.viewModel.GraduationLanguageViewModel
 import org.mpc.presentation.viewModel.PortalViewModel
+import org.mpc.presentation.viewModel.ServiceLearningViewModel
 import kotlin.reflect.KClass
 
 /** The ViewModels preview scenarios ask for, backed by in-memory state instead of the app graph. */
@@ -54,6 +58,14 @@ internal object WebPreviewViewModelFactory : MetroViewModelFactory() {
             GraduationLanguageViewModel(
                 DefaultGraduationLanguageRepository(PreviewBackendEndpoint, IntlDataSource(createHttpClient())),
             )
+        },
+        ServiceLearningViewModel::class to {
+            ServiceLearningViewModel(
+                DefaultServiceLearningRepository(PreviewBackendEndpoint, IntlDataSource(createHttpClient())),
+            )
+        },
+        CreditsViewModel::class to {
+            CreditsViewModel(DefaultCreditsRepository(PreviewBackendEndpoint, IntlDataSource(createHttpClient())))
         },
     )
 }
