@@ -1,0 +1,881 @@
+{
+ "fetched": "2026-11-11",
+ "center": [
+  24.9682,
+  121.1955
+ ],
+ "halal": [
+  {
+   "name": "柴神興業有限公司-Furger 芙格漢堡餐車(中壢中原店)",
+   "lat": 24.953735,
+   "lon": 121.2371,
+   "kind": "漢堡",
+   "certificates": [
+    "MFR"
+   ],
+   "certifier": "巴勒克清真產業有限公司",
+   "address": "桃園市中壢區民有街76號1樓",
+   "phone": "+886-2-82871801"
+  },
+  {
+   "name": "炸鷄大獅-桃捷高鐵A18站",
+   "lat": 25.013552,
+   "lon": 121.213929,
+   "kind": "速食",
+   "certificates": [
+    "MFR"
+   ],
+   "certifier": "中國回教協會",
+   "address": "桃園市中壢區青埔里高鐵北路一段5號",
+   "phone": "+886-3-287-5287"
+  },
+  {
+   "name": "柴神興業有限公司-Furger 芙格漢堡餐車(桃園高鐵店)",
+   "lat": 25.013556,
+   "lon": 121.213922,
+   "kind": "漢堡",
+   "certificates": [
+    "MFR"
+   ],
+   "certifier": "巴勒克清真產業有限公司",
+   "address": "桃園市中壢區高鐵北路一段5號(2樓穿堂層，萊爾富旁邊，往華泰名品城連通道)",
+   "phone": "+886-2-82871801"
+  },
+  {
+   "name": "和逸飯店-桃園館",
+   "lat": 25.017839,
+   "lon": 121.213779,
+   "kind": "早餐/住宿",
+   "certificates": [
+    "MFT"
+   ],
+   "certifier": "中國回教協會",
+   "address": "桃園市中壢區春德路101號2樓",
+   "phone": "+886-3-2737699"
+  },
+  {
+   "name": "姚牛丸",
+   "lat": 24.929685,
+   "lon": 121.254589,
+   "kind": "印尼料理",
+   "certificates": [
+    "MR"
+   ],
+   "certifier": "中國回教協會",
+   "address": "桃園市中壢區龍平二街3號",
+   "phone": "+886-954-046-612"
+  },
+  {
+   "name": "清真合閃妹小廚",
+   "lat": 24.929715,
+   "lon": 121.255151,
+   "kind": "雲南料理",
+   "certificates": [
+    "MR"
+   ],
+   "certifier": "中國回教協會",
+   "address": "桃園市中壢區中正五路186號",
+   "phone": "+886-3-465-0085"
+  },
+  {
+   "name": "異域故事館Halal專用餐廳",
+   "lat": 24.927748,
+   "lon": 121.254053,
+   "kind": "早午餐",
+   "certificates": [
+    "MFR"
+   ],
+   "certifier": "聯璽商務開發有限公司",
+   "address": "桃園市平鎮區中山路70號",
+   "phone": "+886-3-416-1393"
+  }
+ ],
+ "nearby": [
+  {
+   "name": "27秀梅",
+   "lat": 24.965079,
+   "lon": 121.190868,
+   "kind": "restaurant"
+  },
+  {
+   "name": "7餐(松果餐廳)",
+   "lat": 24.965609,
+   "lon": 121.19542,
+   "kind": "restaurant"
+  },
+  {
+   "name": "85度C",
+   "lat": 24.955987,
+   "lon": 121.202851,
+   "kind": "coffee shop"
+  },
+  {
+   "name": "85度C",
+   "lat": 24.956669,
+   "lon": 121.208993,
+   "kind": "coffee shop"
+  },
+  {
+   "name": "85度C",
+   "lat": 24.961593,
+   "lon": 121.211362,
+   "kind": "coffee shop"
+  },
+  {
+   "name": "About Life生活食光",
+   "lat": 24.95351,
+   "lon": 121.202843,
+   "kind": "restaurant"
+  },
+  {
+   "name": "Ale",
+   "lat": 24.964646,
+   "lon": 121.19332,
+   "kind": "restaurant"
+  },
+  {
+   "name": "CASA BRASIL NCU",
+   "lat": 24.964394,
+   "lon": 121.191088,
+   "kind": "restaurant"
+  },
+  {
+   "name": "CoCo都可",
+   "lat": 24.95203,
+   "lon": 121.203398,
+   "kind": "bubble tea"
+  },
+  {
+   "name": "Daddy's美式餐廳",
+   "lat": 24.963687,
+   "lon": 121.190765,
+   "kind": "restaurant"
+  },
+  {
+   "name": "Enf-健康輕食餐",
+   "lat": 24.965285,
+   "lon": 121.193539,
+   "kind": "restaurant"
+  },
+  {
+   "name": "Main蛋",
+   "lat": 24.965413,
+   "lon": 121.193683,
+   "kind": "restaurant"
+  },
+  {
+   "name": "No.17",
+   "lat": 24.964486,
+   "lon": 121.191508,
+   "kind": "regional"
+  },
+  {
+   "name": "Ticket Toast 提齊 熱壓吐司",
+   "lat": 24.964775,
+   "lon": 121.193536,
+   "kind": "restaurant"
+  },
+  {
+   "name": "一億園",
+   "lat": 24.965017,
+   "lon": 121.193545,
+   "kind": "restaurant"
+  },
+  {
+   "name": "一品鍋",
+   "lat": 24.965465,
+   "lon": 121.193679,
+   "kind": "restaurant"
+  },
+  {
+   "name": "中壢正新明牛肉麵",
+   "lat": 24.965012,
+   "lon": 121.191001,
+   "kind": "beef noodle"
+  },
+  {
+   "name": "九品",
+   "lat": 24.964393,
+   "lon": 121.190568,
+   "kind": "restaurant"
+  },
+  {
+   "name": "九餐",
+   "lat": 24.970702,
+   "lon": 121.195821,
+   "kind": "restaurant"
+  },
+  {
+   "name": "京城韓式湯飯",
+   "lat": 24.964245,
+   "lon": 121.193182,
+   "kind": "restaurant"
+  },
+  {
+   "name": "人行道健康蔬食",
+   "lat": 24.964394,
+   "lon": 121.192384,
+   "kind": "italian"
+  },
+  {
+   "name": "來來炒飯",
+   "lat": 24.965371,
+   "lon": 121.193654,
+   "kind": "restaurant"
+  },
+  {
+   "name": "來客",
+   "lat": 24.964879,
+   "lon": 121.193298,
+   "kind": "restaurant"
+  },
+  {
+   "name": "健康美食館",
+   "lat": 24.964796,
+   "lon": 121.190952,
+   "kind": "restaurant"
+  },
+  {
+   "name": "傻師傅湯包",
+   "lat": 24.9647,
+   "lon": 121.193358,
+   "kind": "restaurant"
+  },
+  {
+   "name": "內卡小館",
+   "lat": 24.964327,
+   "lon": 121.193116,
+   "kind": "restaurant"
+  },
+  {
+   "name": "八哥重慶酸辣粉",
+   "lat": 24.96379,
+   "lon": 121.190751,
+   "kind": "restaurant"
+  },
+  {
+   "name": "八方雲集",
+   "lat": 24.962128,
+   "lon": 121.211775,
+   "kind": "dumplings"
+  },
+  {
+   "name": "八方雲集",
+   "lat": 24.964702,
+   "lon": 121.190919,
+   "kind": "dumplings"
+  },
+  {
+   "name": "包子饅頭",
+   "lat": 24.96542,
+   "lon": 121.193536,
+   "kind": "restaurant"
+  },
+  {
+   "name": "十三番工房",
+   "lat": 24.958627,
+   "lon": 121.179244,
+   "kind": "cafe"
+  },
+  {
+   "name": "友竹居",
+   "lat": 24.968401,
+   "lon": 121.201393,
+   "kind": "chinese"
+  },
+  {
+   "name": "可不可熟成紅茶",
+   "lat": 24.951812,
+   "lon": 121.203417,
+   "kind": "bubble tea"
+  },
+  {
+   "name": "合浦",
+   "lat": 24.962465,
+   "lon": 121.212044,
+   "kind": "chinese"
+  },
+  {
+   "name": "吉米熊新點子早午餐",
+   "lat": 24.964382,
+   "lon": 121.19211,
+   "kind": "restaurant"
+  },
+  {
+   "name": "咖哩老師",
+   "lat": 24.964995,
+   "lon": 121.19364,
+   "kind": "restaurant"
+  },
+  {
+   "name": "哈堡堡",
+   "lat": 24.964806,
+   "lon": 121.191132,
+   "kind": "restaurant"
+  },
+  {
+   "name": "喬慧素食",
+   "lat": 24.965368,
+   "lon": 121.193664,
+   "kind": "restaurant"
+  },
+  {
+   "name": "四海遊龍",
+   "lat": 24.952519,
+   "lon": 121.203363,
+   "kind": "dumplings"
+  },
+  {
+   "name": "夏克奶茶",
+   "lat": 24.96506,
+   "lon": 121.193544,
+   "kind": "cafe"
+  },
+  {
+   "name": "夠義式",
+   "lat": 24.964202,
+   "lon": 121.193165,
+   "kind": "restaurant"
+  },
+  {
+   "name": "大中央厚切牛排",
+   "lat": 24.964708,
+   "lon": 121.190703,
+   "kind": "steak house"
+  },
+  {
+   "name": "太祖魷魚羹",
+   "lat": 24.964222,
+   "lon": 121.193044,
+   "kind": "restaurant"
+  },
+  {
+   "name": "宵夜屋自助餐",
+   "lat": 24.965382,
+   "lon": 121.193665,
+   "kind": "restaurant"
+  },
+  {
+   "name": "家鄉麵店",
+   "lat": 24.964123,
+   "lon": 121.19069,
+   "kind": "restaurant"
+  },
+  {
+   "name": "小木屋鬆餅",
+   "lat": 24.969962,
+   "lon": 121.193411,
+   "kind": "cafe"
+  },
+  {
+   "name": "小紅牛",
+   "lat": 24.964156,
+   "lon": 121.19295,
+   "kind": "restaurant"
+  },
+  {
+   "name": "小豬滷味",
+   "lat": 24.96478,
+   "lon": 121.193577,
+   "kind": "restaurant"
+  },
+  {
+   "name": "山丘餐廳",
+   "lat": 24.960756,
+   "lon": 121.190967,
+   "kind": "american"
+  },
+  {
+   "name": "山頂洞人",
+   "lat": 24.96505,
+   "lon": 121.193638,
+   "kind": "restaurant"
+  },
+  {
+   "name": "幸福小館",
+   "lat": 24.964952,
+   "lon": 121.190805,
+   "kind": "restaurant"
+  },
+  {
+   "name": "幸福廚房",
+   "lat": 24.964178,
+   "lon": 121.193139,
+   "kind": "restaurant"
+  },
+  {
+   "name": "廚窗食坊",
+   "lat": 24.964787,
+   "lon": 121.190746,
+   "kind": "restaurant"
+  },
+  {
+   "name": "微笑轉角",
+   "lat": 24.96483,
+   "lon": 121.193637,
+   "kind": "restaurant"
+  },
+  {
+   "name": "必勝客",
+   "lat": 24.956966,
+   "lon": 121.203285,
+   "kind": "pizza"
+  },
+  {
+   "name": "惟客早餐店",
+   "lat": 24.964046,
+   "lon": 121.190568,
+   "kind": "breakfast"
+  },
+  {
+   "name": "懶得煮",
+   "lat": 24.954444,
+   "lon": 121.20294,
+   "kind": "restaurant"
+  },
+  {
+   "name": "打啵",
+   "lat": 24.967157,
+   "lon": 121.190771,
+   "kind": "restaurant"
+  },
+  {
+   "name": "托斯卡尼尼義大利餐廳",
+   "lat": 24.952623,
+   "lon": 121.193943,
+   "kind": "italian"
+  },
+  {
+   "name": "拉亞漢堡",
+   "lat": 24.965392,
+   "lon": 121.19096,
+   "kind": "burger, breakfast"
+  },
+  {
+   "name": "新陶芳",
+   "lat": 24.96923,
+   "lon": 121.199297,
+   "kind": "restaurant"
+  },
+  {
+   "name": "早安美芝城中壢活力中央",
+   "lat": 24.964448,
+   "lon": 121.193282,
+   "kind": "breakfast"
+  },
+  {
+   "name": "星巴克",
+   "lat": 24.95691,
+   "lon": 121.203044,
+   "kind": "coffee shop"
+  },
+  {
+   "name": "東東生鮮手工大水餃",
+   "lat": 24.965131,
+   "lon": 121.193544,
+   "kind": "restaurant"
+  },
+  {
+   "name": "松院餐廳",
+   "lat": 24.96707,
+   "lon": 121.190635,
+   "kind": "restaurant"
+  },
+  {
+   "name": "樂活堡",
+   "lat": 24.964354,
+   "lon": 121.190769,
+   "kind": "restaurant"
+  },
+  {
+   "name": "橘利日式の鍋物",
+   "lat": 24.965319,
+   "lon": 121.213477,
+   "kind": "restaurant"
+  },
+  {
+   "name": "歐姆萊斯",
+   "lat": 24.964289,
+   "lon": 121.190748,
+   "kind": "restaurant"
+  },
+  {
+   "name": "水悅莊園",
+   "lat": 24.973128,
+   "lon": 121.191717,
+   "kind": "restaurant"
+  },
+  {
+   "name": "津知園排骨",
+   "lat": 24.964842,
+   "lon": 121.190769,
+   "kind": "restaurant"
+  },
+  {
+   "name": "清心福全",
+   "lat": 24.957515,
+   "lon": 121.205541,
+   "kind": "bubble tea"
+  },
+  {
+   "name": "滷味居",
+   "lat": 24.964397,
+   "lon": 121.190804,
+   "kind": "restaurant"
+  },
+  {
+   "name": "滿食記燒肉丼飯",
+   "lat": 24.965317,
+   "lon": 121.193539,
+   "kind": "restaurant"
+  },
+  {
+   "name": "漢堡王",
+   "lat": 24.966944,
+   "lon": 121.190611,
+   "kind": "burger"
+  },
+  {
+   "name": "漢林大漢堡",
+   "lat": 24.964528,
+   "lon": 121.190602,
+   "kind": "restaurant"
+  },
+  {
+   "name": "火靠窯Pizza",
+   "lat": 24.964204,
+   "lon": 121.192986,
+   "kind": "restaurant"
+  },
+  {
+   "name": "無敵蛋餅",
+   "lat": 24.965431,
+   "lon": 121.193536,
+   "kind": "restaurant"
+  },
+  {
+   "name": "熟檸檬食肆",
+   "lat": 24.964439,
+   "lon": 121.190822,
+   "kind": "restaurant"
+  },
+  {
+   "name": "熱浪島南洋蔬食茶堂",
+   "lat": 24.963794,
+   "lon": 121.191705,
+   "kind": "restaurant"
+  },
+  {
+   "name": "熱食部",
+   "lat": 24.962494,
+   "lon": 121.210298,
+   "kind": "restaurant"
+  },
+  {
+   "name": "燈丫腳湯包車",
+   "lat": 24.964743,
+   "lon": 121.193397,
+   "kind": "restaurant"
+  },
+  {
+   "name": "瑞麟美而美",
+   "lat": 24.964582,
+   "lon": 121.193418,
+   "kind": "breakfast"
+  },
+  {
+   "name": "田園美食屋",
+   "lat": 24.96446,
+   "lon": 121.191654,
+   "kind": "restaurant"
+  },
+  {
+   "name": "白胡子牛排館",
+   "lat": 24.964107,
+   "lon": 121.190568,
+   "kind": "steak house"
+  },
+  {
+   "name": "真功夫 蔥抓餅",
+   "lat": 24.964906,
+   "lon": 121.193254,
+   "kind": "restaurant"
+  },
+  {
+   "name": "福泉豆花",
+   "lat": 24.96529,
+   "lon": 121.190928,
+   "kind": "restaurant"
+  },
+  {
+   "name": "福陞 紅油炒手",
+   "lat": 24.964193,
+   "lon": 121.190466,
+   "kind": "restaurant"
+  },
+  {
+   "name": "秈春坊",
+   "lat": 24.965477,
+   "lon": 121.190995,
+   "kind": "restaurant"
+  },
+  {
+   "name": "秘密基地",
+   "lat": 24.964754,
+   "lon": 121.190944,
+   "kind": "restaurant"
+  },
+  {
+   "name": "竹香自助餐",
+   "lat": 24.964412,
+   "lon": 121.191247,
+   "kind": "restaurant"
+  },
+  {
+   "name": "米樂義大利",
+   "lat": 24.964459,
+   "lon": 121.190567,
+   "kind": "restaurant"
+  },
+  {
+   "name": "米豆Mido",
+   "lat": 24.964884,
+   "lon": 121.19079,
+   "kind": "restaurant"
+  },
+  {
+   "name": "粥王",
+   "lat": 24.965235,
+   "lon": 121.193633,
+   "kind": "restaurant"
+  },
+  {
+   "name": "紅樓",
+   "lat": 24.964741,
+   "lon": 121.190717,
+   "kind": "restaurant"
+  },
+  {
+   "name": "綠風草原餐廳",
+   "lat": 24.95218,
+   "lon": 121.191361,
+   "kind": "restaurant"
+  },
+  {
+   "name": "美味王",
+   "lat": 24.965223,
+   "lon": 121.193652,
+   "kind": "fast food"
+  },
+  {
+   "name": "美式早餐屋",
+   "lat": 24.964239,
+   "lon": 121.190725,
+   "kind": "breakfast"
+  },
+  {
+   "name": "肯德基",
+   "lat": 24.957538,
+   "lon": 121.204735,
+   "kind": "chicken"
+  },
+  {
+   "name": "胡思咖啡",
+   "lat": 24.964534,
+   "lon": 121.191245,
+   "kind": "coffee, panini, tea"
+  },
+  {
+   "name": "萊姆斯早午餐",
+   "lat": 24.964008,
+   "lon": 121.190581,
+   "kind": "restaurant"
+  },
+  {
+   "name": "萊客堡早午餐",
+   "lat": 24.96415,
+   "lon": 121.190556,
+   "kind": "restaurant"
+  },
+  {
+   "name": "路易莎咖啡",
+   "lat": 24.967016,
+   "lon": 121.190681,
+   "kind": "coffee shop"
+  },
+  {
+   "name": "迷客夏",
+   "lat": 24.951748,
+   "lon": 121.203424,
+   "kind": "bubble tea"
+  },
+  {
+   "name": "迷路義麵屋",
+   "lat": 24.964663,
+   "lon": 121.190678,
+   "kind": "義大利麵 燉飯 烤餅"
+  },
+  {
+   "name": "達啵廚房",
+   "lat": 24.964193,
+   "lon": 121.190696,
+   "kind": "restaurant"
+  },
+  {
+   "name": "銀河炒飯",
+   "lat": 24.965244,
+   "lon": 121.193651,
+   "kind": "restaurant"
+  },
+  {
+   "name": "阿米玲食堂",
+   "lat": 24.964479,
+   "lon": 121.190846,
+   "kind": "japanese"
+  },
+  {
+   "name": "隨緣餐廳",
+   "lat": 24.964953,
+   "lon": 121.191038,
+   "kind": "restaurant"
+  },
+  {
+   "name": "雙寶爸涼麵",
+   "lat": 24.964263,
+   "lon": 121.193069,
+   "kind": "restaurant"
+  },
+  {
+   "name": "雞師父 醬汁照燒雞排",
+   "lat": 24.964743,
+   "lon": 121.193488,
+   "kind": "restaurant"
+  },
+  {
+   "name": "雞排車",
+   "lat": 24.964927,
+   "lon": 121.19357,
+   "kind": "restaurant"
+  },
+  {
+   "name": "雷爾森咖啡",
+   "lat": 24.963793,
+   "lon": 121.213113,
+   "kind": "coffee shop"
+  },
+  {
+   "name": "霸王",
+   "lat": 24.96491,
+   "lon": 121.193633,
+   "kind": "restaurant"
+  },
+  {
+   "name": "韓林",
+   "lat": 24.964557,
+   "lon": 121.193275,
+   "kind": "restaurant"
+  },
+  {
+   "name": "饌食園",
+   "lat": 24.965243,
+   "lon": 121.193543,
+   "kind": "restaurant"
+  },
+  {
+   "name": "饕客滷味",
+   "lat": 24.965191,
+   "lon": 121.193542,
+   "kind": "restaurant"
+  },
+  {
+   "name": "香城燒臘",
+   "lat": 24.964886,
+   "lon": 121.193524,
+   "kind": "restaurant"
+  },
+  {
+   "name": "香恬園",
+   "lat": 24.965401,
+   "lon": 121.193671,
+   "kind": "restaurant"
+  },
+  {
+   "name": "香港尖東港式料理",
+   "lat": 24.958123,
+   "lon": 121.19331,
+   "kind": "cantonese"
+  },
+  {
+   "name": "香煎小舖",
+   "lat": 24.964151,
+   "lon": 121.193111,
+   "kind": "restaurant"
+  },
+  {
+   "name": "香米便當",
+   "lat": 24.970172,
+   "lon": 121.195501,
+   "kind": "restaurant"
+  },
+  {
+   "name": "香米自助餐",
+   "lat": 24.964052,
+   "lon": 121.190708,
+   "kind": "restaurant"
+  },
+  {
+   "name": "馬爾波咖啡",
+   "lat": 24.963828,
+   "lon": 121.190741,
+   "kind": "restaurant"
+  },
+  {
+   "name": "鬼島漢堡",
+   "lat": 24.964976,
+   "lon": 121.193567,
+   "kind": "restaurant"
+  },
+  {
+   "name": "鴻樂",
+   "lat": 24.964433,
+   "lon": 121.191862,
+   "kind": "restaurant"
+  },
+  {
+   "name": "麥克小姐",
+   "lat": 24.964312,
+   "lon": 121.190504,
+   "kind": "restaurant"
+  },
+  {
+   "name": "麥味登",
+   "lat": 24.965346,
+   "lon": 121.193538,
+   "kind": "restaurant"
+  },
+  {
+   "name": "麥味登",
+   "lat": 24.967023,
+   "lon": 121.190737,
+   "kind": "restaurant"
+  },
+  {
+   "name": "麥堡堡早點",
+   "lat": 24.964997,
+   "lon": 121.19082,
+   "kind": "restaurant"
+  },
+  {
+   "name": "麥當勞",
+   "lat": 24.960378,
+   "lon": 121.188144,
+   "kind": "burger"
+  },
+  {
+   "name": "麥當勞",
+   "lat": 24.964861,
+   "lon": 121.213911,
+   "kind": "burger"
+  }
+ ]
+}

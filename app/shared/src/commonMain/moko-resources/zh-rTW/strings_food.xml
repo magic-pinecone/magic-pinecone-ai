@@ -1,0 +1,11 @@
+<resources>
+    <string name="intl_section_food">美食地圖</string>
+    <string name="food_halal">清真</string>
+    <string name="food_halal_only">只看清真</string>
+    <string name="food_cert_mr">穆斯林餐廳（MR）</string>
+    <string name="food_cert_mfr">穆斯林友善餐廳（MFR）</string>
+    <string name="food_cert_mft">穆斯林友善餐旅（MFT）</string>
+    <string name="food_certified_by">認證單位：%1$s</string>
+    <string name="food_sources">清真店家取自交通部觀光署「接待穆斯林餐廳」認證名單，擷取日期 %1$s。其他店家取自 OpenStreetMap，未查核是否清真。前往前請先向店家確認。</string>
+    <string name="food_offline">無法載入地圖。請檢查網路連線後重新開啟此頁。</string>
+</resources>
