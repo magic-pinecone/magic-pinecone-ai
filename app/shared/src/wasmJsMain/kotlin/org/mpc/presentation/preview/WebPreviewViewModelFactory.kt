@@ -8,7 +8,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import org.mpc.core.createHttpClient
+import org.mpc.data.dataSource.AssistantDataSource
 import org.mpc.data.dataSource.IntlDataSource
+import org.mpc.data.repository.DefaultAssistantRepository
 import org.mpc.data.repository.DefaultClubRepository
 import org.mpc.data.repository.DefaultGovGuidesRepository
 import org.mpc.data.repository.DefaultGraduationLanguageRepository
@@ -33,6 +35,7 @@ import org.mpc.domain.session.SiteStatus
 import org.mpc.domain.session.TransferProgress
 import org.mpc.domain.session.Unavailability
 import org.mpc.presentation.viewModel.AppSettingsViewModel
+import org.mpc.presentation.viewModel.AssistantViewModel
 import org.mpc.presentation.viewModel.CampusSessionViewModel
 import org.mpc.presentation.viewModel.ClubViewModel
 import org.mpc.presentation.viewModel.GovGuidesViewModel
@@ -46,6 +49,9 @@ internal object WebPreviewViewModelFactory : MetroViewModelFactory() {
         PortalViewModel::class to { PortalViewModel(InMemoryPortalFavoritesRepository()) },
         CampusSessionViewModel::class to { CampusSessionViewModel(SignedOutCampusSessions) },
         AppSettingsViewModel::class to { AppSettingsViewModel(PreviewSettings) },
+        AssistantViewModel::class to {
+            AssistantViewModel(DefaultAssistantRepository(PreviewBackendEndpoint, AssistantDataSource(createHttpClient())))
+        },
         ClubViewModel::class to { ClubViewModel(DefaultClubRepository(createHttpClient(), PreviewBackendEndpoint)) },
         GovGuidesViewModel::class to {
             GovGuidesViewModel(DefaultGovGuidesRepository(PreviewBackendEndpoint, IntlDataSource(createHttpClient())))

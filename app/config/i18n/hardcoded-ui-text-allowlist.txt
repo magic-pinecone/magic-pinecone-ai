@@ -7,6 +7,7 @@ app/shared/src/commonMain/kotlin/org/mpc/presentation/formatting/CourseFilterLab
 app/shared/src/commonMain/kotlin/org/mpc/presentation/formatting/EeclassFormatters.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/model/EeclassCourses.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/model/PortalAccount.kt
+app/shared/src/commonMain/kotlin/org/mpc/presentation/preview/AssistantPreviewFixture.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/preview/ComposePreviewScenarios.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/preview/GraduationLanguagePreviewFixture.kt
 app/shared/src/commonMain/kotlin/org/mpc/presentation/views/coursePlanning/CoursePlanningTimetableSuccessView.kt
