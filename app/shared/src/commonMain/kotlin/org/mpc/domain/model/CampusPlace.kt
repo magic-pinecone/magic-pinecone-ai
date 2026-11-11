@@ -79,6 +79,8 @@ data class CampusPlaces(
     val places: List<CampusPlace>,
     /** The campus outline, buildings and sports grounds as a GeoJSON FeatureCollection for the map; null when it did not load. */
     val areasGeoJson: String? = null,
+    /** Restaurants around the campus; null when they did not load. */
+    val food: FoodPlaces? = null,
 )
 
 /** True when [query] is part of the Chinese, English or Vietnamese name, the code or an alias, ignoring case. */

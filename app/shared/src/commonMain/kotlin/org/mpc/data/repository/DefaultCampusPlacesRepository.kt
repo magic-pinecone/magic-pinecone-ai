@@ -24,14 +24,17 @@ internal class DefaultCampusPlacesRepository(
     override suspend fun fetchPlaces(): CampusPlaces? {
         val baseUrl = backendEndpoint.baseUrl.first() ?: return null
         val places = dataSource.getPlaces(baseUrl).toDomain()
-        // The shapes only decorate the markers, so a failure here must not hide the places.
-        val areas = try {
-            dataSource.getAreasGeoJson(baseUrl)
-        } catch (cause: Exception) {
-            if (cause is CancellationException) throw cause
-            Logger.i(cause.toString())
-            null
-        }
-        return places.copy(areasGeoJson = areas)
+        // The shapes and the restaurants only add to the markers, so a failure there must not hide the places.
+        val areas = optional { dataSource.getAreasGeoJson(baseUrl) }
+        val food = optional { dataSource.getFood(baseUrl).toDomain() }
+        return places.copy(areasGeoJson = areas, food = food)
     }
+}
+
+private suspend fun <T> optional(load: suspend () -> T): T? = try {
+    load()
+} catch (cause: Exception) {
+    if (cause is CancellationException) throw cause
+    Logger.i(cause.toString())
+    null
 }

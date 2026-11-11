@@ -13,9 +13,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.DirectionsWalk
+import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Payments
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.filled.VerifiedUser
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -30,18 +33,23 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import dev.icerock.moko.resources.compose.stringResource
 import org.mpc.domain.model.CampusPlace
+import org.mpc.domain.model.FoodPlace
+import org.mpc.domain.model.MapLinks
 import org.mpc.domain.model.PriceRange
+import org.mpc.presentation.theme.FoodMarkerColors
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
 import org.mpc.presentation.theme.style
 import org.mpc.shared.MR
 import org.mpc.shared.campus_map_code
+import org.mpc.shared.campus_map_halal_not_checked
 import org.mpc.shared.campus_map_inside
 import org.mpc.shared.campus_map_open_apple
 import org.mpc.shared.campus_map_opening_hours
 import org.mpc.shared.campus_map_price
 import org.mpc.shared.campus_map_price_range
 import org.mpc.shared.campus_map_price_single
+import org.mpc.shared.campus_map_tag_halal
 import org.mpc.shared.campus_map_walk_google
 
 /** What the bottom sheet shows for one place: the names, code, description, hours, price, tags and the routes out. */
@@ -112,22 +120,7 @@ fun CampusPlaceSheetContent(
             Text(stringResource(MR.strings.campus_map_inside), style = MpcTheme.typography.sectionTitle, color = MpcTheme.colors.label)
             tenants.forEach { tenant -> TenantRow(tenant, languageTag, onClick = { onSelectTenant(tenant.id) }) }
         }
-        Button(
-            onClick = { uriHandler.openUri(place.mapLinks.googleWalkingDirections) },
-            modifier = Modifier.fillMaxWidth(),
-            contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
-        ) {
-            Icon(Icons.AutoMirrored.Filled.DirectionsWalk, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
-            Text(stringResource(MR.strings.campus_map_walk_google), modifier = Modifier.padding(start = ButtonDefaults.IconSpacing))
-        }
-        OutlinedButton(
-            onClick = { uriHandler.openUri(place.mapLinks.appleMaps) },
-            modifier = Modifier.fillMaxWidth(),
-            contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
-        ) {
-            Icon(Icons.Filled.Map, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
-            Text(stringResource(MR.strings.campus_map_open_apple), modifier = Modifier.padding(start = ButtonDefaults.IconSpacing))
-        }
+        RouteButtons(place.mapLinks)
     }
 }
 
@@ -172,4 +165,77 @@ private fun PriceRange.format(): String = if (min == max) {
     stringResource(MR.strings.campus_map_price_single, min)
 } else {
     stringResource(MR.strings.campus_map_price_range, min, max)
+}
+
+@Composable
+private fun RouteButtons(mapLinks: MapLinks) {
+    val uriHandler = LocalUriHandler.current
+    Button(
+        onClick = { uriHandler.openUri(mapLinks.googleWalkingDirections) },
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+    ) {
+        Icon(Icons.AutoMirrored.Filled.DirectionsWalk, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
+        Text(stringResource(MR.strings.campus_map_walk_google), modifier = Modifier.padding(start = ButtonDefaults.IconSpacing))
+    }
+    OutlinedButton(
+        onClick = { uriHandler.openUri(mapLinks.appleMaps) },
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+    ) {
+        Icon(Icons.Filled.Map, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
+        Text(stringResource(MR.strings.campus_map_open_apple), modifier = Modifier.padding(start = ButtonDefaults.IconSpacing))
+    }
+}
+
+/** What the bottom sheet shows for a restaurant: name, kind, address, phone, halal certificate and the routes out. */
+@Composable
+fun FoodPlaceSheetContent(
+    place: FoodPlace,
+    modifier: Modifier = Modifier,
+) {
+    val uriHandler = LocalUriHandler.current
+    Column(
+        modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal = MpcSpacing.space4),
+        verticalArrangement = Arrangement.spacedBy(MpcSpacing.space3),
+    ) {
+        Column {
+            Text(place.name, style = MpcTheme.typography.screenTitle, color = MpcTheme.colors.label)
+            place.kind?.let { Text(it, style = MpcTheme.typography.supporting, color = MpcTheme.colors.labelSecondary) }
+        }
+        val halal = place.halal
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(MpcSpacing.space2)) {
+            Icon(
+                Icons.Filled.VerifiedUser,
+                contentDescription = null,
+                tint = if (halal != null) FoodMarkerColors.halal else MpcTheme.colors.labelTertiary,
+                modifier = Modifier.size(20.dp),
+            )
+            Text(
+                text = if (halal != null) {
+                    stringResource(MR.strings.campus_map_tag_halal) + ": " + (halal.certificates + halal.certifier).filter { it.isNotBlank() }.joinToString(" · ")
+                } else {
+                    stringResource(MR.strings.campus_map_halal_not_checked)
+                },
+                style = MpcTheme.typography.body,
+                color = MpcTheme.colors.label,
+            )
+        }
+        place.address?.let { address ->
+            Row(horizontalArrangement = Arrangement.spacedBy(MpcSpacing.space3)) {
+                Icon(Icons.Filled.Place, contentDescription = null, tint = MpcTheme.colors.labelSecondary, modifier = Modifier.size(20.dp))
+                Text(address, style = MpcTheme.typography.body, color = MpcTheme.colors.label)
+            }
+        }
+        place.phone?.let { phone ->
+            Row(
+                modifier = Modifier.clickable { uriHandler.openUri("tel:" + phone.filter { it.isDigit() || it == '+' }) },
+                horizontalArrangement = Arrangement.spacedBy(MpcSpacing.space3),
+            ) {
+                Icon(Icons.Filled.Call, contentDescription = null, tint = MpcTheme.colors.accent, modifier = Modifier.size(20.dp))
+                Text(phone, style = MpcTheme.typography.body, color = MpcTheme.colors.accent)
+            }
+        }
+        RouteButtons(place.mapLinks)
+    }
 }

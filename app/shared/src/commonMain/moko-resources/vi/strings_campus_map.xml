@@ -22,6 +22,9 @@
     <string name="campus_map_tag_cash_only">Chỉ nhận tiền mặt</string>
     <string name="campus_map_tag_card_accepted">Nhận thẻ</string>
     <string name="campus_map_tag_english_menu">Có thực đơn tiếng Anh</string>
+    <string name="campus_map_food_nearby">Quán ăn gần đây</string>
+    <string name="campus_map_halal_only">Chỉ món halal</string>
+    <string name="campus_map_halal_not_checked">Chưa kiểm tra halal</string>
     <string name="campus_map_inside">Trong tòa nhà này</string>
     <string name="campus_map_code">Mã tòa nhà %1$s</string>
     <string name="campus_map_opening_hours">Giờ mở cửa</string>

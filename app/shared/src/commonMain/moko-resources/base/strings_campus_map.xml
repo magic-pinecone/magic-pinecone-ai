@@ -22,6 +22,9 @@
     <string name="campus_map_tag_cash_only">Cash only</string>
     <string name="campus_map_tag_card_accepted">Cards accepted</string>
     <string name="campus_map_tag_english_menu">English menu</string>
+    <string name="campus_map_food_nearby">Food nearby</string>
+    <string name="campus_map_halal_only">Halal only</string>
+    <string name="campus_map_halal_not_checked">Not checked for halal</string>
     <string name="campus_map_inside">Inside this building</string>
     <string name="campus_map_code">Building code %1$s</string>
     <string name="campus_map_opening_hours">Opening hours</string>

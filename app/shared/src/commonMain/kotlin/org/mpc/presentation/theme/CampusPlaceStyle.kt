@@ -54,6 +54,12 @@ data class TagStyle(
     val icon: ImageVector,
 )
 
+/** The restaurant markers: a quiet colour for every restaurant and green for halal-certified ones. */
+object FoodMarkerColors {
+    val regular = Color(0xFF9A8878)
+    val halal = Color(0xFF1B8A3E)
+}
+
 val PlaceCategory.style: CategoryStyle
     get() = when (this) {
         PlaceCategory.ACADEMIC -> CategoryStyle(MR.strings.campus_map_category_academic, Icons.Filled.School, Color(0xFF3B6FD4))

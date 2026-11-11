@@ -11,7 +11,10 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.mpc.domain.model.CampusPlace
 import org.mpc.domain.model.CampusPlaces
+import org.mpc.domain.model.FoodPlace
+import org.mpc.domain.model.FoodPlaces
 import org.mpc.domain.model.GeoPoint
+import org.mpc.domain.model.HalalCertificate
 import org.mpc.domain.model.LocalizedText
 import org.mpc.domain.model.MapLinks
 import org.mpc.domain.model.PlaceCategory
@@ -52,6 +55,18 @@ private val places = CampusPlaces(
     ),
 )
 
+private fun food(id: String, halal: Boolean) = FoodPlace(
+    id = id,
+    name = id,
+    location = GeoPoint(24.95, 121.23),
+    kind = null,
+    osmId = null,
+    halal = HalalCertificate(listOf("MFR"), "cert").takeIf { halal },
+    address = null,
+    phone = null,
+    mapLinks = MapLinks("g", "w", "a"),
+)
+
 private class BackendPlaces(
     backend: String?,
     var failure: Throwable? = null,
@@ -60,7 +75,8 @@ private class BackendPlaces(
 
     override suspend fun fetchPlaces(): CampusPlaces? {
         failure?.let { throw it }
-        return places.takeIf { backend.value != null }
+        val withFood = places.copy(food = FoodPlaces("OSM; MOTC", listOf(food("halal-1", true), food("osm-1", false))))
+        return withFood.takeIf { backend.value != null }
     }
 }
 
@@ -136,6 +152,41 @@ val campusMapViewModelTests by testSuite {
             viewModel.selectCategory(PlaceCategory.SHOP)
             testScheduler.advanceUntilIdle()
             assertEquals(listOf("library"), viewModel.loaded().visiblePlaces.map { it.id })
+        }
+    }
+
+    test("food is hidden until asked for, and halal only keeps the certified places and turns food on") {
+        campusMapTest(backend = "http://10.0.2.2:8000") { viewModel, _ ->
+            assertEquals(emptyList(), viewModel.loaded().visibleFood)
+            assertEquals("© OpenStreetMap contributors", viewModel.loaded().shownAttribution)
+
+            viewModel.setShowFood(true)
+            testScheduler.advanceUntilIdle()
+            assertEquals(listOf("halal-1", "osm-1"), viewModel.loaded().visibleFood.map { it.id })
+            assertEquals("OSM; MOTC", viewModel.loaded().shownAttribution)
+
+            viewModel.setHalalOnly(true)
+            testScheduler.advanceUntilIdle()
+            assertEquals(listOf("halal-1"), viewModel.loaded().visibleFood.map { it.id })
+
+            viewModel.setShowFood(false)
+            testScheduler.advanceUntilIdle()
+            assertEquals(false, viewModel.loaded().halalOnly)
+            assertEquals(emptyList(), viewModel.loaded().visibleFood)
+        }
+    }
+
+    test("opening a restaurant closes the place sheet and the other way round") {
+        campusMapTest(backend = "http://10.0.2.2:8000") { viewModel, _ ->
+            viewModel.selectPlace("cafe")
+            viewModel.selectFood("osm-1")
+            testScheduler.advanceUntilIdle()
+            assertEquals(null, viewModel.loaded().selectedPlace)
+            assertEquals("osm-1", viewModel.loaded().selectedFood?.id)
+
+            viewModel.selectPlace("cafe")
+            testScheduler.advanceUntilIdle()
+            assertEquals(null, viewModel.loaded().selectedFood)
         }
     }
 
