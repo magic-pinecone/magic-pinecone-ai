@@ -29,14 +29,15 @@ import org.mpc.shared.ncu_food_places_json
 fun FoodMapScreen(modifier: Modifier = Modifier) {
     val page by MR.files.ncu_food_map_html.readTextAsState()
     val places by MR.files.ncu_food_places_json.readTextAsState()
+    // Each platform writes an unfilled placeholder differently, so the page gets one it can rely on.
     val labels = buildJsonObject {
         put("halal", stringResource(MR.strings.food_halal))
         put("halalOnly", stringResource(MR.strings.food_halal_only))
         put("cert_MR", stringResource(MR.strings.food_cert_mr))
         put("cert_MFR", stringResource(MR.strings.food_cert_mfr))
         put("cert_MFT", stringResource(MR.strings.food_cert_mft))
-        put("certifiedBy", stringResource(MR.strings.food_certified_by))
-        put("sources", stringResource(MR.strings.food_sources))
+        put("certifiedBy", stringResource(MR.strings.food_certified_by, "{0}"))
+        put("sources", stringResource(MR.strings.food_sources, "{0}"))
         put("offline", stringResource(MR.strings.food_offline))
     }.toString()
     val loadedPage = page

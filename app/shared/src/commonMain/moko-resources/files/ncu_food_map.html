@@ -29,7 +29,7 @@
 const labels = __LABELS__;
 const places = __PLACES__;
 
-document.getElementById('sources').textContent = labels.sources.replace('%1$s', places.fetched);
+document.getElementById('sources').textContent = labels.sources.replace('{0}', places.fetched);
 
 // Names and addresses come from outside sources, so they only ever reach the page as text.
 function popup(lines) {
@@ -71,7 +71,7 @@ if (!window.L) {
       place.name,
       place.kind,
       place.certificates.map(code => labels['cert_' + code] || code).join(' · '),
-      labels.certifiedBy.replace('%1$s', place.certifier),
+      labels.certifiedBy.replace('{0}', place.certifier),
       place.address,
       place.phone,
     ])));

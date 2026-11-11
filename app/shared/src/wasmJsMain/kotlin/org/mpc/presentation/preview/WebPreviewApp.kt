@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.LocalLibrary
+import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.VolunteerActivism
@@ -106,6 +107,7 @@ private enum class PreviewScreen(
             ComposePreviewScenario.CLUBS_FAILURE,
         ),
     ),
+    FOOD_MAP("美食地圖", Icons.Filled.Restaurant, listOf(ComposePreviewScenario.FOOD_MAP)),
     GRADUATION(
         "國際生",
         Icons.Filled.Language,
