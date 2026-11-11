@@ -14,7 +14,7 @@
       "aliases": [
         "文一館"
       ],
-      "name_vi": "Tòa Văn học 1 (文學一館)",
+      "name_vi": "Tòa Văn học 1",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -38,7 +38,7 @@
       "aliases": [
         "文二館"
       ],
-      "name_vi": "Tòa Văn học 2 (文學二館)",
+      "name_vi": "Tòa Văn học 2",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -63,7 +63,7 @@
         "工一館",
         "工一"
       ],
-      "name_vi": "Tòa Kỹ thuật 1 (工程一館)",
+      "name_vi": "Tòa Kỹ thuật 1",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -147,7 +147,7 @@
         "工五館",
         "工五"
       ],
-      "name_vi": "Tòa Kỹ thuật 5 (工程五館)",
+      "name_vi": "Tòa Kỹ thuật 5",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -171,7 +171,7 @@
       "aliases": [
         "客家學院"
       ],
-      "name_vi": "Viện Nghiên cứu Khách Gia (客家學院)",
+      "name_vi": "Viện Nghiên cứu Khách Gia",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -193,7 +193,7 @@
       "longitude": 121.193658,
       "osm_id": "way/217833431",
       "aliases": [],
-      "name_vi": "Tòa Quản lý 1 (志希館) (志希館（管理一館）)",
+      "name_vi": "Tòa Quản lý 1",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -218,7 +218,7 @@
         "管理學院二館",
         "管二館"
       ],
-      "name_vi": "Tòa Quản lý 2 (管理二館)",
+      "name_vi": "Tòa Quản lý 2",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -242,7 +242,7 @@
       "aliases": [
         "光電大樓"
       ],
-      "name_vi": "Tòa Quang điện Quốc Đỉnh (國鼎光電大樓) (國鼎光電大樓)",
+      "name_vi": "Tòa Quang điện Quốc Đỉnh",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -267,7 +267,7 @@
         "大講堂",
         "校史館"
       ],
-      "name_vi": "Giảng đường Lớn (大講堂)",
+      "name_vi": "Giảng đường Lớn",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -291,7 +291,7 @@
       "aliases": [
         "人社大樓"
       ],
-      "name_vi": "Tòa Nhân văn và Khoa học Xã hội (人文社會科學大樓)",
+      "name_vi": "Tòa Nhân văn và Khoa học Xã hội",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -316,7 +316,7 @@
         "數學系",
         "Mathematics"
       ],
-      "name_vi": "Tòa Hongjing (鴻經館) (鴻經館)",
+      "name_vi": "Tòa Hongjing",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -342,7 +342,7 @@
         "語言中心",
         "Chinese class"
       ],
-      "name_vi": "Tòa Giảng dạy Tổng hợp (綜合教學館)",
+      "name_vi": "Tòa Giảng dạy Tổng hợp",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -367,7 +367,7 @@
         "太遙中心",
         "CSRSR"
       ],
-      "name_vi": "Trung tâm Nghiên cứu Không gian và Viễn thám (太空及遙測研究中心)",
+      "name_vi": "Trung tâm Nghiên cứu Không gian và Viễn thám",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -406,7 +406,7 @@
         "科一館",
         "地球科學院"
       ],
-      "name_vi": "Viện Khoa học Trái đất (地球科學學院)",
+      "name_vi": "Viện Khoa học Trái đất",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -433,7 +433,7 @@
         "理學院",
         "理學院大樓"
       ],
-      "name_vi": "Tòa Khoa học 2 (Viện Khoa học) (科學二館（理學院大樓）)",
+      "name_vi": "Tòa Khoa học 2 (Viện Khoa học)",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -457,7 +457,7 @@
       "aliases": [
         "科三館"
       ],
-      "name_vi": "Tòa Khoa học 3 (科學三館)",
+      "name_vi": "Tòa Khoa học 3",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -483,7 +483,7 @@
         "科四館",
         "健雄館"
       ],
-      "name_vi": "Tòa Khoa học 4 (健雄館) (科學四館（健雄館）)",
+      "name_vi": "Tòa Khoa học 4",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -507,7 +507,7 @@
       "aliases": [
         "科五館"
       ],
-      "name_vi": "Tòa Khoa học 5 (科學五館)",
+      "name_vi": "Tòa Khoa học 5",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -540,7 +540,7 @@
         "en": "The Office of International Affairs (OIA) is on the 1st floor.",
         "vi": "Văn phòng Quốc tế (OIA) ở tầng 1."
       },
-      "name_vi": "Tòa Giảng dạy và Nghiên cứu (教學研究綜合大樓)",
+      "name_vi": "Tòa Giảng dạy và Nghiên cứu",
       "sources": [
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
@@ -561,7 +561,7 @@
         "體育館",
         "Gym"
       ],
-      "name_vi": "Nhà thể thao Yi-Ren (依仁堂)",
+      "name_vi": "Nhà thể thao Yi-Ren",
       "description": {
         "zh": "運動設施；開放時間及使用規則請先確認。",
         "en": "Sports facility; check availability and access rules.",
@@ -585,7 +585,7 @@
       "aliases": [
         "Admin Building"
       ],
-      "name_vi": "Tòa Hành chính (行政大樓)",
+      "name_vi": "Tòa Hành chính",
       "description": {
         "zh": "大學行政服務所在建築。",
         "en": "University administration building.",
@@ -624,7 +624,7 @@
         "圖書館",
         "Library"
       ],
-      "name_vi": "Thư viện chính (總圖書館)",
+      "name_vi": "Thư viện chính",
       "description": {
         "zh": "校園圖書館；入館與借閱規則請洽圖書館。",
         "en": "Campus library; check library access and borrowing rules.",
@@ -648,7 +648,7 @@
       "aliases": [
         "國鼎圖書館"
       ],
-      "name_vi": "Thư viện Quốc Đỉnh (國鼎圖書資料館)",
+      "name_vi": "Thư viện Quốc Đỉnh",
       "description": {
         "zh": "校園圖書館；入館與借閱規則請洽圖書館。",
         "en": "Campus library; check library access and borrowing rules.",
@@ -670,7 +670,7 @@
       "longitude": 121.192362,
       "osm_id": "way/996613837",
       "aliases": [],
-      "name_vi": "Hội trường Lớn (大禮堂)",
+      "name_vi": "Hội trường Lớn",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -694,7 +694,7 @@
       "aliases": [
         "游泳池"
       ],
-      "name_vi": "Hồ bơi trong nhà (室內游泳池)",
+      "name_vi": "Hồ bơi trong nhà",
       "description": {
         "zh": "運動設施；開放時間及使用規則請先確認。",
         "en": "Sports facility; check availability and access rules.",
@@ -719,7 +719,7 @@
         "國際宿舍",
         "dorm"
       ],
-      "name_vi": "Ký túc xá sinh viên quốc tế (國際學生宿舍)",
+      "name_vi": "Ký túc xá sinh viên quốc tế",
       "description": {
         "zh": "學生宿舍；入住與門禁請洽住宿服務組。 舍別與入住資格每學年可能變動。",
         "en": "Student housing; contact the housing office about access and check-in. Hall assignments and eligibility can change each academic year.",
@@ -744,7 +744,7 @@
         "宿服中心",
         "dorm office"
       ],
-      "name_vi": "Bộ phận Dịch vụ Nhà ở Sinh viên (住宿服務組)",
+      "name_vi": "Bộ phận Dịch vụ Nhà ở Sinh viên",
       "description": {
         "zh": "國際學生宿舍一樓，可詢問宿舍入住及住宿問題。",
         "en": "On the first floor of the International Student Dormitory; ask about check-in and housing.",
@@ -771,7 +771,7 @@
         "cafeteria",
         "food"
       ],
-      "name_vi": "Nhà ăn Songyuan (松苑餐廳)",
+      "name_vi": "Nhà ăn Songyuan",
       "description": {
         "zh": "校內餐飲區；商家及營業狀況可能隨整修變動。",
         "en": "Campus dining area; tenants and opening status may change with renovations.",
@@ -799,7 +799,7 @@
         "cafeteria",
         "food"
       ],
-      "name_vi": "Nhà ăn Pine Cone (松果餐廳)",
+      "name_vi": "Nhà ăn Pine Cone",
       "description": {
         "zh": "位於男七舍，校內餐飲與商場。",
         "en": "Dining and shopping area at Men’s Dorm 7.",
@@ -830,7 +830,7 @@
         "en": "Street of eateries by the back gate.",
         "vi": "Con phố ẩm thực gần cổng sau."
       },
-      "name_vi": "Phố ăn đêm (宵夜街)",
+      "name_vi": "Phố ăn đêm",
       "sources": [
         "https://in.ncu.edu.tw/~ncu7009/campus/restaurants",
         "https://ncufresh.ncu.edu.tw/18/campus",
@@ -851,7 +851,7 @@
         "郵局",
         "ATM"
       ],
-      "name_vi": "Bưu điện Đại học Trung ương (中央大學郵局)",
+      "name_vi": "Bưu điện Đại học Trung ương",
       "description": {
         "zh": "女十四舍一樓的郵局。",
         "en": "Post office on the first floor of Women’s Dorm 14.",
@@ -902,7 +902,7 @@
         "bus",
         "校門"
       ],
-      "name_vi": "Trạm xe buýt Đại học Trung ương (中央大學)",
+      "name_vi": "Trạm xe buýt Đại học Trung ương",
       "description": {
         "zh": "中大路上的公車站；搭乘前確認方向及站牌。",
         "en": "Bus stop on Zhongda Road; check the direction and stop sign before boarding.",
@@ -957,7 +957,7 @@
         "bus",
         "後門"
       ],
-      "name_vi": "Cổng sau NCU (中央大學後門)",
+      "name_vi": "Cổng sau NCU",
       "description": {
         "zh": "校園後門，可通往中央路附近商店。",
         "en": "Rear campus gate, connecting to shops near Zhongyang Road.",
@@ -972,14 +972,14 @@
     {
       "id": "advanced-technology",
       "name_zh": "前瞻科技研究中心",
-      "name_en": "Advanced Technology Research Center (前瞻科技研究中心)",
+      "name_en": "Advanced Technology Research Center",
       "code": null,
       "category": "academic",
       "latitude": 24.966523,
       "longitude": 121.187521,
       "osm_id": "way/268561943",
       "aliases": [],
-      "name_vi": "Trung tâm Nghiên cứu Công nghệ Tiên tiến (前瞻科技研究中心)",
+      "name_vi": "Trung tâm Nghiên cứu Công nghệ Tiên tiến",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -998,14 +998,14 @@
     {
       "id": "zhi-dao",
       "name_zh": "志道樓",
-      "name_en": "Zhidao Building (志道樓)",
+      "name_en": "Zhidao Building",
       "code": null,
       "category": "academic",
       "latitude": 24.96567,
       "longitude": 121.193884,
       "osm_id": "way/268561418",
       "aliases": [],
-      "name_vi": "Tòa Zhidao (志道樓) (志道樓)",
+      "name_vi": "Tòa Zhidao",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -1024,14 +1024,14 @@
     {
       "id": "ju-de",
       "name_zh": "據德樓",
-      "name_en": "Jude Building (據德樓)",
+      "name_en": "Jude Building",
       "code": null,
       "category": "academic",
       "latitude": 24.966786,
       "longitude": 121.195897,
       "osm_id": "way/268840858",
       "aliases": [],
-      "name_vi": "Tòa Jude (據德樓) (據德樓)",
+      "name_vi": "Tòa Jude",
       "description": {
         "zh": "校園教學或研究建築；請確認課程所在樓層。",
         "en": "Campus academic or research building; check your room and floor before visiting.",
@@ -1050,14 +1050,14 @@
     {
       "id": "male-3",
       "name_zh": "男三舍",
-      "name_en": "Dorm 3 (男三舍)",
+      "name_en": "Dorm 3",
       "code": null,
       "category": "dormitory",
       "latitude": 24.965653,
       "longitude": 121.193334,
       "osm_id": "way/202690673",
       "aliases": [],
-      "name_vi": "Ký túc xá 3 (男三舍)",
+      "name_vi": "Ký túc xá 3",
       "description": {
         "zh": "學生宿舍；入住與門禁請洽住宿服務組。 舍別與入住資格每學年可能變動。 校方列為 115 學年度女生宿舍。",
         "en": "Student housing; contact the housing office about access and check-in. Hall assignments and eligibility can change each academic year. NCU lists this hall for women in academic year 2026–27.",
@@ -1077,14 +1077,14 @@
     {
       "id": "male-5",
       "name_zh": "男五舍",
-      "name_en": "Men’s Dorm 5 (男五舍)",
+      "name_en": "Men’s Dorm 5",
       "code": null,
       "category": "dormitory",
       "latitude": 24.9661,
       "longitude": 121.195274,
       "osm_id": "way/268840857",
       "aliases": [],
-      "name_vi": "Ký túc xá nam 5 (男五舍)",
+      "name_vi": "Ký túc xá nam 5",
       "description": {
         "zh": "學生宿舍；入住與門禁請洽住宿服務組。 舍別與入住資格每學年可能變動。",
         "en": "Student housing; contact the housing office about access and check-in. Hall assignments and eligibility can change each academic year.",
@@ -1103,14 +1103,14 @@
     {
       "id": "male-6",
       "name_zh": "男六舍",
-      "name_en": "Men’s Dorm 6 (男六舍)",
+      "name_en": "Men’s Dorm 6",
       "code": null,
       "category": "dormitory",
       "latitude": 24.965879,
       "longitude": 121.195713,
       "osm_id": "way/268824432",
       "aliases": [],
-      "name_vi": "Ký túc xá nam 6 (男六舍)",
+      "name_vi": "Ký túc xá nam 6",
       "description": {
         "zh": "學生宿舍；入住與門禁請洽住宿服務組。 舍別與入住資格每學年可能變動。",
         "en": "Student housing; contact the housing office about access and check-in. Hall assignments and eligibility can change each academic year.",
@@ -1129,14 +1129,14 @@
     {
       "id": "male-7",
       "name_zh": "男七舍",
-      "name_en": "Men’s Dorm 7 (男七舍)",
+      "name_en": "Men’s Dorm 7",
       "code": null,
       "category": "dormitory",
       "latitude": 24.965601,
       "longitude": 121.195502,
       "osm_id": "way/268824430",
       "aliases": [],
-      "name_vi": "Ký túc xá nam 7 (男七舍)",
+      "name_vi": "Ký túc xá nam 7",
       "description": {
         "zh": "學生宿舍；入住與門禁請洽住宿服務組。 舍別與入住資格每學年可能變動。",
         "en": "Student housing; contact the housing office about access and check-in. Hall assignments and eligibility can change each academic year.",
@@ -1155,14 +1155,14 @@
     {
       "id": "male-9",
       "name_zh": "男九舍",
-      "name_en": "Men’s Dorm 9 (男九舍)",
+      "name_en": "Men’s Dorm 9",
       "code": null,
       "category": "dormitory",
       "latitude": 24.97048,
       "longitude": 121.19564,
       "osm_id": "way/202805783",
       "aliases": [],
-      "name_vi": "Ký túc xá nam 9 (男九舍)",
+      "name_vi": "Ký túc xá nam 9",
       "description": {
         "zh": "學生宿舍；入住與門禁請洽住宿服務組。 舍別與入住資格每學年可能變動。",
         "en": "Student housing; contact the housing office about access and check-in. Hall assignments and eligibility can change each academic year.",
@@ -1181,14 +1181,14 @@
     {
       "id": "male-11",
       "name_zh": "男十一舍",
-      "name_en": "Dorm 11 (男十一舍)",
+      "name_en": "Dorm 11",
       "code": null,
       "category": "dormitory",
       "latitude": 24.96569,
       "longitude": 121.194955,
       "osm_id": "way/268561417",
       "aliases": [],
-      "name_vi": "Ký túc xá 11 (男十一舍)",
+      "name_vi": "Ký túc xá 11",
       "description": {
         "zh": "學生宿舍；入住與門禁請洽住宿服務組。 舍別與入住資格每學年可能變動。 校方列為 115 學年度女生宿舍。",
         "en": "Student housing; contact the housing office about access and check-in. Hall assignments and eligibility can change each academic year. NCU lists this hall for women in academic year 2026–27.",
@@ -1208,14 +1208,14 @@
     {
       "id": "male-12",
       "name_zh": "男十二舍",
-      "name_en": "Men’s Dorm 12 (男十二舍)",
+      "name_en": "Men’s Dorm 12",
       "code": null,
       "category": "dormitory",
       "latitude": 24.971276,
       "longitude": 121.194914,
       "osm_id": "way/268824892",
       "aliases": [],
-      "name_vi": "Ký túc xá nam 12 (男十二舍)",
+      "name_vi": "Ký túc xá nam 12",
       "description": {
         "zh": "學生宿舍；入住與門禁請洽住宿服務組。 舍別與入住資格每學年可能變動。",
         "en": "Student housing; contact the housing office about access and check-in. Hall assignments and eligibility can change each academic year.",
@@ -1234,14 +1234,14 @@
     {
       "id": "male-13",
       "name_zh": "男十三舍",
-      "name_en": "Men’s Dorm 13 (男十三舍)",
+      "name_en": "Men’s Dorm 13",
       "code": null,
       "category": "dormitory",
       "latitude": 24.966599,
       "longitude": 121.196358,
       "osm_id": "way/264560214",
       "aliases": [],
-      "name_vi": "Ký túc xá nam 13 (男十三舍)",
+      "name_vi": "Ký túc xá nam 13",
       "description": {
         "zh": "學生宿舍；入住與門禁請洽住宿服務組。 舍別與入住資格每學年可能變動。",
         "en": "Student housing; contact the housing office about access and check-in. Hall assignments and eligibility can change each academic year.",
@@ -1260,14 +1260,14 @@
     {
       "id": "female-1",
       "name_zh": "女一舍",
-      "name_en": "Women’s Dorm 1 (女一舍)",
+      "name_en": "Women’s Dorm 1",
       "code": null,
       "category": "dormitory",
       "latitude": 24.966402,
       "longitude": 121.192479,
       "osm_id": "way/268843082",
       "aliases": [],
-      "name_vi": "Ký túc xá nữ 1 (女一舍)",
+      "name_vi": "Ký túc xá nữ 1",
       "description": {
         "zh": "學生宿舍；入住與門禁請洽住宿服務組。 舍別與入住資格每學年可能變動。",
         "en": "Student housing; contact the housing office about access and check-in. Hall assignments and eligibility can change each academic year.",
@@ -1286,14 +1286,14 @@
     {
       "id": "female-2",
       "name_zh": "女二舍",
-      "name_en": "Women’s Dorm 2 (女二舍)",
+      "name_en": "Women’s Dorm 2",
       "code": null,
       "category": "dormitory",
       "latitude": 24.966406,
       "longitude": 121.191741,
       "osm_id": "way/268843079",
       "aliases": [],
-      "name_vi": "Ký túc xá nữ 2 (女二舍)",
+      "name_vi": "Ký túc xá nữ 2",
       "description": {
         "zh": "學生宿舍；入住與門禁請洽住宿服務組。 舍別與入住資格每學年可能變動。",
         "en": "Student housing; contact the housing office about access and check-in. Hall assignments and eligibility can change each academic year.",
@@ -1312,14 +1312,14 @@
     {
       "id": "female-3",
       "name_zh": "女三舍",
-      "name_en": "Women’s Dorm 3 (女三舍)",
+      "name_en": "Women’s Dorm 3",
       "code": null,
       "category": "dormitory",
       "latitude": 24.966258,
       "longitude": 121.192411,
       "osm_id": "way/268843081",
       "aliases": [],
-      "name_vi": "Ký túc xá nữ 3 (女三舍)",
+      "name_vi": "Ký túc xá nữ 3",
       "description": {
         "zh": "學生宿舍；入住與門禁請洽住宿服務組。 舍別與入住資格每學年可能變動。",
         "en": "Student housing; contact the housing office about access and check-in. Hall assignments and eligibility can change each academic year.",
@@ -1338,14 +1338,14 @@
     {
       "id": "female-4",
       "name_zh": "女四舍",
-      "name_en": "Women’s Dorm 4 (女四舍)",
+      "name_en": "Women’s Dorm 4",
       "code": null,
       "category": "dormitory",
       "latitude": 24.966188,
       "longitude": 121.191725,
       "osm_id": "way/268843080",
       "aliases": [],
-      "name_vi": "Ký túc xá nữ 4 (女四舍)",
+      "name_vi": "Ký túc xá nữ 4",
       "description": {
         "zh": "學生宿舍；入住與門禁請洽住宿服務組。 舍別與入住資格每學年可能變動。",
         "en": "Student housing; contact the housing office about access and check-in. Hall assignments and eligibility can change each academic year.",
@@ -1364,14 +1364,14 @@
     {
       "id": "female-14",
       "name_zh": "女十四舍",
-      "name_en": "Women’s Dorm 14 (女十四舍)",
+      "name_en": "Women’s Dorm 14",
       "code": null,
       "category": "dormitory",
       "latitude": 24.965493,
       "longitude": 121.194276,
       "osm_id": "way/202805788",
       "aliases": [],
-      "name_vi": "Ký túc xá nữ 14 (女十四舍)",
+      "name_vi": "Ký túc xá nữ 14",
       "description": {
         "zh": "學生宿舍；入住與門禁請洽住宿服務組。 舍別與入住資格每學年可能變動。",
         "en": "Student housing; contact the housing office about access and check-in. Hall assignments and eligibility can change each academic year.",
@@ -1390,14 +1390,14 @@
     {
       "id": "badminton-hall",
       "name_zh": "羽球館",
-      "name_en": "Badminton Hall (羽球館)",
+      "name_en": "Badminton Hall",
       "code": null,
       "category": "sports",
       "latitude": 24.969146,
       "longitude": 121.19079,
       "osm_id": "way/202805154",
       "aliases": [],
-      "name_vi": "Nhà cầu lông (羽球館)",
+      "name_vi": "Nhà cầu lông",
       "description": {
         "zh": "運動設施；開放時間及使用規則請先確認。",
         "en": "Sports facility; check availability and access rules.",
@@ -1416,14 +1416,14 @@
     {
       "id": "baseball-field",
       "name_zh": "棒球場",
-      "name_en": "Baseball Field (棒球場)",
+      "name_en": "Baseball Field",
       "code": null,
       "category": "sports",
       "latitude": 24.969238,
       "longitude": 121.191839,
       "osm_id": "way/995169632",
       "aliases": [],
-      "name_vi": "Sân bóng chày (棒球場)",
+      "name_vi": "Sân bóng chày",
       "description": {
         "zh": "運動設施；開放時間及使用規則請先確認。",
         "en": "Sports facility; check availability and access rules.",
@@ -1442,14 +1442,14 @@
     {
       "id": "skating-rink",
       "name_zh": "溜冰場",
-      "name_en": "Skating Rink (溜冰場)",
+      "name_en": "Skating Rink",
       "code": null,
       "category": "sports",
       "latitude": 24.969576,
       "longitude": 121.190972,
       "osm_id": "way/268851918",
       "aliases": [],
-      "name_vi": "Sân trượt patin (溜冰場)",
+      "name_vi": "Sân trượt patin",
       "description": {
         "zh": "運動設施；開放時間及使用規則請先確認。",
         "en": "Sports facility; check availability and access rules.",
@@ -1468,14 +1468,14 @@
     {
       "id": "sports-center",
       "name_zh": "中大國民運動中心",
-      "name_en": "NCU Civil Sports Center (中大國民運動中心)",
+      "name_en": "NCU Civil Sports Center",
       "code": null,
       "category": "sports",
       "latitude": 24.969739,
       "longitude": 121.189955,
       "osm_id": "way/1041679633",
       "aliases": [],
-      "name_vi": "Trung tâm Thể thao NCU (中大國民運動中心)",
+      "name_vi": "Trung tâm Thể thao NCU",
       "description": {
         "zh": "運動設施；開放時間及使用規則請先確認。",
         "en": "Sports facility; check availability and access rules.",
@@ -1494,14 +1494,14 @@
     {
       "id": "tennis-courts",
       "name_zh": "網球場",
-      "name_en": "Tennis Courts (網球場)",
+      "name_en": "Tennis Courts",
       "code": null,
       "category": "sports",
       "latitude": 24.969471,
       "longitude": 121.189482,
       "osm_id": "way/202690901",
       "aliases": [],
-      "name_vi": "Sân quần vợt (網球場)",
+      "name_vi": "Sân quần vợt",
       "description": {
         "zh": "運動設施；開放時間及使用規則請先確認。",
         "en": "Sports facility; check availability and access rules.",
@@ -1520,14 +1520,14 @@
     {
       "id": "ninth-cafeteria",
       "name_zh": "第九餐廳",
-      "name_en": "Ninth Cafeteria (第九餐廳)",
+      "name_en": "Ninth Cafeteria",
       "code": null,
       "category": "dining",
       "latitude": 24.970702,
       "longitude": 121.195821,
       "osm_id": "node/6187422335",
       "aliases": [],
-      "name_vi": "Nhà ăn số 9 (第九餐廳)",
+      "name_vi": "Nhà ăn số 9",
       "description": {
         "zh": "位於男九舍的餐飲區；請確認整修後營業狀況。",
         "en": "Dining area at Men’s Dorm 9; check its post-renovation status.",
@@ -1547,14 +1547,14 @@
     {
       "id": "wooden-house-waffles",
       "name_zh": "小木屋鬆餅",
-      "name_en": "Wooden House Waffles (小木屋鬆餅)",
+      "name_en": "Wooden House Waffles",
       "code": null,
       "category": "dining",
       "latitude": 24.969962,
       "longitude": 121.193411,
       "osm_id": "node/2126526406",
       "aliases": [],
-      "name_vi": "Bánh waffle Wooden House (小木屋鬆餅)",
+      "name_vi": "Bánh waffle Wooden House",
       "description": {
         "zh": "校內鬆餅及飲品店，營業狀況請先確認。",
         "en": "Campus waffle and drinks shop; check whether it is open.",
@@ -1574,18 +1574,18 @@
     {
       "id": "female-14-food-court",
       "name_zh": "女十四舍地下商場",
-      "name_en": "Women’s Dorm 14 Food Court (女十四舍地下商場)",
+      "name_en": "Women’s Dorm 14 Food Court",
       "code": null,
       "category": "dining",
       "latitude": 24.965493,
       "longitude": 121.194276,
       "osm_id": null,
       "aliases": [],
-      "name_vi": "Khu ăn uống tầng hầm ký túc xá nữ 14 (女十四舍地下商場)",
+      "name_vi": "Khu ăn uống tầng hầm ký túc xá nữ 14",
       "description": {
-        "zh": "女十四舍地下商場，座標為宿舍建築位置。",
-        "en": "Basement shopping and dining area; marker is at the dorm building.",
-        "vi": "Khu mua sắm và ăn uống ở tầng hầm; điểm đánh dấu tại tòa ký túc xá."
+        "zh": "女十四舍地下商場。",
+        "en": "Basement shopping and dining area.",
+        "vi": "Khu mua sắm và ăn uống ở tầng hầm."
       },
       "opening_hours": null,
       "price_range_twd": null,
@@ -1602,14 +1602,14 @@
     {
       "id": "bookstore",
       "name_zh": "敦煌書局",
-      "name_en": "Caves Books (敦煌書局)",
+      "name_en": "Caves Books",
       "code": null,
       "category": "shop",
       "latitude": 24.965554,
       "longitude": 121.194962,
       "osm_id": "node/3007100943",
       "aliases": [],
-      "name_vi": "Nhà sách Caves Books (敦煌書局)",
+      "name_vi": "Nhà sách Caves Books",
       "description": {
         "zh": "校園書店；營業狀況請先確認。",
         "en": "Campus bookstore; check current operation.",
@@ -1628,14 +1628,14 @@
     {
       "id": "life-store-581",
       "name_zh": "581生活館",
-      "name_en": "581 Life Store (581生活館)",
+      "name_en": "581 Life Store",
       "code": null,
       "category": "shop",
       "latitude": 24.965502,
       "longitude": 121.194238,
       "osm_id": "node/9124021887",
       "aliases": [],
-      "name_vi": "Cửa hàng 581 (581生活館)",
+      "name_vi": "Cửa hàng 581",
       "description": {
         "zh": "校園生活用品店；營業狀況請先確認。",
         "en": "Campus daily-goods shop; check current operation.",
@@ -1654,14 +1654,14 @@
     {
       "id": "library-youbike",
       "name_zh": "中央大學圖書館 YouBike",
-      "name_en": "NCU Library YouBike (中央大學圖書館 YouBike)",
+      "name_en": "NCU Library YouBike",
       "code": null,
       "category": "transit",
       "latitude": 24.968128,
       "longitude": 121.194666,
       "osm_id": "node/3975146304",
       "aliases": [],
-      "name_vi": "Trạm YouBike Thư viện NCU (中央大學圖書館 YouBike)",
+      "name_vi": "Trạm YouBike Thư viện NCU",
       "description": {
         "zh": "公共自行車租借站；車輛及車柱數量請查看 YouBike。",
         "en": "Public bicycle station; check YouBike for live bicycle and dock availability.",
@@ -1680,14 +1680,14 @@
     {
       "id": "yiren-youbike",
       "name_zh": "中央大學依仁堂 YouBike",
-      "name_en": "Yi-Ren Hall YouBike (中央大學依仁堂 YouBike)",
+      "name_en": "Yi-Ren Hall YouBike",
       "code": null,
       "category": "transit",
       "latitude": 24.967119,
       "longitude": 121.190958,
       "osm_id": "node/4932640538",
       "aliases": [],
-      "name_vi": "Trạm YouBike nhà Yi-Ren (中央大學依仁堂 YouBike)",
+      "name_vi": "Trạm YouBike nhà Yi-Ren",
       "description": {
         "zh": "公共自行車租借站；車輛及車柱數量請查看 YouBike。",
         "en": "Public bicycle station; check YouBike for live bicycle and dock availability.",
@@ -1706,18 +1706,18 @@
     {
       "id": "health-center",
       "name_zh": "衛生保健組",
-      "name_en": "Health and Wellness Division (衛生保健組)",
+      "name_en": "Health and Wellness Division",
       "code": null,
       "category": "service",
       "latitude": 24.968342,
       "longitude": 121.193559,
       "osm_id": null,
       "aliases": [],
-      "name_vi": "Bộ phận Chăm sóc Sức khỏe (衛生保健組)",
+      "name_vi": "Bộ phận Chăm sóc Sức khỏe",
       "description": {
-        "zh": "中正圖書館一樓提供健康諮詢及急救；座標為建築位置。",
-        "en": "First aid and health support on the first floor of the Chiang Kai-shek Library; marker is at the building.",
-        "vi": "Hỗ trợ sức khỏe và sơ cứu ở tầng 1 thư viện Tưởng Giới Thạch; điểm đánh dấu tại tòa nhà."
+        "zh": "中正圖書館一樓提供健康諮詢及急救。",
+        "en": "First aid and health support on the first floor of the Chiang Kai-shek Library.",
+        "vi": "Hỗ trợ sức khỏe và sơ cứu ở tầng 1 thư viện Tưởng Giới Thạch."
       },
       "opening_hours": null,
       "price_range_twd": null,
@@ -1733,18 +1733,18 @@
     {
       "id": "international-affairs",
       "name_zh": "國際事務處",
-      "name_en": "Office of International Affairs (國際事務處)",
+      "name_en": "Office of International Affairs",
       "code": null,
       "category": "administration",
       "latitude": 24.968395,
       "longitude": 121.191826,
       "osm_id": null,
       "aliases": [],
-      "name_vi": "Phòng Hợp tác Quốc tế (國際事務處)",
+      "name_vi": "Phòng Hợp tác Quốc tế",
       "description": {
-        "zh": "教學研究綜合大樓一樓，提供國際學生相關服務；座標為建築位置。",
-        "en": "On the first floor of the Teaching and Research Building; supports international students. Marker is at the building.",
-        "vi": "Ở tầng 1 Tòa Giảng dạy và Nghiên cứu; hỗ trợ sinh viên quốc tế. Điểm đánh dấu tại tòa nhà."
+        "zh": "教學研究綜合大樓一樓，提供國際學生相關服務。",
+        "en": "On the first floor of the Teaching and Research Building; supports international students.",
+        "vi": "Ở tầng 1 Tòa Giảng dạy và Nghiên cứu; hỗ trợ sinh viên quốc tế."
       },
       "opening_hours": null,
       "price_range_twd": null,
@@ -1761,18 +1761,18 @@
     {
       "id": "longchen-printing",
       "name_zh": "龍誠影印",
-      "name_en": "Longchen Photocopy (龍誠影印)",
+      "name_en": "Longchen Photocopy",
       "code": null,
       "category": "service",
       "latitude": 24.965493,
       "longitude": 121.194276,
       "osm_id": null,
       "aliases": [],
-      "name_vi": "Tiệm in Longchen (龍誠影印)",
+      "name_vi": "Tiệm in Longchen",
       "description": {
-        "zh": "女十四舍地下商場提供影印及輸出；座標為宿舍建築位置。",
-        "en": "Photocopying and printing in the Women’s Dorm 14 basement; marker is at the dorm.",
-        "vi": "In và photocopy ở tầng hầm ký túc xá nữ 14; điểm đánh dấu tại tòa ký túc xá."
+        "zh": "女十四舍地下商場提供影印及輸出。",
+        "en": "Photocopying and printing in the Women’s Dorm 14 basement.",
+        "vi": "In và photocopy ở tầng hầm ký túc xá nữ 14."
       },
       "opening_hours": null,
       "price_range_twd": null,
@@ -1789,18 +1789,18 @@
     {
       "id": "seven-pinecone",
       "name_zh": "7-ELEVEN 中大松果店",
-      "name_en": "7-ELEVEN Pine Cone (7-ELEVEN 中大松果店)",
+      "name_en": "7-ELEVEN Pine Cone",
       "code": null,
       "category": "shop",
       "latitude": 24.965609,
       "longitude": 121.19542,
       "osm_id": null,
       "aliases": [],
-      "name_vi": "7-ELEVEN Pine Cone (7-ELEVEN 中大松果店)",
+      "name_vi": "7-ELEVEN Pine Cone",
       "description": {
-        "zh": "松果餐廳內的便利商店；座標為餐廳位置。",
-        "en": "Convenience store in Pine Cone Cafeteria; marker is at the cafeteria.",
-        "vi": "Cửa hàng tiện lợi trong nhà ăn Pine Cone; điểm đánh dấu tại nhà ăn."
+        "zh": "松果餐廳內的便利商店。",
+        "en": "Convenience store in Pine Cone Cafeteria.",
+        "vi": "Cửa hàng tiện lợi trong nhà ăn Pine Cone."
       },
       "opening_hours": null,
       "price_range_twd": null,
@@ -1817,18 +1817,18 @@
     {
       "id": "seven-female14",
       "name_zh": "7-ELEVEN 中大智能店",
-      "name_en": "7-ELEVEN X-STORE (7-ELEVEN 中大智能店)",
+      "name_en": "7-ELEVEN X-STORE",
       "code": null,
       "category": "shop",
       "latitude": 24.965493,
       "longitude": 121.194276,
       "osm_id": null,
       "aliases": [],
-      "name_vi": "7-ELEVEN X-STORE (7-ELEVEN 中大智能店)",
+      "name_vi": "7-ELEVEN X-STORE",
       "description": {
-        "zh": "女十四舍地下商場的智慧便利商店；座標為宿舍位置。",
-        "en": "Automated convenience store in the Women’s Dorm 14 basement; marker is at the dorm.",
-        "vi": "Cửa hàng tiện lợi tự động ở tầng hầm ký túc xá nữ 14; điểm đánh dấu tại tòa nhà."
+        "zh": "女十四舍地下商場的智慧便利商店。",
+        "en": "Automated convenience store in the Women’s Dorm 14 basement.",
+        "vi": "Cửa hàng tiện lợi tự động ở tầng hầm ký túc xá nữ 14."
       },
       "opening_hours": null,
       "price_range_twd": null,
@@ -1845,18 +1845,18 @@
     {
       "id": "songyuan-atm",
       "name_zh": "松苑餐廳 ATM",
-      "name_en": "Songyuan ATM (松苑餐廳)",
+      "name_en": "Songyuan ATM",
       "code": null,
       "category": "service",
       "latitude": 24.967089,
       "longitude": 121.190681,
       "osm_id": null,
       "aliases": [],
-      "name_vi": "Máy ATM Songyuan (松苑餐廳)",
+      "name_vi": "Máy ATM Songyuan",
       "description": {
-        "zh": "2026 年 3 月校方資料記載全家便利商店設有 ATM；整修後請確認，座標為餐廳位置。",
-        "en": "A March 2026 university list recorded an ATM at FamilyMart; check after renovations. Marker is at the dining building.",
-        "vi": "Danh sách tháng 3 năm 2026 ghi nhận ATM tại FamilyMart; hãy kiểm tra sau cải tạo. Điểm đánh dấu tại tòa nhà ăn."
+        "zh": "2026 年 3 月校方資料記載全家便利商店設有 ATM；整修後請確認。",
+        "en": "A March 2026 university list recorded an ATM at FamilyMart; check after renovations.",
+        "vi": "Danh sách tháng 3 năm 2026 ghi nhận ATM tại FamilyMart; hãy kiểm tra sau cải tạo."
       },
       "opening_hours": null,
       "price_range_twd": null,
@@ -1872,18 +1872,18 @@
     {
       "id": "eat-well",
       "name_zh": "宇崴自助餐",
-      "name_en": "Eat Well Cafeteria (宇崴自助餐)",
+      "name_en": "Eat Well Cafeteria",
       "code": null,
       "category": "dining",
       "latitude": 24.965609,
       "longitude": 121.19542,
       "osm_id": null,
       "aliases": [],
-      "name_vi": "Quán cơm Eat Well (宇崴自助餐)",
+      "name_vi": "Quán cơm Eat Well",
       "description": {
-        "zh": "2026 年 3 月校方名單所列松果餐廳店家；請確認是否仍營業，座標為餐廳位置。",
-        "en": "Cafeteria and boxed meals at Pine Cone Cafeteria, listed by NCU in March 2026; confirm it is still open. Marker is at the cafeteria.",
-        "vi": "Cửa hàng tại nhà ăn Pine Cone theo danh sách tháng 3 năm 2026; hãy xác nhận còn hoạt động. Điểm đánh dấu tại nhà ăn."
+        "zh": "2026 年 3 月校方名單所列松果餐廳店家；請確認是否仍營業。",
+        "en": "Cafeteria and boxed meals at Pine Cone Cafeteria, listed by NCU in March 2026; confirm it is still open.",
+        "vi": "Cửa hàng tại nhà ăn Pine Cone theo danh sách tháng 3 năm 2026; hãy xác nhận còn hoạt động."
       },
       "opening_hours": null,
       "price_range_twd": null,
@@ -1900,18 +1900,18 @@
     {
       "id": "mu-brunch",
       "name_zh": "沐早午餐",
-      "name_en": "MU Brunch (沐早午餐)",
+      "name_en": "MU Brunch",
       "code": null,
       "category": "dining",
       "latitude": 24.965609,
       "longitude": 121.19542,
       "osm_id": null,
       "aliases": [],
-      "name_vi": "Quán ăn sáng MU (沐早午餐)",
+      "name_vi": "Quán ăn sáng MU",
       "description": {
-        "zh": "2026 年 3 月校方名單所列松果餐廳店家；請確認是否仍營業，座標為餐廳位置。",
-        "en": "Brunch at Pine Cone Cafeteria, listed by NCU in March 2026; confirm it is still open. Marker is at the cafeteria.",
-        "vi": "Cửa hàng tại nhà ăn Pine Cone theo danh sách tháng 3 năm 2026; hãy xác nhận còn hoạt động. Điểm đánh dấu tại nhà ăn."
+        "zh": "2026 年 3 月校方名單所列松果餐廳店家；請確認是否仍營業。",
+        "en": "Brunch at Pine Cone Cafeteria, listed by NCU in March 2026; confirm it is still open.",
+        "vi": "Cửa hàng tại nhà ăn Pine Cone theo danh sách tháng 3 năm 2026; hãy xác nhận còn hoạt động."
       },
       "opening_hours": null,
       "price_range_twd": null,
@@ -1928,18 +1928,18 @@
     {
       "id": "taichun",
       "name_zh": "太春小館",
-      "name_en": "Taichun Noodle Shop (太春小館)",
+      "name_en": "Taichun Noodle Shop",
       "code": null,
       "category": "dining",
       "latitude": 24.965609,
       "longitude": 121.19542,
       "osm_id": null,
       "aliases": [],
-      "name_vi": "Quán mì Taichun (太春小館)",
+      "name_vi": "Quán mì Taichun",
       "description": {
-        "zh": "2026 年 3 月校方名單所列松果餐廳店家；請確認是否仍營業，座標為餐廳位置。",
-        "en": "Noodles at Pine Cone Cafeteria, listed by NCU in March 2026; confirm it is still open. Marker is at the cafeteria.",
-        "vi": "Cửa hàng tại nhà ăn Pine Cone theo danh sách tháng 3 năm 2026; hãy xác nhận còn hoạt động. Điểm đánh dấu tại nhà ăn."
+        "zh": "2026 年 3 月校方名單所列松果餐廳店家；請確認是否仍營業。",
+        "en": "Noodles at Pine Cone Cafeteria, listed by NCU in March 2026; confirm it is still open.",
+        "vi": "Cửa hàng tại nhà ăn Pine Cone theo danh sách tháng 3 năm 2026; hãy xác nhận còn hoạt động."
       },
       "opening_hours": null,
       "price_range_twd": null,
@@ -1956,18 +1956,18 @@
     {
       "id": "oh-mo",
       "name_zh": "OH MO 韓式料理",
-      "name_en": "OH MO Korean Cuisine (OH MO 韓式料理)",
+      "name_en": "OH MO Korean Cuisine",
       "code": null,
       "category": "dining",
       "latitude": 24.965609,
       "longitude": 121.19542,
       "osm_id": null,
       "aliases": [],
-      "name_vi": "Quán ăn Hàn Quốc OH MO (OH MO 韓式料理)",
+      "name_vi": "Quán ăn Hàn Quốc OH MO",
       "description": {
-        "zh": "2026 年 3 月校方名單所列松果餐廳店家；請確認是否仍營業，座標為餐廳位置。",
-        "en": "Korean food at Pine Cone Cafeteria, listed by NCU in March 2026; confirm it is still open. Marker is at the cafeteria.",
-        "vi": "Cửa hàng tại nhà ăn Pine Cone theo danh sách tháng 3 năm 2026; hãy xác nhận còn hoạt động. Điểm đánh dấu tại nhà ăn."
+        "zh": "2026 年 3 月校方名單所列松果餐廳店家；請確認是否仍營業。",
+        "en": "Korean food at Pine Cone Cafeteria, listed by NCU in March 2026; confirm it is still open.",
+        "vi": "Cửa hàng tại nhà ăn Pine Cone theo danh sách tháng 3 năm 2026; hãy xác nhận còn hoạt động."
       },
       "opening_hours": null,
       "price_range_twd": null,
@@ -1984,18 +1984,18 @@
     {
       "id": "rice-roll",
       "name_zh": "卷卷食",
-      "name_en": "Korean Seaweed Rice Roll (卷卷食)",
+      "name_en": "Korean Seaweed Rice Roll",
       "code": null,
       "category": "dining",
       "latitude": 24.965609,
       "longitude": 121.19542,
       "osm_id": null,
       "aliases": [],
-      "name_vi": "Quán cơm cuộn rong biển (卷卷食)",
+      "name_vi": "Quán cơm cuộn rong biển",
       "description": {
-        "zh": "2026 年 3 月校方名單所列松果餐廳店家；請確認是否仍營業，座標為餐廳位置。",
-        "en": "Seaweed rice rolls at Pine Cone Cafeteria, listed by NCU in March 2026; confirm it is still open. Marker is at the cafeteria.",
-        "vi": "Cửa hàng tại nhà ăn Pine Cone theo danh sách tháng 3 năm 2026; hãy xác nhận còn hoạt động. Điểm đánh dấu tại nhà ăn."
+        "zh": "2026 年 3 月校方名單所列松果餐廳店家；請確認是否仍營業。",
+        "en": "Seaweed rice rolls at Pine Cone Cafeteria, listed by NCU in March 2026; confirm it is still open.",
+        "vi": "Cửa hàng tại nhà ăn Pine Cone theo danh sách tháng 3 năm 2026; hãy xác nhận còn hoạt động."
       },
       "opening_hours": null,
       "price_range_twd": null,
@@ -2021,9 +2021,9 @@
       "aliases": [],
       "name_vi": "Quán trà Comebuy (Comebuy)",
       "description": {
-        "zh": "2026 年 3 月校方名單所列松果餐廳店家；請確認是否仍營業，座標為餐廳位置。",
-        "en": "Tea and drinks at Pine Cone Cafeteria, listed by NCU in March 2026; confirm it is still open. Marker is at the cafeteria.",
-        "vi": "Cửa hàng tại nhà ăn Pine Cone theo danh sách tháng 3 năm 2026; hãy xác nhận còn hoạt động. Điểm đánh dấu tại nhà ăn."
+        "zh": "2026 年 3 月校方名單所列松果餐廳店家；請確認是否仍營業。",
+        "en": "Tea and drinks at Pine Cone Cafeteria, listed by NCU in March 2026; confirm it is still open.",
+        "vi": "Cửa hàng tại nhà ăn Pine Cone theo danh sách tháng 3 năm 2026; hãy xác nhận còn hoạt động."
       },
       "opening_hours": null,
       "price_range_twd": null,
@@ -2040,18 +2040,18 @@
     {
       "id": "black-box-cafe",
       "name_zh": "黑盒子咖啡",
-      "name_en": "Black Box Café (黑盒子咖啡)",
+      "name_en": "Black Box Café",
       "code": null,
       "category": "dining",
       "latitude": 24.969304,
       "longitude": 121.195186,
       "osm_id": null,
       "aliases": [],
-      "name_vi": "Quán cà phê Black Box (黑盒子咖啡)",
+      "name_vi": "Quán cà phê Black Box",
       "description": {
-        "zh": "2026 年 3 月校方資料列於人文社會科學大樓一樓；座標為大樓位置。",
-        "en": "Coffee and light meals, listed on the first floor of the Humanities and Social Sciences Building in March 2026; marker is at the building.",
-        "vi": "Cà phê và đồ ăn nhẹ; danh sách tháng 3 năm 2026 ghi ở tầng 1 tòa Nhân văn và Khoa học Xã hội. Điểm đánh dấu tại tòa nhà."
+        "zh": "2026 年 3 月校方資料列於人文社會科學大樓一樓。",
+        "en": "Coffee and light meals, listed on the first floor of the Humanities and Social Sciences Building in March 2026.",
+        "vi": "Cà phê và đồ ăn nhẹ; danh sách tháng 3 năm 2026 ghi ở tầng 1 tòa Nhân văn và Khoa học Xã hội."
       },
       "opening_hours": null,
       "price_range_twd": null,
