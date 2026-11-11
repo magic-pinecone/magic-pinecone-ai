@@ -50,4 +50,5 @@
     <string name="intl_guides_machine_translated">機器翻譯，以機關原文為準。</string>
     <string name="intl_guides_show_original">顯示原文</string>
     <string name="intl_guides_show_translation">顯示翻譯</string>
+    <string name="intl_home_header">國際生專區</string>
 </resources>

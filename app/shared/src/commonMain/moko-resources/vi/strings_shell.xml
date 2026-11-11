@@ -2,7 +2,6 @@
     <string name="shell_tab_home">Trang chủ</string>
     <string name="shell_tab_news">Tin tức</string>
     <string name="shell_tab_portal">Portal</string>
-    <string name="shell_tab_international">Quốc tế</string>
     <string name="shell_tab_course_selection">Chọn môn</string>
     <string name="shell_tab_settings">Cài đặt</string>
     <string name="shell_app_title">Magic Pinecone</string>
@@ -23,4 +22,5 @@
     <string name="shell_more_options">Tùy chọn khác</string>
     <string name="shell_share">Chia sẻ</string>
     <string name="shell_open_in_browser">Mở trong trình duyệt</string>
+    <string name="shell_calendar_full_access_denied">Chưa có quyền truy cập lịch. Hãy cho phép Magic Pinecone truy cập đầy đủ vào lịch trong Cài đặt.</string>
 </resources>

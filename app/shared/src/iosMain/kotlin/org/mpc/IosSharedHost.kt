@@ -47,12 +47,13 @@ import org.mpc.domain.session.browserEntry
 import org.mpc.presentation.ClubsScreen
 import org.mpc.presentation.CourseCatalogViewBinding
 import org.mpc.presentation.CoursePlanningTimetableViewBinding
-import org.mpc.presentation.InternationalScreen
+import org.mpc.presentation.InternationalPageScreen
 import org.mpc.presentation.PortalWebScreen
 import org.mpc.presentation.SettingsScreen
 import org.mpc.presentation.model.EeclassBulletinPage
 import org.mpc.presentation.model.EeclassCoursePage
 import org.mpc.presentation.model.EeclassCourses
+import org.mpc.presentation.model.InternationalPage
 import org.mpc.presentation.model.toEeclassBulletinPage
 import org.mpc.presentation.model.toEeclassCoursePage
 import org.mpc.presentation.model.toEeclassCourses
@@ -172,10 +173,10 @@ class IosSharedHost internal constructor(
         }
     }
 
-    fun internationalScreenController(): UIViewController = ComposeUIViewController {
+    fun internationalScreenController(page: InternationalPage): UIViewController = ComposeUIViewController {
         ProvideAppDependencies(appGraph) {
             ThemedContent {
-                InternationalScreen()
+                InternationalPageScreen(page)
             }
         }
     }

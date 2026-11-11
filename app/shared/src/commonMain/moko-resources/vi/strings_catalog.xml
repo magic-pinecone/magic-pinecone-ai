@@ -43,4 +43,6 @@
     <string name="catalog_day_saturday">T7</string>
     <string name="catalog_day_sunday">CN</string>
     <string name="catalog_day_unknown">Không</string>
+    <string name="catalog_filter_mode">Chế độ lọc</string>
+    <string name="catalog_any">Tất cả</string>
 </resources>

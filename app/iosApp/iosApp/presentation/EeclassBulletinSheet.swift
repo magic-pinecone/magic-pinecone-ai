@@ -29,11 +29,11 @@ struct EeclassBulletinSheet: View {
     var body: some View {
         NavigationStack(path: $path) {
             content
-                .navigationTitle("公告")
+                .navigationTitle(MR.strings().eeclass_category_bulletins.localized)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
-                        Button("關閉", systemImage: "xmark") { dismiss() }
+                        Button(MR.strings().common_close.localized, systemImage: "xmark") { dismiss() }
                             .labelStyle(.iconOnly)
                     }
                 }
@@ -82,7 +82,7 @@ struct EeclassBulletinSheet: View {
                         }
                     }
                     if !page.attachments.isEmpty {
-                        Section("附件") {
+                        Section(MR.strings().eeclass_attachments.localized) {
                             ForEach(Array(page.attachments.enumerated()), id: \.offset) { _, attachment in
                                 NavigationLink(value: EeclassPageLink(title: attachment.title, path: attachment.path)) {
                                     Label(attachment.title, systemImage: "paperclip")
@@ -93,15 +93,15 @@ struct EeclassBulletinSheet: View {
                 }
             case .needsPortal:
                 EeclassUnavailableView(
-                    title: "需要登入 Portal",
+                    title: MR.strings().eeclass_needs_portal_title.localized,
                     systemImage: "person.crop.circle.badge.exclamationmark",
-                    description: "在 Portal 分頁登入後再重新整理。"
+                    description: MR.strings().eeclass_needs_portal_description.localized
                 ) { reloadID += 1 }
             case .unavailable:
                 EeclassUnavailableView(
-                    title: "無法載入公告",
+                    title: MR.strings().eeclass_bulletin_unavailable.localized,
                     systemImage: "wifi.exclamationmark",
-                    description: "請稍後再試。"
+                    description: MR.strings().eeclass_try_again_later.localized
                 ) { reloadID += 1 }
             }
         } else {

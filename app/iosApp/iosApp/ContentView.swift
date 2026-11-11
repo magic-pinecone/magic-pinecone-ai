@@ -12,19 +12,26 @@ struct ContentView: View {
     var body: some View {
         @Bindable var router = router
         TabView(selection: $router.selectedTab) {
-            Tab("首頁", systemImage: "house", value: AppTab.home) {
+            Tab(MR.strings().shell_tab_home.localized, systemImage: "house", value: AppTab.home) {
                 NavigationStack {
                     HomeView(
                         loadCourses: { try await sharedHost.loadEeclassCourses() },
                         courseDestination: { course in
                             EeclassCourseView(sharedHost: sharedHost, course: course)
                         },
+                        internationalDestination: { page in
+                            InternationalPageView(sharedHost: sharedHost, page: page)
+                        },
                         onOpenSettings: openSettings
                     )
                 }
                 .ignoresSafeArea(.container, edges: bottomSafeAreaEdges)
             }
-            Tab("選課", systemImage: "calendar", value: AppTab.coursePlanning) {
+            Tab(
+                MR.strings().shell_tab_course_selection.localized,
+                systemImage: "calendar",
+                value: AppTab.coursePlanning
+            ) {
                 NavigationStack {
                     CoursePlanningView(
                         sharedHost: sharedHost,
@@ -33,7 +40,7 @@ struct ContentView: View {
                 }
                 .ignoresSafeArea(.container, edges: bottomSafeAreaEdges)
             }
-            Tab("Portal", systemImage: "building.columns", value: AppTab.portal) {
+            Tab(MR.strings().shell_tab_portal.localized, systemImage: "building.columns", value: AppTab.portal) {
                 NavigationStack {
                     PortalView(
                         sharedHost: sharedHost,
@@ -41,19 +48,6 @@ struct ContentView: View {
                     )
                 }
                 .ignoresSafeArea(.container, edges: bottomSafeAreaEdges)
-            }
-            Tab("Intl", systemImage: "globe", value: AppTab.international) {
-                NavigationStack {
-                    InternationalComposeView(sharedHost: sharedHost)
-                        .ignoresSafeArea(.container, edges: .bottom)
-                        .navigationTitle("International")
-                        .navigationBarTitleDisplayMode(.inline)
-                        .toolbar {
-                            ToolbarItem(placement: .topBarTrailing) {
-                                Button("設定", systemImage: "gearshape", action: openSettings)
-                            }
-                        }
-                }
             }
         }
         .id(appLanguageTag)
@@ -104,18 +98,6 @@ struct ContentView: View {
 
     private func openSettings() {
         isShowingSettings = true
-    }
-}
-
-/// The graduation language requirements and government guides, drawn by the shared Compose screen.
-private struct InternationalComposeView: UIViewControllerRepresentable {
-    let sharedHost: IosSharedHost
-
-    func makeUIViewController(context: Context) -> some UIViewController {
-        sharedHost.internationalScreenController()
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
     }
 }
 

@@ -56,6 +56,7 @@ import org.mpc.domain.model.CourseTime
 import org.mpc.domain.model.CourseType
 import org.mpc.domain.model.PasswordCardType
 import org.mpc.domain.model.TimetableColorMode
+import org.mpc.presentation.formatting.shortName
 import org.mpc.presentation.model.CourseTimetableBlock
 import org.mpc.presentation.model.TimetableCourseCategory
 import org.mpc.presentation.model.assignTimetableColorSlots
@@ -147,7 +148,7 @@ fun CoursePlanningTimetableSuccessView(
                                     .weight(1f),
                             ) {
                                 Text(
-                                    text = it.description,
+                                    text = stringResource(it.shortName()),
                                     color = MpcTheme.colors.labelSecondary,
                                     style = MpcTheme.typography.label,
                                 )

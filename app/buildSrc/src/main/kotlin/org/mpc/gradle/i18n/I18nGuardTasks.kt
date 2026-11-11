@@ -2,10 +2,12 @@ package org.mpc.gradle.i18n
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
+import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.InputFile
+import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
@@ -177,13 +179,10 @@ abstract class CheckI18nKeys : DefaultTask() {
 
 @DisableCachingByDefault(because = "This verification task reads source files and produces no output.")
 abstract class CheckHardcodedUiText : DefaultTask() {
-    @get:InputDirectory
+    /** Kotlin and Swift UI sources. Both languages share the comment and string syntax the scanner reads. */
+    @get:InputFiles
     @get:PathSensitive(PathSensitivity.RELATIVE)
-    abstract val sharedUiRoot: DirectoryProperty
-
-    @get:InputDirectory
-    @get:PathSensitive(PathSensitivity.RELATIVE)
-    abstract val androidUiRoot: DirectoryProperty
+    abstract val uiSources: ConfigurableFileCollection
 
     @get:Internal
     abstract val repositoryRoot: DirectoryProperty
@@ -194,13 +193,9 @@ abstract class CheckHardcodedUiText : DefaultTask() {
 
     @TaskAction
     fun check() {
-        val sharedRoot = sharedUiRoot.get().asFile
-        val androidRoot = androidUiRoot.get().asFile
         val repoRootPath = repositoryRoot.get().asFile.toPath()
         val file = allowlistFile.get().asFile
-        val sourceFiles = (sharedRoot.walkTopDown() + androidRoot.walkTopDown())
-            .filter { it.isFile && it.extension == "kt" }
-            .toList()
+        val sourceFiles = uiSources.asFileTree.files.filter { it.isFile && it.extension in setOf("kt", "swift") }
         val literalLinesByPath = sourceFiles.associate { source ->
             repoRootPath.relativize(source.toPath()).toString().replace('\\', '/') to chineseStringLines(source.readText())
         }

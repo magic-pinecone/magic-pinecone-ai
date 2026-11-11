@@ -43,4 +43,6 @@
     <string name="catalog_day_saturday">六</string>
     <string name="catalog_day_sunday">日</string>
     <string name="catalog_day_unknown">無</string>
+    <string name="catalog_filter_mode">篩選方式</string>
+    <string name="catalog_any">不限</string>
 </resources>
