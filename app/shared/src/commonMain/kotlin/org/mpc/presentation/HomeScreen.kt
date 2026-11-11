@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalance
+import androidx.compose.material.icons.filled.QuestionAnswer
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.filled.VolunteerActivism
@@ -142,4 +143,5 @@ private val InternationalPage.icon: ImageVector
         InternationalPage.GOV_GUIDES -> Icons.Default.AccountBalance
         InternationalPage.SERVICE_LEARNING -> Icons.Default.VolunteerActivism
         InternationalPage.CREDITS -> Icons.Default.School
+        InternationalPage.ASK -> Icons.Default.QuestionAnswer
     }

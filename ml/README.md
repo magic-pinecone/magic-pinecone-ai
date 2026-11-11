@@ -16,11 +16,12 @@ kit (teacher, students, and there are no embeddings); keep it that way.
 
 | File | What it does |
 |---|---|
-| `prompt_format.py` | The one definition of the prompt: system prompt, passage numbering, refusal sentence per language, citation and refusal detection. Used by data generation, training data and evaluation. |
-| `checks.py` | Pure text checks: strip a reasoning channel, numbers not supported by the passages, `must_contain` matching, similarity to golden questions. |
+| `prompt_format.py` | The one definition of the prompt: system prompt, passage numbering, refusal sentence per language, citation and refusal detection. Used by data generation, training data and evaluation. The text lives in `backend/app/services/answer_text.py`, shared with the assistant endpoint, and is loaded from there by file path (no backend dependencies needed). |
+| `checks.py` | Pure text checks: strip a reasoning channel, numbers not supported by the passages (both from `answer_text.py` too), `must_contain` matching, similarity to golden questions. |
+| `demo/` | A one-page demo of the backend's assistant chain; see "Demo page" below. |
 | `common.py` | Paths, import of the backend service, JSONL helpers, the OpenAI-compatible chat client (`httpx`). |
 | `golden/questions.jsonl` | 60 hand-written test questions (24 en, 12 each zh-TW / vi / id; 9 unanswerable). |
-| `eval_retrieval.py` | hit@1 / hit@3 of the backend's keyword search on the golden set. |
+| `eval_retrieval.py` | hit@1 / hit@3 / ans@3 of the backend's keyword search on the golden set. |
 | `make_teacher_data.py` | Asks the teacher(s) for training examples and cleans them. |
 | `train_lora.py` | LoRA fine-tuning of a student (Unsloth, or PEFT + TRL). |
 | `eval_generation.py` | Runs the golden set through any OpenAI-compatible endpoint and scores it; keeps a comparison table across runs. |
@@ -69,7 +70,7 @@ All commands that touch the backend service are run from `backend/`
 cd backend && uv run --frozen pytest ../ml/tests -q
 ```
 
-### 2. Retrieval baseline (laptop, no network)
+### 2. Retrieval on the golden set (laptop, no network)
 
 ```bash
 cd backend && uv run --frozen python ../ml/eval_retrieval.py
@@ -79,32 +80,63 @@ Writes `ml/results/retrieval_baseline.md` and `.json`. Current result:
 
 | lang | answerable | hit@1 | hit@3 | ans@3 | no result | unanswerable with passages |
 |---|---|---|---|---|---|---|
-| en | 21 | 19/21 (90%) | 21/21 (100%) | 15/21 (71%) | 0/21 (0%) | 3/3 (100%) |
-| zh-TW | 10 | 2/10 (20%) | 3/10 (30%) | 2/10 (20%) | 7/10 (70%) | 0/2 (0%) |
-| vi | 10 | 5/10 (50%) | 9/10 (90%) | 4/10 (40%) | 0/10 (0%) | 2/2 (100%) |
-| id | 10 | 5/10 (50%) | 9/10 (90%) | 3/10 (30%) | 0/10 (0%) | 1/2 (50%) |
-| all | 51 | 31/51 (61%) | 42/51 (82%) | 24/51 (47%) | 7/51 (14%) | 6/9 (67%) |
+| en | 21 | 17/21 (81%) | 21/21 (100%) | 19/21 (90%) | 0/21 (0%) | 2/3 (67%) |
+| zh-TW | 10 | 9/10 (90%) | 10/10 (100%) | 10/10 (100%) | 0/10 (0%) | 2/2 (100%) |
+| vi | 10 | 8/10 (80%) | 10/10 (100%) | 10/10 (100%) | 0/10 (0%) | 2/2 (100%) |
+| id | 10 | 8/10 (80%) | 10/10 (100%) | 10/10 (100%) | 0/10 (0%) | 2/2 (100%) |
+| all | 51 | 42/51 (82%) | 51/51 (100%) | 49/51 (96%) | 0/51 (0%) | 8/9 (89%) |
+
+`ans@3` (all `must_contain` strings are in the three returned passages) is the
+number that matters for the generator. hit@k is about documents, and there are
+only 8, so it says little.
+
+How the search got here, `ans@3` after each change (each row includes the rows
+above it):
+
+| search | en | zh-TW | vi | id | all | answerable, no result | unanswerable with passages |
+|---|---|---|---|---|---|---|---|
+| first version: substring match, one passage per document | 15/21 | 2/10 | 4/10 | 3/10 | 24/51 | 7/51 | 6/9 |
+| several passages per document | 15/21 | 1/10 | 2/10 | 4/10 | 22/51 | 7/51 | 6/9 |
+| Latin-script words matched whole | 16/21 | 2/10 | 2/10 | 4/10 | 24/51 | 11/51 | 4/9 |
+| title matched with each passage, rare words weigh more, plural "s" ignored | 19/21 | 2/10 | 2/10 | 5/10 | 28/51 | 11/51 | 4/9 |
+| relevance threshold | 19/21 | 0/10 | 0/10 | 1/10 | 20/51 | 28/51 | 2/9 |
+| Chinese questions cut into bigrams | 19/21 | 4/10 | 0/10 | 1/10 | 24/51 | 20/51 | 3/9 |
+| glossary of zh-TW / vi / id terms | 19/21 | 10/10 | 10/10 | 10/10 | 49/51 | 0/51 | 8/9 |
 
 How to read it:
 
-- hit@k is about documents, and there are only 8 documents, so three random
-  documents already contain the expected one more than a third of the time.
-  `ans@3` (all `must_contain` strings are in the three returned passages) is
-  the number that matters for the generator.
-- English finds the right document, but in 6 of 21 questions the returned
-  8-line passage is not the one with the answer.
-- vi and id look good on hit@3 only because the search matches substrings:
-  short Vietnamese and Indonesian words occur inside English words, and names
-  such as Cathay, NHI, ARC and NCU are shared. hit@1 is 50% and ans@3 30-40%.
-- zh-TW returns nothing for 7 of 10 questions, because a run of Chinese
-  characters is treated as a single word.
-- Unanswerable questions in Latin script almost always get passages, so the
-  search itself gives no "not covered" signal; refusing is the generator's job.
-
-Consequence: before a non-English student can be judged end to end, retrieval
-needs cross-language support (query translation, or embeddings from a model
-that is not of PRC origin). Until then use `--passages oracle` in step 6 to
-measure the generator separately.
+- **The golden set is the only test set, and the search was built while
+  looking at it.** The scoring changes (third and fourth row) were chosen
+  because they fixed English questions of this set. The threshold was fixed by
+  a rule (below) but checked on the same 60 questions. So these are not
+  held-out numbers; expect less on new questions.
+- **The 30/30 for zh-TW, vi and id is optimistic.** The glossary was written
+  from the topics of the 8 documents, not from the questions, but by the same
+  kind of language model that drafted the vi and id questions (and 33 of the 36
+  non-English questions translate English ones about the documents' main
+  facts). A student who words a question differently from the glossary gets
+  nothing. The vi and id glossary entries have not been reviewed by a native
+  speaker.
+- Whole-word matching and the threshold take away the vi and id results of the
+  first version (4/10 and 3/10 down to 0/10 and 1/10 before the glossary).
+  Those were matches on shared names and numbers and on substrings ("nhi" in
+  "nhiêu" matching NHI); without the glossary the search now returns nothing
+  for such a question instead.
+- Threshold: a passage is returned when it has every word of the query, or
+  when the weights of the words it has add up to the weight of a word found in
+  a single passage (ln(1 + number of passages), 5.25 for the 190 passages
+  now). On this set that drops the passages of 1 of the 9 unanswerable
+  questions and of no answerable one; the lowest answerable question scores
+  5.82, so the margin is thin, and a cut-off of 6 would already lose 4
+  answerable questions. The unanswerable questions here are about neighbouring
+  subjects (dependent visa, income tax) and score like answerable ones: the
+  search still gives no usable "not covered" signal, and refusing remains the
+  generator's job.
+- With 51 answerable questions, differences of one or two questions per
+  language mean nothing.
+- Two English questions still miss: the list of documents they ask for is in a
+  passage that overlaps a better-scoring one, and overlapping passages are not
+  returned together.
 
 ### 3. Teacher data (teacher on Colab, script on the laptop)
 
@@ -306,3 +338,53 @@ Run on the development machine (no GPU, no network access to a model):
   <https://huggingface.co/aisingapore/Gemma-SEA-LION-v4.5-E2B-IT> (MIT,
   fine-tune of `google/gemma-4-E2B-it`), `google/gemma-3-1b-it` (gated,
   text-only `AutoModelForCausalLM`).
+
+## Demo page
+
+`demo/app.py` serves one page that shows the whole chain for a question typed
+in any of the four languages. The chain itself is the backend's
+(`backend/app/services/assistant.py`, also served as `POST /api/v1/assistant/ask`);
+the page only shows each step: where the question was sent (OIA documents, a
+campus building, or live bus arrivals), the passages the model was given, the
+model's answer, and two automatic checks on it (the cited passage numbers
+exist; every number in the answer appears in the passages).
+
+```bash
+cd backend
+# look-up only
+uv run --frozen python ../ml/demo/app.py --port 8765
+# with a model behind an OpenAI-compatible endpoint, e.g. Ollama
+DEMO_BASE_URL=http://localhost:11434/v1 DEMO_MODEL=<model name> \
+  DEMO_REASONING_EFFORT=none \
+  uv run --frozen python ../ml/demo/app.py --port 8765
+```
+
+With a model, a question that is not English is first translated by the same
+model, because the pages are in English; the documents are then searched for
+the words of the translation and of the question. Without a model the page
+shows what was looked up only, and a question in another language finds the
+English pages through the search's glossary alone. Bus
+questions need the backend's `TDX_CLIENT_ID` and `TDX_CLIENT_SECRET`. Live
+arrivals are shown as data and never go through the model: tried on 2026-11-11,
+the untuned model gave the time the data was read as the bus time and answered
+Vietnamese and Indonesian bus questions in Thai script. It listens on 127.0.0.1; it
+has no login and is not meant to be exposed.
+
+Run on 2026-11-11 with an untuned `unsloth/gemma-4-E2B-it-GGUF` (Q4_K_M) behind
+Ollama on a CPU-only server, all 60 golden questions through the page's API,
+look-up and answer together (one run, temperature 0):
+
+| lang | right document in top 3 | answer passage in top 3 | answer correct | refused when unanswerable |
+|---|---|---|---|---|
+| en | 21/21 | 15/21 | 14/21 | 2/3 |
+| zh-TW | 7/10 | 5/10 | 4/10 | 2/2 |
+| vi | 10/10 | 8/10 | 7/10 | 2/2 |
+| id | 10/10 | 8/10 | 7/10 | 2/2 |
+
+No answer contained a number missing from its passages or cited a passage that
+was not there. Read these with care: "answer correct" only checks that the
+expected figures appear; the translation prompt was chosen after three tries
+on these same 60 questions, so the non-English rows are optimistic; and there
+are ten questions per non-English language. All 60 are document questions and
+none of them was sent to the building or bus look-up. Building and bus
+questions have no golden set yet; they were only tried by hand.

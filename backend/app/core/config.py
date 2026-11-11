@@ -63,6 +63,15 @@ class Settings(BaseSettings):
     TDX_ARRIVAL_CACHE_SECONDS: int = 30
     TDX_STOP_CACHE_HOURS: int = 24
 
+    # The model behind POST /assistant/ask: an OpenAI-compatible endpoint, the
+    # URL including its /v1 part. Without the first two the endpoint still
+    # answers, with what it looked up and no written answer.
+    ASSISTANT_BASE_URL: str | None = None
+    ASSISTANT_MODEL: str | None = None
+    ASSISTANT_API_KEY: str | None = None
+    # Passed on as `reasoning_effort`; "none" switches a model's thinking off.
+    ASSISTANT_REASONING_EFFORT: str | None = None
+
     @property
     def celery_broker_url(self) -> str:
         if self.REDIS_PASSWORD:

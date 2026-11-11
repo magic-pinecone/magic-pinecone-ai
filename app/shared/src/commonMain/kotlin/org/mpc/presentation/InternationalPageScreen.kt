@@ -20,6 +20,7 @@ fun InternationalPageScreen(
         InternationalPage.GOV_GUIDES -> GovGuidesRoute(modifier = modifier.fillMaxSize())
         InternationalPage.SERVICE_LEARNING -> ServiceLearningRoute(modifier = modifier.fillMaxSize())
         InternationalPage.CREDITS -> CreditsRoute(modifier = modifier.fillMaxSize())
+        InternationalPage.ASK -> AssistantRoute(modifier = modifier.fillMaxSize())
     }
 }
 
