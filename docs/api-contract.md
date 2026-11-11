@@ -496,6 +496,75 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 - `bus_routes` 裡的路線都可以拿去查 `/transit/bus/{route}/arrivals`。
 - 新增或修改地點時，`sources` 要填資料出處，`checked_on` 填查證日期；座標必須是 WGS84 且落在臺灣範圍內，否則後端載入時會失敗。
 
+## `POST /assistant/ask`
+
+把學生的一句問題交給後端，回傳後端查到的資料，以及（伺服器有設定模型時）模型依這些資料寫的回答。App 的 International 分頁「問答」小節使用。
+
+請求：`{ "question": "E6-A203 在哪裡？" }`，1–500 字。
+
+問題由**程式**分流，不由模型決定（`kind`）：
+
+| `kind` | 何時 | 查什麼 |
+|---|---|---|
+| `bus` | 問題有「公車／bus／xe buýt／bis」類字眼（有沒有寫路線編號都可以），或同時有「怎麼去」類字眼與校外目的地（中壢、火車站、高鐵、機場、移民署、健保署） | TDX 即時到站（只取校內站牌，最多兩條路線）與 `destinations.json`。沒寫路線也沒寫目的地時，查 132 與 172 |
+| `place` | 簡短的「在哪」問題且寫了館舍名稱或別名，或幾乎只有館舍代碼（`E6`、`E6-A203`、`LH`） | `campus_places.json`，最多 3 筆 |
+| `documents` | 其他 | 國際處文件段落，最多 3 段 |
+
+分流寧可保守：
+
+- 132、133 這類數字只有在公車字眼旁邊才算路線，「保險費是 132 元嗎」仍是文件題。
+- 只有字母的代碼要大寫才算（`TR`、`LH`），單一字母的代碼要帶三或四位數的教室號才算（`A-203`）。
+- 館舍問題除了館舍和「在哪」之外只能有幾個字；「獎學金在哪裡申請？是國際事務處嗎？」是文件題。
+- 原問題與它的英文翻譯各自判斷，不會把兩邊的字湊在一起。
+- 字眼清單涵蓋英文、中文、越南文、印尼文，寫在 `backend/app/services/assistant.py`；`backend/tests/test_assistant.py` 列了每一類的例句。
+
+```json
+{
+  "question": "E6-A203 在哪裡？",
+  "kind": "place",
+  "search_query": "Where is E6-A203?",
+  "translated": true,
+  "passages": [
+    {
+      "id": "engineering-building-5",
+      "title": "Engineering Building 5 (工程五館)",
+      "url": "https://www.google.com/maps/dir/?api=1&destination=...&travelmode=walking",
+      "fetched_on": null,
+      "passage": "Engineering Building 5 (工程五館) is on the NCU campus.\n..."
+    }
+  ],
+  "places": [ { "id": "engineering-building-5", "...": "同 GET /campus/places 的一筆" } ],
+  "destinations": [],
+  "bus": [],
+  "bus_problem": null,
+  "model": "gemma-4-e2b",
+  "answer": "- E6-A203 在工程五館 (Engineering Building 5) [1]。",
+  "checks": {
+    "refused": false,
+    "cited": [1],
+    "citations_valid": true,
+    "unsupported_numbers": []
+  },
+  "error": null,
+  "seconds": 3.4
+}
+```
+
+- `passages` 是實際交給模型的內容，回答裡的 `[1]` 指的是第幾段。館舍與校外目的地的說明會轉成段落；**公車即時到站不會**，它只放在 `bus`，由畫面直接顯示。原因是實測時未微調的小模型把資料讀取時間說成到站時間，還用泰文回答越南文問題。
+- `places` 的每一筆與 [`GET /campus/places`](#get-campusplaces) 相同（含 `map_links`）；`destinations` 與 [`GET /transit/destinations`](#get-transitdestinations) 相同；`bus` 的每一筆與 [`GET /transit/bus/{route}/arrivals`](#get-transitbusroutearrivals) 相同，但同名站牌只留最快到的那一班（循環線會經過同一站兩次）。畫面應該直接用這些結構化欄位顯示，不要從 `answer` 解析。
+- 只問到站時間的公車題（沒有提到校外目的地）沒有段落可讀，後端**不會**請模型回答：`answer` 是 `null`、`error` 也是 `null`，畫面顯示 `bus` 即可。
+- `bus_problem`：公車問題查不到即時到站的原因，`not_configured`（沒有 TDX 金鑰）、`rate_limited`、`unreachable`。
+- **沒有設定模型時**（`ASSISTANT_BASE_URL`、`ASSISTANT_MODEL` 為空）：`model`、`answer`、`checks` 都是 `null`，其餘照常回傳。這時非英文問題無法先翻成英文，文件檢索幾乎找不到東西；館舍代碼與路線編號不受影響。
+- `translated`：問題不是英文時，模型先把它翻成英文再檢索，`search_query` 是翻譯結果。
+- `checks` 是程式對回答做的檢查：`refused`（模型表示資料裡沒有答案，並給了國際處聯絡方式）、`citations_valid`（引用的段落編號都存在）、`unsupported_numbers`（回答裡有、但段落裡沒有的數字）。
+- `error`：模型端點失敗或只回了空白時的原因（只有狀態碼或例外類別，不含網址與金鑰）。這時 `answer` 是 `null`，查到的資料仍會回傳。
+- 模型在伺服器 CPU 上推論時，一次請求可能要數秒到數十秒。後端對模型每次呼叫的逾時是 60 秒，非英文問題會呼叫兩次（翻譯、回答），所以用戶端的逾時至少要 120 秒。
+- 這個端點沒有流量限制，也不需要登入。
+
+| 狀態碼 | 意義 |
+|---|---|
+| 422 | `question` 是空的或超過 500 字 |
+
 ## MCP 工具
 
 同一批資料也透過 MCP 提供給 AI 客戶端，以 stdio 啟動：

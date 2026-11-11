@@ -2,6 +2,7 @@ package org.mpc.presentation.model
 
 import dev.icerock.moko.resources.StringResource
 import org.mpc.shared.MR
+import org.mpc.shared.intl_section_ask
 import org.mpc.shared.intl_section_credits
 import org.mpc.shared.intl_section_graduation
 import org.mpc.shared.intl_section_guides
@@ -15,4 +16,5 @@ enum class InternationalPage(
     GOV_GUIDES(MR.strings.intl_section_guides),
     SERVICE_LEARNING(MR.strings.intl_section_service_learning),
     CREDITS(MR.strings.intl_section_credits),
+    ASK(MR.strings.intl_section_ask),
 }

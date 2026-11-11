@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from app.api.routes import (
+    assistant,
     campus,
     catalog,
     clubs,
@@ -14,6 +15,7 @@ from app.api.routes import (
 from app.core.config import settings
 
 api_router = APIRouter()
+api_router.include_router(assistant.router)
 api_router.include_router(campus.router)
 api_router.include_router(catalog.router)
 api_router.include_router(clubs.router)

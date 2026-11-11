@@ -17,6 +17,11 @@ x-backend: &backend
     # Optional: live bus arrivals. /transit/bus/* answers 503 while empty.
     TDX_CLIENT_ID: ${TDX_CLIENT_ID:-}
     TDX_CLIENT_SECRET: ${TDX_CLIENT_SECRET:-}
+    # Optional: the model that writes answers for /assistant/ask.
+    ASSISTANT_BASE_URL: ${ASSISTANT_BASE_URL:-}
+    ASSISTANT_MODEL: ${ASSISTANT_MODEL:-}
+    ASSISTANT_API_KEY: ${ASSISTANT_API_KEY:-}
+    ASSISTANT_REASONING_EFFORT: ${ASSISTANT_REASONING_EFFORT:-}
   depends_on:
     db:
       condition: service_healthy

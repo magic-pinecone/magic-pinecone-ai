@@ -1,0 +1,29 @@
+<resources>
+    <string name="intl_section_ask">Hỏi đáp</string>
+    <string name="assistant_intro">Hãy hỏi về các tòa nhà trong trường, xe buýt đến và đi từ NCU, hoặc quy định của Văn phòng Quan hệ Quốc tế. Câu trả lời chỉ dựa trên dữ liệu của ứng dụng, được liệt kê bên dưới.</string>
+    <string name="assistant_question_hint">Nhập câu hỏi bằng bất kỳ ngôn ngữ nào</string>
+    <string name="assistant_ask">Hỏi</string>
+    <string name="assistant_asking">Đang tra cứu…</string>
+    <string name="assistant_failed">Không thể kết nối với trợ lý. Vui lòng thử lại sau.</string>
+    <string name="assistant_answer">Câu trả lời</string>
+    <string name="assistant_no_model">Máy chủ này không có mô hình để viết câu trả lời. Dưới đây là những gì tìm được.</string>
+    <string name="assistant_model_failed">Lần này mô hình không trả lời được. Dưới đây là những gì tìm được.</string>
+    <string name="assistant_nothing_found">Không tìm thấy dữ liệu nào để trả lời.</string>
+    <string name="assistant_unsupported_numbers">Hãy kiểm tra lại các con số này với nguồn: %1$s</string>
+    <string name="assistant_based_on">Dựa trên</string>
+    <string name="assistant_open_source">Xem nguồn</string>
+    <string name="assistant_open_walking">Chỉ đường đi bộ</string>
+    <string name="assistant_open_transit">Chỉ đường từ NCU</string>
+    <string name="assistant_place_code">Mã tòa nhà %1$s</string>
+    <string name="assistant_bus_route">Xe buýt %1$s tại các trạm trong trường</string>
+    <string name="assistant_bus_in_minutes">khoảng %1$d phút nữa</string>
+    <string name="assistant_bus_next_at">chuyến tiếp theo lúc %1$s</string>
+    <string name="assistant_bus_none_today">hôm nay hết xe</string>
+    <string name="assistant_bus_no_estimate">chưa có ước tính</string>
+    <string name="assistant_bus_not_configured">Máy chủ này chưa được thiết lập giờ xe buýt trực tiếp.</string>
+    <string name="assistant_bus_rate_limited">Dữ liệu xe buýt trực tiếp đang quá tải. Vui lòng thử lại sau một phút.</string>
+    <string name="assistant_bus_unreachable">Hiện không thể kết nối với dữ liệu xe buýt trực tiếp.</string>
+    <string name="assistant_example_place">Phòng E6-A203 ở đâu?</string>
+    <string name="assistant_example_bus">Chuyến xe buýt 132 tiếp theo lúc mấy giờ?</string>
+    <string name="assistant_example_insurance">Bảo hiểm Cathay chi trả bao nhiêu?</string>
+</resources>
