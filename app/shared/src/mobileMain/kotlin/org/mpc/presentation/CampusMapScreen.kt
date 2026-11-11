@@ -3,10 +3,16 @@ package org.mpc.presentation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -18,6 +24,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
@@ -28,6 +35,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
@@ -35,8 +43,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -102,13 +112,17 @@ import org.mpc.shared.intl_retry
 import org.mpc.shared.settings_course_source
 
 private const val LIBERTY_STYLE = "https://tiles.openfreemap.org/styles/liberty"
+private const val DARK_STYLE = "https://tiles.openfreemap.org/styles/dark"
 private const val NCU_LATITUDE = 24.9682
 private const val NCU_LONGITUDE = 121.1920
 private const val CAMPUS_ZOOM = 15.5
 private const val PLACE_ZOOM = 17.0
 private const val SEARCH_SETTLE_MILLIS = 400L
 
-private suspend fun MapState.fitTo(points: List<GeoPoint>) {
+private suspend fun MapState.fitTo(
+    points: List<GeoPoint>,
+    bottomInset: Dp,
+) {
     val only = points.singleOrNull()
     if (only != null) {
         animateCamera(CameraUpdate(center = Position(longitude = only.longitude, latitude = only.latitude), zoom = PLACE_ZOOM))
@@ -121,7 +135,7 @@ private suspend fun MapState.fitTo(points: List<GeoPoint>) {
             east = points.maxOf { it.longitude },
             north = points.maxOf { it.latitude },
         ),
-        fit = CameraFit(fitPadding = DpPadding(left = 48.dp, top = 160.dp, right = 48.dp, bottom = 96.dp)),
+        fit = CameraFit(fitPadding = DpPadding(left = 48.dp, top = 160.dp, right = 48.dp, bottom = 96.dp + bottomInset)),
     )
 }
 private val SPORTS_FILL = Color(0xFF2F9E44)
@@ -202,135 +216,140 @@ private fun LoadedMap(
     val foodGeoJson = remember(state.visibleFood, halalLabel) { state.visibleFood.toFoodGeoJson(halalLabel) }
     val areasGeoJson = state.areasGeoJson
     val geoJson = remember(state.visiblePlaces, languageTag) { state.visiblePlaces.toGeoJson(languageTag) }
-    val mapState = rememberMapState(
-        baseStyle = BaseStyle.Uri(LIBERTY_STYLE),
-        initialCameraPosition = CameraPosition(
-            center = Position(longitude = NCU_LONGITUDE, latitude = NCU_LATITUDE),
-            zoom = CAMPUS_ZOOM,
-        ),
-    ) {
-        if (areasGeoJson != null) {
-            val areas = rememberGeoJsonSource(GeoJsonData.JsonString(areasGeoJson))
-            val kind = feature["kind"].asString()
-            val openPlaceOfArea: FeaturesClickHandler = { features ->
-                val id = features.firstOrNull()?.properties?.get("place_id")?.jsonPrimitive?.contentOrNull
+    // The basemap follows the palette in use; a theme switch rebuilds the map with the other style.
+    val darkMap = MpcTheme.colors.background.luminance() < 0.5f
+    val labelHalo = MpcTheme.colors.background
+    val mapState = key(darkMap) {
+        rememberMapState(
+            baseStyle = BaseStyle.Uri(if (darkMap) DARK_STYLE else LIBERTY_STYLE),
+            initialCameraPosition = CameraPosition(
+                center = Position(longitude = NCU_LONGITUDE, latitude = NCU_LATITUDE),
+                zoom = CAMPUS_ZOOM,
+            ),
+        ) {
+            if (areasGeoJson != null) {
+                val areas = rememberGeoJsonSource(GeoJsonData.JsonString(areasGeoJson))
+                val kind = feature["kind"].asString()
+                val openPlaceOfArea: FeaturesClickHandler = { features ->
+                    val id = features.firstOrNull()?.properties?.get("place_id")?.jsonPrimitive?.contentOrNull
+                    if (id == null) {
+                        ClickResult.Pass
+                    } else {
+                        currentOnSelectPlace(id)
+                        ClickResult.Consume
+                    }
+                }
+                LineLayer(
+                    id = "campus-boundary",
+                    source = areas,
+                    filter = kind eq const("campus"),
+                    color = const(MpcTheme.colors.borderStrong),
+                    width = const(1.5.dp),
+                    dasharray = const(listOf(4, 3)),
+                )
+                FillLayer(
+                    id = "campus-buildings",
+                    source = areas,
+                    filter = kind eq const("building"),
+                    color = const(MpcTheme.colors.accent),
+                    opacity = const(0.22f),
+                    onClick = openPlaceOfArea,
+                )
+                FillLayer(
+                    id = "campus-sports",
+                    source = areas,
+                    filter = kind eq const("sports"),
+                    color = const(SPORTS_FILL),
+                    opacity = const(0.3f),
+                    onClick = openPlaceOfArea,
+                )
+                LineLayer(
+                    id = "campus-outlines",
+                    source = areas,
+                    filter = kind neq const("campus"),
+                    color = const(MpcTheme.colors.accent),
+                    width = const(1.dp),
+                )
+            }
+            val food = rememberGeoJsonSource(GeoJsonData.JsonString(foodGeoJson))
+            val isHalal = feature["halal"].asBoolean()
+            val openFood: FeaturesClickHandler = { features ->
+                val id = features.firstOrNull()?.properties?.get("id")?.jsonPrimitive?.contentOrNull
                 if (id == null) {
                     ClickResult.Pass
                 } else {
-                    currentOnSelectPlace(id)
+                    currentOnSelectFood(id)
                     ClickResult.Consume
                 }
             }
-            LineLayer(
-                id = "campus-boundary",
-                source = areas,
-                filter = kind eq const("campus"),
-                color = const(MpcTheme.colors.borderStrong),
-                width = const(1.5.dp),
-                dasharray = const(listOf(4, 3)),
+            CircleLayer(
+                id = "food-places",
+                source = food,
+                filter = isHalal eq const(false),
+                radius = const(4.dp),
+                color = const(FoodMarkerColors.regular),
+                strokeColor = const(Color.White),
+                strokeWidth = const(1.dp),
+                hitPadding = 10.dp,
+                onClick = openFood,
             )
-            FillLayer(
-                id = "campus-buildings",
-                source = areas,
-                filter = kind eq const("building"),
-                color = const(MpcTheme.colors.accent),
-                opacity = const(0.22f),
-                onClick = openPlaceOfArea,
+            CircleLayer(
+                id = "food-places-halal",
+                source = food,
+                filter = isHalal eq const(true),
+                radius = const(7.dp),
+                color = const(FoodMarkerColors.halal),
+                strokeColor = const(Color.White),
+                strokeWidth = const(2.dp),
+                hitPadding = 12.dp,
+                onClick = openFood,
             )
-            FillLayer(
-                id = "campus-sports",
-                source = areas,
-                filter = kind eq const("sports"),
-                color = const(SPORTS_FILL),
-                opacity = const(0.3f),
-                onClick = openPlaceOfArea,
+            SymbolLayer(
+                id = "food-halal-labels",
+                source = food,
+                filter = isHalal eq const(true),
+                textField = format(span(feature["label"].asString())),
+                textFont = const(LABEL_FONT),
+                textSize = const(0.85f.em),
+                textOffset = textOffset(0f.em, 0.9f.em),
+                textAnchor = const(SymbolAnchor.Top),
+                textColor = const(FoodMarkerColors.halal),
+                textHaloColor = const(labelHalo),
+                textHaloWidth = const(1.5.dp),
             )
-            LineLayer(
-                id = "campus-outlines",
-                source = areas,
-                filter = kind neq const("campus"),
-                color = const(MpcTheme.colors.accent),
-                width = const(1.dp),
+            val places = rememberGeoJsonSource(GeoJsonData.JsonString(geoJson))
+            CircleLayer(
+                id = "campus-places",
+                source = places,
+                radius = const(8.dp),
+                color = feature["color"].convertToColor(),
+                strokeColor = const(Color.White),
+                strokeWidth = const(2.dp),
+                hitPadding = 12.dp,
+                onClick = { features ->
+                    val id = features.firstOrNull()?.properties?.get("id")?.jsonPrimitive?.content
+                    if (id == null) {
+                        ClickResult.Pass
+                    } else {
+                        currentOnSelectPlace(id)
+                        ClickResult.Consume
+                    }
+                },
+            )
+            SymbolLayer(
+                id = "campus-place-labels",
+                source = places,
+                minZoom = LABEL_MIN_ZOOM,
+                textField = format(span(feature["label"].asString())),
+                textFont = const(LABEL_FONT),
+                textSize = const(0.85f.em),
+                textOffset = textOffset(0f.em, 0.9f.em),
+                textAnchor = const(SymbolAnchor.Top),
+                textColor = const(MpcTheme.colors.label),
+                textHaloColor = const(labelHalo),
+                textHaloWidth = const(1.5.dp),
             )
         }
-        val food = rememberGeoJsonSource(GeoJsonData.JsonString(foodGeoJson))
-        val isHalal = feature["halal"].asBoolean()
-        val openFood: FeaturesClickHandler = { features ->
-            val id = features.firstOrNull()?.properties?.get("id")?.jsonPrimitive?.contentOrNull
-            if (id == null) {
-                ClickResult.Pass
-            } else {
-                currentOnSelectFood(id)
-                ClickResult.Consume
-            }
-        }
-        CircleLayer(
-            id = "food-places",
-            source = food,
-            filter = isHalal eq const(false),
-            radius = const(4.dp),
-            color = const(FoodMarkerColors.regular),
-            strokeColor = const(Color.White),
-            strokeWidth = const(1.dp),
-            hitPadding = 10.dp,
-            onClick = openFood,
-        )
-        CircleLayer(
-            id = "food-places-halal",
-            source = food,
-            filter = isHalal eq const(true),
-            radius = const(7.dp),
-            color = const(FoodMarkerColors.halal),
-            strokeColor = const(Color.White),
-            strokeWidth = const(2.dp),
-            hitPadding = 12.dp,
-            onClick = openFood,
-        )
-        SymbolLayer(
-            id = "food-halal-labels",
-            source = food,
-            filter = isHalal eq const(true),
-            textField = format(span(feature["label"].asString())),
-            textFont = const(LABEL_FONT),
-            textSize = const(0.85f.em),
-            textOffset = textOffset(0f.em, 0.9f.em),
-            textAnchor = const(SymbolAnchor.Top),
-            textColor = const(FoodMarkerColors.halal),
-            textHaloColor = const(Color.White),
-            textHaloWidth = const(1.5.dp),
-        )
-        val places = rememberGeoJsonSource(GeoJsonData.JsonString(geoJson))
-        CircleLayer(
-            id = "campus-places",
-            source = places,
-            radius = const(8.dp),
-            color = feature["color"].convertToColor(),
-            strokeColor = const(Color.White),
-            strokeWidth = const(2.dp),
-            hitPadding = 12.dp,
-            onClick = { features ->
-                val id = features.firstOrNull()?.properties?.get("id")?.jsonPrimitive?.content
-                if (id == null) {
-                    ClickResult.Pass
-                } else {
-                    currentOnSelectPlace(id)
-                    ClickResult.Consume
-                }
-            },
-        )
-        SymbolLayer(
-            id = "campus-place-labels",
-            source = places,
-            minZoom = LABEL_MIN_ZOOM,
-            textField = format(span(feature["label"].asString())),
-            textFont = const(LABEL_FONT),
-            textSize = const(0.85f.em),
-            textOffset = textOffset(0f.em, 0.9f.em),
-            textAnchor = const(SymbolAnchor.Top),
-            textColor = const(MpcTheme.colors.label),
-            textHaloColor = const(Color.White),
-            textHaloWidth = const(1.5.dp),
-        )
     }
 
     CameraFollowsState(state, mapState)
@@ -358,8 +377,12 @@ private fun LoadedMap(
         }
         Text(
             state.shownAttribution.ifBlank { stringResource(MR.strings.campus_map_attribution) },
-            // Raised above MapLibre's own logo and tile attribution, which sit on the bottom edge.
-            modifier = Modifier.align(Alignment.BottomCenter).padding(start = MpcSpacing.space4, end = MpcSpacing.space4, bottom = 48.dp),
+            // Raised above MapLibre's own logo and tile attribution, which sit on the bottom edge
+            // inside the safe area, so on iOS above the floating tab bar too.
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom))
+                .padding(start = MpcSpacing.space4, end = MpcSpacing.space4, bottom = 48.dp),
             style = MpcTheme.typography.micro,
             color = MpcTheme.colors.labelSecondary,
             textAlign = TextAlign.Center,
@@ -390,6 +413,8 @@ private fun CameraFollowsState(
     state: CampusMapUiState.Loaded,
     mapState: MapState,
 ) {
+    // On iOS the map runs under the floating tab bar, so fits keep clear of it.
+    val bottomInset = WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom).asPaddingValues().calculateBottomPadding()
     val selected = state.selectedPlace
     LaunchedEffect(selected?.id) {
         selected?.let { place ->
@@ -413,7 +438,7 @@ private fun CameraFollowsState(
             return@LaunchedEffect
         }
         if (halalOnly && certified.isNotEmpty()) {
-            mapState.fitTo(certified.map { it.location })
+            mapState.fitTo(certified.map { it.location }, bottomInset)
         } else if (!halalOnly) {
             mapState.animateCamera(
                 CameraUpdate(center = Position(longitude = NCU_LONGITUDE, latitude = NCU_LATITUDE), zoom = CAMPUS_ZOOM),
@@ -425,7 +450,7 @@ private fun CameraFollowsState(
         val matches = state.visiblePlaces.map { it.location }
         if (state.query.isBlank() || matches.isEmpty()) return@LaunchedEffect
         delay(SEARCH_SETTLE_MILLIS)
-        mapState.fitTo(matches)
+        mapState.fitTo(matches, bottomInset)
     }
     val selectedFood = state.selectedFood
     LaunchedEffect(selectedFood?.id) {
@@ -469,10 +494,13 @@ private fun CategoryChips(
     state: CampusMapUiState.Loaded,
     actions: CampusMapActions,
 ) {
+    // Filled so the labels read over both the light and the dark basemap.
+    val chipColors = FilterChipDefaults.filterChipColors(containerColor = MpcTheme.colors.surface)
     LazyRow(horizontalArrangement = Arrangement.spacedBy(MpcSpacing.space2)) {
         if (state.food != null) {
             item {
                 FilterChip(
+                    colors = chipColors,
                     selected = state.foodLayer != FoodLayer.HIDDEN,
                     onClick = {
                         actions.onShowFood(if (state.foodLayer == FoodLayer.HIDDEN) FoodLayer.ALL else FoodLayer.HIDDEN)
@@ -483,6 +511,7 @@ private fun CategoryChips(
             }
             item {
                 FilterChip(
+                    colors = chipColors,
                     selected = state.foodLayer == FoodLayer.HALAL_ONLY,
                     onClick = {
                         actions.onShowFood(if (state.foodLayer == FoodLayer.HALAL_ONLY) FoodLayer.ALL else FoodLayer.HALAL_ONLY)
@@ -496,6 +525,7 @@ private fun CategoryChips(
         }
         item {
             FilterChip(
+                colors = chipColors,
                 selected = state.selectedCategory == null,
                 onClick = { actions.onSelectCategory(null) },
                 label = { Text(stringResource(MR.strings.campus_map_all)) },
@@ -504,6 +534,7 @@ private fun CategoryChips(
         items(state.categories, key = { it.wire }) { category ->
             val style = category.style
             FilterChip(
+                colors = chipColors,
                 selected = state.selectedCategory == category,
                 onClick = { actions.onSelectCategory(category) },
                 label = { Text(stringResource(style.label)) },
