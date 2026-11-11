@@ -193,10 +193,11 @@ def search_student_services(
     Args:
         query: a few English keywords, e.g. "work permit hours per week" or
             "ARC extension form". The pages are in English, so translate the
-            student's question first.
+            student's question first; common Chinese, Vietnamese and
+            Indonesian terms (居留證, học bổng, izin kerja) are also understood.
         topic: insurance, immigration, work_permit, exchange or general, to
             search one area only.
-        limit: how many passages to return.
+        limit: how many passages to return. Several can come from one page.
 
     Returns passages with their page title, URL and the date the page was
     fetched. Answer only from the passages and cite the URL. An empty list

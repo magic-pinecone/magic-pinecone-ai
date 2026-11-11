@@ -232,6 +232,20 @@ def test_other_languages_are_translated_for_the_search_first():
     assert "Passages:" in model.calls[1][1]["content"]
 
 
+def test_without_a_model_the_glossary_finds_the_english_pages():
+    result = assistant.ask("國泰保險每次門診最高可以理賠多少錢？")
+    assert not result["translated"] and result["answer"] is None
+    assert "oia-insurance" in [passage["id"] for passage in result["passages"]]
+
+
+def test_the_question_is_searched_along_with_its_translation():
+    # The translation names nothing the pages have; the question's own words do.
+    model = ScriptedModel("How much is paid?", refusal_text("zh-TW"))
+    result = assistant.ask("國泰保險每次門診最高可以理賠多少錢？", model)
+    assert result["translated"] and result["search_query"] == "How much is paid?"
+    assert "oia-insurance" in [passage["id"] for passage in result["passages"]]
+
+
 def test_a_number_missing_from_the_passages_is_reported():
     model = ScriptedModel("- You get NT$987,654 per visit [1]")
     result = assistant.ask(
