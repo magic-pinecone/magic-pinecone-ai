@@ -3,6 +3,7 @@ package org.mpc.navigation
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 import org.mpc.presentation.EeclassCategory
+import org.mpc.presentation.model.InternationalPage
 
 interface AndroidRoute : NavKey
 
@@ -30,6 +31,12 @@ data class PortalWebRoute(
 @Serializable
 data object ClubsRoute : AndroidRoute
 
+/** A page for international students, opened from the home screen. */
+@Serializable
+data class InternationalRoute(
+    val page: InternationalPage,
+) : AndroidRoute
+
 @Serializable
 data class EeclassCourseRoute(
     val number: String,
@@ -52,14 +59,9 @@ data class EeclassBulletinRoute(
 @Serializable
 data object CoursePlanningRoot : TopLevelRoute
 
-/** Services for international students. */
-@Serializable
-data object InternationalRoot : TopLevelRoute
-
 val topLevelRoutes: Set<TopLevelRoute> =
     linkedSetOf(
         HomeRoot,
         CoursePlanningRoot,
         PortalRoot,
-        InternationalRoot,
     )

@@ -2,7 +2,6 @@
     <string name="shell_tab_home">首頁</string>
     <string name="shell_tab_news">新聞</string>
     <string name="shell_tab_portal">Portal</string>
-    <string name="shell_tab_international">國際生</string>
     <string name="shell_tab_course_selection">選課</string>
     <string name="shell_tab_settings">設定</string>
     <string name="shell_app_title">神奇松果</string>
@@ -23,4 +22,5 @@
     <string name="shell_more_options">更多選項</string>
     <string name="shell_share">分享</string>
     <string name="shell_open_in_browser">在瀏覽器中開啟</string>
+    <string name="shell_calendar_full_access_denied">沒有行事曆權限。請在「設定」允許神奇松果完整取用行事曆。</string>
 </resources>

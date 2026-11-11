@@ -31,9 +31,9 @@ struct CourseFilterSheet: View {
                     }
                 } else {
                     VStack(spacing: 0) {
-                        Picker("篩選方式", selection: $tab) {
-                            Text("篩選").tag(Tab.filters)
-                            Text("時段").tag(Tab.schedule)
+                        Picker(MR.strings().catalog_filter_mode.localized, selection: $tab) {
+                            Text(MR.strings().catalog_tab_filters.localized).tag(Tab.filters)
+                            Text(MR.strings().catalog_tab_schedule.localized).tag(Tab.schedule)
                         }
                         .pickerStyle(.segmented)
                         .padding(.horizontal)
@@ -50,15 +50,15 @@ struct CourseFilterSheet: View {
             }
             // The slot grid is drawn by Compose on the grouped background, so the Form and the sheet match it.
             .background(Color(uiColor: .systemGroupedBackground).ignoresSafeArea())
-            .navigationTitle("篩選")
+            .navigationTitle(MR.strings().catalog_tab_filters.localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("清除") { bridge.clearFilters() }
+                    Button(MR.strings().catalog_clear.localized) { bridge.clearFilters() }
                         .disabled(active.count == 0)
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("完成") { dismiss() }
+                    Button(MR.strings().portal_done.localized) { dismiss() }
                 }
             }
         }
@@ -78,7 +78,7 @@ private struct CourseSchedulePane: View {
     var body: some View {
         VStack(spacing: 0) {
             CourseSlotPickerComposeView(sharedHost: sharedHost, bridge: bridge)
-            Text("只顯示上課時間完全落在所選時段內的課程。")
+            Text(MR.strings().catalog_schedule_hint.localized)
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -144,21 +144,21 @@ private struct CourseFilterForm: View {
 
     var body: some View {
         Form {
-            Section("課程類型") {
-                Picker("課程類型", selection: typeChoice) {
-                    Text("全部").tag(TypeChoice.all)
-                    Text("必修").tag(TypeChoice.required)
-                    Text("選修").tag(TypeChoice.elective)
+            Section(MR.strings().catalog_section_type.localized) {
+                Picker(MR.strings().catalog_section_type.localized, selection: typeChoice) {
+                    Text(MR.strings().catalog_all.localized).tag(TypeChoice.all)
+                    Text(MR.strings().catalog_type_required.localized).tag(TypeChoice.required)
+                    Text(MR.strings().catalog_type_elective.localized).tag(TypeChoice.elective)
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
             }
 
-            Section("名額") {
-                Picker("名額", selection: seatsChoice) {
-                    Text("全部").tag(SeatsChoice.all)
-                    Text("尚有名額").tag(SeatsChoice.open)
-                    Text("已額滿").tag(SeatsChoice.full)
+            Section(MR.strings().catalog_section_seats.localized) {
+                Picker(MR.strings().catalog_section_seats.localized, selection: seatsChoice) {
+                    Text(MR.strings().catalog_all.localized).tag(SeatsChoice.all)
+                    Text(MR.strings().catalog_seats_open.localized).tag(SeatsChoice.open)
+                    Text(MR.strings().catalog_seats_full.localized).tag(SeatsChoice.full)
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
@@ -166,7 +166,7 @@ private struct CourseFilterForm: View {
 
             let credits = options?.credits.map(\.doubleValue) ?? []
             if !credits.isEmpty {
-                Section("學分") {
+                Section(MR.strings().catalog_section_credits.localized) {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 64), spacing: 8)], spacing: 8) {
                         ForEach(credits, id: \.self) { value in
                             creditButton(value)
@@ -178,19 +178,22 @@ private struct CourseFilterForm: View {
 
             Section {
                 optionLink(
-                    title: "系所",
+                    title: MR.strings().catalog_picker_department.localized,
+                    searchPrompt: MR.strings().catalog_search_departments.localized,
                     choices: options?.departments ?? [],
                     selected: active.departments,
                     make: { CourseFilterDepartment(name: $0) }
                 )
                 optionLink(
-                    title: "學院",
+                    title: MR.strings().catalog_picker_college.localized,
+                    searchPrompt: MR.strings().catalog_search_colleges.localized,
                     choices: options?.colleges ?? [],
                     selected: active.colleges,
                     make: { CourseFilterCollege(name: $0) }
                 )
                 optionLink(
-                    title: "老師",
+                    title: MR.strings().catalog_picker_teacher.localized,
+                    searchPrompt: MR.strings().catalog_search_teachers.localized,
                     choices: options?.teachers ?? [],
                     selected: active.teachers,
                     make: { CourseFilterTeacher(name: $0) }
@@ -209,7 +212,7 @@ private struct CourseFilterForm: View {
                 bridge.addFilter(filter: filter)
             }
         } label: {
-            Text(CourseFilterToken(filter).label.replacingOccurrences(of: " 學分", with: ""))
+            Text(value, format: .number.precision(.fractionLength(0...2)))
                 .frame(maxWidth: .infinity)
         }
         .buttonStyle(.bordered)
@@ -220,6 +223,7 @@ private struct CourseFilterForm: View {
 
     private func optionLink(
         title: String,
+        searchPrompt: String,
         choices: [String],
         selected: Set<String>,
         make: @escaping (String) -> any CourseFilter
@@ -227,6 +231,7 @@ private struct CourseFilterForm: View {
         NavigationLink {
             CourseFilterOptionList(
                 title: title,
+                searchPrompt: searchPrompt,
                 choices: choices,
                 selected: selected,
                 onToggle: { name, isOn in
@@ -244,23 +249,31 @@ private struct CourseFilterForm: View {
 
     private func summary(_ selected: Set<String>) -> String {
         switch selected.count {
-        case 0: "不限"
+        case 0: MR.strings().catalog_any.localized
         case 1: selected.first ?? ""
-        default: "已選 \(selected.count) 項"
+        default: MR.strings().catalog_selected_count.localized(selected.count)
         }
     }
 }
 
 private struct CourseFilterOptionList: View {
     let title: String
+    let searchPrompt: String
     let choices: [String]
     let onToggle: (String, Bool) -> Void
     @State private var selected: Set<String>
     @State private var search = ""
 
     // A pushed destination is not rebuilt when the snapshot changes, so it tracks its own selection.
-    init(title: String, choices: [String], selected: Set<String>, onToggle: @escaping (String, Bool) -> Void) {
+    init(
+        title: String,
+        searchPrompt: String,
+        choices: [String],
+        selected: Set<String>,
+        onToggle: @escaping (String, Bool) -> Void
+    ) {
         self.title = title
+        self.searchPrompt = searchPrompt
         self.choices = choices
         self.onToggle = onToggle
         _selected = State(initialValue: selected)
@@ -291,6 +304,6 @@ private struct CourseFilterOptionList: View {
         }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $search, prompt: "搜尋\(title)")
+        .searchable(text: $search, prompt: searchPrompt)
     }
 }

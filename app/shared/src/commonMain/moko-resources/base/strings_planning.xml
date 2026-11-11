@@ -63,4 +63,12 @@
     <string name="planning_calendar_result_no_term">No class dates are available for this semester yet, so the timetable can't be added to your calendar.</string>
     <string name="planning_calendar_result_cleared">Your saved timetable has no courses. Cleared this semester's events from the \"%1$s\" calendar.</string>
     <string name="planning_view_catalog_title">Course search</string>
+    <string name="planning_calendar_add_hint">Add the saved timetable to the “%1$s” calendar</string>
+    <string name="planning_view_picker">Course view</string>
+    <string name="planning_search_failed_title">Couldn\'t load courses</string>
+    <string name="planning_course_admit_badge">%1$d / %2$d students</string>
+    <string name="planning_course_waitlist_badge">%1$d waitlisted</string>
+    <string name="planning_course_info_swipe_hint">Swipe left or right to see course info</string>
+    <string name="planning_course_add_to_timetable_labeled">Add %1$s to timetable, %2$s</string>
+    <string name="planning_course_remove_from_timetable_labeled">Remove %1$s from timetable, %2$s</string>
 </resources>

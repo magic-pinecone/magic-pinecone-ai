@@ -10,21 +10,21 @@ private const val GRADES = "https://portal.ncu.edu.tw/system/incu-studentscore"
 
 val portalHomeTests by testSuite {
     test("favorites keep the user's order and drop services the catalog no longer lists") {
-        val home = portalHome(favoriteIds = listOf(MAIL, "https://portal.ncu.edu.tw/system/retired", EECLASS), query = "")
+        val home = portalHome(favoriteIds = listOf(MAIL, "https://portal.ncu.edu.tw/system/retired", EECLASS), query = "", catalog = testCatalog)
 
         assertEquals(listOf("NCU Mail", "新 ee-class"), home.favorites.map { it.label })
-        assertEquals(defaultPortalShortcutSections, home.sections)
+        assertEquals(testCatalog, home.sections)
     }
 
     test("search filters favorites and the catalog alike") {
-        val home = portalHome(favoriteIds = listOf(MAIL, EECLASS), query = " mail ")
+        val home = portalHome(favoriteIds = listOf(MAIL, EECLASS), query = " mail ", catalog = testCatalog)
 
         assertEquals(listOf("NCU Mail"), home.favorites.map { it.label })
         assertEquals(listOf("NCU Mail"), home.sections.flatMap { it.items }.map { it.label })
     }
 
     test("a search with no match leaves the home empty") {
-        assertTrue(portalHome(favoriteIds = listOf(MAIL), query = "不存在的服務").isEmpty)
+        assertTrue(portalHome(favoriteIds = listOf(MAIL), query = "不存在的服務", catalog = testCatalog).isEmpty)
     }
 
     test("adding a favorite appends it once") {

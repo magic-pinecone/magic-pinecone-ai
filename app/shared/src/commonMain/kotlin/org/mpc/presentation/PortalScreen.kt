@@ -68,6 +68,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.icerock.moko.resources.compose.stringResource
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.mpc.data.portal.portalHome
+import org.mpc.data.portal.portalShortcutSections
+import org.mpc.data.portal.portalShortcutTexts
 import org.mpc.domain.model.PortalShortcutDestination
 import org.mpc.domain.model.PortalShortcutIcon
 import org.mpc.domain.model.PortalShortcutItem
@@ -102,7 +104,9 @@ fun PortalScreen(
     val favoriteIds by viewModel.favoriteIds.collectAsStateWithLifecycle()
     var query by rememberSaveable { mutableStateOf("") }
     var isEditing by rememberSaveable { mutableStateOf(false) }
-    val home = remember(favoriteIds, query) { portalHome(favoriteIds.orEmpty(), query) }
+    val texts = portalShortcutTexts.associateWith { stringResource(it) }
+    val catalog = remember(texts) { portalShortcutSections(texts::getValue) }
+    val home = remember(favoriteIds, query, catalog) { portalHome(favoriteIds.orEmpty(), query, catalog) }
     val favoriteIdSet = remember(favoriteIds) { favoriteIds.orEmpty().toSet() }
     val isSearching = query.isNotBlank()
 

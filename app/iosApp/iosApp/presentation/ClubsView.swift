@@ -7,7 +7,7 @@ struct ClubsView: View {
     var body: some View {
         ClubsComposeView(sharedHost: sharedHost)
             .ignoresSafeArea(.container, edges: .bottom)
-            .navigationTitle("社團")
+            .navigationTitle(MR.strings().clubs_title.localized)
             .navigationBarTitleDisplayMode(.inline)
     }
 }

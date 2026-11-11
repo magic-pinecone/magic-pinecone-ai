@@ -39,4 +39,7 @@
     <string name="coursedetail_password_all">All</string>
     <string name="coursedetail_password_some">Some</string>
     <string name="coursedetail_password_none">None</string>
+    <string name="coursedetail_load_failed_hint">You can still view the basics and add the course to your timetable, or try again later.</string>
+    <string name="coursedetail_enrolled_quota">Enrolled / quota</string>
+    <string name="coursedetail_waitlist">Waitlisted</string>
 </resources>
