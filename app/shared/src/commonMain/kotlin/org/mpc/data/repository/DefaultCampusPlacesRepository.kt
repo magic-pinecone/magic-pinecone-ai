@@ -1,8 +1,10 @@
 package org.mpc.data.repository
 
+import co.touchlab.kermit.Logger
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import org.mpc.data.dataSource.CampusPlacesDataSource
@@ -19,5 +21,17 @@ internal class DefaultCampusPlacesRepository(
 ) : CampusPlacesRepository {
     override val backend: Flow<String?> = backendEndpoint.baseUrl
 
-    override suspend fun fetchPlaces(): CampusPlaces? = backendEndpoint.baseUrl.first()?.let { baseUrl -> dataSource.getPlaces(baseUrl).toDomain() }
+    override suspend fun fetchPlaces(): CampusPlaces? {
+        val baseUrl = backendEndpoint.baseUrl.first() ?: return null
+        val places = dataSource.getPlaces(baseUrl).toDomain()
+        // The shapes only decorate the markers, so a failure here must not hide the places.
+        val areas = try {
+            dataSource.getAreasGeoJson(baseUrl)
+        } catch (cause: Exception) {
+            if (cause is CancellationException) throw cause
+            Logger.i(cause.toString())
+            null
+        }
+        return places.copy(areasGeoJson = areas)
+    }
 }

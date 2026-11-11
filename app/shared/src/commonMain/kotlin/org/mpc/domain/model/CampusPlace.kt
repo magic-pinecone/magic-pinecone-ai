@@ -69,12 +69,16 @@ data class CampusPlace(
     val priceNote: LocalizedText?,
     val tags: Set<PlaceTag>,
     val mapLinks: MapLinks,
+    /** The id of the building this place is inside, such as a shop in a dining hall; it shares the host's coordinates. */
+    val locatedIn: String? = null,
 )
 
 /** The places plus the attribution their coordinates require. */
 data class CampusPlaces(
     val attribution: String,
     val places: List<CampusPlace>,
+    /** The campus outline, buildings and sports grounds as a GeoJSON FeatureCollection for the map; null when it did not load. */
+    val areasGeoJson: String? = null,
 )
 
 /** True when [query] is part of the Chinese, English or Vietnamese name, the code or an alias, ignoring case. */

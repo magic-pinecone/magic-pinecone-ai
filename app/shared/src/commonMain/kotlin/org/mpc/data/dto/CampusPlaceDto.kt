@@ -29,6 +29,7 @@ internal data class CampusPlaceDto(
     val tags: List<String> = emptyList(),
     val sources: List<String> = emptyList(),
     val mapLinks: MapLinksDto,
+    val locatedIn: String? = null,
 )
 
 @Serializable

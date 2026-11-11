@@ -32,6 +32,7 @@ internal fun CampusPlaceDto.toDomain(): CampusPlace = CampusPlace(
         googleWalkingDirections = mapLinks.googleWalkingDirections,
         appleMaps = mapLinks.appleMaps,
     ),
+    locatedIn = locatedIn,
 )
 
 private fun LocalizedTextDto.toDomain() = LocalizedText(zh = zh, en = en, vi = vi)

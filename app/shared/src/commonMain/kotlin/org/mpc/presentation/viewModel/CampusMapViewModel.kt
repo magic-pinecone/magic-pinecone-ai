@@ -61,6 +61,7 @@ class CampusMapViewModel(
             is Load.Done -> CampusMapUiState.Loaded(
                 places = load.places.places,
                 attribution = load.places.attribution,
+                areasGeoJson = load.places.areasGeoJson,
                 selectedCategory = selection.category,
                 query = selection.query,
                 selectedPlace = load.places.places.firstOrNull { it.id == selection.placeId },

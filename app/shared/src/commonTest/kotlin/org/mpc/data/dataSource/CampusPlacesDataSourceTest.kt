@@ -56,7 +56,7 @@ private val enrichedBackendJson =
           "opening_hours": "Mon-Fri 07:00-19:00",
           "price_range_twd": {"min": 60, "max": 120},
           "price_note": {"zh": "套餐", "en": "Set meals"},
-          "tags": ["vegetarian", "halal", "teleport"],
+          "tags": ["vegetarian", "halal", "teleport"], "located_in": "dining-hall",
           "sources": ["https://example.org/menu"],
           $LINKS
         },
@@ -117,6 +117,8 @@ val campusPlacesDataSourceTests by testSuite {
             assertEquals(setOf(PlaceTag.VEGETARIAN, PlaceTag.HALAL), food.tags)
             assertEquals(PlaceCategory.DINING, food.category)
             assertEquals(PlaceCategory.LANDMARK, mystery.category)
+            assertEquals("dining-hall", food.locatedIn)
+            assertNull(mystery.locatedIn)
         }
     }
 }

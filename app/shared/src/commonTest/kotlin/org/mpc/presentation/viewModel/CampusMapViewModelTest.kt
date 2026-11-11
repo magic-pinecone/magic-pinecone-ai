@@ -24,6 +24,7 @@ private fun place(
     id: String,
     name: String,
     category: PlaceCategory,
+    locatedIn: String? = null,
 ) = CampusPlace(
     id = id,
     name = LocalizedText(name, name),
@@ -38,6 +39,7 @@ private fun place(
     priceNote = null,
     tags = emptySet(),
     mapLinks = MapLinks("g", "w", "a"),
+    locatedIn = locatedIn,
 )
 
 private val places = CampusPlaces(
@@ -46,6 +48,7 @@ private val places = CampusPlaces(
         place("canteen", "Pine Canteen", PlaceCategory.DINING),
         place("cafe", "Pine Cafe", PlaceCategory.DINING),
         place("library", "Main Library", PlaceCategory.LIBRARY),
+        place("bookstore", "Campus Bookstore", PlaceCategory.SHOP, locatedIn = "library"),
     ),
 )
 
@@ -102,7 +105,7 @@ val campusMapViewModelTests by testSuite {
 
     test("the category chips and the search narrow the places on the map") {
         campusMapTest(backend = "http://10.0.2.2:8000") { viewModel, _ ->
-            assertEquals(listOf(PlaceCategory.LIBRARY, PlaceCategory.DINING), viewModel.loaded().categories)
+            assertEquals(listOf(PlaceCategory.LIBRARY, PlaceCategory.DINING, PlaceCategory.SHOP), viewModel.loaded().categories)
 
             viewModel.selectCategory(PlaceCategory.DINING)
             testScheduler.advanceUntilIdle()
@@ -114,6 +117,23 @@ val campusMapViewModelTests by testSuite {
 
             viewModel.selectCategory(null)
             viewModel.search("library")
+            testScheduler.advanceUntilIdle()
+            assertEquals(listOf("library"), viewModel.loaded().visiblePlaces.map { it.id })
+        }
+    }
+
+    test("shops inside a building get no marker and are listed under it, and finding one shows its building") {
+        campusMapTest(backend = "http://10.0.2.2:8000") { viewModel, _ ->
+            val loaded = viewModel.loaded()
+            assertEquals(listOf("canteen", "cafe", "library"), loaded.visiblePlaces.map { it.id })
+            assertEquals(listOf("bookstore"), loaded.tenantsOf(loaded.places.first { it.id == "library" }).map { it.id })
+
+            viewModel.search("bookstore")
+            testScheduler.advanceUntilIdle()
+            assertEquals(listOf("library"), viewModel.loaded().visiblePlaces.map { it.id })
+
+            viewModel.search("")
+            viewModel.selectCategory(PlaceCategory.SHOP)
             testScheduler.advanceUntilIdle()
             assertEquals(listOf("library"), viewModel.loaded().visiblePlaces.map { it.id })
         }
