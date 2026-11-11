@@ -19,6 +19,9 @@ struct ContentView: View {
                         courseDestination: { course in
                             EeclassCourseView(sharedHost: sharedHost, course: course)
                         },
+                        internationalDestination: { page in
+                            InternationalPageView(sharedHost: sharedHost, page: page)
+                        },
                         onOpenSettings: openSettings
                     )
                 }
@@ -45,23 +48,6 @@ struct ContentView: View {
                     )
                 }
                 .ignoresSafeArea(.container, edges: bottomSafeAreaEdges)
-            }
-            Tab(MR.strings().shell_tab_international.localized, systemImage: "globe", value: AppTab.international) {
-                NavigationStack {
-                    InternationalComposeView(sharedHost: sharedHost)
-                        .ignoresSafeArea(.container, edges: .bottom)
-                        .navigationTitle(MR.strings().shell_tab_international.localized)
-                        .navigationBarTitleDisplayMode(.inline)
-                        .toolbar {
-                            ToolbarItem(placement: .topBarTrailing) {
-                                Button(
-                                    MR.strings().shell_settings.localized,
-                                    systemImage: "gearshape",
-                                    action: openSettings
-                                )
-                            }
-                        }
-                }
             }
         }
         .id(appLanguageTag)
@@ -112,18 +98,6 @@ struct ContentView: View {
 
     private func openSettings() {
         isShowingSettings = true
-    }
-}
-
-/// The graduation language requirements and government guides, drawn by the shared Compose screen.
-private struct InternationalComposeView: UIViewControllerRepresentable {
-    let sharedHost: IosSharedHost
-
-    func makeUIViewController(context: Context) -> some UIViewController {
-        sharedHost.internationalScreenController()
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
     }
 }
 

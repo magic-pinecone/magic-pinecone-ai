@@ -50,4 +50,5 @@
     <string name="intl_guides_machine_translated">Bản dịch máy. Văn bản gốc của cơ quan có giá trị quyết định.</string>
     <string name="intl_guides_show_original">Xem bản gốc</string>
     <string name="intl_guides_show_translation">Xem bản dịch</string>
+    <string name="intl_home_header">Dành cho sinh viên quốc tế</string>
 </resources>

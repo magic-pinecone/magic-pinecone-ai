@@ -43,6 +43,7 @@ private struct TabPreviewShell: View {
                     HomeView(
                         loadCourses: { throw CancellationError() },
                         courseDestination: { _ in EmptyView() },
+                        internationalDestination: { _ in EmptyView() },
                         onOpenSettings: {}
                     )
                 }
