@@ -4,7 +4,6 @@ enum AppTab: Hashable {
     case home
     case coursePlanning
     case portal
-    case international
     case food
 }
 

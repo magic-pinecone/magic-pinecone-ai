@@ -39,4 +39,7 @@
     <string name="coursedetail_password_all">Tất cả</string>
     <string name="coursedetail_password_some">Một phần</string>
     <string name="coursedetail_password_none">Không có</string>
+    <string name="coursedetail_load_failed_hint">Bạn vẫn có thể xem thông tin cơ bản và thêm môn học vào thời khóa biểu, hoặc thử lại sau.</string>
+    <string name="coursedetail_enrolled_quota">Đã đăng ký / chỉ tiêu</string>
+    <string name="coursedetail_waitlist">Số người chờ</string>
 </resources>

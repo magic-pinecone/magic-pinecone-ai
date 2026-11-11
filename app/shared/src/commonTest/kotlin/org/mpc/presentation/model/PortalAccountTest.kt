@@ -4,6 +4,8 @@ import de.infix.testBalloon.framework.core.testSuite
 import org.mpc.domain.session.PortalNeed
 import org.mpc.domain.session.PortalStatus
 import org.mpc.domain.session.Unavailability
+import org.mpc.shared.MR
+import org.mpc.shared.portal_status_displaced_detail
 import kotlin.test.assertEquals
 
 val portalAccountTests by testSuite {
@@ -25,7 +27,7 @@ val portalAccountTests by testSuite {
         val account = PortalStatus.Blocked(PortalNeed.DISPLACED).toPortalAccount()
 
         assertEquals(PortalAccountTone.ATTENTION, account.tone)
-        assertEquals("重新登入後，其他地方的 Portal 會被登出", account.detail)
+        assertEquals(MR.strings.portal_status_displaced_detail, account.detail)
         assertEquals(listOf(PortalAccountAction.SIGN_IN), account.actions)
     }
 

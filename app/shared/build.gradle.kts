@@ -262,8 +262,14 @@ val hardcodedUiAllowlist = repoRoot.file("app/config/i18n/hardcoded-ui-text-allo
 val checkHardcodedUiText = tasks.register<CheckHardcodedUiText>("checkHardcodedUiText") {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
     description = "Fails when Chinese string literals are added to UI source outside the checked-in allowlist."
-    sharedUiRoot.set(layout.projectDirectory.dir("src/commonMain/kotlin/org/mpc/presentation"))
-    androidUiRoot.set(appRoot.dir("androidApp/src/main/kotlin"))
+    uiSources.from(
+        layout.projectDirectory.dir("src/commonMain/kotlin/org/mpc/presentation"),
+        // The Portal catalog is UI text even though it lives with the data.
+        layout.projectDirectory.dir("src/commonMain/kotlin/org/mpc/data/portal"),
+        appRoot.dir("androidApp/src/main/kotlin"),
+        // The Siri intents stay Chinese until the Siri work moves them to a string catalog.
+        appRoot.dir("iosApp/iosApp").asFileTree.matching { exclude("intents/**") },
+    )
     repositoryRoot.set(repoRoot)
     allowlistFile.set(hardcodedUiAllowlist)
 }

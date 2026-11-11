@@ -18,19 +18,17 @@ struct SelectedCoursesSheet: View {
                 canEditPlan: canEditPlan,
                 onRemoveCourse: { planBridge.requestToggleCourse(course: $0) }
             )
-                .navigationTitle("已選課程")
+                .navigationTitle(MR.strings().planning_selected_title.localized)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .principal) {
                         VStack(spacing: 2) {
-                            Text("已選課程")
+                            Text(MR.strings().planning_selected_title.localized)
                                 .font(.headline)
                                 .accessibilityAddTraits(.isHeader)
                             Text(
-                                """
-                                \(courses.count) 門課 · \
-                                \(totalCredits, format: .number.precision(.fractionLength(0...2))) 學分
-                                """
+                                MR.plurals().planning_selected_summary
+                                    .localized(courses.count, totalCredits.creditString)
                             )
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
@@ -38,7 +36,7 @@ struct SelectedCoursesSheet: View {
                         .accessibilityIdentifier("selected-courses-summary")
                     }
                     ToolbarItem(placement: .confirmationAction) {
-                        Button("完成") { dismiss() }
+                        Button(MR.strings().portal_done.localized) { dismiss() }
                             .accessibilityIdentifier("selected-courses-done")
                     }
                 }
@@ -54,9 +52,9 @@ private struct SelectedCoursesList: View {
     var body: some View {
         if courses.isEmpty {
             ContentUnavailableView(
-                "還沒有已選課程",
+                MR.strings().planning_selected_empty_title.localized,
                 systemImage: "cart",
-                description: Text("加入的課程會顯示於此。")
+                description: Text(MR.strings().planning_selected_empty_hint.localized)
             )
         } else {
             List {
@@ -71,7 +69,7 @@ private struct SelectedCoursesList: View {
                                 Button(role: .destructive) {
                                     onRemoveCourse(course)
                                 } label: {
-                                    Label("移除", systemImage: "trash")
+                                    Label(MR.strings().planning_course_remove.localized, systemImage: "trash")
                                 }
                                 .accessibilityIdentifier("selected-course-remove-\(course.serialNumber)")
                             }
@@ -91,11 +89,11 @@ private struct SelectedCourseRow: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(course.title)
                     .font(.body)
-                Text(course.courseType.description_)
+                Text(course.courseType.localizedLabel)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 if !course.teachers.isEmpty {
-                    Text(course.teachers.joined(separator: "、"))
+                    Text(course.teachers.joined(separator: MR.strings().planning_list_separator.localized))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -104,7 +102,7 @@ private struct SelectedCourseRow: View {
                     .foregroundStyle(.secondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            Text("\(course.credit, format: .number.precision(.fractionLength(0...2))) 學分")
+            Text(MR.strings().planning_credits_value.localized(course.credit.creditString))
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .fixedSize()

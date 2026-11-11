@@ -43,7 +43,7 @@ struct PortalShortcutEntity: IndexedEntity {
     }
 
     static var all: [PortalShortcutEntity] {
-        PortalShortcutCatalogKt.defaultPortalShortcutSections.flatMap { section in
+        PortalShortcutCatalogKt.portalShortcutSections { $0.localized }.flatMap { section in
             section.items.map { PortalShortcutEntity(item: $0, section: section) }
         }
     }

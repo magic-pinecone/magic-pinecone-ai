@@ -14,7 +14,6 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.Settings
@@ -89,7 +88,7 @@ import org.mpc.navigation.EeclassCategoryRoute
 import org.mpc.navigation.EeclassCourseRoute
 import org.mpc.navigation.FoodMapRoot
 import org.mpc.navigation.HomeRoot
-import org.mpc.navigation.InternationalRoot
+import org.mpc.navigation.InternationalRoute
 import org.mpc.navigation.PortalRoot
 import org.mpc.navigation.PortalWebRoute
 import org.mpc.navigation.SettingsRoute
@@ -102,9 +101,9 @@ import org.mpc.presentation.CoursePlanningView
 import org.mpc.presentation.EeclassBulletinScreen
 import org.mpc.presentation.EeclassCategoryScreen
 import org.mpc.presentation.EeclassCourseScreen
-import org.mpc.presentation.EeclassHomeScreen
 import org.mpc.presentation.FoodMapScreen
-import org.mpc.presentation.InternationalScreen
+import org.mpc.presentation.HomeScreen
+import org.mpc.presentation.InternationalPageScreen
 import org.mpc.presentation.PortalScreen
 import org.mpc.presentation.PortalWebScreen
 import org.mpc.presentation.SettingsScreen
@@ -136,7 +135,6 @@ import org.mpc.shared.shell_share
 import org.mpc.shared.shell_tab_course_selection
 import org.mpc.shared.shell_tab_food
 import org.mpc.shared.shell_tab_home
-import org.mpc.shared.shell_tab_international
 import org.mpc.shared.shell_tab_portal
 import org.mpc.shared.shell_view_selected_courses
 
@@ -253,8 +251,9 @@ private fun AndroidPrimaryNavigation(
     val entryProvider =
         entryProvider<NavKey> {
             entry<HomeRoot> {
-                EeclassHomeScreen(
+                HomeScreen(
                     onOpenCourse = { number, name -> navigator.navigate(EeclassCourseRoute(number, name)) },
+                    onOpenInternational = { page -> navigator.navigate(InternationalRoute(page)) },
                     modifier = Modifier.fillMaxSize(),
                 )
             }
@@ -305,8 +304,8 @@ private fun AndroidPrimaryNavigation(
             entry<ClubsRoute> {
                 ClubsScreen(modifier = Modifier.fillMaxSize())
             }
-            entry<InternationalRoot> {
-                InternationalScreen(modifier = Modifier.fillMaxSize())
+            entry<InternationalRoute> { route ->
+                InternationalPageScreen(route.page, modifier = Modifier.fillMaxSize())
             }
             entry<FoodMapRoot> {
                 FoodMapScreen(modifier = Modifier.fillMaxSize())
@@ -607,8 +606,6 @@ private data class PrimaryTopBarState(
 
         selectedTopLevelRoute == PortalRoot -> stringResource(MR.strings.shell_tab_portal)
 
-        selectedTopLevelRoute == InternationalRoot -> stringResource(MR.strings.shell_tab_international)
-
         selectedTopLevelRoute == FoodMapRoot -> stringResource(MR.strings.shell_tab_food)
 
         else -> stringResource(MR.strings.shell_app_title)
@@ -622,6 +619,7 @@ private data class PrimaryTopBarState(
 @Composable
 private fun NavKey.pushedTitle(): String? = when (this) {
     is ClubsRoute -> stringResource(MR.strings.clubs_title)
+    is InternationalRoute -> stringResource(page.title)
     is EeclassCourseRoute -> name
     is EeclassCategoryRoute -> stringResource(category.titleResource)
     else -> null
@@ -698,6 +696,5 @@ private val topLevelNavigationItems =
         TopLevelNavigationItem(HomeRoot, MR.strings.shell_tab_home, Icons.Default.Home),
         TopLevelNavigationItem(CoursePlanningRoot, MR.strings.shell_tab_course_selection, Icons.Default.DateRange),
         TopLevelNavigationItem(PortalRoot, MR.strings.shell_tab_portal, Icons.Default.AccountCircle),
-        TopLevelNavigationItem(InternationalRoot, MR.strings.shell_tab_international, Icons.Default.Language),
         TopLevelNavigationItem(FoodMapRoot, MR.strings.shell_tab_food, Icons.Default.Restaurant),
     )

@@ -2,21 +2,21 @@ import EventKit
 import Foundation
 @preconcurrency import Shared
 
-enum ClassCalendarError: Error, CustomLocalizedStringResourceConvertible {
+enum ClassCalendarError: Error {
     case accessDenied
     case termUnknown
 
-    var localizedStringResource: LocalizedStringResource {
+    var message: String {
         switch self {
-        case .accessDenied: "沒有行事曆權限。請在「設定」允許神奇松果完整取用行事曆。"
-        case .termUnknown: "還沒有本學期的上課日期，暫時無法加入行事曆。"
+        case .accessDenied: MR.strings().shell_calendar_full_access_denied.localized
+        case .termUnknown: MR.strings().planning_calendar_result_no_term.localized
         }
     }
 }
 
 /// Mirrors the Saved Course Plan into one calendar the app owns, so exporting again replaces instead of duplicating.
 enum ClassCalendar {
-    static let title = "神奇松果課表"
+    static var title: String { MR.strings().planning_calendar_title.localized }
     private static let identifierKey = "classCalendarIdentifier"
 
     /// Replaces this term's events with the Saved Course Plan's classes and returns how many were added.
@@ -41,8 +41,9 @@ enum ClassCalendar {
             event.timeZone = .campus
             event.startDate = date(item.date, minute: item.startMinute)
             event.endDate = date(item.date, minute: item.endMinute)
-            let teachers = item.course.teachers.joined(separator: "、")
-            event.notes = [item.periodLabel, teachers, "課號 \(item.course.serialNumber)"]
+            let teachers = item.course.teachers.joined(separator: MR.strings().planning_list_separator.localized)
+            let courseNumber = MR.strings().planning_calendar_course_number.localized(item.course.serialNumber)
+            event.notes = [item.periodLabel, teachers, courseNumber]
                 .filter { !$0.isEmpty }
                 .joined(separator: "\n")
             try store.save(event, span: .thisEvent, commit: false)
@@ -53,8 +54,8 @@ enum ClassCalendar {
 
     static func resultMessage(classCount: Int) -> String {
         classCount == 0
-            ? "已儲存的課表沒有課程，已清空這學期的「\(title)」。"
-            : "已將 \(classCount) 堂課加入「\(title)」行事曆。"
+            ? MR.strings().planning_calendar_result_cleared.localized(title)
+            : MR.plurals().planning_calendar_result_added.localized(classCount, title)
     }
 
     private static func ownedCalendar(in store: EKEventStore) throws -> EKCalendar {
