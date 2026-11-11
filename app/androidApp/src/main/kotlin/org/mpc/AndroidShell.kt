@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -87,12 +88,14 @@ import org.mpc.navigation.EeclassCategoryRoute
 import org.mpc.navigation.EeclassCourseRoute
 import org.mpc.navigation.HomeRoot
 import org.mpc.navigation.InternationalRoute
+import org.mpc.navigation.MapRoot
 import org.mpc.navigation.PortalRoot
 import org.mpc.navigation.PortalWebRoute
 import org.mpc.navigation.SettingsRoute
 import org.mpc.navigation.TopLevelRoute
 import org.mpc.navigation.rememberAndroidNavigationState
 import org.mpc.navigation.scene.BottomSheetSceneStrategy
+import org.mpc.presentation.CampusMapScreen
 import org.mpc.presentation.ClubsScreen
 import org.mpc.presentation.CoursePlanningScreen
 import org.mpc.presentation.CoursePlanningView
@@ -131,6 +134,7 @@ import org.mpc.shared.shell_settings
 import org.mpc.shared.shell_share
 import org.mpc.shared.shell_tab_course_selection
 import org.mpc.shared.shell_tab_home
+import org.mpc.shared.shell_tab_map
 import org.mpc.shared.shell_tab_portal
 import org.mpc.shared.shell_view_selected_courses
 
@@ -296,6 +300,9 @@ private fun AndroidPrimaryNavigation(
                         )
                     },
                 )
+            }
+            entry<MapRoot> {
+                CampusMapScreen(modifier = Modifier.fillMaxSize())
             }
             entry<ClubsRoute> {
                 ClubsScreen(modifier = Modifier.fillMaxSize())
@@ -599,6 +606,8 @@ private data class PrimaryTopBarState(
 
         selectedTopLevelRoute == PortalRoot -> stringResource(MR.strings.shell_tab_portal)
 
+        selectedTopLevelRoute == MapRoot -> stringResource(MR.strings.shell_tab_map)
+
         else -> stringResource(MR.strings.shell_app_title)
     }
 
@@ -687,4 +696,5 @@ private val topLevelNavigationItems =
         TopLevelNavigationItem(HomeRoot, MR.strings.shell_tab_home, Icons.Default.Home),
         TopLevelNavigationItem(CoursePlanningRoot, MR.strings.shell_tab_course_selection, Icons.Default.DateRange),
         TopLevelNavigationItem(PortalRoot, MR.strings.shell_tab_portal, Icons.Default.AccountCircle),
+        TopLevelNavigationItem(MapRoot, MR.strings.shell_tab_map, Icons.Default.Map),
     )

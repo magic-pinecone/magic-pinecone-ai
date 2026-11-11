@@ -33,6 +33,7 @@ datastoreCore = "1.2.1"
 room = "2.8.4"
 jsoup = "1.23.2"
 sqlite = "2.7.0"
+maplibre = "0.20.0"
 
 ksp = "2.3.10"
 
@@ -77,6 +78,8 @@ compose-components-resources = { module = "org.jetbrains.compose.components:comp
 compose-uiToolingPreview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
 calf-ui = { module = "com.mohamedrejeb.calf:calf-ui", version.ref = "calf" }
 calf-webview = { module = "com.mohamedrejeb.calf:calf-webview", version.ref = "calf" }
+maplibre-compose = { module = "org.maplibre.compose:maplibre-compose", version.ref = "maplibre" }
+maplibre-compose-runtime-opengl-android = { module = "org.maplibre.compose:maplibre-compose-runtime-opengl-android", version.ref = "maplibre" }
 
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref="kotlix-serialization" }
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJdkLibs" }

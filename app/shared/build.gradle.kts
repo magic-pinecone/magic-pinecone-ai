@@ -137,6 +137,8 @@ kotlin {
             implementation(libs.androidx.datastorePreferences)
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
+            // The map has no wasmJs build, so its screen lives in mobileMain.
+            implementation(libs.maplibre.compose)
         }
         wasmJsMain.dependencies {
             implementation(libs.ktor.client.js)

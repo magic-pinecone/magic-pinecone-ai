@@ -16,6 +16,8 @@ App（`app/`）會一次下載整個學期的課程目錄，存進裝置上的 R
 | `GET /intl/contacts` | 依主題查承辦窗口 | （尚未接上） |
 | `POST /intl/nhi-enrollment-date` | 估算健保加保日 | （尚未接上） |
 | `GET /campus/places` | 校園地點與地圖連結 | （尚未接上） |
+| `GET /campus/map.geojson` | 校園邊界與建築輪廓（OpenStreetMap） | （尚未接上） |
+| `GET /campus/food` | 校外餐廳與清真認證餐廳 | （尚未接上） |
 | `GET /transit/bus/{route}/arrivals` | 中大校園公車即時到站（TDX） | （尚未接上） |
 | `GET /transit/destinations` | 校外常去地點與前往方式 | （尚未接上） |
 
@@ -378,14 +380,14 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 
 ## `GET /campus/places`
 
-校園地點清單：建築、餐廳、宿舍、公車站等，目前 43 筆，資料在 `backend/app/data/campus_places.json`。這個端點不需要資料庫，也不需要先同步。
+校園地點清單：建築、餐廳、宿舍、公車站等，目前 84 筆，資料在 `backend/app/data/campus_places.json`。這個端點不需要資料庫，也不需要先同步。
 
 | 查詢參數 | 說明 |
 |---|---|
-| `q` | 比對中文名、英文名、建築代碼與別名，不分大小寫。例如 `工程五館`、`E6`、`OIA` |
-| `category` | `academic`、`administration`、`library`、`dormitory`、`dining`、`sports`、`service`、`transit`、`landmark` 其中之一 |
+| `q` | 比對中文名、英文名、越南文名、建築代碼與別名，以及建築內單位（`units`）的名稱與別名，不分大小寫。例如 `工程五館`、`E6`、`OIA`、`資工系` |
+| `category` | `academic`、`administration`、`library`、`dormitory`、`dining`、`sports`、`service`、`transit`、`landmark`、`shop`（便利商店、書店、文具店）其中之一 |
 
-兩個參數都給時取交集；都不給時回傳全部。有 `q` 時最貼近的排最前面：整個名稱、代碼或別名相符的先，其次是開頭相符，最後是包含。所以 `q=E` 的第一筆是代碼為 `E` 的工程一館。
+兩個參數都給時取交集；都不給時回傳全部。有 `q` 時最貼近的排最前面：整個名稱、代碼或別名相符的先，其次是開頭相符，最後是包含。所以 `q=E` 的第一筆是代碼為 `E` 的工程一館。只因為裡面的單位相符的建築，比對等級降一級，排在名稱本身相符的地點後面。
 
 ```json
 {
@@ -401,7 +403,25 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
       "longitude": 121.187598,
       "osm_id": "way/268561940",
       "aliases": ["工五館", "工五"],
-      "note_en": null,
+      "name_vi": null,
+      "description": null,
+      "opening_hours": null,
+      "price_range_twd": null,
+      "price_note": null,
+      "tags": [],
+      "sources": [],
+      "units": [
+        {
+          "name_zh": "資訊工程學系",
+          "name_en": "Department of Computer Science and Information Engineering",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": ["資工系", "CSIE"],
+          "floor": "2F, 3F, 5F",
+          "website": "https://www.csie.ncu.edu.tw/",
+          "sources": ["https://www.csie.ncu.edu.tw/p/412-1013-1818.php"]
+        }
+      ],
       "map_links": {
         "google_maps": "https://www.google.com/maps/search/?api=1&query=24.967014%2C121.187598",
         "google_walking_directions": "https://www.google.com/maps/dir/?api=1&destination=24.967014%2C121.187598&travelmode=walking",
@@ -412,15 +432,84 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 }
 ```
 
+- 新增欄位都是選填，沒有資料時分別是 `null` 或空陣列：
+  - `name_vi`：越南文名稱，尚未翻譯時為 `null`。
+  - `description`：`{zh, en, vi}`，三個值都是字串，取代原本的 `note_en`（已移除）。尚未翻譯的語言先放英文原文。
+  - `opening_hours`：OpenStreetMap `opening_hours` 語法的字串，例如 `Mo-Fr 08:00-17:00`。
+  - `price_range_twd`：`{min, max}`，新台幣整數，`0 <= min <= max`；不合的資料在載入時就會被拒絕。
+  - `price_note`：`{zh, en, vi}`，附價格的範例品項。
+  - `tags`：`vegetarian`、`halal`、`open_24h`、`late_night`、`cash_only`、`card_accepted`、`english_menu` 其中的零到多個。
+  - `sources`：資料來源網址。
+  - `units`：建築裡的學院、學系、研究所、處室與中心，給「資工系在哪」這類問題用。`kind` 是 `college`、`department`、`institute`、`office`、`center` 其中之一；`floor` 照來源寫的樓層或房號，例如 `3F`，來源沒寫時為 `null`；`sources` 是寫明單位在這棟建築的網址，至少一個，否則載入時拒絕。同一個單位分散在幾棟建築時，每棟都列。
+  - `located_in`：所在建築的地點 `id`，例如餐廳裡的店家。店家與所在建築共用座標，地圖上只畫建築，店家列在建築底下。只能指向本身沒有 `located_in` 的地點，否則載入時拒絕。
+- `units` 目前收錄 25 棟建築、83 個單位，是 2026-11-11 從各單位官網與學校公告整理的，不是每個單位都有；找不到來源寫明所在建築的單位就不收。學務處各組、諮商輔導中心、職涯發展中心在中正圖書館（舊圖），也就是 OpenStreetMap 上的第二行政中心，列在 `second-administration-center`。用 `backend/scripts/merge_campus_units.py` 把整理好的檔案寫回 `campus_places.json`。
+- 價格與營業時間目前全部是 `null`：新生網與學校網頁都沒有可引用的價格，不自行填寫。
 - 座標取自 OpenStreetMap，畫面上顯示這些資料時必須一併顯示 `attribution`。
 - `name_en` 只有少數來自 OpenStreetMap，其餘是自行翻譯，尚未與學校的官方英文館名核對。
 - `code` 與有代碼建築的 `name_zh` 以選課系統（課程列表的「時間/教室」欄，例如 `E6-A203 (工程五館-A203)`）為準；OpenStreetMap 上不同的名稱放在 `aliases`。沒有排課的地點 `code` 為 `null`。
 - 選課系統有、但這裡還沒收錄的代碼：`E4` 機電實驗室，位置尚未確認。
-- `osm_id` 是座標來源的 OpenStreetMap 物件；人工定位的地點（目前只有 `R3`）為 `null`。
+- `osm_id` 是座標來源的 OpenStreetMap 物件；人工定位的地點（`R3`，以及放在所在建築座標上的店家與辦公室）為 `null`。
 - `E1` 工程二館的座標取自 OpenStreetMap 上標為「電機系」的建築，這個對應是推定的。
 - 路線不由後端計算：`map_links` 會在手機的地圖 App 開啟步行導航。
 
 `GET /campus/places/{id}` 回傳單一地點，形狀與上面 `places` 的元素相同；找不到時回 404。
+
+## `GET /campus/map.geojson`
+
+校園邊界、建築輪廓與運動場地的 GeoJSON `FeatureCollection`（`Content-Type: application/geo+json`），給 App 把建築畫成可點的形狀。資料在 `backend/app/data/campus_map.geojson`，由 `backend/scripts/fetch_campus_osm.py` 從 Overpass 抓取 OpenStreetMap 校園範圍（relation 18727079）內的物件產生；重新執行就會更新。
+
+```json
+{
+  "type": "FeatureCollection",
+  "attribution": "© OpenStreetMap contributors, ODbL 1.0",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "way/268561940",
+      "geometry": { "type": "Polygon", "coordinates": [[[121.1874, 24.9671], "…"]] },
+      "properties": { "osm_id": "way/268561940", "kind": "building", "name": "工程五館", "name_en": null, "place_id": "engineering-building-5" }
+    }
+  ]
+}
+```
+
+- `kind` 是 `campus`（校園邊界，只有一筆）、`building` 或 `sports`。
+- `place_id` 是 `osm_id` 相同的 `GET /campus/places` 地點；沒有對應地點時為 `null`。
+- 只保留外環，中庭等內環不畫。
+
+## `GET /campus/food`
+
+校園周邊吃飯的地方，補 `GET /campus/places` 沒列的校外餐廳。資料在 `backend/app/data/food_places.json`，由 `backend/scripts/fetch_food_places.py` 產生（改寫自 magic-pinecone-ai#41 的食物地圖）：
+
+- 清真認證餐廳：交通部觀光署[穆斯林友善餐旅清單](https://www.taiwan.net.tw/m1.aspx?sNo=0020118)中，距中大 10 公里內者，目前 7 筆，最近的在 4.5 公里外。
+- 其他餐廳與咖啡店：OpenStreetMap 上距中大 2 公里內者，扣掉 `GET /campus/places` 已有的，目前 128 筆。
+
+查詢參數 `halal_only=true` 只回傳有清真認證的地點。
+
+```json
+{
+  "fetched": "2026-11-11",
+  "attribution": "© OpenStreetMap contributors, ODbL 1.0; halal certificates: Tourism Administration, MOTC",
+  "places": [
+    {
+      "id": "halal-1",
+      "name": "柴神興業有限公司-Furger 芙格漢堡餐車(中壢中原店)",
+      "latitude": 24.953735,
+      "longitude": 121.2371,
+      "kind": "漢堡",
+      "osm_id": null,
+      "halal": { "certificates": ["MFR"], "certifier": "巴勒克清真產業有限公司" },
+      "address": "桃園市中壢區民有街76號1樓",
+      "phone": "+886-2-82871801",
+      "map_links": { "google_maps": "…", "google_walking_directions": "…", "apple_maps": "…" }
+    }
+  ]
+}
+```
+
+- `halal` 為 `null` 表示沒有查證，不代表不是清真。畫面上要這樣說明。
+- 名稱與地址照來源，大多只有中文。
+- 畫面上要顯示 `attribution`。
 
 ## `GET /transit/bus/{route}/arrivals`
 

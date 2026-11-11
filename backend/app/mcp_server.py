@@ -270,8 +270,10 @@ def find_place(query: str = "", category: PlaceCategory | None = None) -> dict:
     """Find buildings and resources on the NCU campus and how to get to them.
 
     `query` matches a Chinese or English name, a building code such as "E6",
-    or an alias such as "OIA"; leave it empty to list a whole category. The
-    closest matches come first. Each result has coordinates and links that
+    an alias such as "OIA", or a unit housed in a building, such as "資工系" or
+    "諮商中心"; leave it empty to list a whole category. The closest matches
+    come first. A building's `units` lists the colleges, departments, offices
+    and centers inside it, with the floor when known. Each result has coordinates and links that
     open walking directions in Google or Apple Maps. An empty result means the
     place is not in the list, not that it does not exist. Show the attribution
     when you show the results.
