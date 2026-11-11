@@ -44,7 +44,7 @@ This PR is the only one that touches Gradle and Xcode configuration. Everyone el
 - [ ] Add `app/androidApp/src/main/res/xml/locales_config.xml` and `android:localeConfig` so Android 13+ lists the three languages in system per-app language settings.
 - [ ] Add `CFBundleLocalizations` (en, zh-Hant, vi) to `app/iosApp/iosApp/Info.plist`.
 - [ ] Add a Gradle task `checkI18nKeys` next to `checkDesignTokens` and wire it into `check`. It fails when a key or plural exists in one locale and not another, or when the `%s`/`%d` placeholders differ between locales.
-- [ ] Add a Gradle task `checkHardcodedUiText`. It fails on a Chinese string literal in `shared/src/commonMain/kotlin/org/mpc/presentation/**` and `androidApp/src/main/kotlin/**`. It reads a checked-in allowlist of files that still have text, and fails if a listed file no longer has any, so the list only shrinks. `domain/`, `data/`, and tests are out of scope because their Chinese is NCU data and search tables.
+- [ ] Add a Gradle task `checkHardcodedUiText`. It fails on a Chinese string literal in `shared/src/commonMain/kotlin/org/mpc/presentation/**`, the Portal catalog in `shared/src/commonMain/kotlin/org/mpc/data/portal/**`, `androidApp/src/main/kotlin/**`, and the SwiftUI app in `iosApp/iosApp/**` except `intents/`. It reads a checked-in allowlist of files that still have text, and fails if a listed file no longer has any, so the list only shrinks. The rest of `domain/` and `data/`, and tests, are out of scope because their Chinese is NCU data and search tables.
 
 **Checks to run before merging, because the prototype did not cover them.**
 

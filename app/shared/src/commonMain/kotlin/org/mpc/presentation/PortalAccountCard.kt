@@ -44,6 +44,7 @@ import org.mpc.presentation.viewModel.CampusSessionViewModel
 import org.mpc.shared.MR
 import org.mpc.shared.portal_retry
 import org.mpc.shared.portal_sign_in
+import org.mpc.shared.portal_sign_in_title
 import org.mpc.shared.portal_sign_out
 
 @Composable
@@ -56,6 +57,7 @@ internal fun PortalAccountCard(
     val account = remember(status) { status.toPortalAccount() }
     val scope = rememberCoroutineScope()
     val lifecycleOwner = LocalLifecycleOwner.current
+    val signInTitle = stringResource(MR.strings.portal_sign_in_title)
 
     LaunchedEffect(viewModel) {
         viewModel.refreshPortal()
@@ -74,7 +76,7 @@ internal fun PortalAccountCard(
             when (action) {
                 PortalAccountAction.SIGN_IN -> scope.launch {
                     when (val signIn = viewModel.signIn()) {
-                        is PortalSignIn.OpenBrowser -> onOpenDestination(portalLoginDestination(signIn.url))
+                        is PortalSignIn.OpenBrowser -> onOpenDestination(portalLoginDestination(signInTitle, signIn.url))
                     }
                 }
 
