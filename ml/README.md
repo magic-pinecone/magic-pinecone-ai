@@ -16,8 +16,9 @@ kit (teacher, students, and there are no embeddings); keep it that way.
 
 | File | What it does |
 |---|---|
-| `prompt_format.py` | The one definition of the prompt: system prompt, passage numbering, refusal sentence per language, citation and refusal detection. Used by data generation, training data and evaluation. |
-| `checks.py` | Pure text checks: strip a reasoning channel, numbers not supported by the passages, `must_contain` matching, similarity to golden questions. |
+| `prompt_format.py` | The one definition of the prompt: system prompt, passage numbering, refusal sentence per language, citation and refusal detection. Used by data generation, training data and evaluation. The text lives in `backend/app/services/answer_text.py`, shared with the assistant endpoint, and is loaded from there by file path (no backend dependencies needed). |
+| `checks.py` | Pure text checks: strip a reasoning channel, numbers not supported by the passages (both from `answer_text.py` too), `must_contain` matching, similarity to golden questions. |
+| `demo/` | A one-page demo of the backend's assistant chain; see "Demo page" below. |
 | `common.py` | Paths, import of the backend service, JSONL helpers, the OpenAI-compatible chat client (`httpx`). |
 | `golden/questions.jsonl` | 60 hand-written test questions (24 en, 12 each zh-TW / vi / id; 9 unanswerable). |
 | `eval_retrieval.py` | hit@1 / hit@3 of the backend's keyword search on the golden set. |
@@ -304,3 +305,51 @@ Run on the development machine (no GPU, no network access to a model):
   <https://huggingface.co/aisingapore/Gemma-SEA-LION-v4.5-E2B-IT> (MIT,
   fine-tune of `google/gemma-4-E2B-it`), `google/gemma-3-1b-it` (gated,
   text-only `AutoModelForCausalLM`).
+
+## Demo page
+
+`demo/app.py` serves one page that shows the whole chain for a question typed
+in any of the four languages. The chain itself is the backend's
+(`backend/app/services/assistant.py`, also served as `POST /api/v1/assistant/ask`);
+the page only shows each step: where the question was sent (OIA documents, a
+campus building, or live bus arrivals), the passages the model was given, the
+model's answer, and two automatic checks on it (the cited passage numbers
+exist; every number in the answer appears in the passages).
+
+```bash
+cd backend
+# look-up only
+uv run --frozen python ../ml/demo/app.py --port 8765
+# with a model behind an OpenAI-compatible endpoint, e.g. Ollama
+DEMO_BASE_URL=http://localhost:11434/v1 DEMO_MODEL=<model name> \
+  DEMO_REASONING_EFFORT=none \
+  uv run --frozen python ../ml/demo/app.py --port 8765
+```
+
+With a model, a question that is not English is first translated by the same
+model, because the pages are in English and the keyword search cannot match
+other languages. Without a model the page shows what was looked up only. Bus
+questions need the backend's `TDX_CLIENT_ID` and `TDX_CLIENT_SECRET`. Live
+arrivals are shown as data and never go through the model: tried on 2026-11-11,
+the untuned model gave the time the data was read as the bus time and answered
+Vietnamese and Indonesian bus questions in Thai script. It listens on 127.0.0.1; it
+has no login and is not meant to be exposed.
+
+Run on 2026-11-11 with an untuned `unsloth/gemma-4-E2B-it-GGUF` (Q4_K_M) behind
+Ollama on a CPU-only server, all 60 golden questions through the page's API,
+look-up and answer together (one run, temperature 0):
+
+| lang | right document in top 3 | answer passage in top 3 | answer correct | refused when unanswerable |
+|---|---|---|---|---|
+| en | 21/21 | 15/21 | 14/21 | 2/3 |
+| zh-TW | 7/10 | 5/10 | 4/10 | 2/2 |
+| vi | 10/10 | 8/10 | 7/10 | 2/2 |
+| id | 10/10 | 8/10 | 7/10 | 2/2 |
+
+No answer contained a number missing from its passages or cited a passage that
+was not there. Read these with care: "answer correct" only checks that the
+expected figures appear; the translation prompt was chosen after three tries
+on these same 60 questions, so the non-English rows are optimistic; and there
+are ten questions per non-English language. All 60 are document questions and
+none of them was sent to the building or bus look-up. Building and bus
+questions have no golden set yet; they were only tried by hand.
