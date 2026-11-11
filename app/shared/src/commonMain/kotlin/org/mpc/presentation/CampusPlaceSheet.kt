@@ -62,7 +62,6 @@ fun CampusPlaceSheetContent(
     tenants: List<CampusPlace> = emptyList(),
     onSelectTenant: (String) -> Unit = {},
 ) {
-    val uriHandler = LocalUriHandler.current
     val name = place.name.resolve(languageTag)
     val category = place.category.style
     Column(
@@ -178,15 +177,20 @@ private fun RouteButtons(mapLinks: MapLinks) {
         Icon(Icons.AutoMirrored.Filled.DirectionsWalk, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
         Text(stringResource(MR.strings.campus_map_walk_google), modifier = Modifier.padding(start = ButtonDefaults.IconSpacing))
     }
-    OutlinedButton(
-        onClick = { uriHandler.openUri(mapLinks.appleMaps) },
-        modifier = Modifier.fillMaxWidth(),
-        contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
-    ) {
-        Icon(Icons.Filled.Map, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
-        Text(stringResource(MR.strings.campus_map_open_apple), modifier = Modifier.padding(start = ButtonDefaults.IconSpacing))
+    if (platformHasAppleMaps) {
+        OutlinedButton(
+            onClick = { uriHandler.openUri(mapLinks.appleMaps) },
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+        ) {
+            Icon(Icons.Filled.Map, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
+            Text(stringResource(MR.strings.campus_map_open_apple), modifier = Modifier.padding(start = ButtonDefaults.IconSpacing))
+        }
     }
 }
+
+/** Whether the device has Apple Maps to open a place in. */
+internal expect val platformHasAppleMaps: Boolean
 
 /** What the bottom sheet shows for a restaurant: name, kind, address, phone, halal certificate and the routes out. */
 @Composable
