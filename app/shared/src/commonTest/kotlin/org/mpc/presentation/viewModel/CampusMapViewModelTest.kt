@@ -20,6 +20,7 @@ import org.mpc.domain.model.MapLinks
 import org.mpc.domain.model.PlaceCategory
 import org.mpc.domain.repository.CampusPlacesRepository
 import org.mpc.presentation.state.CampusMapUiState
+import org.mpc.presentation.state.FoodLayer
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
@@ -155,23 +156,22 @@ val campusMapViewModelTests by testSuite {
         }
     }
 
-    test("food is hidden until asked for, and halal only keeps the certified places and turns food on") {
+    test("food is hidden until asked for, and halal only keeps the certified places") {
         campusMapTest(backend = "http://10.0.2.2:8000") { viewModel, _ ->
             assertEquals(emptyList(), viewModel.loaded().visibleFood)
             assertEquals("© OpenStreetMap contributors", viewModel.loaded().shownAttribution)
 
-            viewModel.setShowFood(true)
+            viewModel.showFood(FoodLayer.ALL)
             testScheduler.advanceUntilIdle()
             assertEquals(listOf("halal-1", "osm-1"), viewModel.loaded().visibleFood.map { it.id })
             assertEquals("OSM; MOTC", viewModel.loaded().shownAttribution)
 
-            viewModel.setHalalOnly(true)
+            viewModel.showFood(FoodLayer.HALAL_ONLY)
             testScheduler.advanceUntilIdle()
             assertEquals(listOf("halal-1"), viewModel.loaded().visibleFood.map { it.id })
 
-            viewModel.setShowFood(false)
+            viewModel.showFood(FoodLayer.HIDDEN)
             testScheduler.advanceUntilIdle()
-            assertEquals(false, viewModel.loaded().halalOnly)
             assertEquals(emptyList(), viewModel.loaded().visibleFood)
         }
     }

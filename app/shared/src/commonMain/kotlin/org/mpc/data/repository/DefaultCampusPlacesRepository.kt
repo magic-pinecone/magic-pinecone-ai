@@ -31,10 +31,8 @@ internal class DefaultCampusPlacesRepository(
     }
 }
 
-private suspend fun <T> optional(load: suspend () -> T): T? = try {
-    load()
-} catch (cause: Exception) {
-    if (cause is CancellationException) throw cause
-    Logger.i(cause.toString())
-    null
-}
+private suspend fun <T> optional(load: suspend () -> T): T? = runCatching { load() }
+    .onFailure { cause ->
+        if (cause is CancellationException) throw cause
+        Logger.i(cause.toString())
+    }.getOrNull()

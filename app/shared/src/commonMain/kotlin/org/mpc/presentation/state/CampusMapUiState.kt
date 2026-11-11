@@ -25,17 +25,18 @@ sealed interface CampusMapUiState {
         val areasGeoJson: String? = null,
         /** Restaurants around the campus; null when they did not load, which hides the food chips. */
         val food: FoodPlaces? = null,
-        val showFood: Boolean = false,
-        /** Shows only the restaurants with a halal certificate. */
-        val halalOnly: Boolean = false,
+        val foodLayer: FoodLayer = FoodLayer.HIDDEN,
         val selectedFood: FoodPlace? = null,
     ) : CampusMapUiState {
-        /** The restaurants on the map: none while food is hidden, and only certified ones when [halalOnly]. */
-        val visibleFood: List<FoodPlace> =
-            if (showFood) food?.places.orEmpty().filter { !halalOnly || it.halal != null } else emptyList()
+        val visibleFood: List<FoodPlace> = when (foodLayer) {
+            FoodLayer.HIDDEN -> emptyList()
+            FoodLayer.ALL -> food?.places.orEmpty()
+            FoodLayer.HALAL_ONLY -> food?.places.orEmpty().filter { it.halal != null }
+        }
 
         /** The attribution to show: the food data adds its own sources while it is on the map. */
-        val shownAttribution: String = if (showFood) food?.attribution?.ifBlank { null } ?: attribution else attribution
+        val shownAttribution: String =
+            if (foodLayer == FoodLayer.HIDDEN) attribution else food?.attribution?.ifBlank { null } ?: attribution
 
         /**
          * The markers on the map: buildings, not the shops inside them. A building stays when it or any
@@ -54,4 +55,11 @@ sealed interface CampusMapUiState {
         /** The categories that have at least one place, in declaration order, for the filter chips. */
         val categories: List<PlaceCategory> = PlaceCategory.entries.filter { category -> places.any { it.category == category } }
     }
+}
+
+/** Which restaurants around the campus the map shows. */
+enum class FoodLayer {
+    HIDDEN,
+    ALL,
+    HALAL_ONLY,
 }

@@ -21,6 +21,7 @@ import org.mpc.domain.model.CampusPlaces
 import org.mpc.domain.model.PlaceCategory
 import org.mpc.domain.repository.CampusPlacesRepository
 import org.mpc.presentation.state.CampusMapUiState
+import org.mpc.presentation.state.FoodLayer
 
 @Inject
 @ViewModelKey
@@ -46,8 +47,7 @@ class CampusMapViewModel(
         val query: String = "",
         val placeId: String? = null,
         val foodId: String? = null,
-        val showFood: Boolean = false,
-        val halalOnly: Boolean = false,
+        val foodLayer: FoodLayer = FoodLayer.HIDDEN,
     )
 
     private val load = MutableStateFlow<Load>(Load.Loading)
@@ -69,8 +69,7 @@ class CampusMapViewModel(
                 query = selection.query,
                 selectedPlace = load.places.places.firstOrNull { it.id == selection.placeId },
                 food = load.places.food,
-                showFood = selection.showFood,
-                halalOnly = selection.halalOnly,
+                foodLayer = selection.foodLayer,
                 selectedFood = load.places.food?.places?.firstOrNull { it.id == selection.foodId },
             )
         }
@@ -116,8 +115,5 @@ class CampusMapViewModel(
     /** Opens the restaurant with [id] in the sheet; null closes it. */
     fun selectFood(id: String?) = selection.update { it.copy(foodId = id, placeId = null) }
 
-    fun setShowFood(show: Boolean) = selection.update { it.copy(showFood = show, halalOnly = it.halalOnly && show, foodId = null) }
-
-    /** Shows only certified restaurants; turning it on also shows the food layer. */
-    fun setHalalOnly(halalOnly: Boolean) = selection.update { it.copy(halalOnly = halalOnly, showFood = it.showFood || halalOnly, foodId = null) }
+    fun showFood(layer: FoodLayer) = selection.update { it.copy(foodLayer = layer, foodId = null) }
 }
