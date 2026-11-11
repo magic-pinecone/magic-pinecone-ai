@@ -382,10 +382,10 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 
 | 查詢參數 | 說明 |
 |---|---|
-| `q` | 比對中文名、英文名、越南文名、建築代碼與別名，不分大小寫。例如 `工程五館`、`E6`、`OIA` |
+| `q` | 比對中文名、英文名、越南文名、建築代碼與別名，以及建築內單位（`units`）的名稱與別名，不分大小寫。例如 `工程五館`、`E6`、`OIA`、`資工系` |
 | `category` | `academic`、`administration`、`library`、`dormitory`、`dining`、`sports`、`service`、`transit`、`landmark`、`shop`（便利商店、書店、文具店）其中之一 |
 
-兩個參數都給時取交集；都不給時回傳全部。有 `q` 時最貼近的排最前面：整個名稱、代碼或別名相符的先，其次是開頭相符，最後是包含。所以 `q=E` 的第一筆是代碼為 `E` 的工程一館。
+兩個參數都給時取交集；都不給時回傳全部。有 `q` 時最貼近的排最前面：整個名稱、代碼或別名相符的先，其次是開頭相符，最後是包含。所以 `q=E` 的第一筆是代碼為 `E` 的工程一館。只因為裡面的單位相符的建築，比對等級降一級，排在名稱本身相符的地點後面。
 
 ```json
 {
@@ -408,6 +408,18 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
       "price_note": null,
       "tags": [],
       "sources": [],
+      "units": [
+        {
+          "name_zh": "資訊工程學系",
+          "name_en": "Department of Computer Science and Information Engineering",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": ["資工系", "CSIE"],
+          "floor": "2F, 3F, 5F",
+          "website": "https://www.csie.ncu.edu.tw/",
+          "sources": ["https://www.csie.ncu.edu.tw/p/412-1013-1818.php"]
+        }
+      ],
       "map_links": {
         "google_maps": "https://www.google.com/maps/search/?api=1&query=24.967014%2C121.187598",
         "google_walking_directions": "https://www.google.com/maps/dir/?api=1&destination=24.967014%2C121.187598&travelmode=walking",
@@ -426,7 +438,9 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
   - `price_note`：`{zh, en, vi}`，附價格的範例品項。
   - `tags`：`vegetarian`、`halal`、`open_24h`、`late_night`、`cash_only`、`card_accepted`、`english_menu` 其中的零到多個。
   - `sources`：資料來源網址。
+  - `units`：建築裡的學院、學系、研究所、處室與中心，給「資工系在哪」這類問題用。`kind` 是 `college`、`department`、`institute`、`office`、`center` 其中之一；`floor` 照來源寫的樓層或房號，例如 `3F`，來源沒寫時為 `null`；`sources` 是寫明單位在這棟建築的網址，至少一個，否則載入時拒絕。同一個單位分散在幾棟建築時，每棟都列。
   - `located_in`：所在建築的地點 `id`，例如餐廳裡的店家。店家與所在建築共用座標，地圖上只畫建築，店家列在建築底下。只能指向本身沒有 `located_in` 的地點，否則載入時拒絕。
+- `units` 目前收錄 25 棟建築、83 個單位，是 2026-11-11 從各單位官網與學校公告整理的，不是每個單位都有；找不到來源寫明所在建築的單位就不收。學務處各組、諮商輔導中心、職涯發展中心在中正圖書館（舊圖），也就是 OpenStreetMap 上的第二行政中心，列在 `second-administration-center`。用 `backend/scripts/merge_campus_units.py` 把整理好的檔案寫回 `campus_places.json`。
 - 價格與營業時間目前全部是 `null`：新生網與學校網頁都沒有可引用的價格，不自行填寫。
 - 座標取自 OpenStreetMap，畫面上顯示這些資料時必須一併顯示 `attribution`。
 - `name_en` 只有少數來自 OpenStreetMap，其餘是自行翻譯，尚未與學校的官方英文館名核對。

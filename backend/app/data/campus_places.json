@@ -24,7 +24,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/202691228"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "liberal-arts-building-2",
@@ -48,6 +49,96 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/202691227"
+      ],
+      "units": [
+        {
+          "name_zh": "中國文學系",
+          "name_en": "Department of Chinese Literature",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "中文系",
+            "中文"
+          ],
+          "floor": "C2-313",
+          "website": "https://liberal.ncu.edu.tw/en/about/Space",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E6%96%87%E5%AD%B8%E4%BA%8C%E9%A4%A8-7679258"
+          ]
+        },
+        {
+          "name_zh": "法國語文學系",
+          "name_en": "Department of French",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "法文系"
+          ],
+          "floor": "C2-315",
+          "website": "https://french.ncu.edu.tw/",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E6%96%87%E5%AD%B8%E4%BA%8C%E9%A4%A8-7679258",
+            "https://french.ncu.edu.tw/?page_id=18"
+          ]
+        },
+        {
+          "name_zh": "英美語文學系",
+          "name_en": "Department of English",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "英文系",
+            "英美系"
+          ],
+          "floor": "C2-337",
+          "website": "https://english.ncu.edu.tw/",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E6%96%87%E5%AD%B8%E4%BA%8C%E9%A4%A8-7679258",
+            "https://english.ncu.edu.tw/wp-content/uploads/2025/10/%E5%85%AC%E5%91%8A115-%E5%AD%B8%E5%A3%AB%E7%8F%AD%E7%89%B9%E6%AE%8A%E9%81%B8%E6%89%8D%E5%85%A5%E5%AD%B8%E8%A4%87%E8%A9%A6%E9%80%9A%E7%9F%A5%E5%87%BD-%E8%8B%B1%E7%BE%8E%E8%AA%9E%E6%96%87%E5%AD%B8%E7%B3%BB.pdf"
+          ]
+        },
+        {
+          "name_zh": "藝術學研究所",
+          "name_en": "Graduate Institute of Art Studies",
+          "name_vi": null,
+          "kind": "institute",
+          "aliases": [
+            "藝術所"
+          ],
+          "floor": "C2-417",
+          "website": "https://liberal.ncu.edu.tw/en/about/Space",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E6%96%87%E5%AD%B8%E4%BA%8C%E9%A4%A8-7679258"
+          ]
+        },
+        {
+          "name_zh": "校務研究辦公室",
+          "name_en": "Office of Institutional Research",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "校務研究辦公室"
+          ],
+          "floor": "C2-210",
+          "website": "https://liberal.ncu.edu.tw/en/about/Space",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E6%96%87%E5%AD%B8%E4%BA%8C%E9%A4%A8-7679258"
+          ]
+        },
+        {
+          "name_zh": "社會責任辦公室",
+          "name_en": "Office of University Social Responsibility",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "USR辦公室"
+          ],
+          "floor": "C2-210",
+          "website": "https://liberal.ncu.edu.tw/en/about/Space",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E6%96%87%E5%AD%B8%E4%BA%8C%E9%A4%A8-7679258"
+          ]
+        }
       ]
     },
     {
@@ -73,6 +164,37 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268841451"
+      ],
+      "units": [
+        {
+          "name_zh": "化學工程與材料工程學系",
+          "name_en": "Department of Chemical and Materials Engineering",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "化材系",
+            "化工系"
+          ],
+          "floor": null,
+          "website": "https://www.cme.ncu.edu.tw/",
+          "sources": [
+            "https://www.cme.ncu.edu.tw/p/412-1015-850.php?Lang=zh-tw"
+          ]
+        },
+        {
+          "name_zh": "土木工程學系",
+          "name_en": "Department of Civil Engineering",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "土木系"
+          ],
+          "floor": null,
+          "website": "https://www.cv.ncu.edu.tw/",
+          "sources": [
+            "https://www.cv.ncu.edu.tw/"
+          ]
+        }
       ]
     },
     {
@@ -89,6 +211,38 @@
         "電機館",
         "電機系",
         "Electrical Engineering"
+      ],
+      "units": [
+        {
+          "name_zh": "電機工程學系",
+          "name_en": "Department of Electrical Engineering",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "電機系",
+            "EE"
+          ],
+          "floor": null,
+          "website": "https://www2.ee.ncu.edu.tw/",
+          "sources": [
+            "https://military.ncu.edu.tw/download/112_0008_%E6%A0%A1%E5%9C%92%E7%81%BD%E5%AE%B3%E9%98%B2%E6%95%91%E8%A8%88%E7%95%AB%E6%9B%B8-%E6%9C%AC%E6%96%87-112.3.28.pdf"
+          ]
+        },
+        {
+          "name_zh": "通訊工程學系",
+          "name_en": "Department of Communication Engineering",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "通訊系",
+            "CE"
+          ],
+          "floor": "2F",
+          "website": "https://www.ce.ncu.edu.tw/",
+          "sources": [
+            "https://www2.ce.ncu.edu.tw/file/%E7%B3%BB%E6%89%80%E4%BB%8B%E7%B4%B9.pdf"
+          ]
+        }
       ]
     },
     {
@@ -104,6 +258,22 @@
         "工程三館(機械館)",
         "工三館",
         "工程三館"
+      ],
+      "units": [
+        {
+          "name_zh": "機械工程學系",
+          "name_en": "Department of Mechanical Engineering",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "機械系"
+          ],
+          "floor": null,
+          "website": "https://www.me.ncu.edu.tw/",
+          "sources": [
+            "https://www.me.ncu.edu.tw/%E8%81%AF%E7%B5%A1%E6%88%91%E5%80%91/"
+          ]
+        }
       ]
     },
     {
@@ -119,6 +289,37 @@
         "環工所",
         "環工館",
         "化工館"
+      ],
+      "units": [
+        {
+          "name_zh": "化學工程與材料工程學系",
+          "name_en": "Department of Chemical and Materials Engineering",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "化材系",
+            "化工系"
+          ],
+          "floor": null,
+          "website": "https://www.cme.ncu.edu.tw/",
+          "sources": [
+            "https://www.cme.ncu.edu.tw/p/412-1015-850.php?Lang=zh-tw"
+          ]
+        },
+        {
+          "name_zh": "環境工程研究所",
+          "name_en": "Graduate Institute of Environmental Engineering",
+          "name_vi": null,
+          "kind": "institute",
+          "aliases": [
+            "環工所"
+          ],
+          "floor": null,
+          "website": "https://ev.in.ncu.edu.tw/",
+          "sources": [
+            "https://ev.in.ncu.edu.tw/index.php/index/About/"
+          ]
+        }
       ]
     },
     {
@@ -132,6 +333,22 @@
       "osm_id": "way/268561934",
       "aliases": [
         "大型力學實驗室"
+      ],
+      "units": [
+        {
+          "name_zh": "土木工程學系",
+          "name_en": "Department of Civil Engineering",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "土木系"
+          ],
+          "floor": null,
+          "website": "https://www.cv.ncu.edu.tw/",
+          "sources": [
+            "https://www.cv.ncu.edu.tw/"
+          ]
+        }
       ]
     },
     {
@@ -157,6 +374,82 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268561940"
+      ],
+      "units": [
+        {
+          "name_zh": "工學院",
+          "name_en": "College of Engineering",
+          "name_vi": null,
+          "kind": "college",
+          "aliases": [],
+          "floor": null,
+          "website": "https://www.ec.ncu.edu.tw/",
+          "sources": [
+            "https://www.ec.ncu.edu.tw/pages/81-%E5%B7%A5%E9%99%A2%E7%B0%A1%E5%8F%B2",
+            "https://www.ncu.edu.tw/upload/page/01-Campus%20Map-202502.pdf"
+          ]
+        },
+        {
+          "name_zh": "材料科學與工程研究所",
+          "name_en": "Graduate Institute of Materials Science and Engineering",
+          "name_vi": null,
+          "kind": "institute",
+          "aliases": [
+            "材料所"
+          ],
+          "floor": "E6-B124",
+          "website": "https://in.ncu.edu.tw/~mse/",
+          "sources": [
+            "https://in.ncu.edu.tw/~mse/intro5.php"
+          ]
+        },
+        {
+          "name_zh": "資訊電機學院",
+          "name_en": "College of Electrical Engineering & Computer Science",
+          "name_vi": null,
+          "kind": "college",
+          "aliases": [
+            "資電學院",
+            "CEEC"
+          ],
+          "floor": "1F (B棟105室)",
+          "website": "https://www.ceecs.ncu.edu.tw/",
+          "sources": [
+            "https://www.ceecs.ncu.edu.tw/Location.aspx",
+            "https://www.ncu.edu.tw/upload/page/01-Campus%20Map-202502.pdf",
+            "https://love.adm.ncu.edu.tw/NCU_counsel/NCU-barrier-free/"
+          ]
+        },
+        {
+          "name_zh": "資訊工程學系",
+          "name_en": "Department of Computer Science and Information Engineering",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "資工系",
+            "CSIE"
+          ],
+          "floor": "2F, 3F, 5F",
+          "website": "https://www.csie.ncu.edu.tw/",
+          "sources": [
+            "https://www.csie.ncu.edu.tw/p/412-1013-1818.php"
+          ]
+        },
+        {
+          "name_zh": "網路學習科技研究所",
+          "name_en": "Graduate Institute of Network Learning Technology",
+          "name_vi": null,
+          "kind": "institute",
+          "aliases": [
+            "網學所",
+            "NLT"
+          ],
+          "floor": "4F",
+          "website": "https://www.lst.ncu.edu.tw/",
+          "sources": [
+            "https://www.lst.ncu.edu.tw/NLT_new/assistant.php"
+          ]
+        }
       ]
     },
     {
@@ -181,6 +474,54 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268561421"
+      ],
+      "units": [
+        {
+          "name_zh": "客家學院",
+          "name_en": "College of Hakka Studies",
+          "name_vi": null,
+          "kind": "college",
+          "aliases": [
+            "客院"
+          ],
+          "floor": null,
+          "website": "https://hakka.ncu.edu.tw/",
+          "sources": [
+            "https://www.ncu.edu.tw/upload/page/01-Campus%20Map-202512.pdf",
+            "https://hakka.ncu.edu.tw/History.aspx"
+          ]
+        },
+        {
+          "name_zh": "客家語文暨社會科學學系",
+          "name_en": "Department of Hakka Language and Social Sciences",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "客家系"
+          ],
+          "floor": null,
+          "website": "https://ncu.edu.tw/hakkadepartment/",
+          "sources": [
+            "https://military.ncu.edu.tw/download/112_0008_%E6%A0%A1%E5%9C%92%E7%81%BD%E5%AE%B3%E9%98%B2%E6%95%91%E8%A8%88%E7%95%AB%E6%9B%B8-%E6%9C%AC%E6%96%87-112.3.28.pdf"
+          ]
+        },
+        {
+          "name_zh": "法律與政府學系",
+          "name_en": "Institute of Law and Government",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "法政系",
+            "法政所"
+          ],
+          "floor": "412",
+          "website": "https://www.lawgov.ncu.edu.tw/",
+          "sources": [
+            "https://www.lawgov.ncu.edu.tw/p/406-1002-8498%2Cr34.php?Lang=zh-tw",
+            "https://hakka.ncu.edu.tw/NewsDetail.aspx?ID=3375&ItemType=NewsListData",
+            "https://www.lawgov.ncu.edu.tw/?Lang=en"
+          ]
+        }
       ]
     },
     {
@@ -203,6 +544,39 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/217833431"
+      ],
+      "units": [
+        {
+          "name_zh": "管理學院",
+          "name_en": "College of Management",
+          "name_vi": null,
+          "kind": "college",
+          "aliases": [
+            "管院"
+          ],
+          "floor": "10F",
+          "website": "https://www.mgt.ncu.edu.tw/",
+          "sources": [
+            "https://www.mgt.ncu.edu.tw/index.php/zh-TW/article/Contact%20Us",
+            "https://www.mgt.ncu.edu.tw/zh-TW/article/%E4%BA%A4%E9%80%9A%E5%9C%B0%E5%9C%96"
+          ]
+        },
+        {
+          "name_zh": "電子計算機中心",
+          "name_en": "Computer Center",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [
+            "電算中心",
+            "計中",
+            "CC"
+          ],
+          "floor": "1F",
+          "website": "https://www.cc.ncu.edu.tw/",
+          "sources": [
+            "https://www.cc.ncu.edu.tw/p/412-1033-146.php"
+          ]
+        }
       ]
     },
     {
@@ -228,6 +602,94 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/202805970"
+      ],
+      "units": [
+        {
+          "name_zh": "企業管理學系",
+          "name_en": "Department of Business Administration",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "企管系"
+          ],
+          "floor": "2F",
+          "website": "https://ba.mgt.ncu.edu.tw/",
+          "sources": [
+            "https://im.mgt.ncu.edu.tw/download/newpost/%E4%B8%AD%E5%A4%A7%E5%8F%8A%E8%B3%87%E7%AE%A1%E7%B3%BB%E8%BE%A6%E5%85%AC%E5%AE%A4%E5%9C%B0%E5%9C%96%E6%8C%87%E5%BC%95%28213%29.pdf"
+          ]
+        },
+        {
+          "name_zh": "經濟學系",
+          "name_en": "Department of Economics",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "經濟系"
+          ],
+          "floor": "2F",
+          "website": "https://ec.mgt.ncu.edu.tw/",
+          "sources": [
+            "https://im.mgt.ncu.edu.tw/download/newpost/%E4%B8%AD%E5%A4%A7%E5%8F%8A%E8%B3%87%E7%AE%A1%E7%B3%BB%E8%BE%A6%E5%85%AC%E5%AE%A4%E5%9C%B0%E5%9C%96%E6%8C%87%E5%BC%95%28213%29.pdf"
+          ]
+        },
+        {
+          "name_zh": "財務金融學系",
+          "name_en": "Department of Finance",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "財金系"
+          ],
+          "floor": "I1-208",
+          "website": "https://fm.mgt.ncu.edu.tw/",
+          "sources": [
+            "https://fm.mgt.ncu.edu.tw/zh-TW/article/2021-08-05%2015%3A49%3A54"
+          ]
+        },
+        {
+          "name_zh": "資訊管理學系",
+          "name_en": "Department of Information Management",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "資管系",
+            "IM"
+          ],
+          "floor": "I1-213",
+          "website": "https://im.mgt.ncu.edu.tw/",
+          "sources": [
+            "https://im.mgt.ncu.edu.tw/about/office/aboutoffice",
+            "https://im.mgt.ncu.edu.tw/download/newpost/%E4%B8%AD%E5%A4%A7%E5%8F%8A%E8%B3%87%E7%AE%A1%E7%B3%BB%E8%BE%A6%E5%85%AC%E5%AE%A4%E5%9C%B0%E5%9C%96%E6%8C%87%E5%BC%95%28213%29.pdf"
+          ]
+        },
+        {
+          "name_zh": "工業管理研究所",
+          "name_en": "Graduate Institute of Industrial Management",
+          "name_vi": null,
+          "kind": "institute",
+          "aliases": [
+            "工管所"
+          ],
+          "floor": "I1-610",
+          "website": "https://ia.mgt.ncu.edu.tw/",
+          "sources": [
+            "https://ia.mgt.ncu.edu.tw/"
+          ]
+        },
+        {
+          "name_zh": "人力資源管理研究所",
+          "name_en": "Graduate Institute of Human Resource Management",
+          "name_vi": null,
+          "kind": "institute",
+          "aliases": [
+            "人資所"
+          ],
+          "floor": null,
+          "website": "https://hr.mgt.ncu.edu.tw/",
+          "sources": [
+            "https://hr.mgt.ncu.edu.tw/index.php/zh-TW"
+          ]
+        }
       ]
     },
     {
@@ -252,6 +714,24 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/202690841"
+      ],
+      "units": [
+        {
+          "name_zh": "光電科學與工程學系",
+          "name_en": "Department of Optics and Photonics",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "光電系",
+            "DOP"
+          ],
+          "floor": "3F (IL-326)",
+          "website": "https://www.dop.ncu.edu.tw/",
+          "sources": [
+            "https://www.dop.ncu.edu.tw/",
+            "https://www.dop.ncu.edu.tw/about.php"
+          ]
+        }
       ]
     },
     {
@@ -277,7 +757,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268824890"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "humanities-social-sciences-building",
@@ -301,6 +782,165 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268845976"
+      ],
+      "units": [
+        {
+          "name_zh": "文學院",
+          "name_en": "College of Liberal Arts",
+          "name_vi": null,
+          "kind": "college",
+          "aliases": [
+            "文學院"
+          ],
+          "floor": "LS-203",
+          "website": "https://liberal.ncu.edu.tw/en/about/Space",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E4%BA%BA%E6%96%87%E7%A4%BE%E6%9C%83%E7%A7%91%E5%AD%B8%E5%A4%A7%E6%A8%93-%E6%96%87%E5%AD%B8%E4%B8%89%E9%A4%A8-75980039",
+            "https://www.ncu.edu.tw/upload/page/01-Campus%20Map-202512.pdf"
+          ]
+        },
+        {
+          "name_zh": "學習與教學研究所",
+          "name_en": "Graduate Institute of Learning and Instruction",
+          "name_vi": null,
+          "kind": "institute",
+          "aliases": [
+            "學習所"
+          ],
+          "floor": "LS-401",
+          "website": "https://liberal.ncu.edu.tw/en/about/Space",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E4%BA%BA%E6%96%87%E7%A4%BE%E6%9C%83%E7%A7%91%E5%AD%B8%E5%A4%A7%E6%A8%93-%E6%96%87%E5%AD%B8%E4%B8%89%E9%A4%A8-75980039"
+          ]
+        },
+        {
+          "name_zh": "師資培育中心",
+          "name_en": "Center for Teacher Education",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [
+            "師培中心"
+          ],
+          "floor": "LS-501",
+          "website": "https://liberal.ncu.edu.tw/en/about/Space",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E4%BA%BA%E6%96%87%E7%A4%BE%E6%9C%83%E7%A7%91%E5%AD%B8%E5%A4%A7%E6%A8%93-%E6%96%87%E5%AD%B8%E4%B8%89%E9%A4%A8-75980039"
+          ]
+        },
+        {
+          "name_zh": "哲學研究所",
+          "name_en": "Graduate Institute of Philosophy",
+          "name_vi": null,
+          "kind": "institute",
+          "aliases": [
+            "哲研所"
+          ],
+          "floor": "LS-302",
+          "website": "https://liberal.ncu.edu.tw/en/about/Space",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E4%BA%BA%E6%96%87%E7%A4%BE%E6%9C%83%E7%A7%91%E5%AD%B8%E5%A4%A7%E6%A8%93-%E6%96%87%E5%AD%B8%E4%B8%89%E9%A4%A8-75980039"
+          ]
+        },
+        {
+          "name_zh": "歷史研究所",
+          "name_en": "Graduate Institute of History",
+          "name_vi": null,
+          "kind": "institute",
+          "aliases": [
+            "歷史所"
+          ],
+          "floor": "LS-305",
+          "website": "https://liberal.ncu.edu.tw/en/about/Space",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E4%BA%BA%E6%96%87%E7%A4%BE%E6%9C%83%E7%A7%91%E5%AD%B8%E5%A4%A7%E6%A8%93-%E6%96%87%E5%AD%B8%E4%B8%89%E9%A4%A8-75980039"
+          ]
+        },
+        {
+          "name_zh": "儒學研究中心",
+          "name_en": "Research Center for Confucian Studies",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [],
+          "floor": "LS-326",
+          "website": "https://liberal.ncu.edu.tw/en/about/Space",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E4%BA%BA%E6%96%87%E7%A4%BE%E6%9C%83%E7%A7%91%E5%AD%B8%E5%A4%A7%E6%A8%93-%E6%96%87%E5%AD%B8%E4%B8%89%E9%A4%A8-75980039"
+          ]
+        },
+        {
+          "name_zh": "明清研究中心",
+          "name_en": "Research Center for Ming-Qing History",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [],
+          "floor": "LS-110",
+          "website": "https://liberal.ncu.edu.tw/en/about/Space",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E4%BA%BA%E6%96%87%E7%A4%BE%E6%9C%83%E7%A7%91%E5%AD%B8%E5%A4%A7%E6%A8%93-%E6%96%87%E5%AD%B8%E4%B8%89%E9%A4%A8-75980039"
+          ]
+        },
+        {
+          "name_zh": "台灣電影研究中心",
+          "name_en": "Taiwan Film Study Center",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [],
+          "floor": "LS-328",
+          "website": "https://liberal.ncu.edu.tw/en/about/Space",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E4%BA%BA%E6%96%87%E7%A4%BE%E6%9C%83%E7%A7%91%E5%AD%B8%E5%A4%A7%E6%A8%93-%E6%96%87%E5%AD%B8%E4%B8%89%E9%A4%A8-75980039"
+          ]
+        },
+        {
+          "name_zh": "視覺文化研究中心",
+          "name_en": "Visual Culture Research Center",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [],
+          "floor": "LS-207",
+          "website": "https://liberal.ncu.edu.tw/en/about/Space",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E4%BA%BA%E6%96%87%E7%A4%BE%E6%9C%83%E7%A7%91%E5%AD%B8%E5%A4%A7%E6%A8%93-%E6%96%87%E5%AD%B8%E4%B8%89%E9%A4%A8-75980039"
+          ]
+        },
+        {
+          "name_zh": "應用倫理研究中心",
+          "name_en": "Research Center for Applied Ethics",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [],
+          "floor": "LS-327",
+          "website": "https://liberal.ncu.edu.tw/en/about/Space",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E4%BA%BA%E6%96%87%E7%A4%BE%E6%9C%83%E7%A7%91%E5%AD%B8%E5%A4%A7%E6%A8%93-%E6%96%87%E5%AD%B8%E4%B8%89%E9%A4%A8-75980039"
+          ]
+        },
+        {
+          "name_zh": "通識教育中心",
+          "name_en": "Center for General Education",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [
+            "通識中心"
+          ],
+          "floor": "LS-102",
+          "website": "https://liberal.ncu.edu.tw/en/about/Space",
+          "sources": [
+            "https://liberal.ncu.edu.tw/zh_tw/about/Space/%E4%BA%BA%E6%96%87%E7%A4%BE%E6%9C%83%E7%A7%91%E5%AD%B8%E5%A4%A7%E6%A8%93-%E6%96%87%E5%AD%B8%E4%B8%89%E9%A4%A8-75980039"
+          ]
+        },
+        {
+          "name_zh": "人文藝術中心",
+          "name_en": "Center for Humanities and Arts",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [],
+          "floor": "LS-325",
+          "website": "https://cha.ncu.edu.tw/",
+          "sources": [
+            "https://cha.ncu.edu.tw/web/about/about_outline.jsp?lang=tw"
+          ]
+        }
       ]
     },
     {
@@ -326,6 +966,36 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/202805968"
+      ],
+      "units": [
+        {
+          "name_zh": "數學系",
+          "name_en": "Department of Mathematics",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "數學系"
+          ],
+          "floor": "1F-4F",
+          "website": "https://w2.math.ncu.edu.tw/",
+          "sources": [
+            "https://w2.math.ncu.edu.tw/about/info"
+          ]
+        },
+        {
+          "name_zh": "統計研究所",
+          "name_en": "Graduate Institute of Statistics",
+          "name_vi": null,
+          "kind": "institute",
+          "aliases": [
+            "統計所"
+          ],
+          "floor": "5F (M501)",
+          "website": "https://www.stat.ncu.edu.tw/",
+          "sources": [
+            "https://www.stat.ncu.edu.tw/%E9%97%9C%E6%96%BC%E6%9C%AC%E6%89%80/"
+          ]
+        }
       ]
     },
     {
@@ -352,6 +1022,37 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/202806028"
+      ],
+      "units": [
+        {
+          "name_zh": "語言中心",
+          "name_en": "Language Center",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [
+            "語言中心",
+            "LC"
+          ],
+          "floor": "O-119",
+          "website": "https://lc.ncu.edu.tw/zh-TW",
+          "sources": [
+            "https://lc.ncu.edu.tw/zh-TW"
+          ]
+        },
+        {
+          "name_zh": "語言中心華語組",
+          "name_en": "Chinese Language Division, Language Center",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "華語組"
+          ],
+          "floor": "1F",
+          "website": "https://mandarin.lc.ncu.edu.tw/ChineseLanguageCenter/",
+          "sources": [
+            "https://mandarin.lc.ncu.edu.tw/ChineseLanguageCenter/%E6%A0%A1%E5%85%A7%E5%96%AE%E4%BD%8D/"
+          ]
+        }
       ]
     },
     {
@@ -377,6 +1078,23 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/217833430"
+      ],
+      "units": [
+        {
+          "name_zh": "太空及遙測研究中心",
+          "name_en": "Center for Space and Remote Sensing Research",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [
+            "太遙中心",
+            "CSRSR"
+          ],
+          "floor": null,
+          "website": "https://www.csrsr.ncu.edu.tw/",
+          "sources": [
+            "https://www.ncu.edu.tw/upload/page/01-Campus%20Map-202512.pdf"
+          ]
+        }
       ]
     },
     {
@@ -391,6 +1109,39 @@
       "aliases": [
         "研究中心二期",
         "二期館"
+      ],
+      "units": [
+        {
+          "name_zh": "生醫理工學院",
+          "name_en": "College of Health Sciences and Technology",
+          "name_vi": null,
+          "kind": "college",
+          "aliases": [
+            "生醫理工學院",
+            "生醫院"
+          ],
+          "floor": null,
+          "website": "https://www.ncu.edu.tw/upload/page/01-Campus%20Map-202512.pdf",
+          "sources": [
+            "https://www.ncu.edu.tw/upload/page/01-Campus%20Map-202512.pdf"
+          ]
+        },
+        {
+          "name_zh": "生醫科學與工程學系",
+          "name_en": "Department of Biomedical Sciences and Engineering",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "生醫系",
+            "DBSE"
+          ],
+          "floor": "R3-401",
+          "website": "https://ncu.edu.tw/dbse/tw/",
+          "sources": [
+            "https://ncu.edu.tw/dbse/tw/pages/show.php?num=382&top=1",
+            "https://www.ncu.edu.tw/upload/page/01-Campus%20Map-202512.pdf"
+          ]
+        }
       ]
     },
     {
@@ -416,6 +1167,51 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268560615"
+      ],
+      "units": [
+        {
+          "name_zh": "地球科學學院",
+          "name_en": "College of Earth Sciences",
+          "name_vi": null,
+          "kind": "college",
+          "aliases": [
+            "地科院"
+          ],
+          "floor": "科一館101室",
+          "website": "https://escollege.ncu.edu.tw/",
+          "sources": [
+            "https://escollege.ncu.edu.tw/p/412-1008-1489.php?Lang=zh-tw"
+          ]
+        },
+        {
+          "name_zh": "地球科學學系",
+          "name_en": "Department of Earth Sciences",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "地科系",
+            "地球科學系"
+          ],
+          "floor": null,
+          "website": "https://www.gep.ncu.edu.tw/",
+          "sources": [
+            "https://military.ncu.edu.tw/download/112_0008_%E6%A0%A1%E5%9C%92%E7%81%BD%E5%AE%B3%E9%98%B2%E6%95%91%E8%A8%88%E7%95%AB%E6%9B%B8-%E6%9C%AC%E6%96%87-112.3.28.pdf"
+          ]
+        },
+        {
+          "name_zh": "應用地質學研究所",
+          "name_en": "Institute of Applied Geology",
+          "name_vi": null,
+          "kind": "institute",
+          "aliases": [
+            "應地所"
+          ],
+          "floor": null,
+          "website": "https://www.geo.ncu.edu.tw/",
+          "sources": [
+            "https://www.geo.ncu.edu.tw/"
+          ]
+        }
       ]
     },
     {
@@ -443,6 +1239,50 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/202691136"
+      ],
+      "units": [
+        {
+          "name_zh": "理學院",
+          "name_en": "College of Science",
+          "name_vi": null,
+          "kind": "college",
+          "aliases": [
+            "理學院"
+          ],
+          "floor": "1F (102室)",
+          "website": "https://www.science.ncu.edu.tw/",
+          "sources": [
+            "https://www.science.ncu.edu.tw/"
+          ]
+        },
+        {
+          "name_zh": "化學系",
+          "name_en": "Department of Chemistry",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "化學系"
+          ],
+          "floor": "5F",
+          "website": "https://www.chem.ncu.edu.tw/",
+          "sources": [
+            "https://www.chem.ncu.edu.tw/id/intro/intro3?locale=zh_tw"
+          ]
+        },
+        {
+          "name_zh": "大氣科學學系",
+          "name_en": "Department of Atmospheric Sciences",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "大氣系"
+          ],
+          "floor": "7F",
+          "website": "https://www.atm.ncu.edu.tw/",
+          "sources": [
+            "https://www.atm.ncu.edu.tw/"
+          ]
+        }
       ]
     },
     {
@@ -467,7 +1307,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268846332"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "science-building-4",
@@ -493,6 +1334,51 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/202691135"
+      ],
+      "units": [
+        {
+          "name_zh": "物理學系",
+          "name_en": "Department of Physics",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "物理系"
+          ],
+          "floor": "S4-629",
+          "website": "https://www.phy.ncu.edu.tw/",
+          "sources": [
+            "https://www.phy.ncu.edu.tw/wp-content/uploads/2025/12/%E6%96%BD%E5%B7%A5%E5%85%AC%E5%91%8A115%E5%AF%92%E5%81%87-3.pdf"
+          ]
+        },
+        {
+          "name_zh": "天文研究所",
+          "name_en": "Institute of Astronomy",
+          "name_vi": null,
+          "kind": "institute",
+          "aliases": [
+            "天文所"
+          ],
+          "floor": "9F-10F",
+          "website": "https://www.astro.ncu.edu.tw/",
+          "sources": [
+            "https://www.astro.ncu.edu.tw/about/contact.php",
+            "https://www.astro.ncu.edu.tw/about/guide.php"
+          ]
+        },
+        {
+          "name_zh": "太空科學與工程學系",
+          "name_en": "Department of Space Science and Engineering",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "太空系"
+          ],
+          "floor": "9F (S4-922)",
+          "website": "https://www.ss.ncu.edu.tw/",
+          "sources": [
+            "https://www.ss.ncu.edu.tw/p/406-1020-14202%2Cr11.php?Lang=zh-tw"
+          ]
+        }
       ]
     },
     {
@@ -517,6 +1403,22 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268846328"
+      ],
+      "units": [
+        {
+          "name_zh": "生命科學學系",
+          "name_en": "Department of Life Sciences",
+          "name_vi": null,
+          "kind": "department",
+          "aliases": [
+            "生科系"
+          ],
+          "floor": "2F",
+          "website": "https://nculs.in.ncu.edu.tw/",
+          "sources": [
+            "https://pdc.adm.ncu.edu.tw/evaluate/document/result/2/2-5/2-5-8.pdf"
+          ]
+        }
       ]
     },
     {
@@ -545,6 +1447,120 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/996613836"
+      ],
+      "units": [
+        {
+          "name_zh": "教務處",
+          "name_en": "Office of Academic Affairs",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "教務處",
+            "OAA"
+          ],
+          "floor": null,
+          "website": "https://pdc.adm.ncu.edu.tw/",
+          "sources": [
+            "https://ncusec.ncu.edu.tw/news/headlines_content.php?H_ID=3989"
+          ]
+        },
+        {
+          "name_zh": "註冊組",
+          "name_en": "Registration Division",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "註冊組",
+            "註冊"
+          ],
+          "floor": "3F",
+          "website": "https://pdc.adm.ncu.edu.tw/p/412-1019-1703.php?Lang=zh-tw",
+          "sources": [
+            "https://pdc.adm.ncu.edu.tw/postM/post/reg/1140903_1.pdf",
+            "https://ncusec.ncu.edu.tw/news/headlines_content.php?H_ID=3989"
+          ]
+        },
+        {
+          "name_zh": "課務組",
+          "name_en": "Curriculum Division",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "課務組",
+            "選課"
+          ],
+          "floor": "3F",
+          "website": "https://pdc.adm.ncu.edu.tw/p/412-1019-1763.php?Lang=zh-tw",
+          "sources": [
+            "https://pdc.adm.ncu.edu.tw/p/412-1019-1971.php?Lang=zh-tw",
+            "https://ncusec.ncu.edu.tw/news/headlines_content.php?H_ID=3989"
+          ]
+        },
+        {
+          "name_zh": "招生組",
+          "name_en": "Admission Division",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "招生組",
+            "招生"
+          ],
+          "floor": "4F",
+          "website": "https://admission.ncu.edu.tw/",
+          "sources": [
+            "https://admission.ncu.edu.tw/zh-TW/contact/us",
+            "https://ncusec.ncu.edu.tw/news/headlines_content.php?H_ID=3989"
+          ]
+        },
+        {
+          "name_zh": "教學發展中心",
+          "name_en": "Teaching and Learning Development Center",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [
+            "教發中心",
+            "教學發展中心",
+            "TLDC"
+          ],
+          "floor": "4F",
+          "website": "https://pdc.adm.ncu.edu.tw/p/412-1019-1783.php",
+          "sources": [
+            "https://pdc.adm.ncu.edu.tw/p/412-1019-1784.php?Lang=zh-tw",
+            "https://ncusec.ncu.edu.tw/news/headlines_content.php?H_ID=3989"
+          ]
+        },
+        {
+          "name_zh": "國際事務處",
+          "name_en": "Office of International Affairs",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "國際處",
+            "OIA"
+          ],
+          "floor": "1F",
+          "website": "https://oia.ncu.edu.tw/",
+          "sources": [
+            "https://oia.ncu.edu.tw/",
+            "https://oia.ncu.edu.tw/?Lang=en",
+            "https://love.adm.ncu.edu.tw/NCU_counsel/NCU-barrier-free/"
+          ]
+        },
+        {
+          "name_zh": "永續與綠能科技研究學院",
+          "name_en": "Graduate College of Sustainability and Green Energy",
+          "name_vi": null,
+          "kind": "college",
+          "aliases": [
+            "永續學院",
+            "SAGE"
+          ],
+          "floor": null,
+          "website": "https://sage.ncu.edu.tw/",
+          "sources": [
+            "https://www.ncu.edu.tw/upload/page/01-Campus%20Map-202512.pdf"
+          ]
+        }
       ]
     },
     {
@@ -571,7 +1587,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268841456"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "administration-building",
@@ -595,6 +1612,68 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/270806669"
+      ],
+      "units": [
+        {
+          "name_zh": "總務處",
+          "name_en": "Office of General Affairs",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "總務處",
+            "OGA"
+          ],
+          "floor": "A1-102",
+          "website": "https://www.oga.ncu.edu.tw/",
+          "sources": [
+            "https://www.oga.ncu.edu.tw/resource/attachment/1212198345.pdf"
+          ]
+        },
+        {
+          "name_zh": "採購組",
+          "name_en": "Procurement Division",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "採購組",
+            "採購"
+          ],
+          "floor": "A1-114",
+          "website": "https://www.oga.ncu.edu.tw/",
+          "sources": [
+            "https://www.oga.ncu.edu.tw/resource/attachment/337451498.pdf"
+          ]
+        },
+        {
+          "name_zh": "秘書室",
+          "name_en": "Secretariat",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "秘書室"
+          ],
+          "floor": "2F",
+          "website": "https://sec.ncu.edu.tw/",
+          "sources": [
+            "https://sec.ncu.edu.tw/p/412-1007-457.php?Lang=zh-tw"
+          ]
+        },
+        {
+          "name_zh": "研究發展處",
+          "name_en": "Office of Research and Development",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "研發處",
+            "ORD"
+          ],
+          "floor": "3F",
+          "website": "https://ncu.edu.tw/rd/index.php",
+          "sources": [
+            "https://www.ncu.edu.tw/p/404-1000-1019.php?Lang=zh-tw",
+            "https://ncu.edu.tw/rd/tw/page/index.php?num=32&root=5"
+          ]
+        }
       ]
     },
     {
@@ -609,6 +1688,172 @@
       "aliases": [
         "中正圖書館",
         "舊圖"
+      ],
+      "units": [
+        {
+          "name_zh": "學生事務處",
+          "name_en": "Office of Student Affairs",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "學務處",
+            "OSA"
+          ],
+          "floor": "2F",
+          "website": "https://osa.ncu.edu.tw/",
+          "sources": [
+            "https://osa.ncu.edu.tw/en/serviceinfo.php?resource_id=61",
+            "https://osa.ncu.edu.tw/serviceinfo.php?resource_id=61"
+          ]
+        },
+        {
+          "name_zh": "性別平等教育委員會",
+          "name_en": "Gender Equity Education Committee",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "性平會",
+            "性別平等教育委員會"
+          ],
+          "floor": "2F",
+          "website": "https://gender.ncu.edu.tw/",
+          "sources": [
+            "https://osa.ncu.edu.tw/en/serviceinfo.php?resource_id=61",
+            "https://osa.ncu.edu.tw/serviceinfo.php?resource_id=61"
+          ]
+        },
+        {
+          "name_zh": "校安中心",
+          "name_en": "Military Education and Student Safety Division",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "校安中心",
+            "校園安全"
+          ],
+          "floor": "1F",
+          "website": "https://osa.ncu.edu.tw/",
+          "sources": [
+            "https://osa.ncu.edu.tw/en/serviceinfo.php?resource_id=61",
+            "https://osa.ncu.edu.tw/serviceinfo.php?resource_id=61"
+          ]
+        },
+        {
+          "name_zh": "衛生保健組",
+          "name_en": "Health Center",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "衛保組",
+            "健康中心"
+          ],
+          "floor": "1F",
+          "website": "https://osa.ncu.edu.tw/",
+          "sources": [
+            "https://osa.ncu.edu.tw/en/serviceinfo.php?resource_id=61",
+            "https://osa.ncu.edu.tw/serviceinfo.php?resource_id=61",
+            "https://health.ncu.edu.tw/zh/page/service_hours"
+          ]
+        },
+        {
+          "name_zh": "課外活動組",
+          "name_en": "Extracurricular Activities Division",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "課外組",
+            "課外活動組"
+          ],
+          "floor": "1F",
+          "website": "https://osa.ncu.edu.tw/",
+          "sources": [
+            "https://osa.ncu.edu.tw/en/serviceinfo.php?resource_id=61",
+            "https://osa.ncu.edu.tw/serviceinfo.php?resource_id=61"
+          ]
+        },
+        {
+          "name_zh": "服務學習發展中心",
+          "name_en": "Service-Learning Division",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [
+            "服務學習中心",
+            "服務學習"
+          ],
+          "floor": "1F",
+          "website": "https://osa.ncu.edu.tw/",
+          "sources": [
+            "https://osa.ncu.edu.tw/en/serviceinfo.php?resource_id=61",
+            "https://osa.ncu.edu.tw/serviceinfo.php?resource_id=61"
+          ]
+        },
+        {
+          "name_zh": "職涯發展中心",
+          "name_en": "Career Center",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [
+            "職涯中心",
+            "職涯發展中心"
+          ],
+          "floor": "2F",
+          "website": "https://careercenter.ncu.edu.tw/",
+          "sources": [
+            "https://careercenter.ncu.edu.tw/article/%E6%A0%A1%E5%9C%92%E4%BD%8D%E7%BD%AE",
+            "https://osa.ncu.edu.tw/en/serviceinfo.php?resource_id=61",
+            "https://osa.ncu.edu.tw/serviceinfo.php?resource_id=61"
+          ]
+        },
+        {
+          "name_zh": "諮商輔導中心",
+          "name_en": "Counseling Center",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [
+            "諮商中心",
+            "諮輔中心",
+            "輔導處"
+          ],
+          "floor": "1F",
+          "website": "https://love.adm.ncu.edu.tw/NCU_counsel/",
+          "sources": [
+            "https://osa.ncu.edu.tw/en/serviceinfo.php?resource_id=61",
+            "https://love.adm.ncu.edu.tw/NCU_counsel/",
+            "https://osa.ncu.edu.tw/serviceinfo.php?resource_id=61"
+          ]
+        },
+        {
+          "name_zh": "生活輔導組",
+          "name_en": "Student Services and Dormitory Division",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "生輔組",
+            "生活輔導組"
+          ],
+          "floor": "1F",
+          "website": "https://osa.ncu.edu.tw/",
+          "sources": [
+            "https://osa.ncu.edu.tw/en/serviceinfo.php?resource_id=61",
+            "https://osa.ncu.edu.tw/serviceinfo.php?resource_id=61"
+          ]
+        },
+        {
+          "name_zh": "原住民族學生資源中心",
+          "name_en": "Indigenous students resource center",
+          "name_vi": null,
+          "kind": "center",
+          "aliases": [
+            "原資中心",
+            "原住民族學生資源中心"
+          ],
+          "floor": "1F",
+          "website": "https://osa.ncu.edu.tw/",
+          "sources": [
+            "https://osa.ncu.edu.tw/en/serviceinfo.php?resource_id=61",
+            "https://osa.ncu.edu.tw/serviceinfo.php?resource_id=61"
+          ]
+        }
       ]
     },
     {
@@ -634,6 +1879,24 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/202806573"
+      ],
+      "units": [
+        {
+          "name_zh": "圖書館",
+          "name_en": "NCU Library",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "總圖",
+            "總圖書館",
+            "NCU Library"
+          ],
+          "floor": null,
+          "website": "https://www.lib.ncu.edu.tw/",
+          "sources": [
+            "https://www.ncu.edu.tw/p/412-1000-324.php?Lang=zh-tw"
+          ]
+        }
       ]
     },
     {
@@ -658,7 +1921,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268851049"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "auditorium",
@@ -680,7 +1944,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/996613837"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "indoor-swimming-pool",
@@ -704,7 +1969,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268851917"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "international-student-dormitory",
@@ -729,6 +1995,25 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268840856"
+      ],
+      "units": [
+        {
+          "name_zh": "住宿服務組",
+          "name_en": "Student Housing Service Division",
+          "name_vi": null,
+          "kind": "office",
+          "aliases": [
+            "住服組",
+            "宿舍服務"
+          ],
+          "floor": "1F",
+          "website": "https://osa.ncu.edu.tw/about.php?group_id=10",
+          "sources": [
+            "https://osa.ncu.edu.tw/about.php?group_id=10",
+            "https://osa.ncu.edu.tw/en/serviceinfo.php?resource_id=61",
+            "https://osa.ncu.edu.tw/serviceinfo.php?resource_id=61"
+          ]
+        }
       ]
     },
     {
@@ -755,7 +2040,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/node/5455006433"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "song-yuan-dining-hall",
@@ -862,7 +2148,8 @@
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.ncu.edu.tw/upload/page/03-Campus%20Guild-202212.pdf",
         "https://www.openstreetmap.org/node/3007100942"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "ncu-guesthouse",
@@ -875,7 +2162,8 @@
       "osm_id": "way/202805967",
       "aliases": [
         "hotel"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "ncu-lake",
@@ -886,7 +2174,8 @@
       "latitude": 24.970867,
       "longitude": 121.191177,
       "osm_id": "relation/7211880",
-      "aliases": []
+      "aliases": [],
+      "units": []
     },
     {
       "id": "bus-stop-ncu",
@@ -993,7 +2282,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268561943"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "zhi-dao",
@@ -1019,7 +2309,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268561418"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "ju-de",
@@ -1045,7 +2336,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268840858"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "male-3",
@@ -1411,7 +2703,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/202805154"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "baseball-field",
@@ -1437,7 +2730,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/995169632"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "skating-rink",
@@ -1463,7 +2757,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268851918"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "sports-center",
@@ -1489,7 +2784,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/1041679633"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "tennis-courts",
@@ -1515,7 +2811,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/202690901"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "ninth-cafeteria",
@@ -1728,7 +3025,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/202806571"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "international-affairs",
@@ -1756,7 +3054,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/269122547"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "longchen-printing",
@@ -1867,7 +3166,8 @@
         "https://ncufresh.ncu.edu.tw/18/campus",
         "https://www.ncu.edu.tw/p/412-1000-105.php?Lang=en",
         "https://www.openstreetmap.org/way/268561936"
-      ]
+      ],
+      "units": []
     },
     {
       "id": "eat-well",

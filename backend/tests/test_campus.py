@@ -256,3 +256,82 @@ def test_campus_map_is_geojson_linked_to_places(client: TestClient):
         if feature["properties"]["place_id"]
     }
     assert linked and linked <= place_ids
+
+
+CSIE = {
+    "name_zh": "資訊工程學系",
+    "name_en": "Department of Computer Science and Information Engineering",
+    "name_vi": None,
+    "kind": "department",
+    "aliases": ["資工系", "CSIE"],
+    "floor": "3F",
+    "website": "https://www.csie.ncu.edu.tw/",
+    "sources": ["https://example.com/csie-contact"],
+}
+
+
+def test_a_building_lists_the_units_inside(client: TestClient, custom_places):
+    custom_places({**FULL_PLACE, "units": [CSIE]})
+
+    [place] = client.get("/api/v1/campus/places").json()["places"]
+
+    assert place["units"] == [CSIE]
+
+
+def test_units_default_to_empty(client: TestClient, custom_places):
+    custom_places(FULL_PLACE)
+
+    [place] = client.get("/api/v1/campus/places").json()["places"]
+
+    assert place["units"] == []
+
+
+@pytest.mark.parametrize("query", ["資工系", "csie", "資訊工程"])
+def test_search_finds_the_building_of_a_unit(client: TestClient, custom_places, query):
+    custom_places(FULL_PLACE, {**FULL_PLACE, "id": "e5", "units": [CSIE]})
+
+    assert ids(client.get("/api/v1/campus/places", params={"q": query})) == ["e5"]
+
+
+def test_a_building_named_by_the_query_outranks_one_housing_a_unit(
+    client: TestClient, custom_places
+):
+    housing = {**FULL_PLACE, "id": "e5", "units": [{**CSIE, "aliases": ["麵"]}]}
+    custom_places(housing, {**FULL_PLACE, "name_zh": "麵"})
+
+    assert ids(client.get("/api/v1/campus/places", params={"q": "麵"})) == [
+        "noodle-shop",
+        "e5",
+    ]
+
+
+@pytest.mark.parametrize(
+    "query, expected",
+    [
+        ("資工系", "engineering-building-5"),
+        ("輔導處", "second-administration-center"),
+        ("諮商中心", "second-administration-center"),
+        ("教學發展中心", "teaching-research-building"),
+        ("註冊組", "teaching-research-building"),
+        ("學務處", "second-administration-center"),
+    ],
+)
+def test_the_curated_units_lead_to_their_building(client: TestClient, query, expected):
+    assert ids(client.get("/api/v1/campus/places", params={"q": query}))[0] == expected
+
+
+def test_every_curated_unit_cites_a_web_source():
+    units = [unit for place in campus_places.load().places for unit in place.units]
+
+    assert len(units) > 50
+    assert all(
+        source.startswith("https://") for unit in units for source in unit.sources
+    )
+
+
+@pytest.mark.parametrize("unit", [{**CSIE, "sources": []}, {**CSIE, "kind": "lab"}])
+def test_an_unsourced_or_unknown_unit_is_rejected_at_load(custom_places, unit):
+    custom_places({**FULL_PLACE, "units": [unit]})
+
+    with pytest.raises(ValidationError):
+        campus_places.load()
