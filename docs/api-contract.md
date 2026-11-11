@@ -17,6 +17,7 @@ App（`app/`）會一次下載整個學期的課程目錄，存進裝置上的 R
 | `POST /intl/nhi-enrollment-date` | 估算健保加保日 | （尚未接上） |
 | `GET /campus/places` | 校園地點與地圖連結 | （尚未接上） |
 | `GET /campus/map.geojson` | 校園邊界與建築輪廓（OpenStreetMap） | （尚未接上） |
+| `GET /campus/food` | 校外餐廳與清真認證餐廳 | （尚未接上） |
 | `GET /transit/bus/{route}/arrivals` | 中大校園公車即時到站（TDX） | （尚未接上） |
 | `GET /transit/destinations` | 校外常去地點與前往方式 | （尚未接上） |
 
@@ -459,6 +460,40 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 - `kind` 是 `campus`（校園邊界，只有一筆）、`building` 或 `sports`。
 - `place_id` 是 `osm_id` 相同的 `GET /campus/places` 地點；沒有對應地點時為 `null`。
 - 只保留外環，中庭等內環不畫。
+
+## `GET /campus/food`
+
+校園周邊吃飯的地方，補 `GET /campus/places` 沒列的校外餐廳。資料在 `backend/app/data/food_places.json`，由 `backend/scripts/fetch_food_places.py` 產生（改寫自 magic-pinecone-ai#41 的食物地圖）：
+
+- 清真認證餐廳：交通部觀光署[穆斯林友善餐旅清單](https://www.taiwan.net.tw/m1.aspx?sNo=0020118)中，距中大 10 公里內者，目前 7 筆，最近的在 4.5 公里外。
+- 其他餐廳與咖啡店：OpenStreetMap 上距中大 2 公里內者，扣掉 `GET /campus/places` 已有的，目前 128 筆。
+
+查詢參數 `halal_only=true` 只回傳有清真認證的地點。
+
+```json
+{
+  "fetched": "2026-11-11",
+  "attribution": "© OpenStreetMap contributors, ODbL 1.0; halal certificates: Tourism Administration, MOTC",
+  "places": [
+    {
+      "id": "halal-1",
+      "name": "柴神興業有限公司-Furger 芙格漢堡餐車(中壢中原店)",
+      "latitude": 24.953735,
+      "longitude": 121.2371,
+      "kind": "漢堡",
+      "osm_id": null,
+      "halal": { "certificates": ["MFR"], "certifier": "巴勒克清真產業有限公司" },
+      "address": "桃園市中壢區民有街76號1樓",
+      "phone": "+886-2-82871801",
+      "map_links": { "google_maps": "…", "google_walking_directions": "…", "apple_maps": "…" }
+    }
+  ]
+}
+```
+
+- `halal` 為 `null` 表示沒有查證，不代表不是清真。畫面上要這樣說明。
+- 名稱與地址照來源，大多只有中文。
+- 畫面上要顯示 `attribution`。
 
 ## `GET /transit/bus/{route}/arrivals`
 

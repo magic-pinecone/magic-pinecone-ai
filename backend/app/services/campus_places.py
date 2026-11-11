@@ -65,6 +65,18 @@ class MapLinks(BaseModel):
     apple_maps: str
 
 
+def map_links_to(latitude: float, longitude: float) -> MapLinks:
+    point = f"{latitude},{longitude}"
+    return MapLinks(
+        google_maps="https://www.google.com/maps/search/?"
+        + urlencode({"api": 1, "query": point}),
+        google_walking_directions="https://www.google.com/maps/dir/?"
+        + urlencode({"api": 1, "destination": point, "travelmode": "walking"}),
+        apple_maps="https://maps.apple.com/?"
+        + urlencode({"daddr": point, "dirflg": "w"}),
+    )
+
+
 class CampusPlace(BaseModel):
     id: str
     name_zh: str
@@ -97,15 +109,7 @@ class CampusPlace(BaseModel):
     @computed_field
     @property
     def map_links(self) -> MapLinks:
-        point = f"{self.latitude},{self.longitude}"
-        return MapLinks(
-            google_maps="https://www.google.com/maps/search/?"
-            + urlencode({"api": 1, "query": point}),
-            google_walking_directions="https://www.google.com/maps/dir/?"
-            + urlencode({"api": 1, "destination": point, "travelmode": "walking"}),
-            apple_maps="https://maps.apple.com/?"
-            + urlencode({"daddr": point, "dirflg": "w"}),
-        )
+        return map_links_to(self.latitude, self.longitude)
 
     def match_rank(self, query: str) -> int | None:
         """How well `query` fits: 0 the whole of a name, code or alias, 1 the

@@ -4,8 +4,9 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from app.services import campus_places
+from app.services import campus_places, food_places
 from app.services.campus_places import CampusPlace, PlaceCategory
+from app.services.food_places import FoodPlace
 
 router = APIRouter(prefix="/campus", tags=["campus"])
 
@@ -21,6 +22,23 @@ def list_places(q: str | None = None, category: PlaceCategory | None = None):
     return PlacesResponse(
         attribution=campus_places.load().attribution,
         places=campus_places.search(q, category),
+    )
+
+
+class FoodPlacesResponse(BaseModel):
+    fetched: str
+    attribution: str
+    places: list[FoodPlace]
+
+
+@router.get("/food", response_model=FoodPlacesResponse)
+def list_food_places(halal_only: bool = False):
+    """Return places to eat around campus; `halal_only` keeps certified ones."""
+    data = food_places.load()
+    return FoodPlacesResponse(
+        fetched=data.fetched,
+        attribution=data.attribution,
+        places=food_places.search(halal_only),
     )
 
 
