@@ -16,7 +16,8 @@ What was found is laid out as numbered passages and, when a model is
 configured (`ASSISTANT_BASE_URL`, `ASSISTANT_MODEL`), the model answers from
 them in the prompt format the students are trained on. Without a model the
 caller still gets what was found; a question that is not in English is then
-searched as written, which finds little in the English documents.
+searched as written, and finds the English documents only through the terms
+of the search's glossary (`student_services.english_terms`).
 """
 
 import logging
@@ -478,8 +479,11 @@ def check_answer(answer: str, question: str, passages: list[dict]) -> dict[str, 
 def look_up(question: str, query: str, result: dict[str, Any]) -> None:
     """Fill `result` with what the backend knows about the question.
 
-    The question and its translation are each read on their own: a word of
-    one never combines with a word of the other.
+    For a bus or a place, the question and its translation are each read on
+    their own: a word of one never combines with a word of the other. The
+    documents are searched for the words of both, so a translation that
+    misses the office's term does not hide what the question itself matches
+    (a Chinese document, or a term of the search's glossary).
     """
     texts = list(dict.fromkeys((question, query)))
 
@@ -508,7 +512,7 @@ def look_up(question: str, query: str, result: dict[str, Any]) -> None:
 
     result["passages"] = [
         {key: row[key] for key in ("id", "title", "url", "fetched_on", "passage")}
-        for row in student_services.search(query, limit=TOP_K)
+        for row in student_services.search(" ".join(reversed(texts)), limit=TOP_K)
     ]
 
 

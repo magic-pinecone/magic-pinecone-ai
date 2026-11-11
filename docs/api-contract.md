@@ -259,11 +259,11 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 
 | 查詢參數 | 說明 |
 |---|---|
-| `q` | 必填。英文關鍵字，例如 `work permit hours per week`。頁面是英文的，其他語言的提問要先轉成英文關鍵字 |
+| `q` | 必填。關鍵字或整句問題，例如 `work permit hours per week`。頁面是英文的（獎助學金處理要點是中文）；繁體中文、越南文、印尼文的常見用詞（`居留證`、`học bổng`、`izin kerja`）會依 `backend/app/data/student_services/glossary.json` 補上對應的英文字再檢索，詞彙表沒有收的說法仍然找不到 |
 | `topic` | `insurance`、`immigration`、`work_permit`、`exchange`、`general` 其中之一；不認得的值回 422 |
 | `limit` | 1–10，預設 4 |
 
-回傳每份文件中與關鍵字重疊最多的一段，命中越多不同的字排越前面：
+回傳與關鍵字重疊最多的段落（每段 8 行），同一份文件可以回傳好幾段，但不會回傳彼此重疊的段落。越少段落出現的字權重越高，命中的字權重加總越高排越前面：
 
 ```json
 {
@@ -282,7 +282,9 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 }
 ```
 
-- 這是關鍵字比對，不是語意檢索；沒有任何字命中時 `passages` 是空陣列，代表頁面沒有寫，不是「沒有這項規定」。
+- 這是關鍵字比對，不是語意檢索。英文、越南文、印尼文以「整個字」比對（`arc` 不會命中 `March`，複數 `permits` 視同 `permit`）；中文以相鄰兩字比對。文件標題也算在每一段的比對範圍內。
+- 相關度門檻：一段必須命中查詢的每一個字，或命中的字權重加總達到「只在一段出現的字」的權重，否則不回傳。只命中 `student`、`apply` 這類到處都有的字時 `passages` 是空陣列。空陣列代表頁面沒有寫（或詞彙表沒收這個說法），不是「沒有這項規定」；反過來，有回傳段落也不代表頁面有答案。
+- `matched_words` 可能包含詞彙表補上的英文字，不一定都是 `q` 裡原本的字。
 - `general` 是原本就收在畢業語言語料裡的國際處文件（獎學金、新生資訊、學生手冊）。
 - 表單頁（居留、工作證、交換生）的段落保留了連結，格式是下一行的 `<網址>`。
 
@@ -554,8 +556,8 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 - `places` 的每一筆與 [`GET /campus/places`](#get-campusplaces) 相同（含 `map_links`）；`destinations` 與 [`GET /transit/destinations`](#get-transitdestinations) 相同；`bus` 的每一筆與 [`GET /transit/bus/{route}/arrivals`](#get-transitbusroutearrivals) 相同，但同名站牌只留最快到的那一班（循環線會經過同一站兩次）。畫面應該直接用這些結構化欄位顯示，不要從 `answer` 解析。
 - 只問到站時間的公車題（沒有提到校外目的地）沒有段落可讀，後端**不會**請模型回答：`answer` 是 `null`、`error` 也是 `null`，畫面顯示 `bus` 即可。
 - `bus_problem`：公車問題查不到即時到站的原因，`not_configured`（沒有 TDX 金鑰）、`rate_limited`、`unreachable`。
-- **沒有設定模型時**（`ASSISTANT_BASE_URL`、`ASSISTANT_MODEL` 為空）：`model`、`answer`、`checks` 都是 `null`，其餘照常回傳。這時非英文問題無法先翻成英文，文件檢索幾乎找不到東西；館舍代碼與路線編號不受影響。
-- `translated`：問題不是英文時，模型先把它翻成英文再檢索，`search_query` 是翻譯結果。
+- **沒有設定模型時**（`ASSISTANT_BASE_URL`、`ASSISTANT_MODEL` 為空）：`model`、`answer`、`checks` 都是 `null`，其餘照常回傳。這時非英文問題無法先翻成英文，文件檢索只靠詞彙表（見 [`GET /intl/services/search`](#get-intlservicessearch)）把常見用詞對到英文；館舍代碼與路線編號不受影響。
+- `translated`：問題不是英文時，模型先把它翻成英文再檢索，`search_query` 是翻譯結果。文件檢索會同時用翻譯結果與原問題的字（翻譯漏掉國際處的用詞、或答案在中文文件裡時，原問題仍然找得到）；`passages` 最多 3 段，可以來自同一份文件，沒有夠相關的段落時是空陣列。
 - `checks` 是程式對回答做的檢查：`refused`（模型表示資料裡沒有答案，並給了國際處聯絡方式）、`citations_valid`（引用的段落編號都存在）、`unsupported_numbers`（回答裡有、但段落裡沒有的數字）。
 - `error`：模型端點失敗或只回了空白時的原因（只有狀態碼或例外類別，不含網址與金鑰）。這時 `answer` 是 `null`，查到的資料仍會回傳。
 - 模型在伺服器 CPU 上推論時，一次請求可能要數秒到數十秒。後端對模型每次呼叫的逾時是 60 秒，非英文問題會呼叫兩次（翻譯、回答），所以用戶端的逾時至少要 120 秒。

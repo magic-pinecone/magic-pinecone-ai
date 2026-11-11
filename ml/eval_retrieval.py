@@ -1,4 +1,4 @@
-"""Baseline of the backend's keyword passage search on the golden questions.
+"""The backend's keyword passage search, scored on the golden questions.
 
 Run from the backend directory so its dependencies are available:
 
@@ -8,9 +8,11 @@ Per language, for answerable questions:
   hit@1 / hit@3  the expected document (`source_id`, or one of `alt_source_ids`)
                  is the first / among the first three results
   ans@3          every `must_contain` string is in the text of the first three
-                 passages (the search returns one 8-line passage per document,
-                 so the right document does not guarantee the right passage)
+                 passages (passages are 8 lines long, so the right document
+                 does not guarantee the right passage)
 and for unanswerable questions how often the search still returns passages.
+The search's relevance threshold and its glossary were written with these 60
+questions as the only test set; ml/README.md says what that does to the numbers.
 Writes ml/results/retrieval_baseline.md and .json.
 """
 
@@ -112,7 +114,7 @@ def main() -> None:
         json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     (args.out_dir / "retrieval_baseline.md").write_text(
-        "# Retrieval baseline\n\n"
+        "# Retrieval on the golden set\n\n"
         "Backend keyword search (`student_services.search`, top 3, no topic "
         "filter) on `ml/golden/questions.jsonl`. Produced by "
         "`ml/eval_retrieval.py`; column meanings are in its docstring.\n\n"
