@@ -17,8 +17,4 @@
     <string name="eeclass_attachments">附件</string>
     <string name="eeclass_see_all">查看全部 %1$d 項</string>
     <string name="eeclass_homework_due">期限 %1$s</string>
-    <string name="eeclass_translate">翻譯</string>
-    <string name="eeclass_show_original">顯示原文</string>
-    <string name="eeclass_translated_on_device">已在這台裝置上翻譯，以原公告為準。</string>
-    <string name="eeclass_translation_failed">無法在這台裝置上翻譯這則公告。</string>
 </resources>

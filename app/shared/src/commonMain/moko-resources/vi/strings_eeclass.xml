@@ -17,8 +17,4 @@
     <string name="eeclass_attachments">Tệp đính kèm</string>
     <string name="eeclass_see_all">Xem tất cả %1$d mục</string>
     <string name="eeclass_homework_due">Hạn nộp %1$s</string>
-    <string name="eeclass_translate">Dịch</string>
-    <string name="eeclass_show_original">Xem bản gốc</string>
-    <string name="eeclass_translated_on_device">Đã dịch trên thiết bị này. Thông báo gốc là bản chính thức.</string>
-    <string name="eeclass_translation_failed">Không thể dịch thông báo này trên thiết bị này.</string>
 </resources>
