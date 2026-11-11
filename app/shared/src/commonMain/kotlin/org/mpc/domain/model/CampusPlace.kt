@@ -71,6 +71,17 @@ data class CampusPlace(
     val mapLinks: MapLinks,
     /** The id of the building this place is inside, such as a shop in a dining hall; it shares the host's coordinates. */
     val locatedIn: String? = null,
+    /** The colleges, departments, offices and centers housed in this building. */
+    val units: List<CampusUnit> = emptyList(),
+)
+
+/** A college, department, office or center inside a building, such as 資訊工程學系 in 工程五館. */
+data class CampusUnit(
+    val name: LocalizedText,
+    val aliases: List<String>,
+    /** Where inside the building as published, such as "3F"; null when the source gives none. */
+    val floor: String?,
+    val website: String?,
 )
 
 /** The places plus the attribution their coordinates require. */
@@ -83,10 +94,11 @@ data class CampusPlaces(
     val food: FoodPlaces? = null,
 )
 
-/** True when [query] is part of the Chinese, English or Vietnamese name, the code or an alias, ignoring case. */
+/** True when [query] is part of the Chinese, English or Vietnamese name, the code, an alias or a unit inside, ignoring case. */
 fun CampusPlace.matches(query: String): Boolean {
     val needle = query.trim()
     if (needle.isEmpty()) return true
-    val haystack = listOfNotNull(name.zh, name.en, name.vi, code) + aliases
+    val haystack = listOfNotNull(name.zh, name.en, name.vi, code) + aliases +
+        units.flatMap { listOfNotNull(it.name.zh, it.name.en, it.name.vi) + it.aliases }
     return haystack.any { it.contains(needle, ignoreCase = true) }
 }

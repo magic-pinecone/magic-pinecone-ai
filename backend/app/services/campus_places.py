@@ -42,6 +42,9 @@ PlaceTag = Literal[
 ]
 
 
+UnitKind = Literal["college", "department", "institute", "office", "center"]
+
+
 class LocalizedText(BaseModel):
     zh: str
     en: str
@@ -77,6 +80,26 @@ def map_links_to(latitude: float, longitude: float) -> MapLinks:
     )
 
 
+class CampusUnit(BaseModel):
+    """A college, department, office or center housed in a building."""
+
+    name_zh: str
+    name_en: str
+    name_vi: str | None = None
+    kind: UnitKind
+    # Short names students use, such as "資工系" or "CSIE".
+    aliases: list[str] = []
+    # Where inside the building as the source states it, such as "3F" or a
+    # room number. None when the source gives none.
+    floor: str | None = None
+    website: str | None = None
+    # URLs that state the unit is in this building.
+    sources: list[str] = Field(min_length=1)
+
+    def names(self) -> list[str]:
+        return [self.name_zh, self.name_en, self.name_vi or "", *self.aliases]
+
+
 class CampusPlace(BaseModel):
     id: str
     name_zh: str
@@ -105,6 +128,8 @@ class CampusPlace(BaseModel):
     # Id of the building this place is inside, such as a shop in a dining
     # hall. It shares the host's coordinates, so maps list it under the host.
     located_in: str | None = None
+    # Units housed in this building, so a search for a department finds it.
+    units: list[CampusUnit] = []
 
     @computed_field
     @property
@@ -113,26 +138,29 @@ class CampusPlace(BaseModel):
 
     def match_rank(self, query: str) -> int | None:
         """How well `query` fits: 0 the whole of a name, code or alias, 1 the
-        start of one, 2 somewhere inside one, None no match."""
-        needle = query.casefold()
-        ranks = [
-            0 if text == needle else 1 if text.startswith(needle) else 2
-            for text in (
-                value.casefold()
-                for value in (
-                    self.name_zh,
-                    self.name_en,
-                    self.name_vi or "",
-                    self.code or "",
-                    *self.aliases,
-                )
-            )
-            if needle in text
-        ]
+        start of one, 2 somewhere inside one, None no match. The names of the
+        units inside count one step lower, so 工程五館 itself outranks a
+        building that only houses something called 工程."""
+        own = _rank(
+            query,
+            [self.name_zh, self.name_en, self.name_vi or "", self.code or "", *self.aliases],
+        )
+        units = _rank(query, [name for unit in self.units for name in unit.names()])
+        ranks = [rank for rank in (own, None if units is None else units + 1) if rank is not None]
         return min(ranks, default=None)
 
     def matches(self, query: str) -> bool:
         return self.match_rank(query) is not None
+
+
+def _rank(query: str, values: list[str]) -> int | None:
+    needle = query.casefold()
+    ranks = [
+        0 if text == needle else 1 if text.startswith(needle) else 2
+        for text in (value.casefold() for value in values)
+        if needle in text
+    ]
+    return min(ranks, default=None)
 
 
 class CampusPlaceData(BaseModel):

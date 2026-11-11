@@ -30,6 +30,18 @@ internal data class CampusPlaceDto(
     val sources: List<String> = emptyList(),
     val mapLinks: MapLinksDto,
     val locatedIn: String? = null,
+    val units: List<CampusUnitDto> = emptyList(),
+)
+
+@Serializable
+internal data class CampusUnitDto(
+    val nameZh: String,
+    val nameEn: String,
+    val nameVi: String? = null,
+    val kind: String,
+    val aliases: List<String> = emptyList(),
+    val floor: String? = null,
+    val website: String? = null,
 )
 
 @Serializable

@@ -26,6 +26,7 @@
     <string name="campus_map_halal_only">Halal only</string>
     <string name="campus_map_halal_not_checked">Not checked for halal</string>
     <string name="campus_map_inside">Inside this building</string>
+    <string name="campus_map_units">Departments and offices</string>
     <string name="campus_map_code">Building code %1$s</string>
     <string name="campus_map_opening_hours">Opening hours</string>
     <string name="campus_map_price">Price per person</string>

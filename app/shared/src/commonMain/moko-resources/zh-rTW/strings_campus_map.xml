@@ -26,6 +26,7 @@
     <string name="campus_map_halal_only">只看清真</string>
     <string name="campus_map_halal_not_checked">未查證是否清真</string>
     <string name="campus_map_inside">館內店家</string>
+    <string name="campus_map_units">系所與單位</string>
     <string name="campus_map_code">建築代碼 %1$s</string>
     <string name="campus_map_opening_hours">營業時間</string>
     <string name="campus_map_price">每人價位</string>

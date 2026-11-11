@@ -13,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.DirectionsWalk
+import androidx.compose.material.icons.filled.Apartment
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Payments
@@ -33,6 +34,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import dev.icerock.moko.resources.compose.stringResource
 import org.mpc.domain.model.CampusPlace
+import org.mpc.domain.model.CampusUnit
 import org.mpc.domain.model.FoodPlace
 import org.mpc.domain.model.MapLinks
 import org.mpc.domain.model.PriceRange
@@ -50,6 +52,7 @@ import org.mpc.shared.campus_map_price
 import org.mpc.shared.campus_map_price_range
 import org.mpc.shared.campus_map_price_single
 import org.mpc.shared.campus_map_tag_halal
+import org.mpc.shared.campus_map_units
 import org.mpc.shared.campus_map_walk_google
 
 /** What the bottom sheet shows for one place: the names, code, description, hours, price, tags and the routes out. */
@@ -119,6 +122,7 @@ fun CampusPlaceSheetContent(
             Text(stringResource(MR.strings.campus_map_inside), style = MpcTheme.typography.sectionTitle, color = MpcTheme.colors.label)
             tenants.forEach { tenant -> TenantRow(tenant, languageTag, onClick = { onSelectTenant(tenant.id) }) }
         }
+        UnitsSection(place.units, languageTag)
         RouteButtons(place.mapLinks)
     }
 }
@@ -140,6 +144,50 @@ private fun TenantRow(
             Text(tenant.name.resolve(languageTag), style = MpcTheme.typography.body, color = MpcTheme.colors.label)
             val subtitle = tenant.description?.resolve(languageTag)?.takeIf { it.isNotBlank() } ?: stringResource(style.label)
             Text(subtitle, style = MpcTheme.typography.caption, color = MpcTheme.colors.labelSecondary, maxLines = 2)
+        }
+    }
+}
+
+@Composable
+private fun UnitsSection(
+    units: List<CampusUnit>,
+    languageTag: String,
+) {
+    if (units.isEmpty()) return
+    Text(stringResource(MR.strings.campus_map_units), style = MpcTheme.typography.sectionTitle, color = MpcTheme.colors.label)
+    units.forEach { unit -> UnitRow(unit, languageTag) }
+}
+
+/** One unit in the building; tapping it opens the unit's website when it has one. */
+@Composable
+private fun UnitRow(
+    unit: CampusUnit,
+    languageTag: String,
+) {
+    val uriHandler = LocalUriHandler.current
+    val name = unit.name.resolve(languageTag)
+    val website = unit.website
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .then(if (website != null) Modifier.clickable { uriHandler.openUri(website) } else Modifier)
+            .padding(vertical = MpcSpacing.space1),
+        horizontalArrangement = Arrangement.spacedBy(MpcSpacing.space3),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            Icons.Filled.Apartment,
+            contentDescription = null,
+            tint = if (website != null) MpcTheme.colors.accent else MpcTheme.colors.labelSecondary,
+            modifier = Modifier.size(20.dp),
+        )
+        Column {
+            Text(name, style = MpcTheme.typography.body, color = MpcTheme.colors.label)
+            // The Chinese name is what the door sign says, so it stays next to the floor.
+            val subtitle = listOfNotNull(unit.name.zh.takeIf { it != name }, unit.floor).joinToString(" · ")
+            if (subtitle.isNotEmpty()) {
+                Text(subtitle, style = MpcTheme.typography.caption, color = MpcTheme.colors.labelSecondary)
+            }
         }
     }
 }

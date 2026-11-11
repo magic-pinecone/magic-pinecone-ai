@@ -14,8 +14,10 @@ import org.mpc.domain.model.GeoPoint
 import org.mpc.domain.model.PlaceCategory
 import org.mpc.domain.model.PlaceTag
 import org.mpc.domain.model.PriceRange
+import org.mpc.domain.model.matches
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 private const val BACKEND = "http://10.0.2.2:8000"
 
@@ -121,4 +123,41 @@ val campusPlacesDataSourceTests by testSuite {
             assertNull(mystery.locatedIn)
         }
     }
+
+    test("the units inside a building are read and found by search") {
+        runTest {
+            val place = fetch(unitsBackendJson).places.single()
+
+            val unit = place.units.single()
+            assertEquals("Department of Computer Science and Information Engineering", unit.name.en)
+            assertEquals(listOf("資工系", "CSIE"), unit.aliases)
+            assertEquals("3F", unit.floor)
+            assertNull(unit.website)
+            assertTrue(place.matches("資工系"))
+            assertTrue(place.matches("computer science"))
+            assertEquals(emptyList(), fetch(currentBackendJson).places.single().units)
+        }
+    }
 }
+
+private val unitsBackendJson =
+    """
+    {
+      "attribution": "© OpenStreetMap contributors, ODbL 1.0",
+      "places": [
+        {
+          "id": "engineering-building-5", "name_zh": "工程五館", "name_en": "Engineering Building 5",
+          "code": "E6", "category": "academic", "latitude": 24.967014, "longitude": 121.187598,
+          "osm_id": "way/268561940", "aliases": [],
+          "units": [
+            {
+              "name_zh": "資訊工程學系", "name_en": "Department of Computer Science and Information Engineering",
+              "name_vi": null, "kind": "department", "aliases": ["資工系", "CSIE"], "floor": "3F",
+              "website": null, "sources": ["https://example.org/csie"]
+            }
+          ],
+          $LINKS
+        }
+      ]
+    }
+    """.trimIndent()
