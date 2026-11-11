@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<!-- shortcut: Leaflet and the tiles load from the network, so the map is blank offline; bundle Leaflet if that matters. -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+  html, body { height: 100%; margin: 0; font: 14px system-ui, sans-serif; }
+  body { display: flex; flex-direction: column; }
+  #map { flex: 1; display: grid; place-items: center; padding: 0 16px; text-align: center; }
+  #sources { margin: 0; padding: 6px 12px; font-size: 11px; line-height: 1.4; color: #444; background: #fff; }
+  .halal { width: auto !important; height: auto !important; padding: 2px 8px; border: 2px solid #fff; border-radius: 12px;
+           background: #0a7a3d; color: #fff; font-weight: 700; white-space: nowrap; transform: translate(-50%, -50%);
+           box-shadow: 0 1px 4px rgba(0, 0, 0, .4); }
+  #halalOnly { min-height: 44px; padding: 0 14px; border: 2px solid #0a7a3d; border-radius: 22px;
+               background: #fff; color: #0a7a3d; font: inherit; font-weight: 700; }
+  #halalOnly[aria-pressed="true"] { background: #0a7a3d; color: #fff; }
+  .leaflet-popup-content p { margin: 4px 0; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<p id="sources"></p>
+<script>
+const labels = __LABELS__;
+const places = __PLACES__;
+
+document.getElementById('sources').textContent = labels.sources.replace('{0}', places.fetched);
+
+// Names and addresses come from outside sources, so they only ever reach the page as text.
+function popup(lines) {
+  const box = document.createElement('div');
+  lines.filter(Boolean).forEach((line, index) => {
+    const element = document.createElement(index === 0 ? 'strong' : 'p');
+    element.textContent = line;
+    box.appendChild(element);
+  });
+  return box;
+}
+
+if (!window.L) {
+  document.getElementById('map').textContent = labels.offline;
+} else {
+  const map = L.map('map').setView(places.center, 15);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
+  // Links would replace the map with no way back, so the attribution stays plain text.
+  map.attributionControl.setPrefix(false);
+  map.getContainer().addEventListener('click', event => { if (event.target.closest('a[href^="http"]')) event.preventDefault(); });
+
+  const nearby = L.layerGroup(places.nearby.map(place =>
+    L.circleMarker([place.lat, place.lon], { radius: 7, color: '#fff', weight: 2, fillColor: '#d9480f', fillOpacity: 1 })
+      .bindPopup(popup([place.name, place.kind]))
+  )).addTo(map);
+
+  // Stalls in one building share a spot, and stacked markers would hide all but the top one.
+  const spots = new Map();
+  places.halal.forEach(place => {
+    const key = place.lat.toFixed(4) + ',' + place.lon.toFixed(4);
+    spots.set(key, (spots.get(key) || []).concat(place));
+  });
+  const halal = L.featureGroup([...spots.values()].map(spot => {
+    const box = document.createElement('div');
+    spot.forEach(place => box.appendChild(popup([
+      place.name,
+      place.kind,
+      place.certificates.map(code => labels['cert_' + code] || code).join(' · '),
+      labels.certifiedBy.replace('{0}', place.certifier),
+      place.address,
+      place.phone,
+    ])));
+    return L.marker([spot[0].lat, spot[0].lon], {
+      icon: L.divIcon({ className: 'halal', html: labels.halal + (spot.length > 1 ? ' ×' + spot.length : ''), iconSize: null }),
+      title: labels.halal + ' · ' + spot.map(place => place.name).join(' · '),
+      zIndexOffset: 1000,
+    }).bindPopup(box, { maxHeight: 260 });
+  })).addTo(map);
+
+  const control = L.control({ position: 'topright' });
+  control.onAdd = () => {
+    const button = L.DomUtil.create('button');
+    button.id = 'halalOnly';
+    button.type = 'button';
+    button.textContent = labels.halalOnly;
+    button.setAttribute('aria-pressed', 'false');
+    L.DomEvent.disableClickPropagation(button);
+    button.addEventListener('click', () => {
+      const only = button.getAttribute('aria-pressed') !== 'true';
+      button.setAttribute('aria-pressed', String(only));
+      // The certified places are all a few kilometres off campus, so showing only them has to zoom out to them.
+      if (only) {
+        map.removeLayer(nearby);
+        map.fitBounds(halal.getBounds().extend(places.center), { padding: [40, 40] });
+      } else {
+        map.addLayer(nearby);
+        map.setView(places.center, 15);
+      }
+    });
+    return button;
+  };
+  control.addTo(map);
+}
+</script>
+</body>
+</html>

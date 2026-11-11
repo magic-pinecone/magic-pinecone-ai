@@ -47,6 +47,7 @@ import org.mpc.domain.session.browserEntry
 import org.mpc.presentation.ClubsScreen
 import org.mpc.presentation.CourseCatalogViewBinding
 import org.mpc.presentation.CoursePlanningTimetableViewBinding
+import org.mpc.presentation.FoodMapScreen
 import org.mpc.presentation.InternationalPageScreen
 import org.mpc.presentation.PortalWebScreen
 import org.mpc.presentation.SettingsScreen
@@ -177,6 +178,14 @@ class IosSharedHost internal constructor(
         ProvideAppDependencies(appGraph) {
             ThemedContent {
                 InternationalPageScreen(page)
+            }
+        }
+    }
+
+    fun foodMapScreenController(): UIViewController = ComposeUIViewController {
+        ProvideAppDependencies(appGraph) {
+            ThemedContent {
+                FoodMapScreen()
             }
         }
     }

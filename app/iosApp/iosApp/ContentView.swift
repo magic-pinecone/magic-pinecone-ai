@@ -49,6 +49,14 @@ struct ContentView: View {
                 }
                 .ignoresSafeArea(.container, edges: bottomSafeAreaEdges)
             }
+            Tab(MR.strings().shell_tab_food.localized, systemImage: "fork.knife", value: AppTab.food) {
+                NavigationStack {
+                    FoodMapComposeView(sharedHost: sharedHost)
+                        .ignoresSafeArea(.container, edges: .bottom)
+                        .navigationTitle(MR.strings().shell_tab_food.localized)
+                        .navigationBarTitleDisplayMode(.inline)
+                }
+            }
         }
         .id(appLanguageTag)
         .sheet(isPresented: $isShowingSettings) {
@@ -98,6 +106,18 @@ struct ContentView: View {
 
     private func openSettings() {
         isShowingSettings = true
+    }
+}
+
+/// Places to eat around NCU with the halal-certified ones marked, drawn by the shared Compose screen.
+private struct FoodMapComposeView: UIViewControllerRepresentable {
+    let sharedHost: IosSharedHost
+
+    func makeUIViewController(context: Context) -> some UIViewController {
+        sharedHost.foodMapScreenController()
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
     }
 }
 

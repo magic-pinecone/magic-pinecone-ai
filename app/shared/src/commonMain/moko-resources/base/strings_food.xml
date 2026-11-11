@@ -1,0 +1,11 @@
+<resources>
+    <string name="shell_tab_food">Food</string>
+    <string name="food_halal">Halal</string>
+    <string name="food_halal_only">Halal only</string>
+    <string name="food_cert_mr">Muslim Restaurant (MR)</string>
+    <string name="food_cert_mfr">Muslim-Friendly Restaurant (MFR)</string>
+    <string name="food_cert_mft">Muslim-Friendly hotel dining (MFT)</string>
+    <string name="food_certified_by">Certified by %1$s</string>
+    <string name="food_sources">Halal places are from the Taiwan Tourism Administration\'s list of certified restaurants, copied on %1$s. Other places are from OpenStreetMap and are not checked for halal. Confirm with the restaurant before you go.</string>
+    <string name="food_offline">Could not load the map. Check your connection and open this page again.</string>
+</resources>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="shell_tab_food">Ẩm thực</string>
+    <string name="food_halal">Halal</string>
+    <string name="food_halal_only">Chỉ halal</string>
+    <string name="food_cert_mr">Nhà hàng Hồi giáo (MR)</string>
+    <string name="food_cert_mfr">Nhà hàng thân thiện với người Hồi giáo (MFR)</string>
+    <string name="food_cert_mft">Khách sạn có bữa ăn thân thiện với người Hồi giáo (MFT)</string>
+    <string name="food_certified_by">Chứng nhận bởi %1$s</string>
+    <string name="food_sources">Các quán halal lấy từ danh sách nhà hàng được chứng nhận của Cục Du lịch Đài Loan, sao chép ngày %1$s. Các quán khác lấy từ OpenStreetMap và chưa được kiểm tra halal. Hãy xác nhận với quán trước khi đến.</string>
+    <string name="food_offline">Không tải được bản đồ. Hãy kiểm tra kết nối và mở lại trang này.</string>
+</resources>
