@@ -16,6 +16,8 @@ App（`app/`）會一次下載整個學期的課程目錄，存進裝置上的 R
 | `GET /intl/contacts` | 依主題查承辦窗口 | （尚未接上） |
 | `POST /intl/nhi-enrollment-date` | 估算健保加保日 | （尚未接上） |
 | `GET /campus/places` | 校園地點與地圖連結 | （尚未接上） |
+| `GET /transit/bus/{route}/arrivals` | 中大校園公車即時到站（TDX） | （尚未接上） |
+| `GET /transit/destinations` | 校外常去地點與前往方式 | （尚未接上） |
 
 `{semester}` 的格式是 `<學年>-<學期>`，例如 `115-1`。
 
@@ -257,11 +259,11 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 
 | 查詢參數 | 說明 |
 |---|---|
-| `q` | 必填。英文關鍵字，例如 `work permit hours per week`。頁面是英文的，其他語言的提問要先轉成英文關鍵字 |
+| `q` | 必填。關鍵字或整句問題，例如 `work permit hours per week`。頁面是英文的（獎助學金處理要點是中文）；繁體中文、越南文、印尼文的常見用詞（`居留證`、`học bổng`、`izin kerja`）會依 `backend/app/data/student_services/glossary.json` 補上對應的英文字再檢索，詞彙表沒有收的說法仍然找不到 |
 | `topic` | `insurance`、`immigration`、`work_permit`、`exchange`、`general` 其中之一；不認得的值回 422 |
 | `limit` | 1–10，預設 4 |
 
-回傳每份文件中與關鍵字重疊最多的一段，命中越多不同的字排越前面：
+回傳與關鍵字重疊最多的段落（每段 8 行），同一份文件可以回傳好幾段，但不會回傳彼此重疊的段落。越少段落出現的字權重越高，命中的字權重加總越高排越前面：
 
 ```json
 {
@@ -280,7 +282,9 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 }
 ```
 
-- 這是關鍵字比對，不是語意檢索；沒有任何字命中時 `passages` 是空陣列，代表頁面沒有寫，不是「沒有這項規定」。
+- 這是關鍵字比對，不是語意檢索。英文、越南文、印尼文以「整個字」比對（`arc` 不會命中 `March`，複數 `permits` 視同 `permit`）；中文以相鄰兩字比對。文件標題也算在每一段的比對範圍內。
+- 相關度門檻：一段必須命中查詢的每一個字，或命中的字權重加總達到「只在一段出現的字」的權重，否則不回傳。只命中 `student`、`apply` 這類到處都有的字時 `passages` 是空陣列。空陣列代表頁面沒有寫（或詞彙表沒收這個說法），不是「沒有這項規定」；反過來，有回傳段落也不代表頁面有答案。
+- `matched_words` 可能包含詞彙表補上的英文字，不一定都是 `q` 裡原本的字。
 - `general` 是原本就收在畢業語言語料裡的國際處文件（獎學金、新生資訊、學生手冊）。
 - 表單頁（居留、工作證、交換生）的段落保留了連結，格式是下一行的 `<網址>`。
 
@@ -418,6 +422,151 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 
 `GET /campus/places/{id}` 回傳單一地點，形狀與上面 `places` 的元素相同；找不到時回 404。
 
+## `GET /transit/bus/{route}/arrivals`
+
+中大校園公車的即時到站資訊，由後端向 [TDX](https://tdx.transportdata.tw) 查詢後轉送。App 目前還沒有使用。
+
+可查的路線由 `GET /transit/bus/routes` 列出：`132`、`133`（往中壢）、`172`、`173`（往高鐵桃園站）、`9025A`（往臺北）。加上 `?campus_only=true` 只回傳校內與校門口的站牌。
+
+```json
+{
+  "route": "132",
+  "fetched_at": "2026-11-10T08:01:40Z",
+  "source": "TDX (tdx.transportdata.tw)",
+  "stops": [
+    {
+      "stop_uid": "TAO269",
+      "stop_name": { "zh": "中央大學正門", "en": "NCU Main Gate" },
+      "position": { "lat": 24.968268, "lon": 121.200395 },
+      "sequence": 14,
+      "direction": 0,
+      "on_campus": true,
+      "status": "EN_ROUTE",
+      "estimate_seconds": 1140,
+      "next_bus_time": "2026-11-10T16:19:00+08:00",
+      "plate_number": "EAL-0563",
+      "updated_at": "2026-11-10T16:01:36+08:00"
+    }
+  ]
+}
+```
+
+- `stops` 依 `direction`、`sequence` 排序。132、133 是循環線，整條都是 `direction` 0，同一個地點會出現兩次（例如正門是第 14 與第 20 站），要靠 `sequence` 分辨。172、173、9025A 有兩個方向，校內站牌在兩個方向各出現一次。
+- `status` 對應 TDX 的 `StopStatus`：`EN_ROUTE`（0，正常營運、有車在路上；車還有多久到要看 `estimate_seconds`，可能是幾十秒也可能是二十分鐘）、`NOT_DEPARTED`（1，尚未發車，看 `next_bus_time`）、`SKIPPED`（2，交管不停靠）、`LAST_BUS_GONE`（3，末班車已過）、`NO_SERVICE`（4，今日未營運）、`UNKNOWN`。後端不提供「即將進站」這種狀態，由畫面依 `estimate_seconds` 決定。
+- `on_campus` 以中文站名判斷：站名含「中央大學」或「中大湖」。同一個站牌在不同路線的 `stop_uid` 不一樣，所以不能用 `stop_uid` 判斷。
+- 校內站牌的英文名稱由後端改寫成一致的 `NCU …`（TDX 的譯名每條路線都不同）；其他站牌沿用 TDX 的英文名稱。
+- `9025A` 在 TDX 是公路客運（InterCity）路線 `9025` 底下的附屬路線：後端查 `InterCity/9025`，只留下 `SubRouteName` 為 `9025A` 的資料。
+- `position` 是 WGS84 經緯度，來自 TDX 的站牌清單，成功讀到後保留 `TDX_STOP_CACHE_HOURS` 小時（預設 24）。站牌清單讀不到、被限流或是空的時候，`position` 是 `null`，到站資訊照常回傳，後端 60 秒後才會再問一次。
+- 同一路線的到站結果會重複使用 `TDX_ARRIVAL_CACHE_SECONDS` 秒（預設 30）。
+
+| 狀態碼 | 意義 |
+|---|---|
+| 404 | 不是可查的路線 |
+| 502 | TDX 連不上，或回了無法解讀的內容（不是 JSON、token 回應缺欄位、時間格式錯誤） |
+| 503 | 後端沒有設定 `TDX_CLIENT_ID`／`TDX_CLIENT_SECRET`；或 TDX 正在限流（HTTP 429），這時回應帶 `Retry-After` 標頭（秒），`detail` 會寫明是 rate limiting |
+
+## `GET /transit/destinations`
+
+外籍生常需要前往的**校外**地點（中壢火車站、高鐵桃園站、桃園機場、移民署服務站、健保署），以及從中大怎麼去，目前 5 筆。資料是人工維護的 `backend/app/data/destinations.json`，不需要 TDX 金鑰。App 目前還沒有使用。
+
+校內的建築與設施不在這裡，請用 [`GET /campus/places`](#get-campusplaces)；兩者的 JSON 形狀不同。
+
+`?category=` 可以篩選：`station`、`airport`、`immigration`、`health_insurance`、`hospital`（目前還沒有 `hospital` 的資料）。`GET /transit/destinations/{id}` 回傳單一地點，找不到時是 404。
+
+```json
+[
+  {
+    "id": "nia-taoyuan-service-center",
+    "category": "immigration",
+    "name": { "zh": "移民署桃園市服務站", "en": "National Immigration Agency, Taoyuan City Service Center (ARC)" },
+    "address": { "zh": "桃園市桃園區縣府路106號1樓", "en": "1F, No. 106, Xianfu Rd., Taoyuan Dist., Taoyuan City 330026" },
+    "position": { "lat": 24.9943647, "lon": 121.3027015 },
+    "phone": "03-331-0409",
+    "hours": { "zh": "週一至週五 08:00–17:00，中午不休息", "en": "Mon–Fri 08:00–17:00, open through lunch" },
+    "official_url": "https://servicestation.immigration.gov.tw/3411",
+    "getting_there": { "zh": "…", "en": "…" },
+    "bus_routes": ["132", "133"],
+    "sources": ["https://servicestation.immigration.gov.tw/3411"],
+    "checked_on": "2026-11-10",
+    "maps_url": "https://www.google.com/maps/dir/?api=1&origin=24.9684%2C121.1916&destination=24.9943647%2C121.3027015&travelmode=transit"
+  }
+]
+```
+
+- `address`、`position`、`phone`、`hours`、`official_url` 都可能是 `null`。
+- `maps_url` 會開啟 Google Maps 從中大出發的大眾運輸路線；沒有座標的地點改用地址當目的地。
+- `bus_routes` 裡的路線都可以拿去查 `/transit/bus/{route}/arrivals`。
+- 新增或修改地點時，`sources` 要填資料出處，`checked_on` 填查證日期；座標必須是 WGS84 且落在臺灣範圍內，否則後端載入時會失敗。
+
+## `POST /assistant/ask`
+
+把學生的一句問題交給後端，回傳後端查到的資料，以及（伺服器有設定模型時）模型依這些資料寫的回答。App 的 International 分頁「問答」小節使用。
+
+請求：`{ "question": "E6-A203 在哪裡？" }`，1–500 字。
+
+問題由**程式**分流，不由模型決定（`kind`）：
+
+| `kind` | 何時 | 查什麼 |
+|---|---|---|
+| `bus` | 問題有「公車／bus／xe buýt／bis」類字眼（有沒有寫路線編號都可以），或同時有「怎麼去」類字眼與校外目的地（中壢、火車站、高鐵、機場、移民署、健保署） | TDX 即時到站（只取校內站牌，最多兩條路線）與 `destinations.json`。沒寫路線也沒寫目的地時，查 132 與 172 |
+| `place` | 簡短的「在哪」問題且寫了館舍名稱或別名，或幾乎只有館舍代碼（`E6`、`E6-A203`、`LH`） | `campus_places.json`，最多 3 筆 |
+| `documents` | 其他 | 國際處文件段落，最多 3 段 |
+
+分流寧可保守：
+
+- 132、133 這類數字只有在公車字眼旁邊才算路線，「保險費是 132 元嗎」仍是文件題。
+- 只有字母的代碼要大寫才算（`TR`、`LH`），單一字母的代碼要帶三或四位數的教室號才算（`A-203`）。
+- 館舍問題除了館舍和「在哪」之外只能有幾個字；「獎學金在哪裡申請？是國際事務處嗎？」是文件題。
+- 原問題與它的英文翻譯各自判斷，不會把兩邊的字湊在一起。
+- 字眼清單涵蓋英文、中文、越南文、印尼文，寫在 `backend/app/services/assistant.py`；`backend/tests/test_assistant.py` 列了每一類的例句。
+
+```json
+{
+  "question": "E6-A203 在哪裡？",
+  "kind": "place",
+  "search_query": "Where is E6-A203?",
+  "translated": true,
+  "passages": [
+    {
+      "id": "engineering-building-5",
+      "title": "Engineering Building 5 (工程五館)",
+      "url": "https://www.google.com/maps/dir/?api=1&destination=...&travelmode=walking",
+      "fetched_on": null,
+      "passage": "Engineering Building 5 (工程五館) is on the NCU campus.\n..."
+    }
+  ],
+  "places": [ { "id": "engineering-building-5", "...": "同 GET /campus/places 的一筆" } ],
+  "destinations": [],
+  "bus": [],
+  "bus_problem": null,
+  "model": "gemma-4-e2b",
+  "answer": "- E6-A203 在工程五館 (Engineering Building 5) [1]。",
+  "checks": {
+    "refused": false,
+    "cited": [1],
+    "citations_valid": true,
+    "unsupported_numbers": []
+  },
+  "error": null,
+  "seconds": 3.4
+}
+```
+
+- `passages` 是實際交給模型的內容，回答裡的 `[1]` 指的是第幾段。館舍與校外目的地的說明會轉成段落；**公車即時到站不會**，它只放在 `bus`，由畫面直接顯示。原因是實測時未微調的小模型把資料讀取時間說成到站時間，還用泰文回答越南文問題。
+- `places` 的每一筆與 [`GET /campus/places`](#get-campusplaces) 相同（含 `map_links`）；`destinations` 與 [`GET /transit/destinations`](#get-transitdestinations) 相同；`bus` 的每一筆與 [`GET /transit/bus/{route}/arrivals`](#get-transitbusroutearrivals) 相同，但同名站牌只留最快到的那一班（循環線會經過同一站兩次）。畫面應該直接用這些結構化欄位顯示，不要從 `answer` 解析。
+- 只問到站時間的公車題（沒有提到校外目的地）沒有段落可讀，後端**不會**請模型回答：`answer` 是 `null`、`error` 也是 `null`，畫面顯示 `bus` 即可。
+- `bus_problem`：公車問題查不到即時到站的原因，`not_configured`（沒有 TDX 金鑰）、`rate_limited`、`unreachable`。
+- **沒有設定模型時**（`ASSISTANT_BASE_URL`、`ASSISTANT_MODEL` 為空）：`model`、`answer`、`checks` 都是 `null`，其餘照常回傳。這時非英文問題無法先翻成英文，文件檢索只靠詞彙表（見 [`GET /intl/services/search`](#get-intlservicessearch)）把常見用詞對到英文；館舍代碼與路線編號不受影響。
+- `translated`：問題不是英文時，模型先把它翻成英文再檢索，`search_query` 是翻譯結果。文件檢索會同時用翻譯結果與原問題的字（翻譯漏掉國際處的用詞、或答案在中文文件裡時，原問題仍然找得到）；`passages` 最多 3 段，可以來自同一份文件，沒有夠相關的段落時是空陣列。
+- `checks` 是程式對回答做的檢查：`refused`（模型表示資料裡沒有答案，並給了國際處聯絡方式）、`citations_valid`（引用的段落編號都存在）、`unsupported_numbers`（回答裡有、但段落裡沒有的數字）。
+- `error`：模型端點失敗或只回了空白時的原因（只有狀態碼或例外類別，不含網址與金鑰）。這時 `answer` 是 `null`，查到的資料仍會回傳。
+- 模型在伺服器 CPU 上推論時，一次請求可能要數秒到數十秒。後端對模型每次呼叫的逾時是 60 秒，非英文問題會呼叫兩次（翻譯、回答），所以用戶端的逾時至少要 120 秒。
+- 這個端點沒有流量限制，也不需要登入。
+
+| 狀態碼 | 意義 |
+|---|---|
+| 422 | `question` 是空的或超過 500 字 |
+
 ## MCP 工具
 
 同一批資料也透過 MCP 提供給 AI 客戶端，以 stdio 啟動：
@@ -435,3 +584,7 @@ cd backend && uv run python -m app.mcp_server
 | `get_student_service_contact` | `GET /intl/contacts`，另附辦公室所在建築與地圖連結 |
 | `estimate_nhi_enrollment_date` | `POST /intl/nhi-enrollment-date` |
 | `find_place` | `GET /campus/places` |
+| `get_bus_arrivals` | `GET /transit/bus/{route}/arrivals`，預設只回校內站牌（`campus_only=True`） |
+| `find_destination` | `GET /transit/destinations`，另可用 `query` 比對名稱與地址 |
+
+`get_bus_arrivals` 在後端沒有 TDX 金鑰、TDX 限流或 TDX 連不上時會回工具錯誤並寫明原因；工具說明要求模型照實告知學生，不可以自行推測到站時間。

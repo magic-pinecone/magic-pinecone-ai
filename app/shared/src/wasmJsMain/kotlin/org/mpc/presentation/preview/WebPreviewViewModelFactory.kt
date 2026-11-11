@@ -8,10 +8,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import org.mpc.core.createHttpClient
+import org.mpc.data.dataSource.AssistantDataSource
 import org.mpc.data.dataSource.IntlDataSource
+import org.mpc.data.repository.DefaultAssistantRepository
 import org.mpc.data.repository.DefaultClubRepository
+import org.mpc.data.repository.DefaultCreditsRepository
 import org.mpc.data.repository.DefaultGovGuidesRepository
 import org.mpc.data.repository.DefaultGraduationLanguageRepository
+import org.mpc.data.repository.DefaultServiceLearningRepository
 import org.mpc.domain.model.AppLanguage
 import org.mpc.domain.model.AppSettings
 import org.mpc.domain.model.AppThemeMode
@@ -33,11 +37,14 @@ import org.mpc.domain.session.SiteStatus
 import org.mpc.domain.session.TransferProgress
 import org.mpc.domain.session.Unavailability
 import org.mpc.presentation.viewModel.AppSettingsViewModel
+import org.mpc.presentation.viewModel.AssistantViewModel
 import org.mpc.presentation.viewModel.CampusSessionViewModel
 import org.mpc.presentation.viewModel.ClubViewModel
+import org.mpc.presentation.viewModel.CreditsViewModel
 import org.mpc.presentation.viewModel.GovGuidesViewModel
 import org.mpc.presentation.viewModel.GraduationLanguageViewModel
 import org.mpc.presentation.viewModel.PortalViewModel
+import org.mpc.presentation.viewModel.ServiceLearningViewModel
 import kotlin.reflect.KClass
 
 /** The ViewModels preview scenarios ask for, backed by in-memory state instead of the app graph. */
@@ -46,6 +53,9 @@ internal object WebPreviewViewModelFactory : MetroViewModelFactory() {
         PortalViewModel::class to { PortalViewModel(InMemoryPortalFavoritesRepository()) },
         CampusSessionViewModel::class to { CampusSessionViewModel(SignedOutCampusSessions) },
         AppSettingsViewModel::class to { AppSettingsViewModel(PreviewSettings) },
+        AssistantViewModel::class to {
+            AssistantViewModel(DefaultAssistantRepository(PreviewBackendEndpoint, AssistantDataSource(createHttpClient())))
+        },
         ClubViewModel::class to { ClubViewModel(DefaultClubRepository(createHttpClient(), PreviewBackendEndpoint)) },
         GovGuidesViewModel::class to {
             GovGuidesViewModel(DefaultGovGuidesRepository(PreviewBackendEndpoint, IntlDataSource(createHttpClient())))
@@ -54,6 +64,14 @@ internal object WebPreviewViewModelFactory : MetroViewModelFactory() {
             GraduationLanguageViewModel(
                 DefaultGraduationLanguageRepository(PreviewBackendEndpoint, IntlDataSource(createHttpClient())),
             )
+        },
+        ServiceLearningViewModel::class to {
+            ServiceLearningViewModel(
+                DefaultServiceLearningRepository(PreviewBackendEndpoint, IntlDataSource(createHttpClient())),
+            )
+        },
+        CreditsViewModel::class to {
+            CreditsViewModel(DefaultCreditsRepository(PreviewBackendEndpoint, IntlDataSource(createHttpClient())))
         },
     )
 }

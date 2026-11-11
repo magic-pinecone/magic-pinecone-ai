@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.LocalLibrary
+import androidx.compose.material.icons.filled.QuestionAnswer
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
@@ -117,6 +118,17 @@ private enum class PreviewScreen(
             ComposePreviewScenario.GRADUATION_LOADING,
             ComposePreviewScenario.GRADUATION_FAILURE,
             ComposePreviewScenario.GRADUATION_NEEDSBACKEND,
+        ),
+    ),
+    ASSISTANT(
+        "問答",
+        Icons.Filled.QuestionAnswer,
+        listOf(
+            ComposePreviewScenario.ASSISTANT_LIVE,
+            ComposePreviewScenario.ASSISTANT_POPULATED,
+            ComposePreviewScenario.ASSISTANT_NOMODEL,
+            ComposePreviewScenario.ASSISTANT_FAILURE,
+            ComposePreviewScenario.ASSISTANT_NEEDSBACKEND,
         ),
     ),
     SETTINGS("設定", Icons.Filled.Settings, listOf(ComposePreviewScenario.SETTINGS)),

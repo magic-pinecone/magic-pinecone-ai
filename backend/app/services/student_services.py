@@ -9,13 +9,17 @@ page of NCU's Office of International Affairs (OIA):
 - the date a new student can enrol in National Health Insurance, computed from
   the rule and worked examples on the OIA insurance page.
 
-Nothing is generated. A question the pages do not answer comes back empty, and
-the date calculation states the assumptions it had to make.
+Nothing is generated. A question that shares no telling word with the pages
+comes back empty, and the date calculation states the assumptions it had to
+make.
 """
 
 import calendar
 import json
+import math
 import re
+import unicodedata
+from collections import Counter
 from dataclasses import dataclass
 from datetime import date, timedelta
 from functools import lru_cache
@@ -36,6 +40,8 @@ STOPWORDS = frozenset(
     "a an and are as at be can do does for how i in is it my of on or the to "
     "what when where which who will with you your".split()
 )
+
+GLOSSARY_LANGS = ("zh-TW", "vi", "id")
 
 NHI_WAIT_MONTHS = 6
 NHI_LONG_TRIP_DAYS = 30
@@ -101,52 +107,161 @@ def topics() -> list[str]:
     return sorted({document.topic for document in load_documents()})
 
 
+# A run of Chinese characters, or a word in any other script. Accented letters
+# stay inside their word: "nhiêu" is one word, not "nhi" + "ê" + "u".
+_TOKEN = re.compile(r"[\u4e00-\u9fff]+|[^\W_\u4e00-\u9fff]+")
+_CHINESE = re.compile(r"[\u4e00-\u9fff]")
+
+
+def _tokens(text: str) -> list[str]:
+    return _TOKEN.findall(unicodedata.normalize("NFC", text).casefold())
+
+
+def _stem(word: str) -> str:
+    """`word` without a plural "s", so "permits" and "permit" are one word."""
+    plural = len(word) > 3 and word.endswith("s") and not word.endswith("ss")
+    return word[:-1] if plural and word.isascii() and word.isalpha() else word
+
+
 def _words(text: str) -> list[str]:
-    found = re.findall(r"[0-9a-z]+|[^\W\d_a-zA-Z]+", text.casefold())
+    found = []
+    for word in _tokens(text):
+        if len(word) > 2 and _CHINESE.match(word):
+            # Chinese has no spaces: a whole clause never matches, its bigrams do.
+            found += [word[i : i + 2] for i in range(len(word) - 1)]
+        else:
+            found.append(word)
     return [word for word in dict.fromkeys(found) if word not in STOPWORDS]
 
 
-def search(query: str, topic: str | None = None, limit: int = 5) -> list[dict]:
-    """The passages that share the most words with `query`, best first.
+@dataclass(frozen=True)
+class Passage:
+    document: Document
+    start: int
+    text: str
+    # What a query is matched against: the passage under its document's title.
+    folded: str
+    stems: Counter
 
-    A passage matches when it has at least one of the words; passages covering
-    more distinct words rank higher, then those repeating them more. Only the
-    best passage of each document is returned.
-    """
-    words = _words(query)
-    if not words:
-        return []
-    best: dict[str, tuple[tuple[int, int], dict]] = {}
+
+@lru_cache
+def _passages() -> tuple[Passage, ...]:
+    passages = []
     for document in load_documents():
-        if topic and document.topic != topic:
-            continue
-        title = document.title.casefold()
         for start in range(0, max(1, len(document.lines)), PASSAGE_STEP):
-            passage = "\n".join(document.lines[start : start + PASSAGE_LINES])
-            folded = passage.casefold()
-            counts = [folded.count(word) for word in words]
-            covered = sum(1 for count in counts if count)
-            if not covered:
-                continue
-            score = (covered + sum(word in title for word in words), sum(counts))
-            if document.id in best and best[document.id][0] >= score:
-                continue
-            best[document.id] = (
-                score,
-                {
-                    "id": document.id,
-                    "title": document.title,
-                    "topic": document.topic,
-                    "url": document.url,
-                    "fetched_on": document.fetched_on,
-                    "matched_words": [
-                        w for w, c in zip(words, counts, strict=True) if c
-                    ],
-                    "passage": passage,
-                },
+            text = "\n".join(document.lines[start : start + PASSAGE_LINES])
+            titled = unicodedata.normalize("NFC", f"{document.title}\n{text}")
+            passages.append(
+                Passage(
+                    document=document,
+                    start=start,
+                    text=text,
+                    folded=titled.casefold(),
+                    stems=Counter(_stem(token) for token in _tokens(titled)),
+                )
             )
-    ranked = sorted(best.values(), key=lambda item: item[0], reverse=True)
-    return [passage for _, passage in ranked[: max(1, limit)]]
+    return tuple(passages)
+
+
+def _count(word: str, passage: Passage) -> int:
+    """How often `word` is in the passage or its title.
+
+    A word in Latin letters is counted as a whole word ("arc" is not in
+    "March"); Chinese has no spaces, so Chinese is counted wherever it occurs.
+    """
+    if _CHINESE.match(word):
+        return passage.folded.count(word)
+    return passage.stems[_stem(word)]
+
+
+@lru_cache(maxsize=4096)
+def _weight(word: str) -> float:
+    """How much a word tells passages apart: rare words weigh more, absent ones 0."""
+    passages = _passages()
+    holding = sum(1 for passage in passages if _count(word, passage))
+    return math.log(1 + len(passages) / holding) if holding else 0.0
+
+
+def _min_score() -> float:
+    """The least a passage must score unless it has every word of the query.
+
+    It is the weight of a word found in a single passage: common words such
+    as "student" and "apply" do not add up to a match on their own.
+    """
+    return math.log(1 + len(_passages()))
+
+
+@lru_cache
+def load_glossary() -> tuple[tuple[re.Pattern[str], str], ...]:
+    """(how a term is found in a question, the English words to add) pairs."""
+    data = json.loads((DATA_DIR / "glossary.json").read_text(encoding="utf-8"))
+    pairs = []
+    for entry in data["terms"]:
+        for lang in GLOSSARY_LANGS:
+            for term in entry.get(lang, []):
+                term = unicodedata.normalize("NFC", term).casefold()
+                # Chinese anywhere in the text, other scripts as whole words.
+                pattern = (
+                    re.escape(term)
+                    if _CHINESE.search(term)
+                    else rf"(?<!\w){re.escape(term)}(?!\w)"
+                )
+                pairs.append((re.compile(pattern), entry["en"]))
+    return tuple(pairs)
+
+
+def english_terms(text: str) -> list[str]:
+    """The pages' English words for the glossary terms found in `text`."""
+    folded = unicodedata.normalize("NFC", text).casefold()
+    found = [english for pattern, english in load_glossary() if pattern.search(folded)]
+    return list(dict.fromkeys(found))
+
+
+def search(query: str, topic: str | None = None, limit: int = 5) -> list[dict]:
+    """The passages that share the most telling words with `query`, best first.
+
+    Chinese, Vietnamese and Indonesian terms of `glossary.json` are searched
+    by the English words the pages use. A passage scores the summed weight of
+    the distinct query words found in it or in its document's title; a word
+    found in few passages weighs more. A passage that has neither every word
+    of the query nor a score of `_min_score()` is left out, so a question the
+    pages say nothing about comes back empty. Several passages of one document
+    can be returned, but never two that overlap.
+    """
+    words = _words(" ".join([query, *english_terms(query)]))
+    scored = []
+    for passage in _passages():
+        if topic and passage.document.topic != topic:
+            continue
+        counts = [_count(word, passage) for word in words]
+        matched = [word for word, count in zip(words, counts, strict=True) if count]
+        score = round(sum(_weight(word) for word in matched), 6)
+        if matched and (len(matched) == len(words) or score >= _min_score()):
+            scored.append(((score, sum(counts)), passage, matched))
+    # Stable, so equal scores keep the order of the documents and their lines.
+    scored.sort(key=lambda item: item[0], reverse=True)
+    chosen: list[dict] = []
+    taken: dict[str, list[int]] = {}
+    for _, passage, matched in scored:
+        document = passage.document
+        if len(chosen) >= max(1, limit):
+            break
+        starts = taken.setdefault(document.id, [])
+        if any(abs(passage.start - other) < PASSAGE_LINES for other in starts):
+            continue
+        starts.append(passage.start)
+        chosen.append(
+            {
+                "id": document.id,
+                "title": document.title,
+                "topic": document.topic,
+                "url": document.url,
+                "fetched_on": document.fetched_on,
+                "matched_words": matched,
+                "passage": passage.text,
+            }
+        )
+    return chosen
 
 
 def find_contacts(topic: str | None = None) -> list[dict[str, Any]]:

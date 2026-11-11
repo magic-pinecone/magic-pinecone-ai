@@ -1,5 +1,6 @@
 import asyncio
 import json
+import re
 from datetime import date
 
 import pytest
@@ -129,6 +130,7 @@ def test_every_source_has_a_corpus_file_from_an_official_ncu_page():
         ("when can I join NHI health insurance", "oia-insurance"),
         ("work permit hours per week", "oia-work-permit"),
         ("ARC extension form", "oia-immigration"),
+        ("寒暑假期間受獎生離開學校超過幾天？", "oia-scholarship-guidelines"),
     ],
 )
 def test_search_puts_the_right_page_first(query, expected):
@@ -154,6 +156,69 @@ def test_search_keeps_the_links_to_forms():
 def test_search_returns_nothing_for_what_the_pages_do_not_cover():
     assert student_services.search("pizza") == []
     assert student_services.search("the of and") == []
+
+
+def test_search_can_return_several_passages_of_one_page_but_none_overlapping():
+    found = student_services.search("scholarship stipend PhD", limit=5)
+    lines = [row["passage"].split("\n") for row in found if row["id"] == found[0]["id"]]
+
+    assert len(lines) > 1
+    for index, passage in enumerate(lines):
+        for other in lines[index + 1 :]:
+            assert not set(passage) & set(other)
+
+
+def test_search_matches_latin_words_whole():
+    # "arc" is inside "March" and "research", "nhi" inside Vietnamese "nhiêu".
+    for row in student_services.search("arc", limit=10):
+        assert re.search(r"\bARC\b", row["title"] + "\n" + row["passage"])
+    assert student_services.search("bao nhiêu") == []
+
+
+def test_search_reads_a_plural_as_its_singular():
+    best = student_services.search("work permits")[0]
+
+    assert best["id"] == "oia-work-permit"
+    assert best["matched_words"] == ["work", "permits"]
+
+
+def test_search_returns_nothing_when_only_common_words_match():
+    # "get" and "student" are on the pages; a driver's licence is not.
+    assert student_services.search("how do I get a driver license as a student") == []
+    # A single word is still a search, however common the word.
+    assert student_services.search("student")
+
+
+@pytest.mark.parametrize(
+    ("query", "expected"),
+    [
+        ("居留證延期", "oia-immigration"),
+        ("gia hạn thẻ cư trú", "oia-immigration"),
+        ("perpanjangan izin tinggal", "oia-immigration"),
+        ("工作證 每週", "oia-work-permit"),
+        ("giấy phép lao động", "oia-work-permit"),
+        ("izin kerja", "oia-work-permit"),
+    ],
+)
+def test_search_finds_english_pages_through_the_glossary(query, expected):
+    # Not always first: a Chinese question also matches the Chinese guidelines.
+    assert expected in [row["id"] for row in student_services.search(query, limit=3)]
+
+
+def test_glossary_only_adds_words_the_pages_use():
+    glossary = json.loads(
+        (student_services.DATA_DIR / "glossary.json").read_text("utf-8")
+    )
+    pages = "\n".join(
+        f"{document.title}\n" + "\n".join(document.lines)
+        for document in student_services.load_documents()
+    ).casefold()
+
+    for entry in glossary["terms"]:
+        for word in entry["en"].casefold().split():
+            assert word in pages, entry["en"]
+        assert any(entry[lang] for lang in student_services.GLOSSARY_LANGS)
+    assert student_services.english_terms("What are the working hours?") == []
 
 
 def test_contacts_carry_no_personal_details_and_point_to_a_known_place():
