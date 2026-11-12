@@ -2,4 +2,8 @@
     <string name="common_app_name">神奇松果</string>
     <string name="common_ok">好</string>
     <string name="common_close">關閉</string>
+    <string name="common_translate">翻譯</string>
+    <string name="common_show_original">顯示原文</string>
+    <string name="common_translated_on_device">已在這台裝置上翻譯，以原文為準。</string>
+    <string name="common_translation_failed">無法在這台裝置上翻譯。</string>
 </resources>

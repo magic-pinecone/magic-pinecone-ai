@@ -2,4 +2,8 @@
     <string name="common_app_name">Magic Pinecone</string>
     <string name="common_ok">OK</string>
     <string name="common_close">Close</string>
+    <string name="common_translate">Translate</string>
+    <string name="common_show_original">Show original</string>
+    <string name="common_translated_on_device">Translated on this device. The original text prevails.</string>
+    <string name="common_translation_failed">Couldn’t translate this on this device.</string>
 </resources>

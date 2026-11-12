@@ -38,6 +38,7 @@ import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteItem
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -107,8 +108,10 @@ import org.mpc.presentation.InternationalPageScreen
 import org.mpc.presentation.PortalScreen
 import org.mpc.presentation.PortalWebScreen
 import org.mpc.presentation.SettingsScreen
+import org.mpc.presentation.rememberOnDeviceTranslator
 import org.mpc.presentation.state.CoursePlanUiState
 import org.mpc.presentation.theme.AndroidMpcTheme
+import org.mpc.presentation.translation.LocalTextTranslator
 import org.mpc.presentation.viewModel.AppSettingsViewModel
 import org.mpc.presentation.viewModel.BackendEndpointViewModel
 import org.mpc.presentation.viewModel.CoursePlanViewModel
@@ -184,22 +187,24 @@ private fun AndroidAppContent(appGraph: AppGraph) {
         }
 
     AndroidMpcTheme(themeMode = settings.themeMode, timetableColorMode = settings.timetableColorMode) {
-        NavDisplay(
-            backStack = appBackStack,
-            onBack = { appBackStack.removeLastOrNull() },
-            entryDecorators =
-            listOf(
-                rememberSaveableStateHolderNavEntryDecorator(),
-                rememberViewModelStoreNavEntryDecorator(),
-            ),
-            sceneStrategies =
-            if (isExpanded) {
-                listOf(dialogSceneStrategy)
-            } else {
-                emptyList()
-            },
-            entryProvider = entryProvider,
-        )
+        CompositionLocalProvider(LocalTextTranslator provides rememberOnDeviceTranslator()) {
+            NavDisplay(
+                backStack = appBackStack,
+                onBack = { appBackStack.removeLastOrNull() },
+                entryDecorators =
+                listOf(
+                    rememberSaveableStateHolderNavEntryDecorator(),
+                    rememberViewModelStoreNavEntryDecorator(),
+                ),
+                sceneStrategies =
+                if (isExpanded) {
+                    listOf(dialogSceneStrategy)
+                } else {
+                    emptyList()
+                },
+                entryProvider = entryProvider,
+            )
+        }
     }
 }
 

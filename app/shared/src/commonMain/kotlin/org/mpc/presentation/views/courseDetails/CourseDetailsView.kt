@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
@@ -46,6 +47,10 @@ import org.mpc.presentation.formatting.scheduleDescription
 import org.mpc.presentation.theme.MpcShapes
 import org.mpc.presentation.theme.MpcSpacing
 import org.mpc.presentation.theme.MpcTheme
+import org.mpc.presentation.translation.TextTranslation
+import org.mpc.presentation.translation.TranslateButton
+import org.mpc.presentation.translation.TranslationNote
+import org.mpc.presentation.translation.rememberTextTranslation
 import org.mpc.shared.MR
 import org.mpc.shared.coursedetail_add
 import org.mpc.shared.coursedetail_basic_info
@@ -91,6 +96,8 @@ fun CourseDetailsView(
     actions: CourseDetailsActions,
     modifier: Modifier = Modifier,
 ) {
+    // The syllabus is the text worth translating, so translation waits until it loads.
+    val translation = rememberTextTranslation(state.detail?.let { detail -> state.translatableTexts(detail) }.orEmpty())
     Column(
         modifier =
         modifier
@@ -107,7 +114,7 @@ fun CourseDetailsView(
                 verticalArrangement = Arrangement.spacedBy(MpcSpacing.space1),
             ) {
                 Text(
-                    text = state.summary?.title ?: stringResource(MR.strings.coursedetail_details_title),
+                    text = state.summary?.title?.let { title -> translation?.text(title) ?: title } ?: stringResource(MR.strings.coursedetail_details_title),
                     style = MpcTheme.typography.screenTitle,
                     fontWeight = FontWeight.SemiBold,
                 )
@@ -190,50 +197,7 @@ fun CourseDetailsView(
                 }
             }
 
-            state.detail?.let { detail ->
-                item(key = "syllabus-heading") {
-                    Text(
-                        text = stringResource(MR.strings.coursedetail_syllabus),
-                        style = MpcTheme.typography.sectionTitle,
-                        fontWeight = FontWeight.SemiBold,
-                    )
-                }
-                item(key = "objectives") {
-                    DetailSection(stringResource(MR.strings.coursedetail_objectives), detail.objectives)
-                }
-                item(key = "content") {
-                    DetailSection(stringResource(MR.strings.coursedetail_content), detail.content)
-                }
-                item(key = "books") {
-                    DetailSection(stringResource(MR.strings.coursedetail_books), detail.books)
-                }
-                item(key = "teaching-method") {
-                    DetailSection(stringResource(MR.strings.coursedetail_teaching_method), detail.teachingMethod)
-                }
-                item(key = "grading-policy") {
-                    DetailSection(stringResource(MR.strings.coursedetail_grading_policy), detail.gradingPolicy)
-                }
-                item(key = "distribution-conditions") {
-                    DistributionConditionsSection(detail.distributionConditions)
-                }
-                if (
-                    listOf(
-                        detail.objectives,
-                        detail.content,
-                        detail.books,
-                        detail.teachingMethod,
-                        detail.gradingPolicy,
-                    ).all(String::isBlank) && detail.distributionConditions.isEmpty()
-                ) {
-                    item(key = "empty-syllabus") {
-                        Text(
-                            text = stringResource(MR.strings.coursedetail_empty_syllabus),
-                            color = MpcTheme.colors.labelSecondary,
-                            style = MpcTheme.typography.supporting,
-                        )
-                    }
-                }
-            }
+            state.detail?.let { detail -> syllabusItems(detail, translation) }
         }
 
         HorizontalDivider()
@@ -253,6 +217,63 @@ fun CourseDetailsView(
             },
         ) {
             Text(if (state.isSelected) stringResource(MR.strings.coursedetail_remove) else stringResource(MR.strings.coursedetail_add))
+        }
+    }
+}
+
+/** The syllabus sections, in the reader's language while [translation] is switched on. */
+private fun LazyListScope.syllabusItems(
+    detail: CourseDetail,
+    translation: TextTranslation?,
+) {
+    val translated: (String) -> String = { text -> translation?.text(text) ?: text }
+    item(key = "syllabus-heading") {
+        Column {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = stringResource(MR.strings.coursedetail_syllabus),
+                    modifier = Modifier.weight(1f),
+                    style = MpcTheme.typography.sectionTitle,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                translation?.let { TranslateButton(it) }
+            }
+            translation?.let { TranslationNote(it) }
+        }
+    }
+    item(key = "objectives") {
+        DetailSection(stringResource(MR.strings.coursedetail_objectives), translated(detail.objectives))
+    }
+    item(key = "content") {
+        DetailSection(stringResource(MR.strings.coursedetail_content), translated(detail.content))
+    }
+    item(key = "books") {
+        DetailSection(stringResource(MR.strings.coursedetail_books), translated(detail.books))
+    }
+    item(key = "teaching-method") {
+        DetailSection(stringResource(MR.strings.coursedetail_teaching_method), translated(detail.teachingMethod))
+    }
+    item(key = "grading-policy") {
+        DetailSection(stringResource(MR.strings.coursedetail_grading_policy), translated(detail.gradingPolicy))
+    }
+    item(key = "distribution-conditions") {
+        DistributionConditionsSection(detail.distributionConditions, translated)
+    }
+    if (
+        listOf(
+            detail.objectives,
+            detail.content,
+            detail.books,
+            detail.teachingMethod,
+            detail.gradingPolicy,
+        ).all(String::isBlank) && detail.distributionConditions.isEmpty()
+    ) {
+        item(key = "empty-syllabus") {
+            Text(
+                text = stringResource(MR.strings.coursedetail_empty_syllabus),
+                color = MpcTheme.colors.labelSecondary,
+                style = MpcTheme.typography.supporting,
+            )
         }
     }
 }
@@ -361,7 +382,10 @@ private fun DetailSection(
 }
 
 @Composable
-private fun DistributionConditionsSection(conditions: List<DistributionCondition>) {
+private fun DistributionConditionsSection(
+    conditions: List<DistributionCondition>,
+    translated: (String) -> String,
+) {
     SheetSection {
         Text(
             text = stringResource(MR.strings.coursedetail_distribution_conditions),
@@ -388,7 +412,7 @@ private fun DistributionConditionsSection(conditions: List<DistributionCondition
                     color = MpcTheme.colors.labelSecondary,
                 )
                 Text(
-                    text = condition.rule,
+                    text = translated(condition.rule),
                     modifier = Modifier.weight(1f),
                     style = MpcTheme.typography.supporting,
                     color = MpcTheme.colors.labelSecondary,
@@ -413,6 +437,11 @@ data class CourseDetailsActions(
     val onClose: () -> Unit,
     val onOpenOfficialPage: (String) -> Unit,
 )
+
+/** The course's own Chinese text: its title, syllabus, and distribution rules. */
+private fun CourseDetailsUiState.translatableTexts(detail: CourseDetail): List<String> = listOfNotNull(summary?.title) +
+    listOf(detail.objectives, detail.content, detail.books, detail.teachingMethod, detail.gradingPolicy) +
+    detail.distributionConditions.map { it.rule }
 
 private fun CourseType.labelResource() = when (this) {
     CourseType.REQUIRED -> MR.strings.coursedetail_type_required

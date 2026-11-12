@@ -20,16 +20,26 @@ struct CourseDetailSheet: View {
     @State private var isLoading = true
     @State private var loadFailed = false
     @State private var retryID = 0
+    @State private var translation = TextTranslation()
+
+    /// The course's own Chinese text, which the reader can translate once the syllabus loads.
+    private var translatableTexts: [String] {
+        guard let detail else { return [] }
+        return [selection.course.title, detail.objectives, detail.content, detail.books, detail.teachingMethod,
+                detail.gradingPolicy] + detail.distributionConditions.map(\.rule)
+    }
 
     var body: some View {
         NavigationStack {
             Form {
                 Section {
                     CourseDetailHeader(
-                        title: selection.course.title,
+                        title: translation.text(selection.course.title),
                         classNumber: selection.course.classNo,
                         isSelected: isSelected
                     )
+                } footer: {
+                    TranslationNote(translation: translation)
                 }
 
                 CourseDetailFacts(course: selection.course)
@@ -56,7 +66,7 @@ struct CourseDetailSheet: View {
                         }
                     }
                 } else if let detail {
-                    CourseDetailDescription(detail: detail)
+                    CourseDetailDescription(detail: detail, translation: translation)
                 }
 
                 if let url = URL(string: selection.course.detailUrl),
@@ -84,6 +94,7 @@ struct CourseDetailSheet: View {
                     }
                 }
             }
+            .onDeviceTranslation(translation, texts: translatableTexts)
             .courseEntityContext(
                 CourseIdentity(semester: selection.semester, serialNumber: selection.course.serialNumber)
             )
@@ -186,14 +197,27 @@ private struct CourseDetailFacts: View {
 
 private struct CourseDetailDescription: View {
     let detail: CourseDetail
+    let translation: TextTranslation
 
     var body: some View {
-        CourseDetailTextSection(title: MR.strings().coursedetail_objectives.localized, text: detail.objectives)
-        CourseDetailTextSection(title: MR.strings().coursedetail_content.localized, text: detail.content)
-        CourseDetailTextSection(title: MR.strings().coursedetail_books.localized, text: detail.books)
-        CourseDetailTextSection(title: MR.strings().coursedetail_teaching_method.localized, text: detail.teachingMethod)
-        CourseDetailTextSection(title: MR.strings().coursedetail_grading_policy.localized, text: detail.gradingPolicy)
-        CourseDetailDistributionSection(conditions: detail.distributionConditions)
+        CourseDetailTextSection(
+            title: MR.strings().coursedetail_objectives.localized,
+            text: translation.text(detail.objectives)
+        )
+        CourseDetailTextSection(
+            title: MR.strings().coursedetail_content.localized,
+            text: translation.text(detail.content)
+        )
+        CourseDetailTextSection(title: MR.strings().coursedetail_books.localized, text: translation.text(detail.books))
+        CourseDetailTextSection(
+            title: MR.strings().coursedetail_teaching_method.localized,
+            text: translation.text(detail.teachingMethod)
+        )
+        CourseDetailTextSection(
+            title: MR.strings().coursedetail_grading_policy.localized,
+            text: translation.text(detail.gradingPolicy)
+        )
+        CourseDetailDistributionSection(conditions: detail.distributionConditions, translation: translation)
         if [detail.objectives, detail.content, detail.books, detail.teachingMethod, detail.gradingPolicy]
             .allSatisfy({ $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
             && detail.distributionConditions.isEmpty {
@@ -207,6 +231,7 @@ private struct CourseDetailDescription: View {
 
 private struct CourseDetailDistributionSection: View {
     let conditions: [DistributionCondition]
+    let translation: TextTranslation
 
     var body: some View {
         Section(MR.strings().coursedetail_distribution_conditions.localized) {
@@ -219,7 +244,7 @@ private struct CourseDetailDistributionSection: View {
                     Text("\(entry.offset + 1).")
                         .monospacedDigit()
                         .foregroundStyle(.secondary)
-                    Text(entry.element.rule)
+                    Text(translation.text(entry.element.rule))
                         .textSelection(.enabled)
                         .fixedSize(horizontal: false, vertical: true)
                 }
