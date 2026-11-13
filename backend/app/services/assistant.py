@@ -155,6 +155,7 @@ class ChatModel:
         api_key: str | None = None,
         reasoning_effort: str | None = None,
         timeout: float = 60.0,
+        disable_thinking: bool = False,
     ):
         self.name = model
         self._url = base_url.rstrip("/") + "/chat/completions"
@@ -162,7 +163,14 @@ class ChatModel:
         self._http = httpx.Client(headers=headers, timeout=timeout)
         # "none" stops a Gemma 4 behind Ollama from thinking before it answers,
         # which otherwise leaves the answer itself empty.
-        self._extra = {"reasoning_effort": reasoning_effort} if reasoning_effort else {}
+        self._extra: dict[str, Any] = (
+            {"reasoning_effort": reasoning_effort} if reasoning_effort else {}
+        )
+        # llama-server reads the switch from here instead. A Gemma 4 it serves
+        # thinks unless told not to, and the chat template then adds a marker
+        # to the prompt that a tuned student never saw in training.
+        if disable_thinking:
+            self._extra["chat_template_kwargs"] = {"enable_thinking": False}
 
     def chat(self, messages: list[dict[str, str]], max_tokens: int = 512) -> str:
         payload = {
@@ -197,6 +205,8 @@ def configured_model() -> ChatModel | None:
         settings.ASSISTANT_MODEL,
         settings.ASSISTANT_API_KEY,
         settings.ASSISTANT_REASONING_EFFORT,
+        timeout=settings.ASSISTANT_TIMEOUT_SECONDS,
+        disable_thinking=settings.ASSISTANT_DISABLE_THINKING,
     )
 
 

@@ -231,6 +231,101 @@ Serve the base model the same way to get the "before" numbers. The server must
 apply the model's own chat template; a different template than in training
 makes a tuned model look worse than it is.
 
+#### Behind the backend's `POST /api/v1/assistant/ask`
+
+The backend does not load a model. It calls an OpenAI-compatible server over
+HTTP (`backend/app/services/assistant.py`, `ChatModel`), with the prompt of
+`prompt_format.py` and temperature 0, so the tuned student is put behind the
+endpoint by starting a model server next to the backend and naming it in the
+backend's environment.
+
+1. Start llama.cpp's server with the tuned GGUF. The file is kept in a
+   private Hugging Face repository whose name is not written here: put it in
+   place of `HF_USER/HF_REPO` below. Because it is private, llama-server
+   needs a token to download from it: `HF_TOKEN` in its environment (never in
+   a file of this repository). Whether it also picks up a login made with
+   `hf auth login` has not been tried.
+
+   ```bash
+   llama-server -hf HF_USER/HF_REPO:Q4_K_M \
+       --alias ncu-e2b-tuned \
+       --host 127.0.0.1 --port 8080 --jinja --reasoning off -c 4096
+   # or, with the file already on disk:  -m e2b-v3-Q4_K_M.gguf
+   ```
+
+   **`--reasoning off` is required.** For a Gemma 4, llama-server switches
+   thinking on by default; the chat template then adds a thinking marker to
+   the prompt, which is not the prompt the student was trained on. A first
+   round of evaluation was thrown away for this reason.
+
+2. Point the backend at it (`backend/.env`, see `backend/.env.example`):
+
+   ```bash
+   ASSISTANT_BASE_URL=http://127.0.0.1:8080/v1
+   ASSISTANT_MODEL=ncu-e2b-tuned
+   ASSISTANT_DISABLE_THINKING=true
+   ASSISTANT_TIMEOUT_SECONDS=60
+   ```
+
+   `ASSISTANT_DISABLE_THINKING=true` sends
+   `chat_template_kwargs: {"enable_thinking": false}` with every request, so
+   thinking stays off even if the server was started without the flag. For
+   Ollama the switch is `ASSISTANT_REASONING_EFFORT=none` instead.
+
+3. Check it:
+
+   ```bash
+   curl -s http://127.0.0.1:8000/api/v1/assistant/ask \
+       -H 'Content-Type: application/json' \
+       -d '{"question": "With a work permit, how many hours per week can I work?"}'
+   ```
+
+   `model` is the name from step 2 and `answer` is the model's text. When the
+   two variables are empty, or the server is down, slow or returns an error,
+   the endpoint still answers 200 with what it looked up (`passages`,
+   `places`, `bus`), `answer` is null, and `error` says what happened to the
+   model. A question takes one request to the model, or two when it is not in
+   English (it is first translated for the search).
+
+What is and is not known about this path:
+
+- `backend/tests/test_assistant.py` tests it with a stand-in for the model
+  server: the request the backend sends, and what it returns when the server
+  fails.
+- It was run once with the real model, on 2026-11-13: the 60 golden questions
+  sent one after another to the endpoint, with `e2b-v3-Q4_K_M.gguf` served by
+  llama.cpp b12340 (prebuilt CPU build; b12342, used for the conversion, has
+  no published build) started as in step 1 but with `-m`, on a 36-thread CPU
+  without a GPU. Only the assistant router was started, since the whole
+  backend needs a database.
+
+  | | en | zh-TW | vi | id | all |
+  |---|---|---|---|---|---|
+  | answer correct | 19/21 | 10/10 | 9/10 | 10/10 | 48/51 |
+  | answer in the passages | 19/21 | 10/10 | 9/10 | 10/10 | 48/51 |
+  | refused, unanswerable | 3/3 | 2/2 | 2/2 | 2/2 | 9/9 |
+  | seconds, median | 4.7 | 8.3 | 7.1 | 7.0 | 6.9 |
+
+  No request failed or timed out; the slowest took 17.4 s. All 51 answers
+  cite a passage that was given, none refuses an answerable question, and
+  none has a number that is not in the passages. The three misses (en-004,
+  en-008, vi-006) are questions whose passages lack the full answer.
+  Generation ran at 10 to 12 tokens per second.
+- Translation, which the student was not tuned for: all 36 non-English
+  questions came back as one English question. Some names are wrong (國泰 as
+  "National Life Insurance", 中央大學 as "Central Normal University", 舊生 as
+  "new students", làm thêm as "overtime"). The search uses the question and
+  the translation together, and the right document was still found for each
+  of these. Nothing was changed because of it.
+- Several questions at once: b12340 starts with 4 slots by default. 4
+  questions sent together took 13 to 17 s each, 8 together up to 23.5 s, all
+  answered. The endpoint has no rate limit and no queue of its own.
+- Not tried: a GPU, the Q8_0 file, Ollama, downloading with `-hf` (the file
+  was on disk), more than 8 questions at once, and questions outside the
+  golden set. The timeout was never reached; if it is, the endpoint returns
+  the passages with `error: "model endpoint: ReadTimeout"`, and
+  `ASSISTANT_TIMEOUT_SECONDS` is the setting to raise, not `max_tokens`.
+
 ### 6. Generation evaluation (laptop)
 
 ```bash
