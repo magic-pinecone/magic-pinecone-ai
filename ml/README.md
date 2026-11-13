@@ -47,6 +47,17 @@ include), `needs_native_review`, and optionally:
   Cathay limits are on the insurance page and in the handbook). They count as
   hits and as correct citations. This field is an addition to the brief.
 
+- `must_contain_any` — spellings of one fact, of which an answer needs only
+  one; it is asked for on top of `must_contain`, and one of the spellings is
+  the document's own. Two items have it, and **both were changed after reading
+  model output, so they are no longer blind**: `zh-003` (`30` or `三十`; an
+  answer of 「三十天」 had been marked wrong) and `en-005` (`excluded`,
+  `not covered`, `does not cover`, `only hospitalization`; the earlier
+  `hospitalization` failed "outpatient visits are completely excluded" and
+  passed an answer that said outpatient visits are covered). `en-005` is a
+  yes/no question and these strings are still only a proxy: a wrong "yes"
+  that happens to use one of them passes. Read its answers by hand.
+
 `must_contain` is mostly numbers and URLs so that it also works for answers in
 other languages. A bare number must appear as a whole number (`20` is not found
 in `2026`; `1,000`, `1000` and `1.000` are the same); other strings are matched
@@ -86,7 +97,8 @@ Writes `ml/results/retrieval_baseline.md` and `.json`. Current result:
 | id | 10 | 8/10 (80%) | 10/10 (100%) | 10/10 (100%) | 0/10 (0%) | 2/2 (100%) |
 | all | 51 | 42/51 (82%) | 51/51 (100%) | 49/51 (96%) | 0/51 (0%) | 8/9 (89%) |
 
-`ans@3` (all `must_contain` strings are in the three returned passages) is the
+`ans@3` (the three returned passages hold the answer, by the same test as for
+a model's answer: all `must_contain` strings and one of `must_contain_any`) is the
 number that matters for the generator. hit@k is about documents, and there are
 only 8, so it says little.
 
@@ -207,6 +219,30 @@ not trained. `--backend peft` uses transformers + PEFT + TRL instead of Unsloth.
 `--merge` also writes merged 16-bit weights; `--gguf q4_k_m` exports a GGUF
 (Unsloth backend).
 
+`--model` also takes Unsloth's mirrors `unsloth/gemma-4-E2B-it`,
+`unsloth/gemma-3-1b-it` and `unsloth/gemma-3-270m-it`, which are not gated.
+
+Notes from the runs on Colab. They were reported by the session that ran
+them and have not been repeated on another machine:
+
+- **Batch size.** The defaults (batch 1, accumulation 8) are for 8 GB of GPU
+  memory. On Colab use `--batch-size 8 --grad-accum 1`: the same effective
+  batch, about 3.9 s per step with the defaults and about 6.6 times faster
+  this way.
+- **Gemma 3 through Unsloth for inference.** Load it with
+  `attn_implementation="eager"`. Nothing in this repository loads a model for
+  inference (`eval_generation.py` talks to a server), so this concerns the
+  notebook that scores a model directly with transformers.
+- **Repeatable scores.** For the same reason the settings are not in a script
+  here: when a model is scored directly on a GPU, set
+  `torch.use_deterministic_algorithms(True, warn_only=True)` and the
+  environment variable `CUBLAS_WORKSPACE_CONFIG=:4096:8` before the first
+  CUDA call, so that two runs of the same model give the same answers.
+- **270m and 1B were scored in bf16**, not from a quantised GGUF, so their
+  numbers are not the numbers of the file that would be served. Numbers from
+  different GPU types are not comparable either: compare runs made on the same
+  machine with the same settings.
+
 Manual GGUF export from `<output>/merged` with llama.cpp:
 
 ```bash
@@ -216,8 +252,11 @@ python llama.cpp/convert_hf_to_gguf.py ml/runs/sealion-e2b/merged \
 # then quantize with llama.cpp's llama-quantize, e.g. to Q4_K_M
 ```
 
-**`train_lora.py` has never been run.** It was written on a machine without a
-GPU; only `--check-data` and `--help` were executed. See "Not tested" below.
+`train_lora.py` was written on a machine without a GPU, where only
+`--check-data` and `--help` were executed. It was then run on Colab on
+2026-11-12 (G4 and A100) for Gemma 3 270m and 1B and for Gemma 4 E2B,
+according to the session that did that work; this has not been repeated on
+another machine. See "Not tested" below.
 
 ### 5. Serve a student
 
@@ -252,8 +291,8 @@ Columns, per language:
 
 | Column | Meaning |
 |---|---|
-| answer | answerable questions answered with every `must_contain` string |
-| answer (ctx) | the same, only over questions whose prompt passages hold those strings |
+| answer | answerable questions answered with every `must_contain` string and, where listed, one of `must_contain_any` |
+| answer (ctx) | the same, only over questions whose prompt passages hold the answer by that same test (a number has to be a whole number there too: `20` is not in `std20230311`) |
 | cite | answerable questions answered with valid `[n]`, at least one pointing to a passage of the expected document |
 | refuse | unanswerable questions that were refused |
 | refuse (no ctx) | answerable questions whose passages lack the answer and that were refused (correct behaviour) |
@@ -280,7 +319,10 @@ Run on the development machine (no GPU, no network access to a model):
   the JSON reply format have not been tried against gpt-oss or any other model.
   Expect to adjust `--max-tokens` (a reasoning model spends tokens on thinking
   before the JSON) and possibly the teacher prompt.
-- **`train_lora.py` was never executed**, in either backend. Uncertain points:
+- **`train_lora.py` was not executed where it was written**, in either
+  backend; the runs on Colab (see "Training") came later and are known here
+  only from that session's report. Points that were uncertain when it was
+  written:
   - whether Unsloth's `FastModel` loads `aisingapore/Gemma-SEA-LION-v4.5-E2B-IT`
     (Unsloth documents its own `unsloth/gemma-4-E2B-it` mirror) and whether
     replacing its chat template with Unsloth's `gemma-4` template is harmless;

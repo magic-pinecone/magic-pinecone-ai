@@ -40,6 +40,10 @@ MODELS = {  # name: family
     "aisingapore/Gemma-SEA-LION-v4.5-E2B-IT": "gemma4",
     "google/gemma-4-E2B-it": "gemma4",
     "google/gemma-3-1b-it": "gemma3",
+    # Unsloth's mirrors of the Google models: not gated, so no HF_TOKEN.
+    "unsloth/gemma-4-E2B-it": "gemma4",
+    "unsloth/gemma-3-1b-it": "gemma3",
+    "unsloth/gemma-3-270m-it": "gemma3",
 }
 FAMILIES = {  # Unsloth chat template name and the turn markers of the template
     "gemma4": {
