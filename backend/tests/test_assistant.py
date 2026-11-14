@@ -1,5 +1,7 @@
 """The assistant: where a question is sent, and what comes back with and without a model."""
 
+import json
+
 import httpx
 import pytest
 from fastapi.testclient import TestClient
@@ -7,7 +9,7 @@ from fastapi.testclient import TestClient
 from app.core.config import settings
 from app.main import app
 from app.services import assistant, tdx
-from app.services.answer_text import refusal_text
+from app.services.answer_text import build_messages, refusal_text
 from app.services.tdx import TdxClient
 from tests.test_transit import BEFORE_SERVICE, FakeClock, FakeTdx
 
@@ -369,3 +371,116 @@ def test_endpoint_rejects_an_empty_or_overlong_question():
     assert (
         client.post("/api/v1/assistant/ask", json={"question": long}).status_code == 422
     )
+
+
+def served_model(monkeypatch: pytest.MonkeyPatch, handler) -> None:
+    """Settings for a model server, with `handler` standing in for the server."""
+    monkeypatch.setattr(settings, "ASSISTANT_BASE_URL", "http://model.test/v1")
+    monkeypatch.setattr(settings, "ASSISTANT_MODEL", "ncu-e2b")
+    monkeypatch.setattr(settings, "ASSISTANT_API_KEY", None)
+    monkeypatch.setattr(settings, "ASSISTANT_REASONING_EFFORT", None)
+    monkeypatch.setattr(settings, "ASSISTANT_DISABLE_THINKING", True)
+    monkeypatch.setattr(settings, "ASSISTANT_TIMEOUT_SECONDS", 7.0)
+    assistant.configured_model.cache_clear()
+    real_client = httpx.Client
+    monkeypatch.setattr(
+        httpx,
+        "Client",
+        lambda **kwargs: real_client(transport=httpx.MockTransport(handler), **kwargs),
+    )
+
+
+@pytest.fixture(autouse=True)
+def forget_the_configured_model():
+    yield
+    assistant.configured_model.cache_clear()
+
+
+def test_without_the_settings_there_is_no_model(monkeypatch: pytest.MonkeyPatch):
+    assistant.configured_model.cache_clear()
+    monkeypatch.setattr(settings, "ASSISTANT_BASE_URL", "http://model.test/v1")
+    monkeypatch.setattr(settings, "ASSISTANT_MODEL", None)
+    assert assistant.configured_model() is None
+
+
+def test_endpoint_asks_the_served_model_in_the_training_format(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    bodies = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        bodies.append(json.loads(request.read()))
+        answer = "- At most 20 hours per week [1]"
+        return httpx.Response(200, json={"choices": [{"message": {"content": answer}}]})
+
+    served_model(monkeypatch, handler)
+    question = "How many hours per week can I work with a work permit?"
+    response = TestClient(app).post(
+        "/api/v1/assistant/ask", json={"question": question}
+    )
+    body = response.json()
+    assert response.status_code == 200 and body["model"] == "ncu-e2b"
+    assert body["answer"] == "- At most 20 hours per week [1]" and not body["error"]
+    assert body["checks"]["citations_valid"]
+    # English needs no translation, so the one request is the answer's, and it
+    # is the prompt of ml/prompt_format.py (which loads the same function).
+    (sent,) = bodies
+    passages = [
+        {key: p[key] for key in ("id", "title", "url", "fetched_on", "passage")}
+        for p in body["passages"]
+    ]
+    assert sent["messages"] == build_messages(question, passages)
+    assert sent["model"] == "ncu-e2b" and sent["temperature"] == 0.0
+    assert sent["chat_template_kwargs"] == {"enable_thinking": False}
+    assert "reasoning_effort" not in sent
+    assert assistant.configured_model()._http.timeout == httpx.Timeout(7.0)
+
+
+def test_thinking_is_left_alone_unless_it_is_switched_off():
+    seen = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.update(json.loads(request.read()))
+        return httpx.Response(200, json={"choices": [{"message": {"content": "hi"}}]})
+
+    model = assistant.ChatModel("http://model.test/v1", "m")
+    model._http = httpx.Client(transport=httpx.MockTransport(handler))
+    model.chat([])
+    assert "chat_template_kwargs" not in seen and "reasoning_effort" not in seen
+
+
+@pytest.mark.parametrize(
+    "failure", [httpx.ConnectError("refused"), httpx.ReadTimeout("slow")]
+)
+def test_endpoint_still_looks_up_when_the_model_server_is_down(
+    monkeypatch: pytest.MonkeyPatch, failure: Exception
+):
+    def handler(request: httpx.Request) -> httpx.Response:
+        raise failure
+
+    served_model(monkeypatch, handler)
+    for question in ("With a work permit, how many hours can I work?", "打工時數上限"):
+        response = TestClient(app).post(
+            "/api/v1/assistant/ask", json={"question": question}
+        )
+        body = response.json()
+        assert response.status_code == 200 and body["answer"] is None
+        assert body["error"] == f"model endpoint: {type(failure).__name__}"
+        assert "model.test" not in response.text
+
+
+def test_a_reply_that_is_only_thinking_is_not_shown_as_the_answer(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    def handler(request: httpx.Request) -> httpx.Response:
+        thought = "<|channel>thought\nThe passages say 20.<channel|>"
+        return httpx.Response(
+            200, json={"choices": [{"message": {"content": thought}}]}
+        )
+
+    served_model(monkeypatch, handler)
+    response = TestClient(app).post(
+        "/api/v1/assistant/ask", json={"question": "How many hours can I work?"}
+    )
+    body = response.json()
+    assert body["answer"] is None and body["error"] == "model endpoint: empty answer"
