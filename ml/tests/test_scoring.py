@@ -125,3 +125,31 @@ def test_retrieval_metrics():
     assert (s["unanswerable"], s["unanswerable_with_passages"]) == (1, 1)
     alt = evaluate([{**ITEM, "alt_source_ids": ["oia-insurance"]}], search)
     assert alt["summary"]["all"]["hit1"] == 1
+
+
+def test_a_number_inside_a_file_name_is_not_the_answer_in_the_passages():
+    link = {**GOLD, "passage": "<https://oia.ncu.edu.tw/img/389/std20230311.pdf>"}
+    s = score_item(ITEM, [link], REFUSALS["en"])
+    assert s["refused"] and not s["ctx_has_answer"]
+    counts = summarize([{**ITEM, **s}])["en"]
+    assert counts["over_refused"] == 0 and counts["refused_no_ctx"] == 1
+
+
+ANY_OF = {**ITEM, "must_contain": [], "must_contain_any": ["30", "三十"]}
+DAYS = {"id": "oia-insurance", "title": "Insurance", "passage": "less than 30 days"}
+
+
+def test_must_contain_any_takes_one_spelling():
+    for answer in ("- 最多三十天 [1]", "- 少於 30 天 [1]"):
+        s = score_item(ANY_OF, [DAYS], answer)
+        assert s["answer_ok"] and s["ctx_has_answer"]
+    assert not score_item(ANY_OF, [DAYS], "- 最多 2030 天 [1]")["answer_ok"]
+    assert not score_item(ANY_OF, [OTHER], "- 三十天 [1]")["ctx_has_answer"]
+
+
+def test_must_contain_any_is_asked_for_besides_must_contain():
+    both = {**ANY_OF, "must_contain": ["once"]}
+    passage = {**DAYS, "passage": "only once, less than 30 days"}
+    assert score_item(both, [passage], "- once, 三十天 [1]")["answer_ok"]
+    assert not score_item(both, [passage], "- 三十天 [1]")["answer_ok"]
+    assert not score_item(both, [passage], "- only once [1]")["answer_ok"]

@@ -4,6 +4,7 @@
 - unsupported_numbers: numbers and month names in an answer that the passages
   do not contain
 - contains_fact: is a golden `must_contain` string present in an answer
+- facts_held, holds_answer: how much of a golden item's answer a text has
 - matches_golden: is a generated question (nearly) a golden question
 """
 
@@ -43,6 +44,28 @@ def contains_fact(answer: str, fact: str) -> bool:
     if _NUMBER.fullmatch(fact.strip()):
         return normalize_number(fact.strip()) in numbers(answer)
     return squash(fact) in squash(answer)
+
+
+def facts_held(text: str, item: dict) -> int:
+    """How many of the item's requirements `text` meets.
+
+    Each `must_contain` string counts for one, and so does `must_contain_any`
+    as a whole when at least one of its spellings is found.
+    """
+    held = sum(contains_fact(text, fact) for fact in item["must_contain"])
+    spellings = item.get("must_contain_any", [])
+    return held + any(contains_fact(text, fact) for fact in spellings)
+
+
+def holds_answer(text: str, item: dict) -> bool:
+    """Has `text` every `must_contain` string and, when the item lists
+    `must_contain_any`, at least one of those spellings?
+
+    The one test for answers, prompt passages and retrieved passages.
+    """
+    return facts_held(text, item) == len(item["must_contain"]) + bool(
+        item.get("must_contain_any")
+    )
 
 
 def normalize_question(text: str) -> str:

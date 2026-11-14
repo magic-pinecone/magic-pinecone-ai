@@ -14,6 +14,7 @@ is put into the prompt, which measures the model apart from the retriever.
 
 Scores per language (definitions in `score_item` and `summarize`):
   answer    answerable questions whose answer has every `must_contain` string
+            and, where the item has `must_contain_any`, one of its spellings
   answer (ctx)  the same, only over questions whose passages hold those strings
   cite      answerable questions answered with valid citations, at least one
             to a passage of the expected document
@@ -33,7 +34,7 @@ import json
 import tempfile
 from pathlib import Path
 
-from checks import contains_fact, strip_reasoning, unsupported_numbers
+from checks import facts_held, holds_answer, strip_reasoning, unsupported_numbers
 from common import (
     RESULTS_DIR,
     ChatClient,
@@ -66,15 +67,40 @@ METRICS = (
 
 
 def oracle_passage(services, item: dict) -> dict:
-    """The passage of the expected document holding most `must_contain` strings."""
+    """The passage of the expected document that holds the answer.
+
+    Windows are compared by how many `must_contain` strings they hold (plus
+    one for any spelling of `must_contain_any`), tested with `contains_fact`
+    as answers are: "20" is not found in "std20230311".
+    A number such as "30" is still in many windows of a long page, so equal
+    windows are ordered by the backend's search for the question: the window
+    that is, or overlaps, the best ranked passage of this document wins (the
+    exact one before a neighbour). Windows the search does not reach keep the
+    order of the page.
+    """
     document = next(d for d in services.load_documents() if d.id == item["source_id"])
-    best, best_score = "", -1
+    windows = {}
     for start in range(0, max(1, len(document.lines)), services.PASSAGE_STEP):
-        text = "\n".join(document.lines[start : start + services.PASSAGE_LINES])
-        score = sum(fact in text for fact in item["must_contain"])
-        if score > best_score:
-            best, best_score = text, score
-    return {"id": document.id, "title": document.title, "passage": best}
+        windows[start] = "\n".join(
+            document.lines[start : start + services.PASSAGE_LINES]
+        )
+    held = {start: facts_held(text, item) for start, text in windows.items()}
+    start_of = {text: start for start, text in reversed(windows.items())}
+    ranked = [
+        start_of[r["passage"]]
+        for r in services.search(item["question"], limit=len(windows) * 1000)
+        if r["id"] == document.id
+    ]
+
+    def order(start: int) -> tuple[int, int, int]:
+        for rank, found in enumerate(ranked):
+            if abs(start - found) < services.PASSAGE_LINES:
+                return (rank, abs(start - found), start)
+        return (len(ranked), 0, start)
+
+    most = max(held.values())
+    best = min((start for start in windows if held[start] == most), key=order)
+    return {"id": document.id, "title": document.title, "passage": windows[best]}
 
 
 def select_passages(services, item: dict, mode: str, top_k: int) -> list[dict]:
@@ -98,14 +124,8 @@ def score_item(item: dict, passages: list[dict], response: str) -> dict:
     cited = cited_numbers(response)
     valid = bool(cited) and all(1 <= n <= len(passages) for n in cited)
     expected = expected_sources(item)
-    ctx_has_answer = item["answerable"] and all(
-        fact in context for fact in item["must_contain"]
-    )
-    answer_ok = (
-        item["answerable"]
-        and not refused
-        and all(contains_fact(response, fact) for fact in item["must_contain"])
-    )
+    ctx_has_answer = item["answerable"] and holds_answer(context, item)
+    answer_ok = item["answerable"] and not refused and holds_answer(response, item)
     wrong_numbers = unsupported_numbers(
         response, context + "\n" + item["question"], ignore=OIA_CONTACT_STRINGS
     )

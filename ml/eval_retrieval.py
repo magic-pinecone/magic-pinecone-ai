@@ -7,9 +7,11 @@ Run from the backend directory so its dependencies are available:
 Per language, for answerable questions:
   hit@1 / hit@3  the expected document (`source_id`, or one of `alt_source_ids`)
                  is the first / among the first three results
-  ans@3          every `must_contain` string is in the text of the first three
-                 passages (passages are 8 lines long, so the right document
-                 does not guarantee the right passage)
+  ans@3          the text of the first three passages holds the answer as
+                 `checks.holds_answer` tests it: every `must_contain` string
+                 and one spelling of `must_contain_any` (passages are 8 lines
+                 long, so the right document does not guarantee the right
+                 passage)
 and for unanswerable questions how often the search still returns passages.
 The search's relevance threshold and its glossary were written with these 60
 questions as the only test set; ml/README.md says what that does to the numbers.
@@ -20,6 +22,7 @@ import argparse
 import json
 from pathlib import Path
 
+from checks import holds_answer
 from common import (
     RESULTS_DIR,
     expected_sources,
@@ -48,8 +51,7 @@ def evaluate(golden: list[dict], search) -> dict:
                 "returned": ids,
                 "hit1": bool(expected & set(ids[:1])),
                 "hit3": bool(expected & set(ids)),
-                "ans3": item["answerable"]
-                and all(fact in text for fact in item["must_contain"]),
+                "ans3": item["answerable"] and holds_answer(text, item),
             }
         )
     summary = {}

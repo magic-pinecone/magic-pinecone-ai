@@ -19,7 +19,7 @@ REQUIRED = {
     "must_contain": list,
     "needs_native_review": bool,
 }
-OPTIONAL = {"source_id", "alt_source_ids", "parallel_of"}
+OPTIONAL = {"source_id", "alt_source_ids", "parallel_of", "must_contain_any"}
 
 
 def test_size_and_unique_ids():
@@ -39,11 +39,15 @@ def test_schema(item):
     assert item["needs_native_review"] == (item["lang"] in ("vi", "id"))
     if item["answerable"]:
         assert item["source_id"] in DOCUMENTS
-        assert item["must_contain"]
+        assert item["must_contain"] or item.get("must_contain_any")
         assert all(isinstance(s, str) and s for s in item["must_contain"])
+        if "must_contain_any" in item:
+            assert len(item["must_contain_any"]) >= 2
+            assert all(isinstance(s, str) and s for s in item["must_contain_any"])
     else:
         assert item["source_id"] is None
         assert item["must_contain"] == []
+        assert "must_contain_any" not in item
         assert "alt_source_ids" not in item
 
 
@@ -55,6 +59,9 @@ def test_must_contain_is_verbatim_in_every_expected_source(item):
         assert source in DOCUMENTS
         for fact in item["must_contain"]:
             assert fact in DOCUMENTS[source], (source, fact)
+        # Of the accepted spellings, one has to be the document's own.
+        spellings = item.get("must_contain_any")
+        assert not spellings or any(s in DOCUMENTS[source] for s in spellings)
 
 
 @pytest.mark.parametrize(
@@ -63,8 +70,13 @@ def test_must_contain_is_verbatim_in_every_expected_source(item):
 def test_parallel_items_mirror_their_english_original(item):
     original = BY_ID[item["parallel_of"]]
     assert original["lang"] == "en" and item["lang"] != "en"
-    for field in ("answerable", "source_id", "must_contain"):
+    for field in ("answerable", "source_id"):
         assert item[field] == original[field]
+    # A fact of the original is either required as it is, or is one of the
+    # accepted spellings (zh-003: "30" or "三十").
+    moved = [f for f in original["must_contain"] if f not in item["must_contain"]]
+    assert set(item["must_contain"]) <= set(original["must_contain"])
+    assert set(moved) <= set(item.get("must_contain_any", []))
     assert item.get("alt_source_ids") == original.get("alt_source_ids")
 
 
