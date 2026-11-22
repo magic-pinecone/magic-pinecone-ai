@@ -25,6 +25,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.icerock.moko.resources.compose.stringResource
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.mpc.presentation.theme.MpcTheme
+import org.mpc.presentation.translation.TranslateButton
+import org.mpc.presentation.translation.TranslationNote
+import org.mpc.presentation.translation.rememberTextTranslation
 import org.mpc.presentation.viewModel.EeclassViewModel
 import org.mpc.shared.MR
 import org.mpc.shared.eeclass_attachments
@@ -57,10 +60,12 @@ fun EeclassBulletinScreen(
         val body = remember(loaded.bodyHtml) {
             AnnotatedString.fromHtml(loaded.bodyHtml) { link -> (link as? LinkAnnotation.Url)?.let { openLink(it.url) } }
         }
+        val translation = rememberTextTranslation(listOf(title, body.text)).takeIf { body.isNotBlank() }
+        val shownBody = translation?.takeIf { it.showsTranslation }?.text(body.text)
         Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
             Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                 Text(
-                    text = title,
+                    text = translation?.text(title) ?: title,
                     style = MpcTheme.typography.sectionTitle,
                     modifier = Modifier.semantics { heading() },
                 )
@@ -72,11 +77,17 @@ fun EeclassBulletinScreen(
                         modifier = Modifier.padding(top = 8.dp),
                     )
                 }
+                translation?.let { TranslateButton(it, modifier = Modifier.padding(top = 8.dp)) }
                 if (body.isNotBlank()) {
                     SelectionContainer {
-                        Text(text = body, style = MpcTheme.typography.body, modifier = Modifier.padding(top = 16.dp))
+                        Text(
+                            text = shownBody?.let(::AnnotatedString) ?: body,
+                            style = MpcTheme.typography.body,
+                            modifier = Modifier.padding(top = 16.dp),
+                        )
                     }
                 }
+                translation?.let { TranslationNote(it, modifier = Modifier.padding(top = 16.dp)) }
             }
             if (loaded.attachments.isNotEmpty()) {
                 EeclassSectionHeader(stringResource(MR.strings.eeclass_attachments))

@@ -24,7 +24,12 @@ struct EeclassBulletinSheet: View {
     @State private var bodyText: AttributedString?
     @State private var reloadID = 0
     @State private var path = NavigationPath()
+    @State private var translation = TextTranslation()
     @Environment(\.dismiss) private var dismiss
+
+    private var plainBody: String? {
+        bodyText.map { String($0.characters) }
+    }
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -37,6 +42,7 @@ struct EeclassBulletinSheet: View {
                             .labelStyle(.iconOnly)
                     }
                 }
+                .onDeviceTranslation(translation, texts: plainBody.map { [selection.bulletin.title, $0] } ?? [])
                 .navigationDestination(for: EeclassPageLink.self) { link in
                     WebPageView(
                         sharedHost: sharedHost,
@@ -59,7 +65,7 @@ struct EeclassBulletinSheet: View {
                 List {
                     Section {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text(selection.bulletin.title)
+                            Text(translation.text(selection.bulletin.title))
                                 .font(.title3.weight(.semibold))
                                 .accessibilityAddTraits(.isHeader)
                             if !page.info.isEmpty {
@@ -68,7 +74,10 @@ struct EeclassBulletinSheet: View {
                                     .foregroundStyle(.secondary)
                             }
                         }
-                        if let bodyText {
+                        if translation.showsTranslation, let plainBody {
+                            Text(translation.text(plainBody))
+                                .textSelection(.enabled)
+                        } else if let bodyText {
                             Text(bodyText)
                                 .textSelection(.enabled)
                                 .environment(\.openURL, OpenURLAction { url in
@@ -80,6 +89,8 @@ struct EeclassBulletinSheet: View {
                                     return .handled
                                 })
                         }
+                    } footer: {
+                        TranslationNote(translation: translation)
                     }
                     if !page.attachments.isEmpty {
                         Section(MR.strings().eeclass_attachments.localized) {
