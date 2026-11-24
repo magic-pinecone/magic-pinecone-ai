@@ -18,11 +18,13 @@ Per language, for answerable questions:
                  and one spelling of `must_contain_any` (passages are 8 lines
                  long, so the right document does not guarantee the right
                  passage)
+  ans@5          the same for the first five passages
 and for unanswerable questions how often the search still returns passages.
 Items without `source_type` are the first 60 questions ("old"); the others
 are written against the larger corpus ("new").
 `--sweep 0.3,0.4,...` repeats the run with those values of
-KNOWLEDGE_MIN_SIMILARITY. Writes ml/results/retrieval_<search>.md and .json.
+KNOWLEDGE_MIN_SIMILARITY, and `--cjk-weights 1,1.5,2` with those values of
+KNOWLEDGE_CJK_KEYWORD_WEIGHT (every pair is run). Writes ml/results/retrieval_<search>.md and .json.
 """
 
 import argparse
@@ -40,7 +42,7 @@ from common import (
 )
 from prompt_format import LANGS
 
-TOP_K = 3
+TOP_K = 5
 SETS = ("old", "new", "all")
 
 
@@ -65,6 +67,7 @@ def summarize(items: list[dict]) -> dict:
                 "hit1": sum(row["hit1"] for row in answerable),
                 "hit3": sum(row["hit3"] for row in answerable),
                 "ans3": sum(row["ans3"] for row in answerable),
+                "ans5": sum(row["ans5"] for row in answerable),
                 "no_result": sum(not row["returned"] for row in answerable),
                 "unanswerable": len(unanswerable),
                 "unanswerable_with_passages": sum(
@@ -79,9 +82,12 @@ def by_source_type(items: list[dict]) -> dict:
     for row in items:
         if row["set"] != "new" or not row["answerable"]:
             continue
-        entry = found.setdefault(row["source_type"], {"answerable": 0, "ans3": 0})
+        entry = found.setdefault(
+            row["source_type"], {"answerable": 0, "ans3": 0, "ans5": 0}
+        )
         entry["answerable"] += 1
         entry["ans3"] += row["ans3"]
+        entry["ans5"] += row["ans5"]
     return found
 
 
@@ -90,6 +96,7 @@ def evaluate(golden: list[dict], search) -> dict:
     for item in golden:
         results = search(item["question"], limit=TOP_K)
         ids = [result["id"] for result in results]
+        first_three = "\n".join(result["passage"] for result in results[:3])
         text = "\n".join(result["passage"] for result in results)
         expected = expected_sources(item)
         similarities = [
@@ -106,8 +113,9 @@ def evaluate(golden: list[dict], search) -> dict:
                 "answerable": item["answerable"],
                 "returned": ids,
                 "hit1": bool(expected & set(ids[:1])),
-                "hit3": bool(expected & set(ids)),
-                "ans3": item["answerable"] and holds_answer(text, item),
+                "hit3": bool(expected & set(ids[:3])),
+                "ans3": item["answerable"] and holds_answer(first_three, item),
+                "ans5": item["answerable"] and holds_answer(text, item),
                 "top_similarity": max(similarities, default=None),
             }
         )
@@ -131,6 +139,7 @@ def to_markdown(report: dict) -> str:
                     rate(s["hit1"], s["answerable"]),
                     rate(s["hit3"], s["answerable"]),
                     rate(s["ans3"], s["answerable"]),
+                    rate(s["ans5"], s["answerable"]),
                     rate(s["no_result"], s["answerable"]),
                     rate(s["unanswerable_with_passages"], s["unanswerable"]),
                 ]
@@ -142,6 +151,7 @@ def to_markdown(report: dict) -> str:
                 "hit@1",
                 "hit@3",
                 "ans@3",
+                "ans@5",
                 "no result",
                 "unanswerable with passages",
             ],
@@ -149,12 +159,17 @@ def to_markdown(report: dict) -> str:
         )
         sections.append(f"### {name} questions\n\n{table}")
     types = [
-        [source_type, e["answerable"], rate(e["ans3"], e["answerable"])]
+        [
+            source_type,
+            e["answerable"],
+            rate(e["ans3"], e["answerable"]),
+            rate(e["ans5"], e["answerable"]),
+        ]
         for source_type, e in sorted(report["by_source_type"].items())
     ]
     sections.append(
         "### new questions by source type\n\n"
-        + markdown_table(["source type", "answerable", "ans@3"], types)
+        + markdown_table(["source type", "answerable", "ans@3", "ans@5"], types)
     )
     return "\n\n".join(sections)
 
@@ -163,9 +178,12 @@ def sweep_markdown(rows: list[dict]) -> str:
     table = [
         [
             row["min_similarity"],
+            row["cjk_weight"],
             rate(row["old"]["all"]["ans3"], row["old"]["all"]["answerable"]),
             rate(row["new"]["all"]["ans3"], row["new"]["all"]["answerable"]),
             rate(row["all"]["all"]["ans3"], row["all"]["all"]["answerable"]),
+            rate(row["old"]["zh-TW"]["ans3"], row["old"]["zh-TW"]["answerable"]),
+            rate(row["all"]["all"]["ans5"], row["all"]["all"]["answerable"]),
             rate(
                 row["all"]["all"]["unanswerable_with_passages"],
                 row["all"]["all"]["unanswerable"],
@@ -177,9 +195,12 @@ def sweep_markdown(rows: list[dict]) -> str:
     return markdown_table(
         [
             "KNOWLEDGE_MIN_SIMILARITY",
+            "KNOWLEDGE_CJK_KEYWORD_WEIGHT",
             "ans@3 old",
             "ans@3 new",
             "ans@3 all",
+            "ans@3 old zh-TW",
+            "ans@5 all",
             "unanswerable with passages",
             "unanswerable with a vector hit",
         ],
@@ -194,6 +215,11 @@ def main() -> None:
     parser.add_argument(
         "--sweep", help="comma-separated KNOWLEDGE_MIN_SIMILARITY values"
     )
+    parser.add_argument(
+        "--cjk-weights",
+        default="",
+        help="comma-separated KNOWLEDGE_CJK_KEYWORD_WEIGHT values for --sweep",
+    )
     parser.add_argument("--out-dir", type=Path, default=RESULTS_DIR)
     args = parser.parse_args()
 
@@ -206,8 +232,17 @@ def main() -> None:
         if args.search != "hybrid":
             parser.error("--sweep needs --search hybrid")
         rows = []
-        for value in [float(v) for v in args.sweep.split(",")]:
+        weights = [float(v) for v in args.cjk_weights.split(",") if v] or [
+            settings.KNOWLEDGE_CJK_KEYWORD_WEIGHT
+        ]
+        pairs = [
+            (float(value), weight)
+            for value in args.sweep.split(",")
+            for weight in weights
+        ]
+        for value, weight in pairs:
             settings.KNOWLEDGE_MIN_SIMILARITY = value
+            settings.KNOWLEDGE_CJK_KEYWORD_WEIGHT = weight
             report = evaluate(golden, services.search)
             hits = sum(
                 row["top_similarity"] is not None
@@ -217,6 +252,7 @@ def main() -> None:
             rows.append(
                 {
                     "min_similarity": value,
+                    "cjk_weight": weight,
                     **report["summary"],
                     "vector_hits_unanswerable": hits,
                 }
@@ -224,7 +260,7 @@ def main() -> None:
         table = sweep_markdown(rows)
         print(table)
         (args.out_dir / "retrieval_hybrid_sweep.md").write_text(
-            "# KNOWLEDGE_MIN_SIMILARITY sweep\n\nHybrid search, top 3, "
+            "# KNOWLEDGE_MIN_SIMILARITY sweep\n\nHybrid search, top 3 and 5, "
             "`ml/golden/questions.jsonl`. Produced by "
             "`ml/eval_retrieval.py --sweep`.\n\n" + table + "\n",
             encoding="utf-8",
@@ -236,6 +272,7 @@ def main() -> None:
     report = evaluate(golden, services.search)
     report["search"] = args.search
     report["min_similarity"] = settings.KNOWLEDGE_MIN_SIMILARITY
+    report["cjk_weight"] = settings.KNOWLEDGE_CJK_KEYWORD_WEIGHT
     table = to_markdown(report)
     print(table)
 
@@ -249,7 +286,7 @@ def main() -> None:
     )
     (args.out_dir / f"retrieval_{args.search}.md").write_text(
         "# Retrieval on the golden set\n\n"
-        f"{detail} (`knowledge.index.search`, top 3, no source-type filter) on "
+        f"{detail} (`knowledge.index.search`, top 3 and 5, no source-type filter) on "
         "`ml/golden/questions.jsonl`. Produced by `ml/eval_retrieval.py "
         f"--search {args.search}`; column meanings are in its docstring.\n\n"
         f"{table}\n",

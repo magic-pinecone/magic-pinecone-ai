@@ -130,11 +130,33 @@ def oia_pages() -> list[Document]:
     return documents
 
 
+GOV_GUIDE_TITLES_EN = {
+    "mol-work-permit-simplified": "Simpler work permit documents for overseas "
+    "Chinese and foreign students",
+    "wda-summer-hours": "Work permit for overseas Chinese and foreign students: "
+    "no 20-hour weekly limit in winter and summer vacations",
+    "ocac-work-permit": "How overseas Chinese students apply for a work permit",
+    "nhi-students": "National Health Insurance for overseas Chinese and foreign "
+    "students in Taiwan",
+    "mol-student-labor-insurance": "Labor insurance, employment insurance and "
+    "labor pension for student workers",
+    "nisa-faq-arc": "Resident certificate (ARC) for international students: who "
+    "applies, deadlines and steps",
+    "nisa-faq-graduation-extension": "Resident certificate deadlines and staying "
+    "after graduation",
+    "nia-stay-after-graduation": "Staying in Taiwan after graduation and avoiding "
+    "scams",
+    "nia-hotline": "Service contacts and the 1990 hotline for foreigners in Taiwan",
+}
+
+
 def gov_guide_documents() -> list[Document]:
     return [
         Document(
             id=article["id"],
-            title=article["title"],
+            title=" / ".join(
+                filter(None, (GOV_GUIDE_TITLES_EN.get(article["id"]), article["title"]))
+            ),
             url=article["url"],
             topic=article["topic"],
             source_type="gov_guide",

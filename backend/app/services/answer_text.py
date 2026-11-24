@@ -46,7 +46,9 @@ SYSTEM_PROMPT = (
     "passages in the user message; they come from official NCU pages and "
     "Magic Pinecone's campus data.\n"
     "Rules:\n"
-    "- Answer in the language of the question.\n"
+    "- Answer in the language of the question. Translate facts from passages "
+    "written in another language; keep numbers, URLs and official names as "
+    "written.\n"
     "- Answer with short bullet points, each starting with '- '.\n"
     "- End every bullet with the number of the passage it comes from, like [1].\n"
     "- Copy numbers, amounts, dates, URLs and the names of forms, offices and "
@@ -133,6 +135,7 @@ def is_refusal(answer: str) -> bool:
 
 _NUMBER = re.compile(r"\d+(?:[.,]\d+)*")
 _THOUSANDS_DOT = re.compile(r"\d{1,3}(?:\.\d{3})+")
+_ZERO_DECIMALS = re.compile(r"(?<=\d)\.0+$")
 _ENUMERATOR = re.compile(r"^\s*\d+[.)]\s+", re.M)
 
 _MONTHS = (
@@ -211,10 +214,11 @@ def _nfkc(text: str) -> str:
 
 
 def normalize_number(token: str) -> str:
-    """'1,000' and '1.000' and '1000' are the same number; '4.5' stays '4.5'."""
+    """'1,000', '1.000', '1000' and '1,000.00' are the same number; '4.5' stays."""
     token = token.replace(",", "")
     if _THOUSANDS_DOT.fullmatch(token):
         token = token.replace(".", "")
+    token = _ZERO_DECIMALS.sub("", token)
     if token.isdigit():
         token = token.lstrip("0") or "0"
     return token

@@ -7,9 +7,13 @@
     uv run --frozen python ../ml/make_teacher_data.py -n 2000 --out ../ml/data/train.jsonl
 
 Each example shows the student one passage that holds the answer plus one or
-two distractor passages from other documents. For a refusal example the
+more distractor passages from other documents. For a refusal example the
 answering passage is hidden from the student, so the right output is the fixed
-refusal sentence with the OIA contact.
+refusal sentence with the OIA contact. A hard refusal (`--hard-refusal-rate`)
+shows instead what the search returns for the question without the answering
+document, and is kept only when the teacher confirms that those passages do
+not answer it: the student learns to refuse when related passages lack the
+answer.
 
 The teacher writes the question and, for answer examples, the bulleted answer.
 An example is kept only if it passes `clean_example`; rejected ones go to
@@ -57,6 +61,7 @@ DEFAULT_LANG_MIX = "en=0.55,zh-TW=0.15,vi=0.15,id=0.15"
 DEFAULT_REFUSAL_RATE = 0.18
 DEFAULT_MULTI_RATE = 0.10
 DEFAULT_HARD_RATE = 0.70
+DEFAULT_HARD_REFUSAL_RATE = 0.60
 DEFAULT_TYPE_MIX = (
     "oia_page=0.40,gov_guide=0.14,graduation_language=0.07,intl_program=0.07,"
     "credits=0.08,service_learning=0.04,contact=0.03,place=0.06,destination=0.04,"
@@ -87,6 +92,7 @@ LANG_NAMES = {
 }
 _CJK = re.compile(r"[一-鿿]")
 _BULLET = re.compile(r"^\s*[*•·]\s+", re.M)
+_QUOTED = re.compile(r"\([^)]*\)|（[^）]*）|「[^」]*」|https?://\S+")
 
 
 def looks_chinese(text: str) -> bool:
@@ -94,6 +100,15 @@ def looks_chinese(text: str) -> bool:
     question does not count. Cannot tell en, vi and id apart."""
     letters = [char for char in text if char.isalpha()]
     return len(_CJK.findall(text)) > 0.3 * max(1, len(letters))
+
+
+def in_language(answer: str, lang: str) -> bool:
+    """Is the answer written in its language? Text in parentheses or 「」 and
+    URLs are left out, so a Chinese name may follow its translation."""
+    text = _QUOTED.sub(" ", answer)
+    letters = [char for char in text if char.isalpha()]
+    share = len(_CJK.findall(text)) / max(1, len(letters))
+    return share > 0.3 if lang == "zh-TW" else share <= 0.1
 
 
 TEACHER_SYSTEM = (
@@ -112,6 +127,9 @@ that passage [{gold}] answers. Then write the assistant's answer in {language}.
 
 Requirements for the answer:
 - 1 to 4 short bullet points, each starting with "- ".
+- Write the answer only in {language}. Translate facts taken from \
+passages in another language; keep numbers, URLs and official names as \
+written (an original Chinese name may follow its translation in parentheses).
 - Every bullet ends with the number of the passage it is taken from, e.g. [{gold}].
 - Use only facts written in the passages. Copy numbers, amounts, dates, URLs \
 and names of forms, offices and systems exactly as written.
@@ -147,6 +165,9 @@ that can only be answered with facts from both passage [{gold}] and passage \
 
 Requirements for the answer:
 - 2 to 4 short bullet points, each starting with "- ".
+- Write the answer only in {language}. Translate facts taken from \
+passages in another language; keep numbers, URLs and official names as \
+written (an original Chinese name may follow its translation in parentheses).
 - Every bullet ends with the number of the passage it is taken from; both \
 [{gold}] and [{second}] must be cited at least once.
 - Use only facts written in the passages. Copy numbers, amounts, dates, URLs \
@@ -156,6 +177,16 @@ and names of forms, offices and systems exactly as written.
 If the two passages share no subject a student could ask about together, \
 reply {{"skip": true}}.
 Otherwise reply {{"question": "...", "answer": "- ... [{gold}]\\n- ... [{second}]"}}"""
+
+
+VERIFY_TASK = """Passages:
+
+{passages}
+
+Question: {question}
+
+Do these passages contain the answer to the question, fully or in part? \
+Reply {{"answered": true}} or {{"answered": false}}."""
 
 
 @dataclass(frozen=True)
@@ -263,6 +294,7 @@ def make_plan(
     multi_rate: float = 0.0,
     hard_rate: float = 0.0,
     neighbor=None,
+    hard_refusal_rate: float = 0.0,
 ) -> list[Task]:
     """`count` tasks. Task i depends only on the seed and i, not on `count`,
     so a rerun with a larger count resumes and then continues the same plan."""
@@ -295,7 +327,8 @@ def make_plan(
         else:
             kind = "answer"
         lang = rng.choices(langs, weights)[0]
-        hard = kind == "answer" and rng.random() < hard_rate
+        rate = {"answer": hard_rate, "refusal": hard_refusal_rate}.get(kind, 0.0)
+        hard = rate > 0 and rng.random() < rate
         others = [p for p in passages if p["id"] != gold["id"]]
         second, second_number = None, 0
         if kind == "multi":
@@ -348,6 +381,8 @@ def hard_distractors(task: Task, question: str, search, starts: dict) -> tuple:
             "start": starts.get(key, -1),
             "passage": result["passage"],
         }
+        if task.kind == "refusal" and candidate["id"] == task.gold["id"]:
+            continue
         if not any(lines_overlap(candidate, p) for p in answering):
             found.append(candidate)
     replacements = iter(found[:wanted])
@@ -428,6 +463,8 @@ def clean_example(
         return None, "not_bulleted"
     if OIA_EMAIL in answer.casefold():
         return None, "answer_is_refusal"
+    if not in_language(answer, task.lang):
+        return None, "answer_not_in_language"
     cited = cited_numbers(answer)
     if not cited or not all(cited_numbers(line) for line in lines):
         return None, "bullet_without_citation"
@@ -449,11 +486,32 @@ def swap_distractors(
 ) -> tuple[Task, str]:
     shown = hard_distractors(task, example["question"], search, starts)
     swapped = replace(task, shown=shown)
+    if task.kind == "refusal":
+        return swapped, "ok"
     source_text = "\n".join(p["title"] + "\n" + p["passage"] for p in shown)
     missing = unsupported_numbers(example["answer"], source_text)
     if missing:
         return task, "number_not_in_passages_after_swap: " + ", ".join(missing)
     return swapped, "ok"
+
+
+def verify_messages(task: Task, question: str) -> list[dict]:
+    content = VERIFY_TASK.format(
+        passages=format_passages(list(task.shown)), question=question
+    )
+    return [
+        {"role": "system", "content": TEACHER_SYSTEM},
+        {"role": "user", "content": content},
+    ]
+
+
+def refusal_confirmed(raw: str) -> tuple[bool, str]:
+    data = parse_json_object(strip_reasoning(raw))
+    if data is None or not isinstance(data.get("answered"), bool):
+        return False, "verify_not_json"
+    if data["answered"]:
+        return False, "visible_passages_answer"
+    return True, "ok"
 
 
 def to_row(task: Task, example: dict, teacher_name: str) -> dict:
@@ -491,6 +549,8 @@ class FakeTeacher:
     def chat(self, messages: list[dict], **_: object) -> str:
         self.calls += 1
         prompt = messages[-1]["content"]
+        if "Do these passages contain the answer" in prompt:
+            return json.dumps({"answered": self.calls % 3 == 0})
         refusal = "Hidden passage" in prompt
         pair = re.search(
             r"facts from both passage \[(\d+)\] and passage \[(\d+)\]", prompt
@@ -567,6 +627,9 @@ def main() -> None:
     parser.add_argument("--type-mix", default=DEFAULT_TYPE_MIX)
     parser.add_argument("--multi-rate", type=float, default=DEFAULT_MULTI_RATE)
     parser.add_argument("--hard-rate", type=float, default=DEFAULT_HARD_RATE)
+    parser.add_argument(
+        "--hard-refusal-rate", type=float, default=DEFAULT_HARD_REFUSAL_RATE
+    )
     parser.add_argument("--search", choices=("keyword", "hybrid"), default="hybrid")
     parser.add_argument("--workers", type=int, default=1)
     parser.add_argument("--dry-run", action="store_true", help="use the fake teacher")
@@ -630,6 +693,7 @@ def main() -> None:
         args.multi_rate,
         args.hard_rate,
         neighbor,
+        args.hard_refusal_rate,
     )
     done = {row["id"] for row in read_jsonl(out)} | {
         row["id"] for row in read_jsonl(rejects)
@@ -639,34 +703,39 @@ def main() -> None:
         f"plan: {len(plan)} tasks, {len(plan) - len(todo)} already done, output {out}"
     )
 
-    def ask(task: Task) -> str | EndpointError:
+    def chat(task: Task, messages: list[dict]) -> str:
+        return teachers[task.teacher].chat(
+            messages, temperature=args.temperature, max_tokens=args.max_tokens
+        )
+
+    def produce(task: Task) -> tuple[Task, dict | None, str, str] | EndpointError:
         try:
-            return teachers[task.teacher].chat(
-                teacher_messages(task),
-                temperature=args.temperature,
-                max_tokens=args.max_tokens,
-            )
+            raw = chat(task, teacher_messages(task))
+            example, reason = clean_example(raw, task, golden)
+            if example and task.hard:
+                task, reason = swap_distractors(task, example, services.search, starts)
+                example = example if reason == "ok" else None
+            if example and task.hard and task.kind == "refusal":
+                verdict = chat(task, verify_messages(task, example["question"]))
+                confirmed, reason = refusal_confirmed(verdict)
+                example = example if confirmed else None
         except EndpointError as error:
             return error
+        return task, example, reason, raw
 
     kept, reasons, number, stopped = 0, {}, 0, False
     batch = max(1, args.workers) * 4
     with ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
         for start in range(0, len(todo), batch):
             chunk = todo[start : start + batch]
-            for task, raw in zip(chunk, pool.map(ask, chunk), strict=True):
+            for planned, result in zip(chunk, pool.map(produce, chunk), strict=True):
                 number += 1
-                teacher = teachers[task.teacher]
-                if isinstance(raw, EndpointError):
-                    print(f"stopping at {task.id}: {raw}")
+                teacher = teachers[planned.teacher]
+                if isinstance(result, EndpointError):
+                    print(f"stopping at {planned.id}: {result}")
                     stopped = True
                     break
-                example, reason = clean_example(raw, task, golden)
-                if example and task.hard:
-                    task, reason = swap_distractors(
-                        task, example, services.search, starts
-                    )
-                    example = example if reason == "ok" else None
+                task, example, reason, raw = result
                 if example:
                     append_jsonl(out, to_row(task, example, teacher.name))
                     kept += 1

@@ -29,20 +29,41 @@ _nfkc = answer_text._nfkc
 _DASHES = str.maketrans({"–": "-", "—": "-", "‐": "-", "‑": "-", "−": "-"})
 
 
+_NUMBER_WORDS = dict(
+    zip(
+        "one two three four five six seven eight nine ten eleven twelve".split(),
+        map(str, range(1, 13)),
+        strict=True,
+    )
+)
+_NUMBER_WORD = re.compile(r"\b(" + "|".join(_NUMBER_WORDS) + r")\b")
+_RANGE = re.compile(r"(?<=\d)\s*(?:-|~|to|至|到)\s*(?=\d)")
+
+
+def spell_digits(text: str) -> str:
+    """English number words one to twelve written as digits ("four" -> "4")."""
+    return _NUMBER_WORD.sub(lambda m: _NUMBER_WORDS[m.group(1)], text)
+
+
 def squash(text: str) -> str:
-    """Case, width, dash style and whitespace removed, for substring tests."""
-    return re.sub(r"\s+", "", _nfkc(text).casefold().translate(_DASHES))
+    """Case, width, dash style, range words ("9 to 5" = "9-5"), English number
+    words and whitespace removed or unified, for substring tests."""
+    text = spell_digits(_nfkc(text).casefold().translate(_DASHES))
+    return re.sub(r"\s+", "", _RANGE.sub("-", text))
 
 
 def contains_fact(answer: str, fact: str) -> bool:
     """Is the golden `must_contain` string `fact` in `answer`?
 
     A fact that is a bare number has to appear as a whole number ("20" is not
-    found in "2026", "1,000" is found in "1000"); anything else is a substring
-    test that ignores case, whitespace and dash style.
+    found in "2026", "1,000" is found in "1000" and "five" counts as "5");
+    anything else is a substring test that ignores case, whitespace, dash
+    style, range words and English number words (see `squash`).
     """
     if _NUMBER.fullmatch(fact.strip()):
-        return normalize_number(fact.strip()) in numbers(answer)
+        return normalize_number(fact.strip()) in numbers(
+            spell_digits(_nfkc(answer).casefold())
+        )
     return squash(fact) in squash(answer)
 
 

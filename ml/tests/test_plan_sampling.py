@@ -9,10 +9,12 @@ from make_teacher_data import (
     clean_example,
     corpus_passages,
     hard_distractors,
+    in_language,
     lines_overlap,
     make_plan,
     parse_lang_mix,
     parse_type_mix,
+    refusal_confirmed,
     swap_distractors,
     teacher_messages,
 )
@@ -145,3 +147,46 @@ def test_swap_rejects_a_number_that_the_new_distractors_do_not_support():
 
     swapped, reason = swap_distractors(task, example, search, {})
     assert swapped is task and reason.startswith("number_not_in_passages_after_swap")
+
+
+def test_hard_refusal_shows_search_results_from_other_documents_only():
+    gold = {"id": "a", "title": "A", "start": 0, "passage": "Fee 100"}
+    shown = (
+        {"id": "r1", "title": "R1", "start": 0, "passage": "random one"},
+        {"id": "r2", "title": "R2", "start": 0, "passage": "random two"},
+    )
+    task = Task("t", "refusal", "en", 0, gold, shown, 0, hard=True)
+    example = {"question": "How much is the fee?", "answer": "refused"}
+
+    def search(question, limit):
+        return [
+            {"id": "a", "title": "A", "passage": "Other part of A"},
+            {"id": "b", "title": "B", "passage": "Fees in general"},
+            {"id": "c", "title": "C", "passage": "Payment desk 0800-000-000"},
+        ]
+
+    swapped, reason = swap_distractors(task, example, search, {})
+    assert reason == "ok"
+    assert [p["id"] for p in swapped.shown] == ["b", "c"]
+
+
+def test_refusal_is_kept_only_when_the_teacher_finds_no_answer():
+    assert refusal_confirmed('{"answered": false}') == (True, "ok")
+    assert refusal_confirmed('{"answered": true}') == (
+        False,
+        "visible_passages_answer",
+    )
+    assert refusal_confirmed("maybe") == (False, "verify_not_json")
+
+
+def test_plan_marks_hard_refusals_only_when_asked():
+    assert not any(t.hard for t in plan() if t.kind == "refusal")
+    hard = [t.hard for t in plan(hard_refusal_rate=1.0) if t.kind == "refusal"]
+    assert hard and all(hard)
+
+
+def test_answer_language():
+    assert in_language("- The fine is NT$150,000 (新臺幣十五萬元) [2]", "en")
+    assert not in_language("- The fine is 新臺幣三萬元以上十五萬元以下之罰鍰 [2]", "en")
+    assert in_language("- 罰鍰新臺幣三萬元以上 [1]", "zh-TW")
+    assert not in_language("- The fine is NT$150,000 [1]", "zh-TW")
