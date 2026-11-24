@@ -170,29 +170,31 @@ uv run --frozen python ../ml/eval_retrieval.py --search hybrid --sweep 0.3,0.4,0
 `hybrid` embeds all passages through an OpenAI-compatible `/v1/embeddings`
 endpoint (run here: `ggml-org/embeddinggemma-300M-GGUF`, Q8_0, in
 llama-server `--embeddings`), keeps the vectors in a SQLite file and fuses the
-keyword and vector rankings. `ans@3`, top 3, no source-type filter,
-`KNOWLEDGE_MIN_SIMILARITY` 0.45:
+keyword and vector rankings. Top 3 and top 5, no source-type filter,
+`KNOWLEDGE_MIN_SIMILARITY` 0.40 (the default):
 
-| questions | answerable | keyword ans@3 | hybrid ans@3 |
-|---|---|---|---|
-| old (first 60) | 51 | 45/51 (88%) | 44/51 (86%) |
-| new (76) | 66 | 43/66 (65%) | 51/66 (77%) |
-| all | 117 | 88/117 (75%) | 95/117 (81%) |
+| questions | answerable | keyword ans@3 | hybrid ans@3 | keyword ans@5 | hybrid ans@5 |
+|---|---|---|---|---|---|
+| old (first 60) | 51 | 44/51 (86%) | 46/51 (90%) | 47/51 (92%) | 47/51 (92%) |
+| new (76) | 66 | 45/66 (68%) | 54/66 (82%) | 48/66 (73%) | 56/66 (85%) |
+| all | 117 | 89/117 (76%) | 100/117 (85%) | 95/117 (81%) | 103/117 (88%) |
 
 Per language and per source type: `results/retrieval_keyword.md` and
 `results/retrieval_hybrid.md`. Hybrid helps most the questions in English about
-the Chinese government guides (`gov_guide` 3/16 keyword, 8/16 hybrid) and
-costs the old zh-TW questions (10/10 keyword, 7/10 hybrid). The keyword number
-on the old set is the 45/51 that the larger corpus brought down from 49/51.
+the Chinese government guides (`gov_guide` ans@3 5/16 keyword, 10/16 hybrid) and
+the vi and id questions (ans@3 20/32 keyword, 25/32 hybrid, all questions).
+The assistant passes five passages to the model (`TOP_K` 5), so ans@5 is the
+cap on `answer` for retrieved prompts.
 
-Sweep of `KNOWLEDGE_MIN_SIMILARITY` (`results/retrieval_hybrid_sweep.md`): up to
-0.35 the answers found stay at 97/117; 0.40 loses one question, 0.45 (the
-default) two, 0.55 seven. The unanswerable questions that still get a vector
-hit fall from 19 of 19 (0.25) to 12 (0.40), 10 (0.45) and 1 (0.60); they
-always keep their keyword passages, so the threshold does not make the search
-say "not found". 0.40 is the highest value that keeps `ans@3` within one
-question of the best; the choice rests on 117 questions and one embedding
-model.
+Sweep of `KNOWLEDGE_MIN_SIMILARITY` (`results/retrieval_hybrid_sweep.md`):
+ans@3 on all questions is 101/117 at 0.30 and 0.35, 100/117 at 0.40, 99/117 at
+0.45 and 98/117 at 0.50; ans@5 is 104, 104, 103, 102 and 99. The unanswerable
+questions that still get passages fall from 19 of 19 (0.30, 0.35) to 18 (0.40)
+and 17 (0.45, 0.50), and the number of unanswerable questions with a vector hit
+from 18 (0.30) to 12 (0.40) and 8 (0.50). They always keep their keyword
+passages, so the threshold does not make the search say "not found". 0.40 is
+the highest value that keeps ans@3 within one question of the best; the choice
+rests on 117 questions and one embedding model.
 
 ### 3. Teacher data (teacher on Colab, script on the laptop)
 
@@ -251,16 +253,23 @@ print the URL or the key.
   each row records `teacher`. To add a teacher to an existing file later, run
   it alone with a different `--seed` and the same `--out`.
 
-Run for the tuned student below (gpt-oss-20b behind vLLM, `-n 3600
---workers 48 --max-tokens 3000`): 3479 kept, 121 rejected (69
-`number_not_in_passages`, 27 `not_json`, 9 `bullet_without_citation`, 6
-`matches_golden_question`, 5 `answer_is_refusal`, 2 `teacher_skipped`, 2
-`wrong_language`, 1 `not_bulleted`). By kind: 2539 answer, 317 multi, 623
-refusal; by language: 1934 en, 518 vi, 518 id, 509 zh-TW; by source type: 1509
-oia_page, 531 gov_guide, 287 credits, 267 intl_program, 248 graduation_language,
-233 place, 163 destination, 142 service_learning, 99 contact; 1773 rows with
-retrieved and 1706 with random distractors. Some vi and id answers carry
-English fragments copied from the passages.
+Run for the tuned student below (gpt-oss-20b behind vLLM, `-n 4200 --seed 5
+--refusal-rate 0.22 --workers 16 --max-tokens 3072`; five-passage prompts, 2 to
+4 distractors, `--hard-refusal-rate` 0.6): 3596 kept, 604 rejected (232
+`visible_passages_answer`, 210 `answer_not_in_language`, 77
+`number_not_in_passages`, 39 `not_json`, 22 `bullet_without_citation`, 5
+`matches_golden_question`, 5 `teacher_skipped`, 4
+`number_not_in_passages_after_swap`, 3 `wrong_language`, 2 `answer_is_refusal`,
+2 `question_too_long`, 2 `not_bulleted`, 1 `second_passage_not_cited`). By kind:
+2553 answer, 358 multi, 685 refusal (298 of them with passages retrieved for the
+question minus the answering document, 387 with random passages); by language:
+2014 en, 541 id, 527 zh-TW, 514 vi; by source type: 1537 oia_page, 530
+gov_guide, 327 credits, 275 intl_program, 239 graduation_language, 237 place,
+193 service_learning, 153 destination, 105 contact; 2102 rows with retrieved and
+1494 with random distractors. With the default of 1024 reply tokens a test of 40
+tasks lost 8 to empty or cut-off JSON (the model's reasoning used the budget);
+3072 brought `not_json` to 39 of 4200. Some vi and id answers carry English
+fragments copied from the passages.
 
 Read a sample of the output before training. The cleaning catches invented
 numbers and broken citations; it cannot tell whether an answer is otherwise
@@ -468,49 +477,71 @@ With `--passages retrieved`, `answer` is capped by retrieval (`ans@3` above);
 
 #### Run on the larger corpus (Gemma 4 E2B, Colab A100)
 
-`unsloth/gemma-4-E2B-it`, the 3479 rows above (3306 train, 173 held out), 3
-epochs, `--batch-size 8 --grad-accum 1`, rank 16, `--merge --gguf q4_k_m`,
-about 15 minutes for 1242 steps. Before the run `train_lora.py` decodes the
-label sequence of the first example (`check_labels`, also `--labels-only`): 124
-of 775 tokens carry loss and they decode to the answer plus the end-of-turn
-token, no system, passage or question text. Training loss 1.34 at step 10, about
-0.23 from the second epoch on; held-out loss 0.395 after the last epoch. Unsloth
-reports "double BOS tokens" and removes one itself.
+`unsloth/gemma-4-E2B-it`, the 3596 rows above (3417 train, 179 held out), 3
+epochs, `--batch-size 8 --grad-accum 1 --max-seq-length 3072`, rank 16,
+`--merge --gguf q4_k_m`, 1284 steps in 21 minutes. Before the run
+`train_lora.py` decodes the label sequence of the first example (`--labels-only`):
+176 of 1116 tokens carry loss and they decode to the answer plus the
+end-of-turn token, no system, passage or question text. Mean training loss
+0.294 (0.16 to 0.23 in the last epoch); held-out loss 0.395 after the last
+epoch.
 
-Generation scores of this run (Q4_K_M GGUF, llama-server `--jinja --reasoning
-off -c 4096`, temperature 0, hybrid search for the retrieved prompts; base is
-`unsloth/gemma-4-E2B-it-GGUF` Q4_K_M). Columns as in section 6, all languages:
+Generation scores (Q4_K_M GGUF, llama-server `--jinja --reasoning off -c 4096`,
+temperature 0, hybrid search and five passages for the retrieved prompts; base
+is `unsloth/gemma-4-E2B-it-GGUF` Q4_K_M, v4 is the tuned model of the previous
+data round, v5 the model trained on the data above). Columns as in section 6,
+all languages; `refuse` is over the unanswerable questions, `num-err` over all
+replies:
 
-| questions | passages | model | answer | answer (ctx) | cite | refuse | refuse (no ctx) | over-refuse |
-|---|---|---|---|---|---|---|---|---|
-| old | retrieved | base | 41/51 | 41/44 | 39/51 | 7/9 | 0/7 | 0/44 |
-| old | retrieved | tuned | 41/51 | 41/44 | 39/51 | 9/9 | 0/7 | 0/44 |
-| old | oracle | base | 49/51 | 49/51 | 49/51 | 7/9 | n/a | 0/51 |
-| old | oracle | tuned | 48/51 | 48/51 | 42/51 | 9/9 | n/a | 0/51 |
-| new | retrieved | base | 46/66 | 46/54 | 56/66 | 5/10 | 3/12 | 0/54 |
-| new | retrieved | tuned | 44/66 | 44/54 | 55/66 | 10/10 | 3/12 | 0/54 |
-| new | oracle | base | 56/66 | 56/66 | 65/66 | 4/10 | n/a | 0/66 |
-| new | oracle | tuned | 57/66 | 57/66 | 63/66 | 10/10 | n/a | 1/66 |
+| questions | passages | model | answer | answer (ctx) | cite | refuse | refuse (no ctx) | over-refuse | num-err |
+|---|---|---|---|---|---|---|---|---|---|
+| old | retrieved | base | 42/51 | 42/47 | 43/51 | 6/9 | 0/4 | 0/47 | 0/60 |
+| old | retrieved | v4 | 43/51 | 43/47 | 43/51 | 9/9 | 0/4 | 0/47 | 0/60 |
+| old | retrieved | v5 | 35/51 | 35/47 | 33/51 | 9/9 | 1/4 | 6/47 | 0/60 |
+| old | oracle | base | 48/51 | 48/51 | 47/51 | 6/9 | n/a | 0/51 | 0/60 |
+| old | oracle | v4 | 44/51 | 44/51 | 44/51 | 9/9 | n/a | 0/51 | 1/60 |
+| old | oracle | v5 | 41/51 | 41/51 | 41/51 | 9/9 | n/a | 4/51 | 0/60 |
+| new | retrieved | base | 51/66 | 51/58 | 59/66 | 2/10 | 1/8 | 0/58 | 2/76 |
+| new | retrieved | v4 | 52/66 | 52/58 | 59/66 | 8/10 | 2/8 | 0/58 | 1/76 |
+| new | retrieved | v5 | 53/66 | 53/58 | 56/66 | 10/10 | 6/8 | 1/58 | 1/76 |
+| new | oracle | base | 61/66 | 61/66 | 66/66 | 2/10 | n/a | 0/66 | 2/76 |
+| new | oracle | v4 | 63/66 | 63/66 | 64/66 | 8/10 | n/a | 0/66 | 2/76 |
+| new | oracle | v5 | 58/66 | 58/66 | 63/66 | 10/10 | n/a | 2/66 | 3/76 |
 
-Reading: the tuned model matches the base on answer accuracy within a few
-questions and refuses every unanswerable question (19/19 against 12/19 for the
-base, retrieved prompts), which is what the training data was built for. It
-does not answer more questions than the base. It also refuses less when the
-passages lack the answer (`refuse (no ctx)` 3/12 in both) and has the lowest
-`cite` on the old zh-TW questions (4/10 oracle, 3/10 retrieved): in the four cases read by hand these are
-answers drawn from a government-guide page that states the same fact
-(for example the work-permit hours from the Workforce Development Agency
-page), whereas the old golden items only list the OIA page as the expected
-source. The old items have no `alt_source_ids` for the newer documents, so
-`cite` on them undercounts correct answers. One run per model, 51 and 66
-answerable questions: differences of one to three questions mean nothing.
-Per-language rows: `results/generation_comparison.md`.
+Split of the 117 answerable questions, retrieved prompts (old and new together):
+
+| outcome | base | v4 | v5 |
+|---|---|---|---|
+| correct | 93 | 95 | 88 |
+| passages lack the answer, model refused | 1 | 2 | 7 |
+| passages lack the answer, model answered | 11 | 10 | 5 |
+| passages have the answer, model refused | 0 | 0 | 7 |
+| passages have the answer, model answered wrongly | 12 | 10 | 10 |
+| of the last two rows, correct with oracle passages | 9 | 5 | 9 of 17 |
+
+Reading: v5 refuses every unanswerable question (19/19 against 17/19 for v4 and
+8/19 for the base) and refuses more often when the passages lack the answer (7
+of 12, against 2 and 1), which is what the new hard-refusal data was built
+for. It pays for it with over-refusal: 7 questions whose passages hold the
+answer were refused (v4 and the base: 0), and its `answer` on the old
+questions fell from 43/51 to 35/51 (retrieved) and from 44/51 to 41/51
+(oracle). On the new questions retrieved `answer` is 53/66 against 52/66 for
+v4, within noise. Of the 17 questions where v5 had the answer in its passages
+and failed, 2 are scoring artifacts (a paraphrase of "ARC" and "Certificate of
+Enrollment", and "128" written as "一百二十八"), 1 is borderline (the
+website is named, its URL is not given) and 14 are errors: 7 refusals, a wrong
+figure (15 days for 30), the wrong semester row, an off-topic answer, and
+three answers that point to the Immigration Bureau site instead of giving the
+OIA download link. This reading is of the replies against `must_contain`, not
+of the passages. Per-language rows: `results/generation_comparison.md`. One run per model, 51 and 66 answerable
+questions: differences of one to three questions mean nothing; the drop on the
+old set (8 questions) is larger than that.
 
 ## What has been tested
 
 Run on the development machine (no GPU, no network access to a model):
 
-- `pytest ml/tests`: 392 passed.
+- `pytest ml/tests`: 397 passed.
 - `eval_retrieval.py`: real run, numbers above.
 - `make_teacher_data.py --dry-run`, including resume and a larger `-n`.
 - `eval_generation.py --dry-run`, both `--passages` modes.
