@@ -20,3 +20,9 @@ def test_gemma3_drops_it_because_its_tokenizer_adds_one():
 
 def test_every_family_says_what_to_do_with_bos():
     assert all("strip_bos" in family for family in train_lora.FAMILIES.values())
+
+
+def test_learning_rate_defaults_follow_the_training_mode():
+    assert train_lora.learning_rate(None, False) == train_lora.LORA_LEARNING_RATE
+    assert train_lora.learning_rate(None, True) == train_lora.FULL_LEARNING_RATE
+    assert train_lora.learning_rate(1e-5, False) == 1e-5

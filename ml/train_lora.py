@@ -70,6 +70,16 @@ def training_text(rendered: str, strip_bos: bool) -> str:
     return rendered.removeprefix("<bos>") if strip_bos else rendered
 
 
+LORA_LEARNING_RATE = 2e-4
+FULL_LEARNING_RATE = 5e-5
+
+
+def learning_rate(given: float | None, full_finetune: bool) -> float:
+    if given is not None:
+        return given
+    return FULL_LEARNING_RATE if full_finetune else LORA_LEARNING_RATE
+
+
 LORA_TARGETS = [
     "q_proj",
     "k_proj",
@@ -151,21 +161,22 @@ def train_unsloth(args, family: dict, train_rows: list[dict], eval_rows: list[di
         model_name=args.model,
         max_seq_length=args.max_seq_length,
         dtype=None,
-        load_in_4bit=args.load_in_4bit,
-        full_finetuning=False,
+        load_in_4bit=args.load_in_4bit and not args.full_finetune,
+        full_finetuning=args.full_finetune,
     )
-    model = FastModel.get_peft_model(
-        model,
-        finetune_vision_layers=False,  # text only
-        finetune_language_layers=True,
-        finetune_attention_modules=True,
-        finetune_mlp_modules=True,
-        r=args.rank,
-        lora_alpha=args.alpha,
-        lora_dropout=args.dropout,
-        bias="none",
-        random_state=args.seed,
-    )
+    if not args.full_finetune:
+        model = FastModel.get_peft_model(
+            model,
+            finetune_vision_layers=False,  # text only
+            finetune_language_layers=True,
+            finetune_attention_modules=True,
+            finetune_mlp_modules=True,
+            r=args.rank,
+            lora_alpha=args.alpha,
+            lora_dropout=args.dropout,
+            bias="none",
+            random_state=args.seed,
+        )
     tokenizer = get_chat_template(tokenizer, chat_template=family["chat_template"])
 
     def to_text(rows: list[dict]):
@@ -193,7 +204,7 @@ def train_unsloth(args, family: dict, train_rows: list[dict], eval_rows: list[di
             num_train_epochs=args.epochs,
             max_steps=args.max_steps,
             warmup_steps=args.warmup_steps,
-            learning_rate=args.learning_rate,
+            learning_rate=learning_rate(args.learning_rate, args.full_finetune),
             lr_scheduler_type="linear",
             weight_decay=0.001,
             optim="adamw_8bit",
@@ -216,11 +227,17 @@ def train_unsloth(args, family: dict, train_rows: list[dict], eval_rows: list[di
     if eval_rows:
         print("eval:", trainer.evaluate())
 
-    adapter = args.output / "adapter"
-    model.save_pretrained(str(adapter))
-    tokenizer.save_pretrained(str(adapter))
-    print(f"adapter saved to {adapter}")
-    if args.merge:
+    if args.full_finetune:
+        full = args.output / "model"
+        model.save_pretrained(str(full))
+        tokenizer.save_pretrained(str(full))
+        print(f"fine-tuned model saved to {full}")
+    else:
+        adapter = args.output / "adapter"
+        model.save_pretrained(str(adapter))
+        tokenizer.save_pretrained(str(adapter))
+        print(f"adapter saved to {adapter}")
+    if args.merge and not args.full_finetune:
         merged = args.output / "merged"
         model.save_pretrained_merged(str(merged), tokenizer, save_method="merged_16bit")
         print(f"merged 16-bit model saved to {merged}")
@@ -300,7 +317,7 @@ def train_peft(args, family_name: str, train_rows: list[dict], eval_rows: list[d
             num_train_epochs=args.epochs,
             max_steps=args.max_steps,
             warmup_steps=args.warmup_steps,
-            learning_rate=args.learning_rate,
+            learning_rate=learning_rate(args.learning_rate, False),
             lr_scheduler_type="linear",
             optim="adamw_torch_fused",
             bf16=bf16,
@@ -361,7 +378,18 @@ def main() -> None:
     parser.add_argument("--epochs", type=float, default=3.0)
     parser.add_argument("--max-steps", type=int, default=-1, help="overrides --epochs")
     parser.add_argument("--warmup-steps", type=int, default=10)
-    parser.add_argument("--learning-rate", type=float, default=2e-4)
+    parser.add_argument(
+        "--learning-rate",
+        type=float,
+        help=f"default {LORA_LEARNING_RATE} with LoRA, {FULL_LEARNING_RATE} with "
+        "--full-finetune",
+    )
+    parser.add_argument(
+        "--full-finetune",
+        action="store_true",
+        help="train all weights instead of a LoRA adapter (unsloth backend, 16-bit "
+        "loading); saves <output>/model, --gguf exports from it",
+    )
     parser.add_argument("--eval-fraction", type=float, default=0.05)
     parser.add_argument("--seed", type=int, default=3407)
     parser.add_argument("--merge", action="store_true", help="also save merged weights")
@@ -385,6 +413,8 @@ def main() -> None:
     if args.check_data:
         return
 
+    if args.full_finetune and args.backend != "unsloth":
+        parser.error("--full-finetune needs the unsloth backend")
     family_name = MODELS[args.model]
     args.output.mkdir(parents=True, exist_ok=True)
     if args.backend == "unsloth":

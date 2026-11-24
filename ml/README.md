@@ -299,6 +299,11 @@ not trained. `--backend peft` uses transformers + PEFT + TRL instead of Unsloth.
 `--model` also takes Unsloth's mirrors `unsloth/gemma-4-E2B-it`,
 `unsloth/gemma-3-1b-it` and `unsloth/gemma-3-270m-it`, which are not gated.
 
+`--full-finetune` (Unsloth backend) trains all weights instead of a LoRA
+adapter, loads the model in 16 bit, and saves it to `<output>/model`; the
+learning rate default drops from 2e-4 to 5e-5. It is meant for the 270m
+student, which is small enough to train in full.
+
 Notes from the runs on Colab. They were reported by the session that ran
 them and have not been repeated on another machine:
 
