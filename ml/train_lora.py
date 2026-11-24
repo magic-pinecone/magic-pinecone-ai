@@ -33,6 +33,7 @@ exports a GGUF. See ml/README.md for the manual llama.cpp route.
 
 import argparse
 import json
+import os
 import random
 from pathlib import Path
 
@@ -151,6 +152,7 @@ def check_labels(trainer, tokenizer, train_rows: list[dict]) -> None:
 
 
 def train_unsloth(args, family: dict, train_rows: list[dict], eval_rows: list[dict]):
+    os.environ.setdefault("UNSLOTH_DEFAULT_PACKING", "0")
     # Unsloth must be imported before transformers.
     from unsloth import FastModel  # isort: skip
     from datasets import Dataset
