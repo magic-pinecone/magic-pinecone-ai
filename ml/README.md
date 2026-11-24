@@ -7,10 +7,13 @@ OIA when the passages do not hold the answer. A large open-weight teacher
 students are LoRA fine-tuned on it. Languages: English, Traditional Chinese
 (zh-TW), Vietnamese (vi), Indonesian (id).
 
-Nothing here changes `backend/` or `app/`. The scripts import the backend's
-passage search (`backend/app/services/student_services.py`) and therefore run
-with the backend's environment. No model of PRC origin is used anywhere in this
-kit (teacher, students, and there are no embeddings); keep it that way.
+The scripts import the backend's knowledge index
+(`backend/app/services/knowledge/`) and therefore run with the backend's
+environment. The index covers the crawled OIA site, government guides, credits,
+service learning, graduation language, international programs, contacts,
+places and destinations (courses and clubs only with the production database).
+No model of PRC origin is used anywhere in this kit (teacher, students,
+embeddings: EmbeddingGemma); keep it that way.
 
 ## Files
 
@@ -20,8 +23,8 @@ kit (teacher, students, and there are no embeddings); keep it that way.
 | `checks.py` | Pure text checks: strip a reasoning channel, numbers not supported by the passages (both from `answer_text.py` too), `must_contain` matching, similarity to golden questions. |
 | `demo/` | A one-page demo of the backend's assistant chain; see "Demo page" below. |
 | `common.py` | Paths, import of the backend service, JSONL helpers, the OpenAI-compatible chat client (`httpx`). |
-| `golden/questions.jsonl` | 60 hand-written test questions (24 en, 12 each zh-TW / vi / id; 9 unanswerable). |
-| `eval_retrieval.py` | hit@1 / hit@3 / ans@3 of the backend's keyword search on the golden set. |
+| `golden/questions.jsonl` | 136 test questions: the first 60 hand-written against 8 documents (24 en, 12 each zh-TW / vi / id; 9 unanswerable), then 76 against the larger corpus (48 en, 12 zh-TW, 8 vi, 8 id; 10 unanswerable). |
+| `eval_retrieval.py` | hit@1 / hit@3 / ans@3 of the knowledge search on the golden set, `--search keyword\|hybrid`, and a sweep of `KNOWLEDGE_MIN_SIMILARITY`. |
 | `make_teacher_data.py` | Asks the teacher(s) for training examples and cleans them. |
 | `train_lora.py` | LoRA fine-tuning of a student (Unsloth, or PEFT + TRL). |
 | `eval_generation.py` | Runs the golden set through any OpenAI-compatible endpoint and scores it; keeps a comparison table across runs. |
@@ -35,10 +38,14 @@ git-ignored.
 ## Golden set
 
 Fields: `id`, `lang`, `question`, `answerable`, `source_id` (a document id of
-`student_services.load_documents()`, `null` when unanswerable), `must_contain`
+`knowledge.index.load_documents()`, `null` when unanswerable), `must_contain`
 (strings copied verbatim from that document that a correct answer must
 include), `needs_native_review`, and optionally:
 
+- `source_type` — only on the 76 newer questions (the first 60 lack it, which is
+  how the scripts tell "old" from "new"): the source type of the document, or
+  `none` when unanswerable. 44 of the 66 answerable newer questions are in
+  English, the rest are mostly translations of those (`parallel_of`).
 - `parallel_of` — id of the English question this one translates. 33 of the 36
   non-English questions are translations, so languages can be compared on the
   same facts. Three zh-TW questions are written directly against the Chinese
@@ -81,7 +88,7 @@ All commands that touch the backend service are run from `backend/`
 cd backend && uv run --frozen pytest ../ml/tests -q
 ```
 
-### 2. Retrieval on the golden set (laptop, no network)
+### 2. Retrieval on the golden set (keyword: laptop, no network)
 
 ```bash
 cd backend && uv run --frozen python ../ml/eval_retrieval.py
@@ -150,6 +157,43 @@ How to read it:
   passage that overlaps a better-scoring one, and overlapping passages are not
   returned together.
 
+#### Keyword and hybrid search on the larger corpus
+
+```bash
+cd backend
+uv run --frozen python ../ml/eval_retrieval.py --search keyword
+EMBEDDING_BASE_URL=http://127.0.0.1:8002/v1 EMBEDDING_MODEL=embeddinggemma \
+    uv run --frozen python ../ml/eval_retrieval.py --search hybrid
+uv run --frozen python ../ml/eval_retrieval.py --search hybrid --sweep 0.3,0.4,0.5
+```
+
+`hybrid` embeds all passages through an OpenAI-compatible `/v1/embeddings`
+endpoint (run here: `ggml-org/embeddinggemma-300M-GGUF`, Q8_0, in
+llama-server `--embeddings`), keeps the vectors in a SQLite file and fuses the
+keyword and vector rankings. `ans@3`, top 3, no source-type filter,
+`KNOWLEDGE_MIN_SIMILARITY` 0.45:
+
+| questions | answerable | keyword ans@3 | hybrid ans@3 |
+|---|---|---|---|
+| old (first 60) | 51 | 45/51 (88%) | 44/51 (86%) |
+| new (76) | 66 | 43/66 (65%) | 51/66 (77%) |
+| all | 117 | 88/117 (75%) | 95/117 (81%) |
+
+Per language and per source type: `results/retrieval_keyword.md` and
+`results/retrieval_hybrid.md`. Hybrid helps most the questions in English about
+the Chinese government guides (`gov_guide` 3/16 keyword, 8/16 hybrid) and
+costs the old zh-TW questions (10/10 keyword, 7/10 hybrid). The keyword number
+on the old set is the 45/51 that the larger corpus brought down from 49/51.
+
+Sweep of `KNOWLEDGE_MIN_SIMILARITY` (`results/retrieval_hybrid_sweep.md`): up to
+0.35 the answers found stay at 97/117; 0.40 loses one question, 0.45 (the
+default) two, 0.55 seven. The unanswerable questions that still get a vector
+hit fall from 19 of 19 (0.25) to 12 (0.40), 10 (0.45) and 1 (0.60); they
+always keep their keyword passages, so the threshold does not make the search
+say "not found". 0.40 is the highest value that keeps `ans@3` within one
+question of the best; the choice rests on 117 questions and one embedding
+model.
+
 ### 3. Teacher data (teacher on Colab, script on the laptop)
 
 Serve gpt-oss on Colab behind an OpenAI-compatible endpoint, then on the
@@ -168,7 +212,20 @@ uv run --frozen python ../ml/make_teacher_data.py -n 2000 --out ../ml/data/train
 The scripts read the endpoint only from these environment variables and never
 print the URL or the key.
 
-- Passages are cut with the backend's `PASSAGE_LINES` / `PASSAGE_STEP`.
+- Passages come from `knowledge.index` and are cut with `PASSAGE_LINES` /
+  `PASSAGE_STEP`. The answering passage is drawn by source type
+  (`--type-mix`, default OIA pages 40% and government guides 14%, so at least
+  half; the rest over the other types; a type absent from the corpus is
+  dropped and the weights renormalised).
+- About 70% of the answer examples (`--hard-rate`) have their distractors
+  replaced, after the question exists, by the top results of the search for
+  that question (`--search hybrid`, the default, or `keyword`), never a
+  passage sharing lines with the answering one; the rest keep random
+  distractors. Rows record `distractors: retrieved|random`.
+- About 10% (`--multi-rate`) are `multi` examples: two answering passages
+  (the nearest non-overlapping passage by search, else another window of the
+  page) and a question that needs both; both must be cited.
+- `--workers N` asks the teacher with N parallel requests.
 - An answer example shows the passage with the answer plus 1-2 distractor
   passages from other documents, in random order. (The brief says one
   distractor; a second is added at random because evaluation prompts hold up to
@@ -193,6 +250,17 @@ print the URL or the key.
   `TEACHER2_API_KEY`, `TEACHER2_MODEL`. Tasks alternate between teachers and
   each row records `teacher`. To add a teacher to an existing file later, run
   it alone with a different `--seed` and the same `--out`.
+
+Run for the tuned student below (gpt-oss-20b behind vLLM, `-n 3600
+--workers 48 --max-tokens 3000`): 3479 kept, 121 rejected (69
+`number_not_in_passages`, 27 `not_json`, 9 `bullet_without_citation`, 6
+`matches_golden_question`, 5 `answer_is_refusal`, 2 `teacher_skipped`, 2
+`wrong_language`, 1 `not_bulleted`). By kind: 2539 answer, 317 multi, 623
+refusal; by language: 1934 en, 518 vi, 518 id, 509 zh-TW; by source type: 1509
+oia_page, 531 gov_guide, 287 credits, 267 intl_program, 248 graduation_language,
+233 place, 163 destination, 142 service_learning, 99 contact; 1773 rows with
+retrieved and 1706 with random distractors. Some vi and id answers carry
+English fragments copied from the passages.
 
 Read a sample of the output before training. The cleaning catches invented
 numbers and broken citations; it cannot tell whether an answer is otherwise
@@ -398,11 +466,51 @@ A refusal is a reply that contains the OIA e-mail address and no `[n]`.
 With `--passages retrieved`, `answer` is capped by retrieval (`ans@3` above);
 `answer (ctx)` and the oracle run show what the model itself can do.
 
+#### Run on the larger corpus (Gemma 4 E2B, Colab A100)
+
+`unsloth/gemma-4-E2B-it`, the 3479 rows above (3306 train, 173 held out), 3
+epochs, `--batch-size 8 --grad-accum 1`, rank 16, `--merge --gguf q4_k_m`,
+about 15 minutes for 1242 steps. Before the run `train_lora.py` decodes the
+label sequence of the first example (`check_labels`, also `--labels-only`): 124
+of 775 tokens carry loss and they decode to the answer plus the end-of-turn
+token, no system, passage or question text. Training loss 1.34 at step 10, about
+0.23 from the second epoch on; held-out loss 0.395 after the last epoch. Unsloth
+reports "double BOS tokens" and removes one itself.
+
+Generation scores of this run (Q4_K_M GGUF, llama-server `--jinja --reasoning
+off -c 4096`, temperature 0, hybrid search for the retrieved prompts; base is
+`unsloth/gemma-4-E2B-it-GGUF` Q4_K_M). Columns as in section 6, all languages:
+
+| questions | passages | model | answer | answer (ctx) | cite | refuse | refuse (no ctx) | over-refuse |
+|---|---|---|---|---|---|---|---|---|
+| old | retrieved | base | 41/51 | 41/44 | 39/51 | 7/9 | 0/7 | 0/44 |
+| old | retrieved | tuned | 41/51 | 41/44 | 39/51 | 9/9 | 0/7 | 0/44 |
+| old | oracle | base | 49/51 | 49/51 | 49/51 | 7/9 | n/a | 0/51 |
+| old | oracle | tuned | 48/51 | 48/51 | 42/51 | 9/9 | n/a | 0/51 |
+| new | retrieved | base | 46/66 | 46/54 | 56/66 | 5/10 | 3/12 | 0/54 |
+| new | retrieved | tuned | 44/66 | 44/54 | 55/66 | 10/10 | 3/12 | 0/54 |
+| new | oracle | base | 56/66 | 56/66 | 65/66 | 4/10 | n/a | 0/66 |
+| new | oracle | tuned | 57/66 | 57/66 | 63/66 | 10/10 | n/a | 1/66 |
+
+Reading: the tuned model matches the base on answer accuracy within a few
+questions and refuses every unanswerable question (19/19 against 12/19 for the
+base, retrieved prompts), which is what the training data was built for. It
+does not answer more questions than the base. It also refuses less when the
+passages lack the answer (`refuse (no ctx)` 3/12 in both) and has the lowest
+`cite` on the old zh-TW questions (4/10 oracle, 3/10 retrieved): in the four cases read by hand these are
+answers drawn from a government-guide page that states the same fact
+(for example the work-permit hours from the Workforce Development Agency
+page), whereas the old golden items only list the OIA page as the expected
+source. The old items have no `alt_source_ids` for the newer documents, so
+`cite` on them undercounts correct answers. One run per model, 51 and 66
+answerable questions: differences of one to three questions mean nothing.
+Per-language rows: `results/generation_comparison.md`.
+
 ## What has been tested
 
 Run on the development machine (no GPU, no network access to a model):
 
-- `pytest ml/tests`: 201 passed.
+- `pytest ml/tests`: 392 passed.
 - `eval_retrieval.py`: real run, numbers above.
 - `make_teacher_data.py --dry-run`, including resume and a larger `-n`.
 - `eval_generation.py --dry-run`, both `--passages` modes.
@@ -410,10 +518,10 @@ Run on the development machine (no GPU, no network access to a model):
 
 ## Not tested
 
-- **No real endpoint was ever called.** `ChatClient`, the teacher prompts and
-  the JSON reply format have not been tried against gpt-oss or any other model.
-  Expect to adjust `--max-tokens` (a reasoning model spends tokens on thinking
-  before the JSON) and possibly the teacher prompt.
+- **The teacher run** (section 3) used gpt-oss-20b through vLLM with
+  `--max-tokens 3000`; the reasoning is returned in a separate field, which
+  `ChatClient` does not read. Whether a cut-off or differently served model
+  needs a different `--max-tokens` is untested.
 - **`train_lora.py` was not executed where it was written**, in either
   backend; the runs on Colab (see "Training") came later and are known here
   only from that session's report. Points that were uncertain when it was
