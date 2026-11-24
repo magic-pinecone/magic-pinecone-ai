@@ -8,6 +8,7 @@ from app.api.routes import (
     courses,
     credits,
     intl,
+    knowledge,
     scraper,
     service_learning,
     transit,
@@ -22,6 +23,7 @@ api_router.include_router(clubs.router)
 api_router.include_router(courses.router)
 api_router.include_router(credits.router)
 api_router.include_router(intl.router)
+api_router.include_router(knowledge.router)
 api_router.include_router(scraper.router)
 api_router.include_router(service_learning.router)
 api_router.include_router(transit.router)

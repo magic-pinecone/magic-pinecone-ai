@@ -510,7 +510,7 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 |---|---|---|
 | `bus` | 問題有「公車／bus／xe buýt／bis」類字眼（有沒有寫路線編號都可以），或同時有「怎麼去」類字眼與校外目的地（中壢、火車站、高鐵、機場、移民署、健保署） | TDX 即時到站（只取校內站牌，最多兩條路線）與 `destinations.json`。沒寫路線也沒寫目的地時，查 132 與 172 |
 | `place` | 簡短的「在哪」問題且寫了館舍名稱或別名，或幾乎只有館舍代碼（`E6`、`E6-A203`、`LH`） | `campus_places.json`，最多 3 筆 |
-| `documents` | 其他 | 國際處文件段落，最多 3 段 |
+| `documents` | 其他 | 知識庫混合檢索（`GET /knowledge/search` 同一套），最多 3 段 |
 
 分流寧可保守：
 
@@ -567,13 +567,76 @@ App 的 DTO 把每個欄位都當成必填，所以後端保證：
 |---|---|
 | 422 | `question` 是空的或超過 500 字 |
 
+## 知識庫：`/knowledge/*`
+
+OIA 全站（`backend/app/data/oia_site/`，由 `python -m app.services.knowledge.crawler` 產生並納入版控）與後端所有資料合成一個索引。關鍵字檢索沿用 `/intl/services/search` 的計分與多語 glossary；後端設定 `EMBEDDING_BASE_URL`／`EMBEDDING_MODEL`（OpenAI 相容 `/v1/embeddings`，EmbeddingGemma）時，再加上向量檢索，兩邊以 RRF（k=60）合併。未設定時只有關鍵字檢索。
+
+`source_type`：`oia_page`、`gov_guide`、`graduation_language`、`intl_program`、`credits`、`service_learning`、`contact`、`place`、`destination`、`course`、`club`（後兩者來自資料庫，API 啟動時與每 `KNOWLEDGE_REFRESH_MINUTES` 分鐘載入一次）。
+
+### `GET /knowledge/search?q=&source_types=&limit=`
+
+`q` 1–500 字，任何語言；`source_types` 可重複，空的表示全部；`limit` 1–20，預設 5。
+
+```json
+{
+  "query": "工讀證每週可以工作幾小時",
+  "source_types": [],
+  "passages": [
+    {
+      "id": "oia-work-permit",
+      "title": "Work permit for international degree students",
+      "topic": "work_permit",
+      "source_type": "oia_page",
+      "lang": "en",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2204.php?Lang=en",
+      "fetched_on": "2026-11-10",
+      "matched_words": ["work", "permit", "hours", "week"],
+      "similarity": 0.61,
+      "score": 0.032787,
+      "retrieval": "both",
+      "passage": "..."
+    }
+  ]
+}
+```
+
+- `retrieval`：`keyword`、`vector` 或 `both`；`similarity` 在沒有經向量檢索找到時為 `null`。
+- 同一文件的段落不會重疊。空陣列表示索引裡沒有相符的內容。
+- 未知的 `source_types` 回 422。
+
+### `GET /knowledge/documents/{document_id}`
+
+一份文件的全文：`id`、`title`、`topic`、`source_type`、`lang`、`url`、`fetched_on`、`text`。找不到回 404。
+
+### `GET /knowledge/sources`
+
+```json
+{
+  "built_at": "2026-11-24T08:00:00Z",
+  "with_database": true,
+  "embedding_model": "embeddinggemma",
+  "errors": [],
+  "sources": [
+    { "source_type": "oia_page", "documents": 129, "passages": 2239, "embedded_passages": 2239, "latest_fetched_on": "2026-11-24" }
+  ]
+}
+```
+
+`sources` 永遠列出全部 11 種，依上面的順序。
+
+### `POST /knowledge/reindex?wait=`
+
+重新載入課程與社團，並替還沒有向量的段落計算向量（以內容雜湊存在 `knowledge_embeddings` 表，同樣內容不會重算）。預設在背景執行並回 `{"status": "started"}`；`wait=true` 時在請求內完成並回傳 `GET /knowledge/sources` 的內容加上 `embedded`（這次算了幾段）。已在執行時回 409。沒有驗證，nginx 對外擋掉（403），只在 compose 網路內可呼叫。
+
 ## MCP 工具
 
-同一批資料也透過 MCP 提供給 AI 客戶端，以 stdio 啟動：
+同一批資料也透過 MCP 提供給 AI 客戶端，以 stdio 啟動（連得到資料庫時會一併載入課程與社團）：
 
 ```bash
 cd backend && uv run python -m app.mcp_server
 ```
+
+後端設定 `MCP_HTTP_ENABLED=true` 時，同一個伺服器也以 streamable HTTP（無狀態、JSON 回應）掛在 API 的 `/mcp`；`MCP_ALLOWED_HOSTS` 可限制接受的 Host。
 
 | 工具 | 對應 |
 |---|---|
@@ -586,5 +649,10 @@ cd backend && uv run python -m app.mcp_server
 | `find_place` | `GET /campus/places` |
 | `get_bus_arrivals` | `GET /transit/bus/{route}/arrivals`，預設只回校內站牌（`campus_only=True`） |
 | `find_destination` | `GET /transit/destinations`，另可用 `query` 比對名稱與地址 |
+| `search_knowledge` | `GET /knowledge/search` |
+| `search_courses`、`search_clubs`、`search_gov_guides` | `GET /knowledge/search` 限定 `course`、`club`、`gov_guide`；該類資料未載入時回工具錯誤 |
+| `get_credit_requirements` | `GET /intl/credits` |
+| `get_service_learning_requirements` | `GET /intl/service-learning` |
+| resource `ncu://documents/{document_id}` | `GET /knowledge/documents/{document_id}` |
 
 `get_bus_arrivals` 在後端沒有 TDX 金鑰、TDX 限流或 TDX 連不上時會回工具錯誤並寫明原因；工具說明要求模型照實告知學生，不可以自行推測到站時間。

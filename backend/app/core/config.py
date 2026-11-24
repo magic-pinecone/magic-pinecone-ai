@@ -79,6 +79,16 @@ class Settings(BaseSettings):
     # and returns what it looked up.
     ASSISTANT_TIMEOUT_SECONDS: float = 60.0
 
+    EMBEDDING_BASE_URL: str | None = None
+    EMBEDDING_MODEL: str | None = None
+    EMBEDDING_API_KEY: str | None = None
+    EMBEDDING_TIMEOUT_SECONDS: float = 30.0
+    EMBEDDING_BATCH_SIZE: int = 64
+    KNOWLEDGE_MIN_SIMILARITY: float = 0.45
+    KNOWLEDGE_REFRESH_MINUTES: int = 60
+    MCP_HTTP_ENABLED: bool = False
+    MCP_ALLOWED_HOSTS: list[str] = []
+
     @property
     def celery_broker_url(self) -> str:
         if self.REDIS_PASSWORD:
