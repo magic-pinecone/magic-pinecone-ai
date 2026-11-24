@@ -240,6 +240,12 @@ def main() -> None:
     parser.add_argument("--search", choices=("keyword", "hybrid"), default="keyword")
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--max-tokens", type=int, default=512)
+    parser.add_argument(
+        "--questions",
+        choices=("all", "old", "new"),
+        default="all",
+        help="old: the first 60 questions; new: those with a source_type",
+    )
     parser.add_argument("--limit", type=int, help="only the first N questions")
     parser.add_argument("--out-dir", type=Path, help="default: ml/results")
     parser.add_argument("--dry-run", action="store_true", help="use the fake model")
@@ -259,7 +265,12 @@ def main() -> None:
         run_name, out_dir = args.run_name, args.out_dir or RESULTS_DIR
 
     services = knowledge_services("keyword" if args.dry_run else args.search)
-    golden = load_golden()[: args.limit]
+    golden = [
+        item
+        for item in load_golden()
+        if args.questions == "all"
+        or ("source_type" in item) == (args.questions == "new")
+    ][: args.limit]
     records = []
     for number, item in enumerate(golden, start=1):
         passages = select_passages(services, item, args.passages, args.top_k)
@@ -291,6 +302,8 @@ def main() -> None:
         "passages": args.passages,
         "top_k": args.top_k,
         "questions": len(records),
+        "question_set": args.questions,
+        "search": "keyword" if args.dry_run else args.search,
         "summary": summarize(records),
         "items": records,
     }
