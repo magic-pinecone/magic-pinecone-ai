@@ -163,10 +163,13 @@ def sweep_markdown(rows: list[dict]) -> str:
     table = [
         [
             row["min_similarity"],
-            rate(row["old"]["ans3"], row["old"]["answerable"]),
-            rate(row["new"]["ans3"], row["new"]["answerable"]),
-            rate(row["all"]["ans3"], row["all"]["answerable"]),
-            rate(row["all"]["unanswerable_with_passages"], row["all"]["unanswerable"]),
+            rate(row["old"]["all"]["ans3"], row["old"]["all"]["answerable"]),
+            rate(row["new"]["all"]["ans3"], row["new"]["all"]["answerable"]),
+            rate(row["all"]["all"]["ans3"], row["all"]["all"]["answerable"]),
+            rate(
+                row["all"]["all"]["unanswerable_with_passages"],
+                row["all"]["all"]["unanswerable"],
+            ),
             row["vector_hits_unanswerable"],
         ]
         for row in rows
