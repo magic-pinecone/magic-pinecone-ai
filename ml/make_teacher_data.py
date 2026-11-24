@@ -658,7 +658,6 @@ def main() -> None:
                 number += 1
                 teacher = teachers[task.teacher]
                 if isinstance(raw, EndpointError):
-                    # Not recorded as done, so the next run tries this task again.
                     print(f"stopping at {task.id}: {raw}")
                     stopped = True
                     break
