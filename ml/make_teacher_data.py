@@ -11,9 +11,9 @@ more distractor passages from other documents. For a refusal example the
 answering passage is hidden from the student, so the right output is the fixed
 refusal sentence with the OIA contact. A hard refusal (`--hard-refusal-rate`)
 shows instead what the search returns for the question without the answering
-document, and is kept only when the teacher confirms that those passages do
-not answer it: the student learns to refuse when related passages lack the
-answer.
+document, and is kept only when the teacher, asked `--verify-votes` times,
+says every time that those passages do not answer it: the student learns to
+refuse when related passages lack the answer.
 
 The teacher writes the question and, for answer examples, the bulleted answer.
 An example is kept only if it passes `clean_example`; rejected ones go to
@@ -61,7 +61,8 @@ DEFAULT_LANG_MIX = "en=0.55,zh-TW=0.15,vi=0.15,id=0.15"
 DEFAULT_REFUSAL_RATE = 0.18
 DEFAULT_MULTI_RATE = 0.10
 DEFAULT_HARD_RATE = 0.70
-DEFAULT_HARD_REFUSAL_RATE = 0.60
+DEFAULT_HARD_REFUSAL_RATE = 0.30
+DEFAULT_VERIFY_VOTES = 2
 DEFAULT_TYPE_MIX = (
     "oia_page=0.40,gov_guide=0.14,graduation_language=0.07,intl_program=0.07,"
     "credits=0.08,service_learning=0.04,contact=0.03,place=0.06,destination=0.04,"
@@ -185,8 +186,9 @@ VERIFY_TASK = """Passages:
 
 Question: {question}
 
-Do these passages contain the answer to the question, fully or in part? \
-Reply {{"answered": true}} or {{"answered": false}}."""
+Could a student answer the question from these passages, fully or in part? \
+Count a fact that is stated indirectly, in another language, in a title, in a \
+table row or in a link. Reply {{"answered": true}} or {{"answered": false}}."""
 
 
 @dataclass(frozen=True)
@@ -495,10 +497,8 @@ def swap_distractors(
     return swapped, "ok"
 
 
-def verify_messages(task: Task, question: str) -> list[dict]:
-    content = VERIFY_TASK.format(
-        passages=format_passages(list(task.shown)), question=question
-    )
+def verify_messages(passages: str, question: str) -> list[dict]:
+    content = VERIFY_TASK.format(passages=passages, question=question)
     return [
         {"role": "system", "content": TEACHER_SYSTEM},
         {"role": "user", "content": content},
@@ -511,6 +511,16 @@ def refusal_confirmed(raw: str) -> tuple[bool, str]:
         return False, "verify_not_json"
     if data["answered"]:
         return False, "visible_passages_answer"
+    return True, "ok"
+
+
+def refusal_confirmed_by_votes(
+    chat, passages: str, question: str, votes: int
+) -> tuple[bool, str]:
+    for _ in range(max(1, votes)):
+        confirmed, reason = refusal_confirmed(chat(verify_messages(passages, question)))
+        if not confirmed:
+            return False, reason
     return True, "ok"
 
 
@@ -549,7 +559,7 @@ class FakeTeacher:
     def chat(self, messages: list[dict], **_: object) -> str:
         self.calls += 1
         prompt = messages[-1]["content"]
-        if "Do these passages contain the answer" in prompt:
+        if "Could a student answer the question from these passages" in prompt:
             return json.dumps({"answered": self.calls % 3 == 0})
         refusal = "Hidden passage" in prompt
         pair = re.search(
@@ -629,6 +639,12 @@ def main() -> None:
     parser.add_argument("--hard-rate", type=float, default=DEFAULT_HARD_RATE)
     parser.add_argument(
         "--hard-refusal-rate", type=float, default=DEFAULT_HARD_REFUSAL_RATE
+    )
+    parser.add_argument(
+        "--verify-votes",
+        type=int,
+        default=DEFAULT_VERIFY_VOTES,
+        help="teacher checks a hard refusal must pass, each saying it is unanswered",
     )
     parser.add_argument("--search", choices=("keyword", "hybrid"), default="hybrid")
     parser.add_argument("--workers", type=int, default=1)
@@ -716,8 +732,12 @@ def main() -> None:
                 task, reason = swap_distractors(task, example, services.search, starts)
                 example = example if reason == "ok" else None
             if example and task.hard and task.kind == "refusal":
-                verdict = chat(task, verify_messages(task, example["question"]))
-                confirmed, reason = refusal_confirmed(verdict)
+                confirmed, reason = refusal_confirmed_by_votes(
+                    lambda messages: chat(task, messages),
+                    format_passages(list(task.shown)),
+                    example["question"],
+                    args.verify_votes,
+                )
                 example = example if confirmed else None
         except EndpointError as error:
             return error
