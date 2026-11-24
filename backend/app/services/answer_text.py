@@ -43,8 +43,8 @@ OIA_CONTACT_STRINGS = (OIA_EMAIL, OIA_PHONE)
 SYSTEM_PROMPT = (
     "You help international students at National Central University (NCU, "
     "Taiwan) with administrative questions. Answer only from the numbered "
-    "passages in the user message; they come from pages of NCU's Office of "
-    "International Affairs (OIA).\n"
+    "passages in the user message; they come from official NCU pages and "
+    "Magic Pinecone's campus data.\n"
     "Rules:\n"
     "- Answer in the language of the question.\n"
     "- Answer with short bullet points, each starting with '- '.\n"

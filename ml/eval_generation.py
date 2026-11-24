@@ -40,10 +40,10 @@ from common import (
     ChatClient,
     EndpointError,
     expected_sources,
+    knowledge_services,
     load_golden,
     markdown_table,
     rate,
-    student_services,
 )
 from prompt_format import (
     LANGS,
@@ -237,6 +237,7 @@ def main() -> None:
         "--passages", choices=("retrieved", "oracle"), default="retrieved"
     )
     parser.add_argument("--top-k", type=int, default=3)
+    parser.add_argument("--search", choices=("keyword", "hybrid"), default="keyword")
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--max-tokens", type=int, default=512)
     parser.add_argument("--limit", type=int, help="only the first N questions")
@@ -257,7 +258,7 @@ def main() -> None:
             parser.error(str(error))
         run_name, out_dir = args.run_name, args.out_dir or RESULTS_DIR
 
-    services = student_services()
+    services = knowledge_services("keyword" if args.dry_run else args.search)
     golden = load_golden()[: args.limit]
     records = []
     for number, item in enumerate(golden, start=1):

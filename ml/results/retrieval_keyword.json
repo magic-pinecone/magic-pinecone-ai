@@ -1,0 +1,2322 @@
+{
+  "top_k": 3,
+  "summary": {
+    "old": {
+      "en": {
+        "answerable": 21,
+        "hit1": 15,
+        "hit3": 20,
+        "ans3": 18,
+        "no_result": 0,
+        "unanswerable": 3,
+        "unanswerable_with_passages": 3
+      },
+      "zh-TW": {
+        "answerable": 10,
+        "hit1": 7,
+        "hit3": 8,
+        "ans3": 10,
+        "no_result": 0,
+        "unanswerable": 2,
+        "unanswerable_with_passages": 2
+      },
+      "vi": {
+        "answerable": 10,
+        "hit1": 7,
+        "hit3": 7,
+        "ans3": 8,
+        "no_result": 0,
+        "unanswerable": 2,
+        "unanswerable_with_passages": 2
+      },
+      "id": {
+        "answerable": 10,
+        "hit1": 6,
+        "hit3": 8,
+        "ans3": 9,
+        "no_result": 1,
+        "unanswerable": 2,
+        "unanswerable_with_passages": 2
+      },
+      "all": {
+        "answerable": 51,
+        "hit1": 35,
+        "hit3": 43,
+        "ans3": 45,
+        "no_result": 1,
+        "unanswerable": 9,
+        "unanswerable_with_passages": 9
+      }
+    },
+    "new": {
+      "en": {
+        "answerable": 44,
+        "hit1": 32,
+        "hit3": 34,
+        "ans3": 33,
+        "no_result": 0,
+        "unanswerable": 4,
+        "unanswerable_with_passages": 4
+      },
+      "zh-TW": {
+        "answerable": 10,
+        "hit1": 9,
+        "hit3": 10,
+        "ans3": 7,
+        "no_result": 0,
+        "unanswerable": 2,
+        "unanswerable_with_passages": 2
+      },
+      "vi": {
+        "answerable": 6,
+        "hit1": 2,
+        "hit3": 2,
+        "ans3": 1,
+        "no_result": 3,
+        "unanswerable": 2,
+        "unanswerable_with_passages": 0
+      },
+      "id": {
+        "answerable": 6,
+        "hit1": 2,
+        "hit3": 3,
+        "ans3": 2,
+        "no_result": 1,
+        "unanswerable": 2,
+        "unanswerable_with_passages": 1
+      },
+      "all": {
+        "answerable": 66,
+        "hit1": 45,
+        "hit3": 49,
+        "ans3": 43,
+        "no_result": 4,
+        "unanswerable": 10,
+        "unanswerable_with_passages": 7
+      }
+    },
+    "all": {
+      "en": {
+        "answerable": 65,
+        "hit1": 47,
+        "hit3": 54,
+        "ans3": 51,
+        "no_result": 0,
+        "unanswerable": 7,
+        "unanswerable_with_passages": 7
+      },
+      "zh-TW": {
+        "answerable": 20,
+        "hit1": 16,
+        "hit3": 18,
+        "ans3": 17,
+        "no_result": 0,
+        "unanswerable": 4,
+        "unanswerable_with_passages": 4
+      },
+      "vi": {
+        "answerable": 16,
+        "hit1": 9,
+        "hit3": 9,
+        "ans3": 9,
+        "no_result": 3,
+        "unanswerable": 4,
+        "unanswerable_with_passages": 2
+      },
+      "id": {
+        "answerable": 16,
+        "hit1": 8,
+        "hit3": 11,
+        "ans3": 11,
+        "no_result": 2,
+        "unanswerable": 4,
+        "unanswerable_with_passages": 3
+      },
+      "all": {
+        "answerable": 117,
+        "hit1": 80,
+        "hit3": 92,
+        "ans3": 88,
+        "no_result": 5,
+        "unanswerable": 19,
+        "unanswerable_with_passages": 16
+      }
+    }
+  },
+  "by_source_type": {
+    "gov_guide": {
+      "answerable": 16,
+      "ans3": 3
+    },
+    "credits": {
+      "answerable": 12,
+      "ans3": 10
+    },
+    "service_learning": {
+      "answerable": 6,
+      "ans3": 6
+    },
+    "graduation_language": {
+      "answerable": 3,
+      "ans3": 2
+    },
+    "intl_program": {
+      "answerable": 2,
+      "ans3": 2
+    },
+    "contact": {
+      "answerable": 4,
+      "ans3": 4
+    },
+    "destination": {
+      "answerable": 5,
+      "ans3": 4
+    },
+    "place": {
+      "answerable": 1,
+      "ans3": 1
+    },
+    "oia_page": {
+      "answerable": 17,
+      "ans3": 11
+    }
+  },
+  "items": [
+    {
+      "id": "en-001",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-002",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-003",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "nia-student-online-guidelines",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-004",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-005",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-006",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "nia-student-online-guidelines",
+        "oia-site-44fffda52501"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-007",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "taipei-times-graduate-stay",
+        "oia-site-9d9e36d4716b"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-008",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "nia-residence-tips",
+        "oia-site-7645056b800a",
+        "oia-work-permit"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-009",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "oia-scholarship-page",
+        "oia-site-694ddc8efa60"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-010",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "oia-site-9d9e36d4716b",
+        "taipei-times-graduate-stay"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-011",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-exchange-incoming",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-012",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "nia-student-online-guidelines",
+        "oia-degree-student-handbook",
+        "oia-site-c244199dc51c"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-013",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-site-9eaf94496478"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-014",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-site-a756a2aad46d",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-015",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-016",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-017",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-018",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "nia-student-online-guidelines",
+        "nia-student-online-guidelines"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-019",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-site-498703495648",
+        "oia-degree-student-handbook",
+        "nia-student-online-guidelines"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-020",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "nia-student-online-guidelines",
+        "nia-student-online-guidelines"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-021",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-site-694ddc8efa60"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-022",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": false,
+      "returned": [
+        "oia-site-14f77ce7b79e",
+        "nia-residence-tips",
+        "nia-residence-tips"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-023",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": false,
+      "returned": [
+        "taipei-times-graduate-stay",
+        "oia-site-c9fdd88183bc",
+        "oia-site-44fffda52501"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-024",
+      "lang": "en",
+      "set": "old",
+      "source_type": null,
+      "answerable": false,
+      "returned": [
+        "nia-residence-tips",
+        "oia-site-28271c6518e4",
+        "oia-scholarship-page"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-001",
+      "lang": "vi",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-002",
+      "lang": "vi",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-003",
+      "lang": "vi",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-004",
+      "lang": "vi",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "nia-student-online-guidelines",
+        "oia-site-e90988d012ed"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-005",
+      "lang": "vi",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "nia-student-online-guidelines",
+        "nia-student-online-guidelines"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-006",
+      "lang": "vi",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "nia-student-online-guidelines",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-084a1a606d7e"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-007",
+      "lang": "vi",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-008",
+      "lang": "vi",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "nia-student-online-guidelines",
+        "oia-site-4a82cc1fbc88",
+        "nia-student-online-guidelines"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-009",
+      "lang": "vi",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617",
+        "oia-scholarship-page"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-010",
+      "lang": "vi",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-011",
+      "lang": "vi",
+      "set": "old",
+      "source_type": null,
+      "answerable": false,
+      "returned": [
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-012",
+      "lang": "vi",
+      "set": "old",
+      "source_type": null,
+      "answerable": false,
+      "returned": [
+        "oia-work-permit",
+        "nia-student-online-guidelines",
+        "nia-residence-tips"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "id-001",
+      "lang": "id",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "id-002",
+      "lang": "id",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "id-003",
+      "lang": "id",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "id-004",
+      "lang": "id",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "nia-student-online-guidelines",
+        "oia-site-e90988d012ed"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "id-005",
+      "lang": "id",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "id-006",
+      "lang": "id",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-immigration",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-4a82cc1fbc88"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "id-007",
+      "lang": "id",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-site-9eaf94496478"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "id-008",
+      "lang": "id",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "nia-student-online-guidelines",
+        "oia-site-4a82cc1fbc88",
+        "nia-student-online-guidelines"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "id-009",
+      "lang": "id",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-site-498703495648",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "id-010",
+      "lang": "id",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "id-011",
+      "lang": "id",
+      "set": "old",
+      "source_type": null,
+      "answerable": false,
+      "returned": [
+        "oia-site-e90988d012ed",
+        "oia-scholarship-page",
+        "oia-insurance"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "id-012",
+      "lang": "id",
+      "set": "old",
+      "source_type": null,
+      "answerable": false,
+      "returned": [
+        "oia-work-permit",
+        "nia-student-online-guidelines",
+        "nia-residence-tips"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-001",
+      "lang": "zh-TW",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-002",
+      "lang": "zh-TW",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-003",
+      "lang": "zh-TW",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-insurance",
+        "oia-site-c94d68071546",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-004",
+      "lang": "zh-TW",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "oia-site-1ad657e04753",
+        "wda-summer-hours"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-005",
+      "lang": "zh-TW",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-scholarship-guidelines",
+        "oia-scholarship-guidelines"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-006",
+      "lang": "zh-TW",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "nisa-faq-graduation-extension",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-231a8d7f7b43"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-007",
+      "lang": "zh-TW",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-site-fb35618b82b1",
+        "oia-degree-student-handbook",
+        "oia-site-c94d68071546"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-008",
+      "lang": "zh-TW",
+      "set": "old",
+      "source_type": null,
+      "answerable": false,
+      "returned": [
+        "nia-stay-after-graduation",
+        "oia-site-e4ff4722d0b4",
+        "oia-site-e4ff4722d0b4"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-009",
+      "lang": "zh-TW",
+      "set": "old",
+      "source_type": null,
+      "answerable": false,
+      "returned": [
+        "oia-site-442d0d39ad51",
+        "oia-site-e4ff4722d0b4",
+        "oia-work-permit"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-010",
+      "lang": "zh-TW",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-guidelines",
+        "oia-scholarship-page",
+        "oia-scholarship-guidelines"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-011",
+      "lang": "zh-TW",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-site-8e360e3e2406",
+        "oia-site-f7afefe078ea",
+        "oia-site-998e4652d55e"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-012",
+      "lang": "zh-TW",
+      "set": "old",
+      "source_type": null,
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-guidelines",
+        "oia-site-f7afefe078ea",
+        "oia-site-998e4652d55e"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-101",
+      "lang": "en",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [
+        "nia-student-online-guidelines",
+        "oia-site-400fc9c50429",
+        "oia-site-7645056b800a"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-102",
+      "lang": "en",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [
+        "oia-work-permit",
+        "taipei-times-graduate-stay",
+        "nia-student-online-guidelines"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-103",
+      "lang": "en",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [
+        "taipei-times-graduate-stay",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-312dc510adbc"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-104",
+      "lang": "en",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [
+        "oia-site-400fc9c50429",
+        "oia-site-1ad657e04753",
+        "oia-site-400fc9c50429"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-105",
+      "lang": "en",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [
+        "taipei-times-graduate-stay",
+        "nia-student-online-guidelines",
+        "taipei-times-graduate-stay"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-106",
+      "lang": "en",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [
+        "nia-stay-after-graduation"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-107",
+      "lang": "en",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [
+        "oia-site-896b2a6ff66f",
+        "credits-general-education",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-108",
+      "lang": "en",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [
+        "destination-nhi-northern-division",
+        "oia-site-3a91bf233b7a",
+        "oia-insurance"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-109",
+      "lang": "en",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [
+        "oia-site-694ddc8efa60",
+        "taipei-times-graduate-stay",
+        "nia-student-online-guidelines"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-110",
+      "lang": "en",
+      "set": "new",
+      "source_type": "credits",
+      "answerable": true,
+      "returned": [
+        "credits-minimum-credits",
+        "intl-program-84",
+        "credits-chinese-department-foreign-students"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-111",
+      "lang": "en",
+      "set": "new",
+      "source_type": "credits",
+      "answerable": true,
+      "returned": [
+        "credits-equivalent-qualification-extra-credits",
+        "credits-master-minimum-credits",
+        "credits-physical-education"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-112",
+      "lang": "en",
+      "set": "new",
+      "source_type": "credits",
+      "answerable": true,
+      "returned": [
+        "credits-semester-credit-load",
+        "nia-student-online-guidelines",
+        "service_learning-extended-study"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-113",
+      "lang": "en",
+      "set": "new",
+      "source_type": "credits",
+      "answerable": true,
+      "returned": [
+        "credits-chinese",
+        "credits-common-required-total",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-114",
+      "lang": "en",
+      "set": "new",
+      "source_type": "credits",
+      "answerable": true,
+      "returned": [
+        "credits-mandarin-substitution",
+        "credits-chinese-department-foreign-students",
+        "credits-general-education"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-115",
+      "lang": "en",
+      "set": "new",
+      "source_type": "credits",
+      "answerable": true,
+      "returned": [
+        "credits-general-education",
+        "credits-physical-education",
+        "oia-site-694ddc8efa60"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-116",
+      "lang": "en",
+      "set": "new",
+      "source_type": "credits",
+      "answerable": true,
+      "returned": [
+        "credits-master-minimum-credits",
+        "credits-doctoral-minimum-credits",
+        "credits-direct-doctoral-minimum-credits"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-117",
+      "lang": "en",
+      "set": "new",
+      "source_type": "credits",
+      "answerable": true,
+      "returned": [
+        "credits-direct-doctoral-minimum-credits",
+        "credits-doctoral-minimum-credits",
+        "credits-equivalent-qualification-extra-credits"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-118",
+      "lang": "en",
+      "set": "new",
+      "source_type": "credits",
+      "answerable": true,
+      "returned": [
+        "credits-freshman-english-exemption",
+        "credits-foreign-language",
+        "nia-student-online-guidelines"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-119",
+      "lang": "en",
+      "set": "new",
+      "source_type": "service_learning",
+      "answerable": true,
+      "returned": [
+        "service_learning-passport-100-hours",
+        "nia-student-online-guidelines",
+        "credits-equivalent-qualification-extra-credits"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-120",
+      "lang": "en",
+      "set": "new",
+      "source_type": "service_learning",
+      "answerable": true,
+      "returned": [
+        "service_learning-graduate-not-listed",
+        "service_learning-graduation-condition",
+        "credits-master-minimum-credits"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-121",
+      "lang": "en",
+      "set": "new",
+      "source_type": "service_learning",
+      "answerable": true,
+      "returned": [
+        "service_learning-course",
+        "credits-service-learning",
+        "service_learning-extended-study"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-122",
+      "lang": "en",
+      "set": "new",
+      "source_type": "graduation_language",
+      "answerable": true,
+      "returned": [
+        "graduation-language-bachelor-eecs",
+        "graduation-language-bachelor-eecs",
+        "graduation-language-phd-network-learning"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-123",
+      "lang": "en",
+      "set": "new",
+      "source_type": "graduation_language",
+      "answerable": true,
+      "returned": [
+        "graduation-language-master-engineering",
+        "graduation-language-master-igpai",
+        "graduation-language-bachelor-science"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-124",
+      "lang": "en",
+      "set": "new",
+      "source_type": "intl_program",
+      "answerable": true,
+      "returned": [
+        "intl-program-0",
+        "intl-program-90",
+        "oia-site-b78426a6d85a"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-125",
+      "lang": "en",
+      "set": "new",
+      "source_type": "intl_program",
+      "answerable": true,
+      "returned": [
+        "intl-program-70",
+        "intl-program-65",
+        "oia-site-421d52e49480"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-126",
+      "lang": "en",
+      "set": "new",
+      "source_type": "contact",
+      "answerable": true,
+      "returned": [
+        "contact-oia-exchange-students",
+        "oia-site-62546755ea36",
+        "oia-site-f6777077282d"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-127",
+      "lang": "en",
+      "set": "new",
+      "source_type": "contact",
+      "answerable": true,
+      "returned": [
+        "oia-site-f6777077282d",
+        "contact-oia-degree-students",
+        "contact-oia-exchange-students"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-128",
+      "lang": "en",
+      "set": "new",
+      "source_type": "contact",
+      "answerable": true,
+      "returned": [
+        "contact-oia-admissions",
+        "oia-site-62546755ea36",
+        "oia-site-f6777077282d"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-129",
+      "lang": "en",
+      "set": "new",
+      "source_type": "contact",
+      "answerable": true,
+      "returned": [
+        "contact-oia-visiting-programs",
+        "oia-site-62546755ea36",
+        "oia-site-a23a0cdec676"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-130",
+      "lang": "en",
+      "set": "new",
+      "source_type": "destination",
+      "answerable": true,
+      "returned": [
+        "destination-zhongli-train-station",
+        "destination-nia-taoyuan-service-center",
+        "destination-thsr-taoyuan-station"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-131",
+      "lang": "en",
+      "set": "new",
+      "source_type": "destination",
+      "answerable": true,
+      "returned": [
+        "destination-nhi-northern-division",
+        "oia-site-3a91bf233b7a",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-132",
+      "lang": "en",
+      "set": "new",
+      "source_type": "place",
+      "answerable": true,
+      "returned": [
+        "place-engineering-building-1",
+        "place-engineering-building-2",
+        "place-mechanical-engineering-building"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-133",
+      "lang": "en",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "oia-site-9eaf94496478",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-134",
+      "lang": "en",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "oia-site-9eaf94496478",
+        "intl-program-30",
+        "oia-site-b90d3d1af2e2"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-135",
+      "lang": "en",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "oia-site-9eaf94496478",
+        "oia-site-b2ccac2d6617",
+        "oia-site-8949d52535f2"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-136",
+      "lang": "en",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "oia-site-4e86fddc23a8",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-137",
+      "lang": "en",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "oia-site-4e86fddc23a8",
+        "nia-student-online-guidelines"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-138",
+      "lang": "en",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-139",
+      "lang": "en",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "oia-site-b2ccac2d6617",
+        "oia-degree-student-handbook",
+        "oia-site-b2ccac2d6617"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-140",
+      "lang": "en",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "nia-student-online-guidelines",
+        "nia-student-online-guidelines",
+        "oia-site-fe9ac9f9ef0d"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-141",
+      "lang": "en",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "oia-site-694ddc8efa60",
+        "oia-site-694ddc8efa60",
+        "oia-insurance"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-142",
+      "lang": "en",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "nia-student-online-guidelines",
+        "oia-site-694ddc8efa60",
+        "oia-insurance"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-143",
+      "lang": "en",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "oia-site-694ddc8efa60",
+        "oia-site-694ddc8efa60",
+        "nia-student-online-guidelines"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-144",
+      "lang": "en",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "en-145",
+      "lang": "en",
+      "set": "new",
+      "source_type": "none",
+      "answerable": false,
+      "returned": [
+        "place-indoor-swimming-pool"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-146",
+      "lang": "en",
+      "set": "new",
+      "source_type": "none",
+      "answerable": false,
+      "returned": [
+        "oia-site-44fffda52501",
+        "oia-degree-student-handbook"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-147",
+      "lang": "en",
+      "set": "new",
+      "source_type": "none",
+      "answerable": false,
+      "returned": [
+        "taipei-times-graduate-stay",
+        "credits-foreign-language",
+        "nia-student-online-guidelines"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "en-148",
+      "lang": "en",
+      "set": "new",
+      "source_type": "none",
+      "answerable": false,
+      "returned": [
+        "oia-site-694ddc8efa60",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-101",
+      "lang": "zh-TW",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [
+        "oia-site-1ad657e04753",
+        "oia-site-24f84f9fef69",
+        "oia-site-312dc510adbc"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-102",
+      "lang": "zh-TW",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [
+        "nia-stay-after-graduation",
+        "nisa-faq-graduation-extension",
+        "oia-site-779ce58808f8"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-103",
+      "lang": "zh-TW",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [
+        "nia-hotline",
+        "nia-hotline",
+        "nia-hotline"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-104",
+      "lang": "zh-TW",
+      "set": "new",
+      "source_type": "credits",
+      "answerable": true,
+      "returned": [
+        "credits-minimum-credits",
+        "credits-master-minimum-credits",
+        "credits-chinese-department-foreign-students"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-105",
+      "lang": "zh-TW",
+      "set": "new",
+      "source_type": "service_learning",
+      "answerable": true,
+      "returned": [
+        "service_learning-passport-100-hours",
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-106",
+      "lang": "zh-TW",
+      "set": "new",
+      "source_type": "graduation_language",
+      "answerable": true,
+      "returned": [
+        "graduation-language-bachelor-eecs",
+        "graduation-language-master-law-government",
+        "graduation-language-master-management-110"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-107",
+      "lang": "zh-TW",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "oia-site-c94d68071546",
+        "oia-site-c94d68071546",
+        "oia-site-c94d68071546"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-108",
+      "lang": "zh-TW",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "oia-site-fb35618b82b1",
+        "oia-site-c94d68071546",
+        "nhi-students"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-109",
+      "lang": "zh-TW",
+      "set": "new",
+      "source_type": "destination",
+      "answerable": true,
+      "returned": [
+        "destination-nia-taoyuan-service-center",
+        "destination-zhongli-train-station",
+        "oia-site-4c53227fd84f"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-110",
+      "lang": "zh-TW",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "oia-site-779ce58808f8",
+        "oia-site-799d5f1249c2",
+        "oia-site-799d5f1249c2"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-111",
+      "lang": "zh-TW",
+      "set": "new",
+      "source_type": "none",
+      "answerable": false,
+      "returned": [
+        "place-indoor-swimming-pool",
+        "oia-site-4e86fddc23a8",
+        "oia-site-b78426a6d85a"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "zh-112",
+      "lang": "zh-TW",
+      "set": "new",
+      "source_type": "none",
+      "answerable": false,
+      "returned": [
+        "nia-stay-after-graduation",
+        "credits-freshman-english-exemption",
+        "oia-site-e4ff4722d0b4"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-101",
+      "lang": "vi",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [
+        "oia-site-4a82cc1fbc88",
+        "oia-site-1ad657e04753",
+        "taipei-times-graduate-stay"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-102",
+      "lang": "vi",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-103",
+      "lang": "vi",
+      "set": "new",
+      "source_type": "credits",
+      "answerable": true,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-104",
+      "lang": "vi",
+      "set": "new",
+      "source_type": "service_learning",
+      "answerable": true,
+      "returned": [
+        "service_learning-passport-100-hours",
+        "oia-site-a756a2aad46d",
+        "credits-equivalent-qualification-extra-credits"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-105",
+      "lang": "vi",
+      "set": "new",
+      "source_type": "destination",
+      "answerable": true,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-106",
+      "lang": "vi",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "oia-site-9eaf94496478",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-107",
+      "lang": "vi",
+      "set": "new",
+      "source_type": "none",
+      "answerable": false,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "vi-108",
+      "lang": "vi",
+      "set": "new",
+      "source_type": "none",
+      "answerable": false,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "id-101",
+      "lang": "id",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [
+        "oia-site-4a82cc1fbc88",
+        "nia-student-online-guidelines",
+        "oia-site-400fc9c50429"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "id-102",
+      "lang": "id",
+      "set": "new",
+      "source_type": "gov_guide",
+      "answerable": true,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "id-103",
+      "lang": "id",
+      "set": "new",
+      "source_type": "credits",
+      "answerable": true,
+      "returned": [
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "id-104",
+      "lang": "id",
+      "set": "new",
+      "source_type": "service_learning",
+      "answerable": true,
+      "returned": [
+        "oia-site-a756a2aad46d",
+        "service_learning-passport-100-hours"
+      ],
+      "hit1": false,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "id-105",
+      "lang": "id",
+      "set": "new",
+      "source_type": "destination",
+      "answerable": true,
+      "returned": [
+        "destination-zhongli-train-station",
+        "oia-degree-student-handbook",
+        "destination-nia-taoyuan-service-center"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": true,
+      "top_similarity": null
+    },
+    {
+      "id": "id-106",
+      "lang": "id",
+      "set": "new",
+      "source_type": "oia_page",
+      "answerable": true,
+      "returned": [
+        "oia-site-9eaf94496478",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "hit1": true,
+      "hit3": true,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "id-107",
+      "lang": "id",
+      "set": "new",
+      "source_type": "none",
+      "answerable": false,
+      "returned": [
+        "oia-site-cf1bde247b94"
+      ],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    },
+    {
+      "id": "id-108",
+      "lang": "id",
+      "set": "new",
+      "source_type": "none",
+      "answerable": false,
+      "returned": [],
+      "hit1": false,
+      "hit3": false,
+      "ans3": false,
+      "top_similarity": null
+    }
+  ],
+  "search": "keyword",
+  "min_similarity": 0.45
+}
