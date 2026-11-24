@@ -85,7 +85,6 @@ class Settings(BaseSettings):
     EMBEDDING_TIMEOUT_SECONDS: float = 30.0
     EMBEDDING_BATCH_SIZE: int = 64
     KNOWLEDGE_MIN_SIMILARITY: float = 0.40
-    KNOWLEDGE_CJK_KEYWORD_WEIGHT: float = 1.0
     KNOWLEDGE_REFRESH_MINUTES: int = 60
     MCP_HTTP_ENABLED: bool = False
     MCP_ALLOWED_HOSTS: list[str] = []

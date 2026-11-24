@@ -46,7 +46,7 @@ logger = logging.getLogger(__name__)
 Kind = Literal["documents", "place", "bus"]
 BusProblem = Literal["not_configured", "rate_limited", "unreachable"]
 
-TOP_K = 3
+TOP_K = 5
 MAX_QUESTION_CHARS = 500
 MAX_PLACES = 3
 MAX_BUS_ROUTES = 2

@@ -214,13 +214,3 @@ def test_reindex_and_sources_endpoints(client, monkeypatch):
     rows = {row["source_type"]: row for row in listed.json()["sources"]}
     assert rows["course"]["documents"] == 1
     assert listed.json()["embedding_model"] is None
-
-
-def test_keyword_weight_for_chinese_questions(monkeypatch):
-    monkeypatch.setattr(settings, "KNOWLEDGE_CJK_KEYWORD_WEIGHT", 2.0)
-
-    chinese = knowledge_index.search("工作許可", limit=1, embedder=None)
-    english = knowledge_index.search("work permit", limit=1, embedder=None)
-
-    assert chinese[0]["score"] == round(2.0 / (knowledge_index.RRF_K + 1), 6)
-    assert english[0]["score"] == round(1.0 / (knowledge_index.RRF_K + 1), 6)

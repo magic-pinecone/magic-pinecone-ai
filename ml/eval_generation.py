@@ -236,7 +236,7 @@ def main() -> None:
     parser.add_argument(
         "--passages", choices=("retrieved", "oracle"), default="retrieved"
     )
-    parser.add_argument("--top-k", type=int, default=3)
+    parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--search", choices=("keyword", "hybrid"), default="keyword")
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--max-tokens", type=int, default=512)

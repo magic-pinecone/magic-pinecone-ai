@@ -346,7 +346,7 @@ def main() -> None:
     parser.add_argument("--model", choices=sorted(MODELS), default=next(iter(MODELS)))
     parser.add_argument("--backend", choices=("unsloth", "peft"), default="unsloth")
     parser.add_argument("--output", type=Path, default=Path("ml/runs/student"))
-    parser.add_argument("--max-seq-length", type=int, default=2048)
+    parser.add_argument("--max-seq-length", type=int, default=3072)
     parser.add_argument(
         "--load-in-4bit",
         action=argparse.BooleanOptionalAction,

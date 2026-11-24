@@ -615,8 +615,8 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--lang-mix", default=DEFAULT_LANG_MIX)
     parser.add_argument("--refusal-rate", type=float, default=DEFAULT_REFUSAL_RATE)
-    parser.add_argument("--min-distractors", type=int, default=1)
-    parser.add_argument("--max-distractors", type=int, default=2)
+    parser.add_argument("--min-distractors", type=int, default=2)
+    parser.add_argument("--max-distractors", type=int, default=4)
     parser.add_argument(
         "--teachers",
         default="TEACHER",

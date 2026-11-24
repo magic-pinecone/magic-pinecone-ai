@@ -23,8 +23,7 @@ and for unanswerable questions how often the search still returns passages.
 Items without `source_type` are the first 60 questions ("old"); the others
 are written against the larger corpus ("new").
 `--sweep 0.3,0.4,...` repeats the run with those values of
-KNOWLEDGE_MIN_SIMILARITY, and `--cjk-weights 1,1.5,2` with those values of
-KNOWLEDGE_CJK_KEYWORD_WEIGHT (every pair is run). Writes ml/results/retrieval_<search>.md and .json.
+KNOWLEDGE_MIN_SIMILARITY. Writes ml/results/retrieval_<search>.md and .json.
 """
 
 import argparse
@@ -178,11 +177,9 @@ def sweep_markdown(rows: list[dict]) -> str:
     table = [
         [
             row["min_similarity"],
-            row["cjk_weight"],
             rate(row["old"]["all"]["ans3"], row["old"]["all"]["answerable"]),
             rate(row["new"]["all"]["ans3"], row["new"]["all"]["answerable"]),
             rate(row["all"]["all"]["ans3"], row["all"]["all"]["answerable"]),
-            rate(row["old"]["zh-TW"]["ans3"], row["old"]["zh-TW"]["answerable"]),
             rate(row["all"]["all"]["ans5"], row["all"]["all"]["answerable"]),
             rate(
                 row["all"]["all"]["unanswerable_with_passages"],
@@ -195,11 +192,9 @@ def sweep_markdown(rows: list[dict]) -> str:
     return markdown_table(
         [
             "KNOWLEDGE_MIN_SIMILARITY",
-            "KNOWLEDGE_CJK_KEYWORD_WEIGHT",
             "ans@3 old",
             "ans@3 new",
             "ans@3 all",
-            "ans@3 old zh-TW",
             "ans@5 all",
             "unanswerable with passages",
             "unanswerable with a vector hit",
@@ -215,11 +210,6 @@ def main() -> None:
     parser.add_argument(
         "--sweep", help="comma-separated KNOWLEDGE_MIN_SIMILARITY values"
     )
-    parser.add_argument(
-        "--cjk-weights",
-        default="",
-        help="comma-separated KNOWLEDGE_CJK_KEYWORD_WEIGHT values for --sweep",
-    )
     parser.add_argument("--out-dir", type=Path, default=RESULTS_DIR)
     args = parser.parse_args()
 
@@ -232,17 +222,8 @@ def main() -> None:
         if args.search != "hybrid":
             parser.error("--sweep needs --search hybrid")
         rows = []
-        weights = [float(v) for v in args.cjk_weights.split(",") if v] or [
-            settings.KNOWLEDGE_CJK_KEYWORD_WEIGHT
-        ]
-        pairs = [
-            (float(value), weight)
-            for value in args.sweep.split(",")
-            for weight in weights
-        ]
-        for value, weight in pairs:
+        for value in [float(v) for v in args.sweep.split(",")]:
             settings.KNOWLEDGE_MIN_SIMILARITY = value
-            settings.KNOWLEDGE_CJK_KEYWORD_WEIGHT = weight
             report = evaluate(golden, services.search)
             hits = sum(
                 row["top_similarity"] is not None
@@ -252,7 +233,6 @@ def main() -> None:
             rows.append(
                 {
                     "min_similarity": value,
-                    "cjk_weight": weight,
                     **report["summary"],
                     "vector_hits_unanswerable": hits,
                 }
@@ -272,7 +252,6 @@ def main() -> None:
     report = evaluate(golden, services.search)
     report["search"] = args.search
     report["min_similarity"] = settings.KNOWLEDGE_MIN_SIMILARITY
-    report["cjk_weight"] = settings.KNOWLEDGE_CJK_KEYWORD_WEIGHT
     table = to_markdown(report)
     print(table)
 

@@ -274,13 +274,10 @@ def search(
         vector_hits = _vector_ranking(current, query, keep, embedder)
     similarity = dict(vector_hits)
 
-    keyword_weight = (
-        settings.KNOWLEDGE_CJK_KEYWORD_WEIGHT if lexical.CHINESE.search(query) else 1.0
-    )
     fused: dict[int, float] = {}
     for rank, (_, chunk, _) in enumerate(lexical_hits):
         i = position[id(chunk)]
-        fused[i] = fused.get(i, 0.0) + keyword_weight / (RRF_K + rank + 1)
+        fused[i] = fused.get(i, 0.0) + 1 / (RRF_K + rank + 1)
     for rank, (i, _) in enumerate(vector_hits):
         fused[i] = fused.get(i, 0.0) + 1 / (RRF_K + rank + 1)
     order = sorted(fused, key=lambda i: (-fused[i], i))
