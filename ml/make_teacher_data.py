@@ -66,7 +66,7 @@ DEFAULT_VERIFY_VOTES = 2
 DEFAULT_TYPE_MIX = (
     "oia_page=0.40,gov_guide=0.14,graduation_language=0.07,intl_program=0.07,"
     "credits=0.08,service_learning=0.04,contact=0.03,place=0.06,destination=0.04,"
-    "food_place=0.02,course=0.04,club=0.03"
+    "food_place=0.02,academic_calendar=0.02,course=0.04,club=0.03"
 )
 SOURCE_TYPES = (
     "oia_page",
@@ -79,6 +79,7 @@ SOURCE_TYPES = (
     "place",
     "destination",
     "food_place",
+    "academic_calendar",
     "course",
     "club",
 )

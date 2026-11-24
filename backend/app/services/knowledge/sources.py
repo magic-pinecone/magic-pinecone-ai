@@ -1,9 +1,11 @@
+import calendar
 import hashlib
 import json
 import math
 import re
 from collections.abc import Iterable
 from dataclasses import dataclass
+from datetime import date
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -38,12 +40,14 @@ SOURCE_TYPES = (
     "place",
     "destination",
     "food_place",
+    "academic_calendar",
     "course",
     "club",
 )
 FOOD_PLACES = (
     Path(__file__).resolve().parents[2] / "data/food_places/ncu_food_places.json"
 )
+ACADEMIC_CALENDARS = Path(__file__).resolve().parents[2] / "data/academic_calendar"
 HALAL_SOURCE = "https://www.taiwan.net.tw/m1.aspx?sNo=0020118"
 OSM_COPYRIGHT = "https://www.openstreetmap.org/copyright"
 EARTH_RADIUS_M = 6_371_000
@@ -421,6 +425,58 @@ def food_place_documents() -> list[Document]:
     return documents
 
 
+def _calendar_when(start: date, end: date) -> str:
+    def weekday(day: date) -> str:
+        return WEEKDAYS[str(day.isoweekday())]
+
+    def month(day: date) -> str:
+        return f"{calendar.month_name[day.month]} {day.month}月"
+
+    if start == end:
+        return f"{start.isoformat()} ({weekday(start)}, {month(start)})"
+    months = (
+        month(start) if start.month == end.month else f"{month(start)} to {month(end)}"
+    )
+    return (
+        f"{start.isoformat()} to {end.isoformat()} "
+        f"({weekday(start)} to {weekday(end)}, {months})"
+    )
+
+
+def academic_calendar_documents() -> list[Document]:
+    documents = []
+    for path in sorted(ACADEMIC_CALENDARS.glob("*.json")):
+        data = json.loads(path.read_text(encoding="utf-8"))
+        months: dict[tuple[int, int], list[dict[str, str]]] = {}
+        for event in data["events"]:
+            start = date.fromisoformat(event["start"])
+            months.setdefault((start.year, start.month), []).append(event)
+        for (year, month), events in sorted(months.items()):
+            semester = events[0]["semester"]
+            documents.append(
+                Document(
+                    id=f"calendar-{year}-{month:02d}",
+                    title=(
+                        f"NCU academic calendar {semester}, "
+                        f"{calendar.month_name[month]} {year} "
+                        f"中央大學校曆 {year}年{month}月"
+                    ),
+                    url=data["source"],
+                    topic="academic calendar",
+                    source_type="academic_calendar",
+                    lang="zh-TW",
+                    fetched_on=data["fetched_on"],
+                    lines=_lines(
+                        *(
+                            f"{_calendar_when(date.fromisoformat(e['start']), date.fromisoformat(e['end']))}: {e['text']}"
+                            for e in events
+                        )
+                    ),
+                )
+            )
+    return documents
+
+
 @lru_cache
 def file_documents() -> tuple[Document, ...]:
     return tuple(
@@ -435,6 +491,7 @@ def file_documents() -> tuple[Document, ...]:
             *place_documents(),
             *destination_documents(),
             *food_place_documents(),
+            *academic_calendar_documents(),
         ]
     )
 

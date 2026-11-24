@@ -21,6 +21,7 @@ SourceType = Literal[
     "place",
     "destination",
     "food_place",
+    "academic_calendar",
     "course",
     "club",
 ]

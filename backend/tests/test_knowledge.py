@@ -11,7 +11,7 @@ from app.core.config import settings
 from app.main import app
 from app.models.club import Club
 from app.models.course import College, Course, Department
-from app.services.knowledge import crawler, sources
+from app.services.knowledge import calendar_pdf, crawler, sources
 from app.services.knowledge import index as knowledge_index
 from app.services.knowledge.embedder import EmbeddingClient
 
@@ -257,6 +257,139 @@ def test_keyword_search_finds_halal_places():
 
     assert found and all(passage["source_type"] == "food_place" for passage in found)
     assert any(passage["topic"] == "halal" for passage in found)
+
+
+def calendar_lines(month_id: str) -> str:
+    documents = {d.id: d for d in sources.academic_calendar_documents()}
+    return "\n".join(documents[month_id].lines)
+
+
+def test_academic_calendar_has_a_document_per_month():
+    documents = sources.academic_calendar_documents()
+    ids = [d.id for d in documents]
+
+    assert ids == sorted(ids) and len(set(ids)) == len(ids)
+    assert ids[0] == "calendar-2026-08" and ids[-1] == "calendar-2027-07"
+    assert all(d.source_type == "academic_calendar" for d in documents)
+    assert all(d.url.endswith("calendar115.pdf") for d in documents)
+    assert "calendar-2026-09" in ids
+    document = next(d for d in documents if d.id == "calendar-2026-09")
+    assert document.title == (
+        "NCU academic calendar 115-1, September 2026 中央大學校曆 2026年9月"
+    )
+
+
+def test_academic_calendar_dates_land_in_their_months():
+    expected = {
+        "calendar-2026-08": ["2026-08-01 (Sat 週六, August 8月): 115學年度第1學期開始"],
+        "calendar-2026-09": [
+            "2026-09-02 to 2026-09-16 (Wed 週三 to Wed 週三, September 9月): 加退選",
+            "2026-09-07 (Mon 週一, September 9月): 全校學生註冊、開始上課",
+            "2026-09-25 (Fri 週五, September 9月): 中秋節放假1日",
+        ],
+        "calendar-2026-10": ["2026-10-10 (Sat 週六, October 10月): 國慶日放假1日"],
+        "calendar-2026-11": ["2026-11-11 (Wed 週三, November 11月): 全校運動會"],
+        "calendar-2026-12": [
+            "2026-12-25 (Fri 週五, December 12月): 行憲紀念日放假1日",
+            "2026-12-25 (Fri 週五, December 12月): 寒假開始",
+            "2026-12-28 to 2027-01-29 (Mon 週一 to Fri 週五, "
+            "December 12月 to January 1月): 寒修上課",
+        ],
+        "calendar-2027-01": [
+            "2027-01-31 (Sun 週日, January 1月): 115學年度第1學期終了"
+        ],
+        "calendar-2027-02": [
+            "2027-02-10 to 2027-02-24 (Wed 週三 to Wed 週三, February 2月): 加退選",
+            "2027-02-15 (Mon 週一, February 2月): 全校學生註冊、開始上課",
+        ],
+        "calendar-2027-04": [
+            "2027-04-04 (Sun 週日, April 4月): 兒童節放假1日",
+            "2027-04-05 (Mon 週一, April 4月): 民族掃墓節放假1日",
+        ],
+        "calendar-2027-05": ["2027-05-22 (Sat 週六, May 5月): 全校畢業典禮"],
+        "calendar-2027-06": [
+            "2027-06-09 (Wed 週三, June 6月): 校慶紀念日",
+            "2027-06-09 (Wed 週三, June 6月): 端午節放假1日",
+        ],
+        "calendar-2027-07": ["2027-07-31 (Sat 週六, July 7月): 115學年度第2學期終了"],
+    }
+
+    for month_id, wanted in expected.items():
+        text = calendar_lines(month_id)
+        for line in wanted:
+            assert line in text, (month_id, line)
+
+
+def test_academic_calendar_events_stay_in_their_semester():
+    data = json.loads(
+        next(sources.ACADEMIC_CALENDARS.glob("*.json")).read_text(encoding="utf-8")
+    )
+    events = data["events"]
+
+    assert {e["semester"] for e in events} == {"115-1", "115-2"}
+    assert all(e["start"] <= e["end"] for e in events)
+    assert all("822次" not in e["text"] and "分機" not in e["text"] for e in events)
+    firsts = [e["start"] for e in events if e["semester"] == "115-2"]
+    assert min(firsts) == "2027-02-01" and max(firsts) == "2027-07-31"
+
+
+def test_calendar_page_parses_ranges_and_rolls_the_month_over():
+    page = (
+        "年 月 週 日 一 二 三 四 五 六 記 事\n"
+        "1 2 3\n"
+        "1日　學期開始\n"
+        "2 3 4 5 6 7 8 3日～9日　新生申請 28日～116年1月29日　寒修上課\n"
+        "31日～9月4日　新生訓練週\n"
+        "5 4 5 6 7 8 9 10 9日　國慶日補假1日 10日　國慶日放假1日\n"
+        "30日～12月18日　導師輔導選課\n"
+        "1日～14日　轉系申請\n"
+        "3日　輔系、雙主修、學分學程、抵免審核申\n"
+        "請\n"
+        "11日　提前畢業申請截止　；　資格核定表繳交截止\n"
+        "822次行政會議通過\n"
+        "116\n年\n1\n月\n"
+    )
+
+    events = calendar_pdf.page_events(page, 2026, 8, "115-1")
+    found = [(e["start"], e["end"], e["text"]) for e in events]
+
+    assert found[0] == ("2026-08-01", "2026-08-01", "學期開始")
+    assert found[1] == ("2026-08-03", "2026-08-09", "新生申請")
+    assert found[2] == ("2026-08-28", "2027-01-29", "寒修上課")
+    assert found[3] == ("2026-08-31", "2026-09-04", "新生訓練週")
+    assert found[4][0] == "2026-09-09" and found[5][0] == "2026-09-10"
+    assert found[6] == ("2026-09-30", "2026-12-18", "導師輔導選課")
+    assert found[7] == ("2026-10-01", "2026-10-14", "轉系申請")
+    assert found[8] == (
+        "2026-10-03",
+        "2026-10-03",
+        "輔系、雙主修、學分學程、抵免審核申請",
+    )
+    assert [e["text"] for e in events[-2:]] == [
+        "提前畢業申請截止",
+        "資格核定表繳交截止",
+    ]
+    assert events[-1]["start"] == events[-2]["start"] == "2026-10-11"
+    assert all(e["semester"] == "115-1" for e in events)
+
+
+def test_calendar_year_rolls_over_in_december():
+    page = "年 月 週 日\n30日　十二月\n1日　一月\n1日～2月3日　跨月\n"
+
+    events = calendar_pdf.page_events(page, 2026, 12, "115-1")
+
+    assert [e["start"] for e in events] == ["2026-12-30", "2027-01-01", "2027-01-01"]
+    assert events[2]["end"] == "2027-02-03"
+
+
+def test_keyword_search_finds_calendar_passages():
+    found = knowledge_index.search(
+        "加退選", source_types=["academic_calendar"], limit=5, embedder=None
+    )
+
+    assert found
+    assert all(passage["source_type"] == "academic_calendar" for passage in found)
+    assert any("加退選" in passage["passage"] for passage in found)
 
 
 def test_syllabus_lines_carry_their_english_translation():
