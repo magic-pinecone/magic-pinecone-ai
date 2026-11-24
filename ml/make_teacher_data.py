@@ -623,7 +623,7 @@ def main() -> None:
         help="comma-separated environment prefixes, one per teacher endpoint",
     )
     parser.add_argument("--temperature", type=float, default=0.7)
-    parser.add_argument("--max-tokens", type=int, default=1024)
+    parser.add_argument("--max-tokens", type=int, default=3072)
     parser.add_argument("--type-mix", default=DEFAULT_TYPE_MIX)
     parser.add_argument("--multi-rate", type=float, default=DEFAULT_MULTI_RATE)
     parser.add_argument("--hard-rate", type=float, default=DEFAULT_HARD_RATE)
