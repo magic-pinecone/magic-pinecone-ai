@@ -617,6 +617,99 @@ when the passages lack the answer it refuses 3 of 12 times (v5 7, v4 2).
 Against v4 the differences on answerable questions are one or two questions
 (94 against 95 correct), which one run per model cannot separate.
 
+## Gemma 3 270m student
+
+A second, smaller student for the offline mode: `unsloth/gemma-3-270m-it`
+against the budget of 300 MB for the model file and phones with 4 GB of RAM.
+The comparison asked is full fine-tune against LoRA at this size.
+
+Where this was run, so the numbers are read correctly:
+
+- Base, v4, v5 and v6 of Gemma 4 E2B (tables above) ran on an A100. The 270m
+  runs below ran on a Colab T4 (15 GB).
+- All 270m numbers use the knowledge index at commit `bc3304d`, before the
+  `food_place` source, the academic calendar and the course translations were
+  added. They are comparable with each other, and with the E2B rows only for
+  the same 117 answerable and 19 unanswerable golden questions.
+- Each cell is one run at temperature 0.
+
+### Setup
+
+- Data: `train_v6.jsonl`, the 7,028 rows of the mixed data run (6,677 train,
+  351 held out).
+- Full fine-tune: `--full-finetune`, `--batch-size 8 --grad-accum 1
+  --epochs 2`, 1670 steps in 9672 s. Mean training loss 0.568, held-out loss
+  0.547. Exported with `--gguf q4_k_m`; a Q8_0 file of the same model
+  also exists.
+- float32: the T4 has no bf16, and Unsloth refuses float16 for Gemma 3 (its
+  log says so and switches to float32), so the whole fine-tune ran in float32.
+- LoRA: not run. The Colab runtime was replaced at step 525/1670, and no
+  checkpoint had been saved. The run (rank 16, `--no-load-in-4bit --merge
+  --gguf q4_k_m`) needed `UNSLOTH_DEFAULT_PACKING=0`, because Unsloth otherwise
+  packs rows and the label check fails; `train_lora.py` now defaults that
+  variable to 0.
+- Serving for the evals: `llama-server --jinja --reasoning off -c 4096` on the
+  GPU, the Q4_K_M file, hybrid search with EmbeddingGemma 300M.
+
+### Size against the budget
+
+| file | bytes | MB (10^6) |
+|---|---|---|
+| full fine-tune, Q4_K_M | 253,114,752 | 253.1 |
+| full fine-tune, Q8_0 | 291,545,312 | 291.5 |
+| LoRA, Q4_K_M | not run | not run |
+
+Both files are under 300 MB; Q8_0 only just. Speed on a phone, or on a CPU:
+not measured.
+
+### Results
+
+Counts over the 117 answerable and 19 unanswerable questions (old and new
+sets together), from `error_split.txt` and `ml/results/generation/`; the
+per-language rows are in `generation_comparison.md`.
+
+| model | passages | correct /117 | has the answer, refused | refused, passages lack it | unanswerable refused /19 | num-err /136 | language drift |
+|---|---|---|---|---|---|---|---|
+| 270m base | hybrid top 5 | 35 | 0 | 0/12 | 1 | 4 | 34 |
+| 270m base | oracle | 44 | 1 | n/a | 0 | 7 | 32 |
+| 270m full | hybrid top 5 | 74 (old 30/51, new 44/66) | 2 | 3/12 | 9 | 1 | 4 |
+| 270m full | hybrid top 3 | 80 | 2 | 4/15 | 11 | 3 | 5 |
+| 270m full | keyword top 3 | 68 | 1 | 10/27 | 14 | 0 | 2 |
+| 270m full | oracle | 84 | 2 | n/a | 9 | 2 | 6 |
+| 270m LoRA | all | not run | not run | not run | not run | not run | not run |
+| E2B v6 (A100) | hybrid top 5 | 94 | 1 | 3/12 | 18 | 1 | n/a |
+
+"Refused, passages lack it" counts only the answerable questions whose
+retrieved passages do not hold the answer; the denominator changes with the
+search because top 3 and keyword search retrieve different passages. The
+language drift column counts non-refusals written in another language than
+the question; it was not computed for the E2B runs. The E2B v6 row is copied
+from the v6 section above.
+
+### Reading
+
+- Fine-tuning does most of the work at this size: 74 correct against 35 for
+  the untuned model, and the base model answers in the wrong language in 34
+  responses against 4.
+- Full fine-tune against LoRA: not answered here, LoRA was not run.
+- Top 3 beats top 5 for this model: 80 against 74 correct, and 11 against 9
+  unanswerable questions refused. Retrieval puts the answer in the top 3 for
+  100 of 117 questions and in the top 5 for 103, so the three extra passages
+  cost little recall and appear to give a 270m model more to get lost in. It
+  is one run per cell and a difference of 6 questions, so treat it as a
+  direction, not a result.
+- Keyword-only search with top 3 loses 12 correct answers against hybrid top
+  3 (68 against 80), but refuses more: 14/19 unanswerable and 10 refusals
+  where the passages lack the answer. The model refuses when the passages
+  look unrelated, which is what weaker retrieval gives it.
+- The main weakness against E2B v6 is refusing unanswerable questions: 9/19
+  at top 5 (11/19 at top 3) against 18/19. Even with the right passages
+  (oracle) it gets 84/117 correct against 108/117 for E2B v6, and only 9/19
+  unanswerable refused.
+- Against the 300 MB budget the model fits (253 MB at Q4_K_M), but at about 63%
+  correct with retrieved passages it is a fallback for offline use, not a
+  replacement for E2B v6.
+
 ## What has been tested
 
 Run on the development machine (no GPU, no network access to a model):

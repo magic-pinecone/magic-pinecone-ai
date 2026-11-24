@@ -1,0 +1,1047 @@
+{
+  "run_name": "g3-270m-full-k3-retrieved-old",
+  "model": "g3-270m-full",
+  "passages": "retrieved",
+  "top_k": 3,
+  "questions": 60,
+  "question_set": "old",
+  "search": "hybrid",
+  "summary": {
+    "en": {
+      "total": 24,
+      "answerable": 21,
+      "unanswerable": 3,
+      "ctx_has_answer": 20,
+      "ctx_lacks_answer": 1,
+      "answer_ok": 15,
+      "answer_ok_ctx": 15,
+      "citation_ok": 18,
+      "refused_unanswerable": 2,
+      "refused_no_ctx": 0,
+      "over_refused": 0,
+      "number_error": 0
+    },
+    "zh-TW": {
+      "total": 12,
+      "answerable": 10,
+      "unanswerable": 2,
+      "ctx_has_answer": 8,
+      "ctx_lacks_answer": 2,
+      "answer_ok": 6,
+      "answer_ok_ctx": 6,
+      "citation_ok": 5,
+      "refused_unanswerable": 1,
+      "refused_no_ctx": 1,
+      "over_refused": 0,
+      "number_error": 1
+    },
+    "vi": {
+      "total": 12,
+      "answerable": 10,
+      "unanswerable": 2,
+      "ctx_has_answer": 9,
+      "ctx_lacks_answer": 1,
+      "answer_ok": 7,
+      "answer_ok_ctx": 7,
+      "citation_ok": 9,
+      "refused_unanswerable": 1,
+      "refused_no_ctx": 0,
+      "over_refused": 0,
+      "number_error": 1
+    },
+    "id": {
+      "total": 12,
+      "answerable": 10,
+      "unanswerable": 2,
+      "ctx_has_answer": 9,
+      "ctx_lacks_answer": 1,
+      "answer_ok": 6,
+      "answer_ok_ctx": 6,
+      "citation_ok": 7,
+      "refused_unanswerable": 1,
+      "refused_no_ctx": 0,
+      "over_refused": 0,
+      "number_error": 0
+    },
+    "all": {
+      "total": 60,
+      "answerable": 51,
+      "unanswerable": 9,
+      "ctx_has_answer": 46,
+      "ctx_lacks_answer": 5,
+      "answer_ok": 34,
+      "answer_ok_ctx": 34,
+      "citation_ok": 39,
+      "refused_unanswerable": 5,
+      "refused_no_ctx": 1,
+      "over_refused": 0,
+      "number_error": 2
+    }
+  },
+  "items": [
+    {
+      "id": "en-001",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "response": "- The clinic visit maximum reimbursement of NT$1,000 per day/visit. [1]\n- If the insured is hospitalized due to illness or injury, the company will reimburse the following expenses. [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-002",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "response": "- The benefit payment will not exceed NTD120,000/hospitalization [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-003",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-insurance",
+        "oia-degree-student-handbook"
+      ],
+      "response": "- You must establish a continuous residence in Taiwan for more than six months from your initial arrival date. [1]\n- During this six-month period, you are permitted to travel abroad only once, and the trip must last less than 30 days. [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-004",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-site-c94d68071546"
+      ],
+      "response": "- Receipt [3]\n- Medical certificate (obtained from the hospital/clinic) [3]\n- Post office account book, passport, and ARC (only for first-time applicants) [3]\n- Application form (available at OIA) [3]",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-005",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "response": "- The NCU Student Group Insurance covers injuries due to unexpected accidents, illness, and disablement. [1]\n- The benefit payment will not exceed NTD120,000/hospitalization. [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-006",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "wda-summer-hours",
+        "oia-site-1ad657e04753"
+      ],
+      "response": "- You can work up to 20 hours per week during the semester. [2]\n- During the semester, you cannot work up to 20 hours per week. [2]\n- The work permit is valid for up to 6 months. [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-007",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "oia-site-19735f1a7559",
+        "taipei-times-graduate-stay"
+      ],
+      "response": "- It takes about 1-2 weeks working days to review and issue the permit. [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-008",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "oia-site-1ad657e04753",
+        "nia-residence-tips"
+      ],
+      "response": "- Alien Resident Certificate (ARC) [1]\n- Passport [1]\n- Certificate of Enrollment [1]\n- Attachment: Approval document signed by the supervising professor (dated within the past three months) [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-009",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "oia-scholarship-page",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "- If you complete the procedure before the 15th of the month, the scholarship for that month and any following months will not be issued. [2]\n- If the procedure is completed after the 15th, the scholarship for that month will still be issued, but no further payments will be issued. [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-010",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "taipei-times-graduate-stay",
+        "oia-site-9d9e36d4716b"
+      ],
+      "response": "- The permit is valid for at least 1 year. [1]\n- International students applying for a work permit from October 1 of the first semester to September 30 of the following year cannot have their permit extend beyond September 30 of the next year. [1]\n- The maximum working hours are 20 hours per week. [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-011",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-exchange-incoming",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "response": "- The Handbook for Incoming Exchange Students is available at https://drive.google.com/file/d/1tCqWv20slRtL58a543gv7tbQom00qRkO/view [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-012",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-immigration",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-4a82cc1fbc88"
+      ],
+      "response": "- Download the ARC application form from https://oia.ncu.edu.tw/static/file/26/1026/img/389/VISAandARC.pdf [1]\n- Download the ARC application form from https://oia.ncu.edu.tw/static/file/26/1026/img/389/VisaandARC.doc [1]\n- Download the ARC application form from https://oia.ncu.edu.tw/static/file/26/1026/img/389/ARCApplicationFormMultiplePurposeApplicationForm.pdf [1]\n- Download the ARC application form from https://oia.ncu.edu.tw/static/file/26/1026/img/389/VisaApplicationForm.pdf [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-013",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "response": "- The maximum monthly stipend for a master's student is NTD$15,000. [1]\n- The maximum monthly stipend for a PhD student is NTD$40,000. [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-014",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-site-a756a2aad46d"
+      ],
+      "response": "- Cumulative GPA ≥ 70 [2]\n- New students enrolled in the fall semester are exempt from the Chinese proficiency requirement when applying for the second semester of their first academic year [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-015",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "response": "- PhD students must apply for the scholarship for the second semester of their first academic year Before February 1st. [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-016",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "response": "- Application period for Fall 2026 semester: July 6th to July 20th, 12:00 PM, 2026 [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-017",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "response": "- Self-service Machine near to Zhi-Dao Lecture Hall. (Across from the OIA) [2]\n- Office of Registrar, 3rd floor of the Teaching & Research Building. [2]\n- Please apply for a full academic year transcript. (Either Chinese or English is acceptable) [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-018",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-084a1a606d7e",
+        "nia-student-online-guidelines",
+        "oia-degree-student-handbook"
+      ],
+      "response": "- Resident visa holders should apply for ARC at local service center of National Immigration Agency within 15 days. [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-019",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-site-498703495648",
+        "oia-degree-student-handbook"
+      ],
+      "response": "- Must pay late processing fee: NTD $100/course [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-020",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook",
+        "oia-site-799d5f1249c2"
+      ],
+      "response": "- The health examination fee for the first semester is NTD 780. [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-021",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "- The National Health Insurance fee per semester is NTD 4,956. [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-022",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "oia-work-permit",
+        "oia-site-14f77ce7b79e",
+        "oia-degree-student-handbook"
+      ],
+      "response": "I can't find this in the OIA pages I have. Please contact the Office of International Affairs (OIA): ncuoia@ncu.edu.tw, +886-3-425-4945.",
+      "refused": true,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-023",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "taipei-times-graduate-stay",
+        "oia-site-c9fdd88183bc",
+        "oia-site-44fffda52501"
+      ],
+      "response": "I can't find this in the OIA pages I have. Please contact the Office of International Affairs (OIA): ncuoia@ncu.edu.tw, +886-3-425-4945.",
+      "refused": true,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-024",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "nia-residence-tips",
+        "nia-residence-tips",
+        "nia-residence-tips"
+      ],
+      "response": "- You cannot apply for the extension of residence in person; you can authorize your spouse or other people to apply for that for you with these documents mentioned above and the power of attorney. [1]\n- If you are not in Taiwan while applying for extension of residence, you also can entrust other people in Taiwan to apply for that for you with your original passport, current ARC, other documents in need and the power of attorney authenticated by Taiwanese embassies abroad. [1]",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-001",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "response": "- Mức hoàn trả tối đa cho mỗi lần khám tại phòng khám là NT$1,000. [1]\n- Nếu bạn đến phòng khám hàng ngày, bạn sẽ được bảo hiểm tối đa 1,000 NT$ mỗi ngày. [1]\n- Nếu bạn đến phòng khám hàng tuần, bạn sẽ được bảo hiểm tối đa 1,000 NT$ mỗi tuần. [1]\n- Nếu bạn đến phòng khám hàng tuần, bạn sẽ được bảo hiểm tối đa 1,000 NT$ mỗi tuần. [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-002",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "response": "- Tổng số tiền bảo hiểm Cathay chi trả tối đa cho một lần nằm viện là NTD120,000/tháng [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-003",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "response": "- Bạn phải sử dụng Cathay Insurance từ 10/9 đến 9/9. [2]\n- Nếu đi nước ngoài ít nhất 5 ngày trong thời gian đầu tiên, ngày đăng ký sẽ bị gián đoạn, và ngày mới là 15/9 (được công bố từ 10/9 + 5 ngày). [2]\n- Nếu đi nước ngoài ít nhất 30 ngày, bạn phải đăng ký vào NHI từ ngày 10/9 đến 9/9. [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-004",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "wda-summer-hours",
+        "nia-student-online-guidelines"
+      ],
+      "response": "- Khi có giấy phép lao động, bạn được làm việc tối đa 1 năm: 1-2 tuần làm việc [1]\n- Bạn không được làm việc tối đa 1 năm: 20 giờ mỗi tuần [1]\n- Nếu bạn đã được cấp giấy phép làm việc qua trường, giấy phép sẽ tự động hết hạn khi bạn nộp đơn xin tốt nghiệp, suspension, hoặc rút học [1]\n- Bạn phải đăng ký qua trang web \"外國專業人員工作許可申辦網\" (https://ezwp.wda.gov.tw/) trong vòng 8 ngày kể từ ngày 8 tháng 7 [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": [
+        "7"
+      ]
+    },
+    {
+      "id": "vi-005",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "oia-site-19735f1a7559",
+        "nia-student-online-guidelines"
+      ],
+      "response": "- Thời gian xét duyệt là 1-2 tuần làm việc để cấp giấy phép lao động [1]\n- Giấy phép có thời hạn tối đa 1 năm [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-006",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-immigration",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-084a1a606d7e"
+      ],
+      "response": "- Hướng dẫn tải mẫu đơn xin ARC tại https://oia.ncu.edu.tw/static/file/26/1026/img/389/VISAandARC.pdf [1]\n- Hướng dẫn tải mẫu đơn xin ARC tại https://oia.ncu.edu.tw/static/file/26/1026/img/389/VisaandARC.doc [1]\n- Hướng dẫn tải mẫu đơn xin ARC tại https://oia.ncu.edu.tw/static/file/26/1026/img/389/ARCApplicationFormMultiplePurposeApplicationForm.pdf [1]\n- Hướng dẫn tải mẫu đơn xin ARC tại https://oia.ncu.edu.tw/static/file/26/1026/img/389/VisaApplicationForm.pdf [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-007",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "response": "- Mức trợ cấp hằng tháng tối đa của Học bổng Sinh viên Quốc tế là NTD$9,000 [1]\n- Phải đăng ký và nhận trợ cấp qua hệ thống trực tuyến tại https://www.ncu.edu.tw/ [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-008",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "nia-student-online-guidelines",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-4a82cc1fbc88"
+      ],
+      "response": "- Bạn phải nộp đơn xin ARC trong vòng 15 ngày kể từ ngày đến địa điểm cư trú. [3]\n- Nếu bạn đang có visa nhập cảnh hoặc visa-exemption, bạn không thể nộp trong vòng 15 ngày. [2]",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-009",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-site-b2ccac2d6617",
+        "oia-site-498703495648"
+      ],
+      "response": "- Phí xử lý trễ cho môn học thủ công là NTD $100/ môn [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-010",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "response": "- Phí Bảo hiểm Y tế (NHI) mỗi học kỳ là NTD 600/semester [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-011",
+      "lang": "vi",
+      "answerable": false,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-site-b2ccac2d6617",
+        "oia-work-permit"
+      ],
+      "response": "- Sinh viên quốc tế có thể xin giấy phép lái xe của Đài Loan qua trang web Work Permit (Work Permit) [3]\n- Giấy phép lái xe có thể được cấp trong vòng 28 ngày 29 ngày 30 [2]",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-012",
+      "lang": "vi",
+      "answerable": false,
+      "passage_ids": [
+        "oia-work-permit",
+        "nia-student-online-guidelines",
+        "nia-residence-tips"
+      ],
+      "response": "Tôi không tìm thấy thông tin này trong các trang của OIA mà tôi có. Vui lòng liên hệ Văn phòng Quan hệ Quốc tế (OIA): ncuoia@ncu.edu.tw, +886-3-425-4945.",
+      "refused": true,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-001",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "response": "- Untuk kunjungan klinik, biaya maksimal adalah NT$1,000 per hari atau kunjungan jika ditanggung oleh orang tua. [1]\n- Untuk kunjungan klinik, biaya maksimal adalah NT$1,000 per hari atau kunjungan jika ditanggung oleh orang tua. [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-002",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-insurance",
+        "oia-degree-student-handbook"
+      ],
+      "response": "- Batas total manfaat asuransi Cathay untuk satu kali rawat inap adalah NTD120,000. [3]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-003",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "response": "- Mahasiswa internasional harus menetap di Taiwan selama enam bulan penuh, dan Anda dapat pergi di luar negeri hanya sekali, dan perjalanan tersebut harus berlangsung kurang dari 30 hari. [1]\n- Jika Anda pergi lebih dari sekali (misalnya 6 bulan Oct. 1–6 dan 6 bulan Dec. 15–25), tanggal 6 bulan pertama dimulai ulang dari tanggal masuk terakhir. [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-004",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "wda-summer-hours",
+        "nia-student-online-guidelines"
+      ],
+      "response": "- Mahasiswa yang bekerja di semester pertama dapat bekerja maksimal 20 jam per minggu, kecuali pada musim panas dan dingin. [2]\n- Jam kerja maksimal 20 jam per minggu, kecuali pada musim panas dan dingin. [2]\n- Mahasiswa yang memperoleh izin kerja melalui sekolah selama studi dapat bekerja tanpa batas jam maksimal 20 jam per minggu. [2]\n- Mahasiswa yang bekerja di luar negeri dapat bekerja tanpa batas jam maksimal 20 jam per minggu. [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-005",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-19735f1a7559",
+        "oia-work-permit",
+        "ocac-work-permit"
+      ],
+      "response": "- Waktu proses pengajuan izin kerja adalah 7-10 hari kerja [3]\n- Dokumen yang diperlukan: 申請書、學生證影本(含學校註冊組加蓋註冊章或另提供在學證明)、有效期間居留證影本及護照影本、審查費收據正本（每案新臺幣100元整，可利用郵政劃撥＜劃撥戶名：勞動部勞動力發展署聘僱許可收費專戶，劃撥帳號：19058848＞或使用ATM繳費，於取得ATM繳費序號後即時繳納）。 [3]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-006",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-immigration",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-4a82cc1fbc88"
+      ],
+      "response": "- Unduh formulir aplikasi ARC di situs web immigration.gov.tw/ [2]\n- Unduh formulir aplikasi ARC di situs web immigration.gov.tw/ [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-007",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "response": "- Maximum Monthly Stipend: NTD$15,000 [1]\n- PhD: NTD$40,000 [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-008",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "nia-student-online-guidelines",
+        "oia-site-084a1a606d7e",
+        "oia-site-4a82cc1fbc88"
+      ],
+      "response": "- Mahasiswa yang memiliki visa landing atau visa-exemption masuk tidak dapat mengajukan perpanjangan. [3]\n- Mahasiswa yang memiliki visa tinggal di luar negeri harus mengajukan perpanjangan dalam 15 hari sebelum masa tinggal berakhir. [3]\n- Jika tidak memenuhi ketentuan, ARC akan dibatalkan dan proses pengajuan akan dihitung ulang dalam 5 hari kerja. [3]",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-009",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-site-498703495648",
+        "oia-degree-student-handbook"
+      ],
+      "response": "- Biaya keterlambatan per mata kuliah: NTD $100/course [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-010",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "response": "- Biaya Asuransi Kesehatan Nasional (NHI) per semester adalah NTD 600/semester [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-011",
+      "lang": "id",
+      "answerable": false,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook",
+        "oia-site-e90988d012ed"
+      ],
+      "response": "- Mahasiswa internasional dapat mengajukan surat izin mengemudi di Taiwan melalui sistem GSM di Taiwan. [2]\n- Untuk membeli kartu telepon atau kartu telepon, silakan kunjungi Taiwan Taoyuan International Airport. [2]\n- Kartu telepon atau kartu telepon yang dapat dibawa di kampus adalah nomor telepon yang ideal untuk komunikasi darurat. [2]\n- Mahasiswa internasional harus membeli kartu telepon atau kartu telepon (atau telepon) di Taiwan. [2]",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-012",
+      "lang": "id",
+      "answerable": false,
+      "passage_ids": [
+        "oia-work-permit",
+        "nia-student-online-guidelines",
+        "nia-residence-tips"
+      ],
+      "response": "Saya tidak menemukan informasi ini di halaman OIA yang saya miliki. Silakan hubungi Kantor Urusan Internasional (OIA): ncuoia@ncu.edu.tw, +886-3-425-4945.",
+      "refused": true,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-001",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-fb35618b82b1",
+        "oia-site-613f2e754e32",
+        "oia-site-613f2e754e32"
+      ],
+      "response": "- 每天新臺幣1,000元為上限 [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-002",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-613f2e754e32",
+        "oia-site-613f2e754e32",
+        "oia-site-fb35618b82b1"
+      ],
+      "response": "我手邊的國際事務處資料沒有這項資訊。請直接聯絡國際事務處（OIA）：ncuoia@ncu.edu.tw，+886-3-425-4945。",
+      "refused": true,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-003",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "nhi-students",
+        "oia-insurance",
+        "nhi-students"
+      ],
+      "response": "- 投保時，您可選擇以就讀學校為投保單位或以工作單位為投保單位。 [1]\n- 投保單位（雇主）應於被保險人合於投保資格之日起 3 日內，向健保署辦理投保。 [3]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-004",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "wda-summer-hours",
+        "oia-work-permit",
+        "oia-site-19735f1a7559"
+      ],
+      "response": "- 雇主僱用僑外生仍需遵守勞動基準法工時規範。 [1]\n- 申請工作許可時，可於「外國專業人員工作許可申辦網」（https://ezwp.wda.gov.tw/)線上申辦。 [1]\n- 申請許可後，需於勞動部以電子郵件通知日起8個日曆天內至前開申辦網領取電子公文，並可再選取「行動裝置檢視」功能，並於手機螢幕顯示畫面為QR code。 [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-005",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-guidelines",
+        "oia-scholarship-guidelines",
+        "oia-scholarship-guidelines"
+      ],
+      "response": "- 碩士班每人每月不超過新台幣 15,000 元。 [1]\n- 博士班每人每月不超過新台幣 51,000 元。 [1]\n- 獎助學金總額度大學部每人每月不超過新台幣 9,000 元。 [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-006",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-4a82cc1fbc88",
+        "oia-site-4a82cc1fbc88",
+        "nisa-faq-graduation-extension"
+      ],
+      "response": "- 30天內申請外僑居留證（ARC）[3]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-007",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-fb35618b82b1",
+        "oia-site-c94d68071546",
+        "nhi-students"
+      ],
+      "response": "- 每個學期可支付新臺幣4,400元，其中在學雜費內繳清。 [2]\n- 若有清寒證明，僑務委員會將補助新臺幣375元/月，補助後費用為新臺幣2244元/6個月。 [2]\n- 必須於學期開始前一個月內繳交清寒證明至國際處承辦人，由僑務委員會審核通過後方能辦理補助。 [2]",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": [
+        "4400"
+      ]
+    },
+    {
+      "id": "zh-008",
+      "lang": "zh-TW",
+      "answerable": false,
+      "passage_ids": [
+        "nia-stay-after-graduation",
+        "mol-work-permit-simplified",
+        "oia-site-e4ff4722d0b4"
+      ],
+      "response": "- 申請以「其他」事由延期居留1年，可再申請一次，總效期最長可達2年。 [1]\n- 取得工作許可後，可儘速變更為工作居留。 [1]\n- 避免因居留原因而產生「身分」問題，請保持冷靜（Calm Down）、小心查證（Check it out）及撥打165反詐騙諮詢專線。 [1]",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-009",
+      "lang": "zh-TW",
+      "answerable": false,
+      "passage_ids": [
+        "oia-site-442d0d39ad51",
+        "mol-student-labor-insurance",
+        "wda-summer-hours"
+      ],
+      "response": "我手邊的國際事務處資料沒有這項資訊。請直接聯絡國際事務處（OIA）：ncuoia@ncu.edu.tw，+886-3-425-4945。",
+      "refused": true,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-010",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-guidelines",
+        "oia-scholarship-guidelines",
+        "oia-site-8e360e3e2406"
+      ],
+      "response": "- 申請時間：每年 6 月 5 日前公告於國際事務處網站。 [1]\n- 申請資料：歷年成績單。 [1]\n- 獎助學金核定：經獎助學金審查委員會同意後，由國際事務處授權各院獎助學金預算額度。各院統籌此預算並參酌其他經費（如：系所獎助學金、指導教授研究助理費、管理費、）[1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-011",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-8e360e3e2406",
+        "oia-scholarship-guidelines",
+        "oia-site-998e4652d55e"
+      ],
+      "response": "- 受獎生若於每月 15 日(含)前，因保留學籍、畢業、休學、退學、轉學、離校、非法在校外工 或無故曠課逾兩週以上，註銷其當月獎助學金，所餘獎助學金不予發放。 [2]\n- 獎學金每次核給期間以一學期為原則。 [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-012",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-guidelines",
+        "oia-site-f7afefe078ea",
+        "oia-site-998e4652d55e"
+      ],
+      "response": "- 獎助學金總額度大學部每人每月不超過新台幣 9,000 元為原則，碩士班每人每月不超過新台幣 15,000 元為原則、博士班每人每月不超過新台幣 51,000 元為原則。 [2]\n- 獎助學金發放與金額由審查委員依成績表現分級核給。 [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    }
+  ]
+}
