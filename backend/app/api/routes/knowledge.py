@@ -20,6 +20,7 @@ SourceType = Literal[
     "contact",
     "place",
     "destination",
+    "food_place",
     "course",
     "club",
 ]

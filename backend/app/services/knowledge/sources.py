@@ -1,4 +1,6 @@
+import hashlib
 import json
+import math
 import re
 from collections.abc import Iterable
 from dataclasses import dataclass
@@ -21,6 +23,7 @@ from app.services import (
     student_services,
 )
 from app.services.course_detail import detail_url
+from app.services.course_translations import load_table, translate
 from app.services.knowledge import crawler
 
 FRONT_MATTER = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
@@ -34,9 +37,16 @@ SOURCE_TYPES = (
     "contact",
     "place",
     "destination",
+    "food_place",
     "course",
     "club",
 )
+FOOD_PLACES = (
+    Path(__file__).resolve().parents[2] / "data/food_places/ncu_food_places.json"
+)
+HALAL_SOURCE = "https://www.taiwan.net.tw/m1.aspx?sNo=0020118"
+OSM_COPYRIGHT = "https://www.openstreetmap.org/copyright"
+EARTH_RADIUS_M = 6_371_000
 CLUB_SITE = "https://club.adm.ncu.edu.tw"
 WEEKDAYS = {
     "1": "Mon 週一",
@@ -342,6 +352,75 @@ def destination_documents() -> list[Document]:
     ]
 
 
+def _metres(a: tuple[float, float], b: tuple[float, float]) -> float:
+    lat1, lon1, lat2, lon2 = map(math.radians, (*a, *b))
+    h = (
+        math.sin((lat2 - lat1) / 2) ** 2
+        + math.cos(lat1) * math.cos(lat2) * math.sin((lon2 - lon1) / 2) ** 2
+    )
+    return 2 * EARTH_RADIUS_M * math.asin(math.sqrt(h))
+
+
+def _distance(metres: float) -> tuple[str, str]:
+    if metres < 1000:
+        rounded = round(metres, -1)
+        return f"{rounded:.0f} m", f"{rounded:.0f} 公尺"
+    return f"{metres / 1000:.1f} km", f"{metres / 1000:.1f} 公里"
+
+
+def food_place_documents() -> list[Document]:
+    data = json.loads(FOOD_PLACES.read_text(encoding="utf-8"))
+    centre = tuple(data["center"])
+    documents = []
+    for group in ("halal", "nearby"):
+        halal = group == "halal"
+        for place in data[group]:
+            spot = (place["lat"], place["lon"])
+            english, chinese = _distance(_metres(centre, spot))
+            maps = (
+                f"https://www.google.com/maps/search/?api=1&query={spot[0]},{spot[1]}"
+            )
+            key = f"{place['name']}|{spot[0]}|{spot[1]}".encode()
+            documents.append(
+                Document(
+                    id=f"food-{hashlib.sha1(key).hexdigest()[:10]}",
+                    title=place["name"],
+                    url=maps,
+                    topic="halal" if halal else "food",
+                    source_type="food_place",
+                    lang="zh-TW",
+                    fetched_on=data["fetched"],
+                    lines=_lines(
+                        f"{place['name']}: "
+                        + (
+                            "halal-certified restaurant 清真認證餐廳"
+                            if halal
+                            else "food near NCU 中央大學附近美食"
+                        )
+                        + f"; kind 類型: {place['kind']}",
+                        f"About {english} in a straight line from the NCU campus "
+                        f"centre 距中央大學校區中心直線約 {chinese}",
+                        f"Certificates 認證: {', '.join(place['certificates'])}; "
+                        f"certified by 認證單位: {place['certifier']}"
+                        if halal
+                        else None,
+                        f"Address 地址: {place['address']}"
+                        if place.get("address")
+                        else None,
+                        f"Phone 電話: {place['phone']}" if place.get("phone") else None,
+                        f"Map 地圖: {maps} (source 來源: "
+                        + (
+                            f"Tourism Administration halal restaurant list {HALAL_SOURCE}"
+                            if halal
+                            else f"OpenStreetMap contributors {OSM_COPYRIGHT}"
+                        )
+                        + ")",
+                    ),
+                )
+            )
+    return documents
+
+
 @lru_cache
 def file_documents() -> tuple[Document, ...]:
     return tuple(
@@ -355,6 +434,7 @@ def file_documents() -> tuple[Document, ...]:
             *contact_documents(),
             *place_documents(),
             *destination_documents(),
+            *food_place_documents(),
         ]
     )
 
@@ -375,6 +455,19 @@ def _excerpt(text: str) -> str:
     return text if len(text) <= SYLLABUS_CHARS else text[:SYLLABUS_CHARS] + "…"
 
 
+def _joined(*parts: str | None) -> str | None:
+    found = [part for part in parts if part]
+    return "; ".join(found) if found else None
+
+
+def _with_english(label: str, text: str, table: dict[str, str]) -> str | None:
+    if not text:
+        return None
+    line = f"{label}: {_excerpt(text)}"
+    english = translate(text, table)
+    return line if english == text else f"{line} | English: {_excerpt(english)}"
+
+
 def course_documents(session: Session) -> list[Document]:
     state = session.get(CatalogState, 1)
     semester = state.semester if state else ""
@@ -383,13 +476,21 @@ def course_documents(session: Session) -> list[Document]:
         d.department_id: d.department_name for d in session.exec(select(Department))
     }
     details = {d.serial_no: d for d in session.exec(select(CourseDetail))}
+    titles_en = load_table("catalog", "en")
+    titles_vi = load_table("catalog", "vi")
+    details_en = load_table("detail", "en")
     documents = []
     for course in session.exec(select(Course)):
         detail = details.get(course.serial_no)
+        title_en = titles_en.get(course.title.strip())
+        title_vi = titles_vi.get(course.title.strip())
+        department_names = [departments.get(d, d) for d in course.department_ids]
+        departments_en = [titles_en.get(name, name) for name in department_names]
         documents.append(
             Document(
                 id=f"course-{course.serial_no}",
-                title=f"{course.title} ({course.class_no})",
+                title=" ".join(part for part in (course.title, title_en) if part)
+                + f" ({course.class_no})",
                 url=detail_url(str(course.serial_no)),
                 topic=semester,
                 source_type="course",
@@ -397,18 +498,32 @@ def course_documents(session: Session) -> list[Document]:
                 fetched_on=fetched,
                 lines=_lines(
                     f"Semester {semester}; serial number {course.serial_no}; course code {course.class_no}",
+                    _joined(
+                        f"English title: {title_en}" if title_en else None,
+                        f"Tên môn học: {title_vi}" if title_vi else None,
+                    ),
                     f"Teachers 授課教師: {', '.join(course.teachers)}"
                     if course.teachers
                     else None,
-                    f"Time 上課時間: {_class_times(course.class_times)}"
-                    if course.class_times
-                    else None,
-                    f"Credits 學分: {course.credit:g}; type: {course.course_type or ''}",
+                    _joined(
+                        f"Time 上課時間: {_class_times(course.class_times)}"
+                        if course.class_times
+                        else None,
+                        f"Credits 學分: {course.credit:g}",
+                        f"type: {course.course_type or ''}",
+                    ),
                     "Departments 開課系所: "
-                    + ", ".join(departments.get(d, d) for d in course.department_ids),
-                    f"Objectives 課程目標: {_excerpt(detail.objectives)}"
-                    if detail and detail.objectives
-                    else None,
+                    + ", ".join(department_names)
+                    + (
+                        f" (English: {', '.join(departments_en)})"
+                        if departments_en != department_names
+                        else ""
+                    ),
+                    _with_english(
+                        "Objectives 課程目標",
+                        detail.objectives if detail else "",
+                        details_en,
+                    ),
                     f"Content 課程內容: {_excerpt(detail.content)}"
                     if detail and detail.content
                     else None,

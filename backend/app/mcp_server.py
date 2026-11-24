@@ -399,7 +399,8 @@ def search_knowledge(
     (English and Chinese), central-government guides on work permits,
     insurance and residence, graduation language rules, international degree
     programs, university credit and service-learning rules, office contacts,
-    campus buildings, off-campus destinations, and, when the server has its
+    campus buildings, off-campus destinations, restaurants and halal-certified
+    places near campus, and, when the server has its
     database, this semester's courses and the student clubs.
 
     Args:
@@ -407,7 +408,8 @@ def search_knowledge(
             and meaning-based search are combined, so a whole question works.
         source_types: only search these kinds of sources: oia_page,
             gov_guide, graduation_language, intl_program, credits,
-            service_learning, contact, place, destination, course, club.
+            service_learning, contact, place, destination, food_place, course,
+            club.
         limit: how many passages to return, 1 to 20.
 
     Returns passages best first, each with its document id, title, official

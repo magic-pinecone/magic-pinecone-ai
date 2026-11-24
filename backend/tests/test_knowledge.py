@@ -141,7 +141,12 @@ def test_refresh_adds_courses_and_clubs_and_embeds_once(session, embedder):
     assert second["embedded"] == 0
     assert counts["course"]["embedded_passages"] == 1
     course = knowledge_index.get_document("course-3001")
-    assert "Wed 週三 periods 2,3" in "\n".join(course.lines)
+    text = "\n".join(course.lines)
+    assert "Wed 週三 periods 2,3" in text
+    assert course.title == "微積分 Calculus (MA1001-A)"
+    assert "Tên môn học: Phép tính" in text
+    assert "數學系 (English: Department of Mathematics)" in text
+    assert len(course.lines) <= knowledge_index.PASSAGE_LINES
 
 
 def test_vector_search_finds_passages_without_shared_words(
@@ -214,3 +219,54 @@ def test_reindex_and_sources_endpoints(client, monkeypatch):
     rows = {row["source_type"]: row for row in listed.json()["sources"]}
     assert rows["course"]["documents"] == 1
     assert listed.json()["embedding_model"] is None
+
+
+def test_food_places_cover_halal_and_nearby_places():
+    documents = sources.food_place_documents()
+    data = json.loads(sources.FOOD_PLACES.read_text(encoding="utf-8"))
+    halal = [d for d in documents if d.topic == "halal"]
+
+    assert len(documents) == len(data["halal"]) + len(data["nearby"])
+    assert len({d.id for d in documents}) == len(documents)
+    assert len(halal) == len(data["halal"])
+    text = "\n".join(halal[0].lines)
+    assert "清真認證餐廳" in text and "Certificates 認證:" in text
+    assert "straight line from the NCU campus centre" in text
+
+
+def test_food_place_distance_is_rounded_by_scale():
+    assert sources._distance(434) == ("430 m", "430 公尺")
+    assert sources._distance(1234) == ("1.2 km", "1.2 公里")
+    assert round(sources._metres((24.9682, 121.1955), (24.9682, 121.1955))) == 0
+
+
+def test_food_places_match_the_app_copy():
+    app_copy = (
+        sources.FOOD_PLACES.parents[3].parent
+        / "app/shared/src/commonMain/moko-resources/files/ncu_food_places.json"
+    )
+    if not app_copy.exists():
+        pytest.skip("app sources are not checked out next to the backend")
+    assert sources.FOOD_PLACES.read_bytes() == app_copy.read_bytes()
+
+
+def test_keyword_search_finds_halal_places():
+    found = knowledge_index.search(
+        "halal restaurant", source_types=["food_place"], limit=3, embedder=None
+    )
+
+    assert found and all(passage["source_type"] == "food_place" for passage in found)
+    assert any(passage["topic"] == "halal" for passage in found)
+
+
+def test_syllabus_lines_carry_their_english_translation():
+    table = {"認識光學": "Understand optics"}
+
+    assert (
+        sources._with_english("Objectives 課程目標", "認識光學", table)
+        == "Objectives 課程目標: 認識光學 | English: Understand optics"
+    )
+    assert sources._with_english("Objectives 課程目標", "未翻譯", table) == (
+        "Objectives 課程目標: 未翻譯"
+    )
+    assert sources._with_english("Objectives 課程目標", "", table) is None
