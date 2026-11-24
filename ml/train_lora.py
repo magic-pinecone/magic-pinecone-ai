@@ -121,6 +121,25 @@ def describe(rows: list[dict]) -> str:
     )
 
 
+def check_labels(trainer, tokenizer, train_rows: list[dict]) -> None:
+    sample = trainer.train_dataset[0]
+    labels = list(sample["labels"])
+    kept = [token for token in labels if token != -100]
+    decoded = tokenizer.decode(kept)
+    answer = train_rows[0]["messages"][-1]["content"]
+    print(f"label sequence: {len(kept)} of {len(labels)} tokens carry loss")
+    print("decoded labels:", repr(decoded))
+    if answer.strip() not in decoded:
+        raise SystemExit("the answer is missing from the labels")
+    leaked = [
+        marker
+        for marker in ("Passages:", "Question:", "You help international students")
+        if marker in decoded
+    ]
+    if leaked:
+        raise SystemExit(f"prompt text carries loss: {leaked}")
+
+
 def train_unsloth(args, family: dict, train_rows: list[dict], eval_rows: list[dict]):
     # Unsloth must be imported before transformers.
     from unsloth import FastModel  # isort: skip
@@ -190,6 +209,9 @@ def train_unsloth(args, family: dict, train_rows: list[dict], eval_rows: list[di
         instruction_part=family["instruction_part"],
         response_part=family["response_part"],
     )
+    check_labels(trainer, tokenizer, train_rows)
+    if args.labels_only:
+        return
     trainer.train()
     if eval_rows:
         print("eval:", trainer.evaluate())
@@ -344,6 +366,11 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=3407)
     parser.add_argument("--merge", action="store_true", help="also save merged weights")
     parser.add_argument("--gguf", metavar="QUANT", help="e.g. q4_k_m (unsloth backend)")
+    parser.add_argument(
+        "--labels-only",
+        action="store_true",
+        help="build the trainer, check which tokens carry loss, then exit",
+    )
     parser.add_argument(
         "--check-data",
         action="store_true",
