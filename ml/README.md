@@ -537,6 +537,81 @@ of the passages. Per-language rows: `results/generation_comparison.md`. One run 
 questions: differences of one to three questions mean nothing; the drop on the
 old set (8 questions) is larger than that.
 
+#### Mixed data run (v6)
+
+`mix_data.py` merges teacher-data files into one training file:
+
+```bash
+cd backend
+uv run --frozen python ../ml/mix_data.py --data /content/data/train.jsonl \
+    /content/data/train_v5.jsonl --out /content/data/train_v6.jsonl \
+    --recheck-votes 2 --workers 16
+```
+
+It puts the current system prompt on every row, drops duplicate ids and
+questions that look like a golden question, and asks the teacher again
+(`--recheck-votes`, with the stricter verify prompt) about every hard refusal,
+a refusal row whose distractors were retrieved: it stays only if every vote
+says the passages do not answer the question. Rejects, with the reason, go to
+`<out>.rejects.jsonl`; `--dry-run` uses the fake teacher.
+
+The input was the v4 data (3479 rows) and the v5 data (3596 rows). 7028 rows
+were kept and 47 rejected, all of them v5 hard refusals for which a vote said
+the passages do answer (298 hard refusals went in, 251 stayed: 3.6% of the
+rows; none of the v4 rows is a hard refusal). No duplicate id and no golden
+look-alike was found. Kept by kind: 5092 answer, 675 multi, 1261 refusal; by
+language: 3923 en, 1054 id, 1024 vi, 1027 zh-TW; by distractors: 3200 random,
+3828 retrieved.
+
+`unsloth/gemma-4-E2B-it` on these rows (6677 train, 351 held out), 2 epochs,
+`--batch-size 8 --grad-accum 1 --max-seq-length 3072`, rank 16, `--merge --gguf
+q4_k_m`, 1670 steps in 21 minutes. `--labels-only` on the first example: 127
+of 625 tokens carry loss and they decode to the answer plus the end-of-turn
+token. Mean training loss 0.298, held-out loss 0.308.
+
+Generation scores as in the table above, with v6 added (same server flags, one
+run per cell):
+
+| questions | passages | model | answer | answer (ctx) | cite | refuse | refuse (no ctx) | over-refuse | num-err |
+|---|---|---|---|---|---|---|---|---|---|
+| old | retrieved | base | 42/51 | 42/47 | 43/51 | 6/9 | 0/4 | 0/47 | 0/60 |
+| old | retrieved | v4 | 43/51 | 43/47 | 43/51 | 9/9 | 0/4 | 0/47 | 0/60 |
+| old | retrieved | v5 | 35/51 | 35/47 | 33/51 | 9/9 | 1/4 | 6/47 | 0/60 |
+| old | retrieved | v6 | 41/51 | 41/47 | 41/51 | 9/9 | 0/4 | 0/47 | 0/60 |
+| old | oracle | base | 48/51 | 48/51 | 47/51 | 6/9 | n/a | 0/51 | 0/60 |
+| old | oracle | v4 | 44/51 | 44/51 | 44/51 | 9/9 | n/a | 0/51 | 1/60 |
+| old | oracle | v5 | 41/51 | 41/51 | 41/51 | 9/9 | n/a | 4/51 | 0/60 |
+| old | oracle | v6 | 44/51 | 44/51 | 45/51 | 9/9 | n/a | 0/51 | 0/60 |
+| new | retrieved | base | 51/66 | 51/58 | 59/66 | 2/10 | 1/8 | 0/58 | 2/76 |
+| new | retrieved | v4 | 52/66 | 52/58 | 59/66 | 8/10 | 2/8 | 0/58 | 1/76 |
+| new | retrieved | v5 | 53/66 | 53/58 | 56/66 | 10/10 | 6/8 | 1/58 | 1/76 |
+| new | retrieved | v6 | 53/66 | 53/58 | 57/66 | 9/10 | 3/8 | 1/58 | 1/76 |
+| new | oracle | base | 61/66 | 61/66 | 66/66 | 2/10 | n/a | 0/66 | 2/76 |
+| new | oracle | v4 | 63/66 | 63/66 | 64/66 | 8/10 | n/a | 0/66 | 2/76 |
+| new | oracle | v5 | 58/66 | 58/66 | 63/66 | 10/10 | n/a | 2/66 | 3/76 |
+| new | oracle | v6 | 64/66 | 64/66 | 64/66 | 9/10 | n/a | 0/66 | 2/76 |
+
+Split of the 117 answerable questions, retrieved prompts:
+
+| outcome | base | v4 | v5 | v6 |
+|---|---|---|---|---|
+| correct | 93 | 95 | 88 | 94 |
+| passages lack the answer, model refused | 1 | 2 | 7 | 3 |
+| passages lack the answer, model answered | 11 | 10 | 5 | 9 |
+| passages have the answer, model refused | 0 | 0 | 7 | 1 |
+| passages have the answer, model answered wrongly | 12 | 10 | 10 | 10 |
+| of the last two rows, correct with oracle passages | 9 | 5 | 9 of 17 | 6 of 11 |
+
+Reading: v6 gets back most of the answer accuracy (old retrieved 41/51 against
+43/51 for v4 and 35/51 for v5; oracle 44/51 and 64/66, the same as or above
+v4) and over-refuses once (en-141, the Cathay Life insurance price, refused
+with the answer in the passages) against 7 for v5. It keeps part of the
+refusal gain: 18/19 unanswerable questions refused (v5 19/19, v4 17/19; the
+miss is a Vietnamese question in the new set, in both passage modes), and
+when the passages lack the answer it refuses 3 of 12 times (v5 7, v4 2).
+Against v4 the differences on answerable questions are one or two questions
+(94 against 95 correct), which one run per model cannot separate.
+
 ## What has been tested
 
 Run on the development machine (no GPU, no network access to a model):
