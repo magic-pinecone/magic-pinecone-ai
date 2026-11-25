@@ -156,3 +156,13 @@ def test_held_out_questions_cover_golden_and_generated(tmp_path):
         encoding="utf-8",
     )
     assert held_out_questions(golden, generated) == ["what is x", "why y"]
+
+
+def test_facts_echoed_by_the_question_are_dropped():
+    fields, reason = accept_answerable(
+        reply("When are the midterms in E1-201?", ["E1-201", "2026-04-20"]),
+        task(),
+        [],
+        lambda messages: "From 2026-04-20.",
+    )
+    assert reason == "ok" and fields["must_contain"] == ["2026-04-20"]

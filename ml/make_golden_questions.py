@@ -93,12 +93,16 @@ QUESTION_TASK = """Passage:
 {passage}
 
 Write one question in {language} that a student of NCU would naturally ask \
-and that this passage alone answers. Do not mention the passage.
+and that this passage alone answers. Do not mention the passage. The \
+question must stand on its own: name the course (title or code), place, \
+office, program, event or document it is about, never "this course" or "this \
+page".
 
 Also list 1 to 3 short strings (`must_contain`) that a correct answer has to \
 contain. Copy each one exactly, character for character, from the passage. \
 Prefer numbers, dates, times, codes, room and building names, URLs and proper \
-names, because they stay the same in every language.
+names, because they stay the same in every language. Do not list strings \
+that the question itself already contains.
 
 If the passage has no fact a student could ask about (menus, bare link lists, \
 page footers), reply {{"skip": true}}.
@@ -226,8 +230,12 @@ def accept_answerable(raw: str, task: Task, blocked: list[str], chat) -> tuple:
     item = {"must_contain": facts}
     if not holds_answer(passage_text(task.gold), item):
         return None, "must_contain_not_in_passage"
-    if holds_answer(data["question"], item):
+    facts = [
+        f for f in facts if not holds_answer(data["question"], {"must_contain": [f]})
+    ]
+    if not facts:
         return None, "answer_in_question"
+    item = {"must_contain": facts}
     verdict = strip_reasoning(chat(answer_messages(task, data["question"])))
     if not holds_answer(verdict, item):
         return None, "verification_answer_lacks_facts"
