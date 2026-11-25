@@ -24,7 +24,7 @@ JSONL written by make_teacher_data.py (`messages`: system, user, assistant);
 its prompt format is defined once in prompt_format.py.
 
 Defaults are sized for an 8 GB RTX 4070: 4-bit loading, batch size 1 with
-gradient accumulation 8, sequence length 2048.
+gradient accumulation 8, sequence length 3072.
 
 After training: the adapter is in <output>/adapter. `--merge` also writes
 merged 16-bit weights to <output>/merged, `--gguf q4_k_m` (unsloth backend)

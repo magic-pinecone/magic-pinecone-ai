@@ -68,3 +68,17 @@ def test_mix_without_votes_keeps_hard_refusals():
     rows = [row("c", "Unanswered?", "refusal", "retrieved")]
     kept, rejected = mix(rows, [], lambda messages: "unused", votes=0)
     assert [r["id"] for r in kept] == ["c"] and rejected == []
+
+
+def test_mix_drops_questions_of_the_generated_set(tmp_path):
+    from common import held_out_questions
+
+    golden, generated = tmp_path / "g.jsonl", tmp_path / "gen.jsonl"
+    golden.write_text("", encoding="utf-8")
+    generated.write_text(json.dumps({"question": "Generated one?"}), encoding="utf-8")
+    held_out = held_out_questions(golden, generated)
+    kept, rejected = mix(
+        [row("a", "Generated one?"), row("b", "Something else?")], held_out, None, 0
+    )
+    assert [r["id"] for r in kept] == ["b"]
+    assert rejected == [{"id": "a", "reason": "matches_golden_question"}]

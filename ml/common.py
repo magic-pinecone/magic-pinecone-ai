@@ -9,6 +9,7 @@ from pathlib import Path
 ML_DIR = Path(__file__).resolve().parent
 BACKEND_DIR = ML_DIR.parent / "backend"
 GOLDEN_PATH = ML_DIR / "golden" / "questions.jsonl"
+GENERATED_PATH = ML_DIR / "golden" / "generated.jsonl"
 RESULTS_DIR = ML_DIR / "results"
 
 
@@ -81,6 +82,15 @@ def append_jsonl(path: Path, row: dict) -> None:
 
 def load_golden(path: Path = GOLDEN_PATH) -> list[dict]:
     return read_jsonl(path)
+
+
+def held_out_questions(
+    golden_path: Path = GOLDEN_PATH, generated_path: Path = GENERATED_PATH
+) -> list[str]:
+    from checks import normalize_question
+
+    rows = read_jsonl(golden_path) + read_jsonl(generated_path)
+    return list(dict.fromkeys(normalize_question(row["question"]) for row in rows))
 
 
 def expected_sources(item: dict) -> set[str]:

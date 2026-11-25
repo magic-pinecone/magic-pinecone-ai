@@ -23,7 +23,9 @@ and for unanswerable questions how often the search still returns passages.
 Items without `source_type` are the first 60 questions ("old"); the others
 are written against the larger corpus ("new").
 `--sweep 0.3,0.4,...` repeats the run with those values of
-KNOWLEDGE_MIN_SIMILARITY. Writes ml/results/retrieval_<search>.md and .json.
+KNOWLEDGE_MIN_SIMILARITY. Writes ml/results/retrieval_<search>.md and .json;
+with `--golden` set to another file, the golden file's stem is appended to the
+names (retrieval_<search>_<stem>.md) so the results of the golden set are kept.
 """
 
 import argparse
@@ -32,6 +34,7 @@ from pathlib import Path
 
 from checks import holds_answer
 from common import (
+    GOLDEN_PATH,
     RESULTS_DIR,
     expected_sources,
     knowledge_services,
@@ -211,12 +214,17 @@ def main() -> None:
         "--sweep", help="comma-separated KNOWLEDGE_MIN_SIMILARITY values"
     )
     parser.add_argument("--out-dir", type=Path, default=RESULTS_DIR)
+    parser.add_argument(
+        "--golden", type=Path, default=GOLDEN_PATH, help="questions JSONL to score"
+    )
     args = parser.parse_args()
+    suffix = "" if args.golden == GOLDEN_PATH else f"_{args.golden.stem}"
+    questions_file = f"ml/golden/{args.golden.name}"
 
     services = knowledge_services(args.search)
     from app.core.config import settings
 
-    golden = load_golden()
+    golden = load_golden(args.golden)
     args.out_dir.mkdir(parents=True, exist_ok=True)
     if args.sweep:
         if args.search != "hybrid":
@@ -239,9 +247,9 @@ def main() -> None:
             )
         table = sweep_markdown(rows)
         print(table)
-        (args.out_dir / "retrieval_hybrid_sweep.md").write_text(
+        (args.out_dir / f"retrieval_hybrid_sweep{suffix}.md").write_text(
             "# KNOWLEDGE_MIN_SIMILARITY sweep\n\nHybrid search, top 3 and 5, "
-            "`ml/golden/questions.jsonl`. Produced by "
+            f"`{questions_file}`. Produced by "
             "`ml/eval_retrieval.py --sweep`.\n\n" + table + "\n",
             encoding="utf-8",
         )
@@ -255,7 +263,7 @@ def main() -> None:
     table = to_markdown(report)
     print(table)
 
-    (args.out_dir / f"retrieval_{args.search}.json").write_text(
+    (args.out_dir / f"retrieval_{args.search}{suffix}.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     detail = (
@@ -263,10 +271,10 @@ def main() -> None:
         if args.search == "keyword"
         else "Hybrid search (keyword and embeddings, fused)"
     )
-    (args.out_dir / f"retrieval_{args.search}.md").write_text(
+    (args.out_dir / f"retrieval_{args.search}{suffix}.md").write_text(
         "# Retrieval on the golden set\n\n"
         f"{detail} (`knowledge.index.search`, top 3 and 5, no source-type filter) on "
-        "`ml/golden/questions.jsonl`. Produced by `ml/eval_retrieval.py "
+        f"`{questions_file}`. Produced by `ml/eval_retrieval.py "
         f"--search {args.search}`; column meanings are in its docstring.\n\n"
         f"{table}\n",
         encoding="utf-8",

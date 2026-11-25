@@ -77,6 +77,36 @@ before any number computed on them is quoted.** They are marked
 `needs_native_review: true`. The zh-TW questions were also written by the
 model and deserve a read by a native speaker, although they are not flagged.
 
+### Generated exam set
+
+`golden/generated.jsonl` is a larger test set over the whole knowledge base,
+including the source types `course`, `food_place` and `academic_calendar`.
+Rows have the fields above plus `generated: true`, `source_type` and, for
+answerable rows, `passage_id` (`<document id>@<first line of the passage>`);
+ids are `gen-<en|zh|vi|id>-<number>`. It is written by
+`make_golden_questions.py` with the teacher model:
+
+- Answerable: for one passage of the planned source type the teacher writes a
+  question and 1 to 3 `must_contain` strings. It is kept if the strings are
+  found in the passage (`checks.holds_answer`), the question is in the right
+  language and not close to a golden or earlier generated question, and the
+  teacher, shown only that passage and the question, answers with all the
+  strings.
+- Unanswerable (`--unanswerable-rate`): the teacher writes a plausible
+  question the knowledge base does not answer; it is kept if the teacher says
+  `--verify-votes` times that the five passages the search returns for it do
+  not answer it.
+
+Rejected tasks go to `generated.jsonl.rejects.jsonl` with the reason; rerunning
+resumes. The set is teacher-written and has only been spot-checked, so its
+questions and `must_contain` strings can be wrong; the vi and id rows are
+flagged `needs_native_review` like the golden ones. `make_teacher_data.py`
+and `mix_data.py` drop every training question that matches a golden or
+generated question (`common.held_out_questions`). Score it with
+`--golden golden/generated.jsonl` on `eval_retrieval.py` and
+`eval_generation.py`; results go to files with the golden file's stem in their
+name or directory, not over the golden-set results.
+
 ## Order of steps
 
 All commands that touch the backend service are run from `backend/`
@@ -291,7 +321,7 @@ python ml/train_lora.py --data ml/data/train.jsonl \
 ```
 
 Defaults: 4-bit loading, batch size 1, gradient accumulation 8, sequence length
-2048, LoRA rank 16, 3 epochs, loss on the assistant turn only, vision layers
+3072, LoRA rank 16, 3 epochs, loss on the assistant turn only, vision layers
 not trained. `--backend peft` uses transformers + PEFT + TRL instead of Unsloth.
 `--merge` also writes merged 16-bit weights; `--gguf q4_k_m` exports a GGUF
 (Unsloth backend).

@@ -34,18 +34,13 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, replace
 from pathlib import Path
 
-from checks import (
-    matches_golden,
-    normalize_question,
-    strip_reasoning,
-    unsupported_numbers,
-)
+from checks import matches_golden, strip_reasoning, unsupported_numbers
 from common import (
     ChatClient,
     EndpointError,
     append_jsonl,
+    held_out_questions,
     knowledge_services,
-    load_golden,
     read_jsonl,
 )
 from prompt_format import (
@@ -237,7 +232,11 @@ def parse_lang_mix(text: str) -> dict[str, float]:
     return mix
 
 
-def parse_type_mix(text: str, available: set[str] | None = None) -> dict[str, float]:
+def parse_type_mix(
+    text: str,
+    available: set[str] | None = None,
+    min_primary_share: float = MIN_PRIMARY_SHARE,
+) -> dict[str, float]:
     mix = {}
     for part in text.split(","):
         source_type, _, weight = part.partition("=")
@@ -250,10 +249,10 @@ def parse_type_mix(text: str, available: set[str] | None = None) -> dict[str, fl
     total = sum(mix.values())
     if total <= 0:
         raise ValueError("source-type mix needs at least one positive weight")
-    if sum(mix.get(k, 0.0) for k in PRIMARY_TYPES) / total < MIN_PRIMARY_SHARE:
+    if sum(mix.get(k, 0.0) for k in PRIMARY_TYPES) / total < min_primary_share:
         raise ValueError(
             f"{' and '.join(PRIMARY_TYPES)} need at least "
-            f"{MIN_PRIMARY_SHARE:.0%} of the examples"
+            f"{min_primary_share:.0%} of the examples"
         )
     return mix
 
@@ -672,7 +671,7 @@ def main() -> None:
     rejects = out.with_name(out.name + ".rejects.jsonl")
 
     services = knowledge_services(args.search)
-    golden = [normalize_question(item["question"]) for item in load_golden()]
+    golden = held_out_questions()
     passages = corpus_passages(services)
     starts = {(p["id"], p["passage"]): p["start"] for p in passages}
 

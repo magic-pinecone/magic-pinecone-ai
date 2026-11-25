@@ -4,7 +4,13 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from checks import matches_golden, normalize_question
-from common import ChatClient, EndpointError, append_jsonl, load_golden, read_jsonl
+from common import (
+    ChatClient,
+    EndpointError,
+    append_jsonl,
+    held_out_questions,
+    read_jsonl,
+)
 from make_teacher_data import (
     DEFAULT_VERIFY_VOTES,
     FakeTeacher,
@@ -109,7 +115,7 @@ def main() -> None:
         )
 
     rows = [row for path in args.data for row in read_jsonl(path)]
-    golden = [normalize_question(item["question"]) for item in load_golden()]
+    golden = held_out_questions()
     try:
         kept, rejected = mix(rows, golden, recheck, args.recheck_votes, args.workers)
     except EndpointError as error:
