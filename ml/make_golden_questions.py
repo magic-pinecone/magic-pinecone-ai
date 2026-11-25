@@ -115,7 +115,8 @@ ANSWER_TASK = """Passage:
 Question: {question}
 
 Answer the question in {language} using only the passage, in one or two \
-short sentences. If the passage does not answer it, say so."""
+short sentences. Copy numbers, dates, times, codes and names exactly as the \
+passage writes them. If the passage does not answer it, say so."""
 
 UNANSWERABLE_TASK = """Topic of the knowledge base: {topic}.
 
