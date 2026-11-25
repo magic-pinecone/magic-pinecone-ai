@@ -105,9 +105,15 @@ def matches_golden(
     `golden_normalized` are golden questions passed through normalize_question.
     """
     candidate = normalize_question(question)
+    matcher = SequenceMatcher(None, candidate)
     for golden in golden_normalized:
         if candidate == golden:
             return True
-        if SequenceMatcher(None, candidate, golden).ratio() >= threshold:
+        matcher.set_seq2(golden)
+        if (
+            matcher.real_quick_ratio() >= threshold
+            and matcher.quick_ratio() >= threshold
+            and matcher.ratio() >= threshold
+        ):
             return True
     return False
