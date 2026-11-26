@@ -8,4 +8,10 @@
     <string name="food_certified_by">認證單位：%1$s</string>
     <string name="food_sources">清真店家取自交通部觀光署「接待穆斯林餐廳」認證名單，擷取日期 %1$s。其他店家取自 OpenStreetMap，未查核是否清真。前往前請先向店家確認。</string>
     <string name="food_offline">無法載入地圖。請檢查網路連線後重新開啟此頁。</string>
+    <string name="food_view_list">清單</string>
+    <string name="food_view_map">地圖</string>
+    <string name="food_search">搜尋店名、種類或地址</string>
+    <string name="food_clear_search">清除搜尋</string>
+    <string name="food_nearby">校園附近</string>
+    <string name="food_no_match">找不到符合「%1$s」的店家。</string>
 </resources>

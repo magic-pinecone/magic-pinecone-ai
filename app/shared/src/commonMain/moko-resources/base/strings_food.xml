@@ -8,4 +8,10 @@
     <string name="food_certified_by">Certified by %1$s</string>
     <string name="food_sources">Halal places are from the Taiwan Tourism Administration\'s list of certified restaurants, copied on %1$s. Other places are from OpenStreetMap and are not checked for halal. Confirm with the restaurant before you go.</string>
     <string name="food_offline">Could not load the map. Check your connection and open this page again.</string>
+    <string name="food_view_list">List</string>
+    <string name="food_view_map">Map</string>
+    <string name="food_search">Search by name, food or address</string>
+    <string name="food_clear_search">Clear search</string>
+    <string name="food_nearby">Near campus</string>
+    <string name="food_no_match">No places match “%1$s”.</string>
 </resources>

@@ -8,4 +8,10 @@
     <string name="food_certified_by">Chứng nhận bởi %1$s</string>
     <string name="food_sources">Các quán halal lấy từ danh sách nhà hàng được chứng nhận của Cục Du lịch Đài Loan, sao chép ngày %1$s. Các quán khác lấy từ OpenStreetMap và chưa được kiểm tra halal. Hãy xác nhận với quán trước khi đến.</string>
     <string name="food_offline">Không tải được bản đồ. Hãy kiểm tra kết nối và mở lại trang này.</string>
+    <string name="food_view_list">Danh sách</string>
+    <string name="food_view_map">Bản đồ</string>
+    <string name="food_search">Tìm theo tên, món hoặc địa chỉ</string>
+    <string name="food_clear_search">Xóa tìm kiếm</string>
+    <string name="food_nearby">Gần trường</string>
+    <string name="food_no_match">Không có quán nào khớp với “%1$s”.</string>
 </resources>
