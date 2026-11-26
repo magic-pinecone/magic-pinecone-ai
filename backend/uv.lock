@@ -835,7 +835,7 @@ requires-dist = [
     { name = "redis", specifier = "==8.1.0" },
     { name = "redis", specifier = ">=8.1.0" },
     { name = "ruff", specifier = ">=0.16.3" },
-    { name = "selectolax", specifier = ">=0.4.11" },
+    { name = "selectolax", specifier = ">=0.4.11,<1" },
     { name = "sqlmodel", specifier = "==0.0.39" },
     { name = "tenacity", specifier = ">=9.1.4" },
     { name = "uvicorn", specifier = ">=0.52.3" },
