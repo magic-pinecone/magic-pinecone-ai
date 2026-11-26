@@ -440,6 +440,10 @@ backend's environment.
    the prompt, which is not the prompt the student was trained on. A first
    round of evaluation was thrown away for this reason.
 
+   To serve from a Kaggle GPU instead, `ml/serving/kaggle-llama-server.ipynb`
+   runs the chat model and EmbeddingGemma on two T4s behind one URL (Pangolin
+   or ngrok) and prints the backend settings.
+
 2. Point the backend at it (`backend/.env`, see `backend/.env.example`):
 
    ```bash
