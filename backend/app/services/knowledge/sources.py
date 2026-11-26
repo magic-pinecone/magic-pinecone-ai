@@ -323,7 +323,7 @@ def place_documents() -> list[Document]:
                 f"Building code: {place.code}" if place.code else None,
                 f"Category: {place.category}",
                 f"Also called: {', '.join(place.aliases)}" if place.aliases else None,
-                place.note_en,
+                place.description.en if place.description else None,
                 f"Walking directions: {place.map_links.google_walking_directions}",
             ),
         )

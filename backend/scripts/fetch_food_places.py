@@ -1,10 +1,11 @@
-#!/usr/bin/env python3
-"""Refresh the food map's places around NCU.
+"""Refresh the places to eat around NCU in app/data/food_places.json.
 
-Usage: python3 -I scripts/update_food_map.py
+Run from backend/: `uv run python scripts/fetch_food_places.py`.
 
-Halal places come from the Tourism Administration's list of certified restaurants, the only
-source that names the certificate and who issued it. Everything else comes from OpenStreetMap.
+Halal places come from the Tourism Administration's list of certified
+restaurants, the only source that names the certificate and who issued it.
+Everything else comes from OpenStreetMap, minus what campus_places.json
+already lists. Ported from the food map in magic-pinecone-ai#41.
 """
 
 import datetime
@@ -12,35 +13,50 @@ import html
 import json
 import math
 import re
+import ssl
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
 
+DATA_DIR = Path(__file__).resolve().parent.parent / "app" / "data"
+OUTPUT = DATA_DIR / "food_places.json"
+CAMPUS_PLACES = DATA_DIR / "campus_places.json"
+
 NCU = (24.9682, 121.1955)
 # Certified places are sparse, so they are kept from further away than ordinary ones.
 HALAL_KM = 10
 NEARBY_M = 2000
 HALAL_URL = "https://www.taiwan.net.tw/m1.aspx?sNo=0020118&page={page}"
-OVERPASS_URLS = ("https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter")
+OVERPASS_URLS = (
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.kumi.systems/api/interpreter",
+)
 OVERPASS_QUERY = (
     '[out:json][timeout:25];nwr["amenity"~"^(restaurant|cafe|fast_food|food_court)$"]["name"]'
     f"(around:{NEARBY_M},{NCU[0]},{NCU[1]});out center tags;"
 )
-OUTPUT = Path(__file__).resolve().parent.parent / "shared/src/commonMain/moko-resources/files/ncu_food_places.json"
+
+
+# The tourism site's certificate has no Subject Key Identifier, which Python
+# 3.13's strict X.509 checks reject; the chain is still verified.
+TLS = ssl.create_default_context()
+TLS.verify_flags &= ~ssl.VERIFY_X509_STRICT
 
 
 def fetch(url: str, data: bytes | None = None, agent: str = "Mozilla/5.0") -> str:
     request = urllib.request.Request(url, data=data, headers={"User-Agent": agent})
-    with urllib.request.urlopen(request, timeout=90) as response:
+    with urllib.request.urlopen(request, timeout=90, context=TLS) as response:
         return response.read().decode("utf-8", errors="replace")
 
 
 def km_from_ncu(lat: float, lon: float) -> float:
     haversine = (
         math.sin(math.radians(lat - NCU[0]) / 2) ** 2
-        + math.cos(math.radians(NCU[0])) * math.cos(math.radians(lat)) * math.sin(math.radians(lon - NCU[1]) / 2) ** 2
+        + math.cos(math.radians(NCU[0]))
+        * math.cos(math.radians(lat))
+        * math.sin(math.radians(lon - NCU[1]) / 2) ** 2
     )
     return 6371 * 2 * math.asin(math.sqrt(haversine))
 
@@ -54,7 +70,9 @@ def halal_places() -> list[dict]:
     page = 1
     while True:
         try:
-            rows = re.findall(r"<tbody>(.*?)</tbody>", fetch(HALAL_URL.format(page=page)), flags=re.S)
+            rows = re.findall(
+                r"<tbody>(.*?)</tbody>", fetch(HALAL_URL.format(page=page)), flags=re.S
+            )
         except urllib.error.HTTPError:
             # The page after the last one redirects to a 404.
             rows = []
@@ -74,25 +92,30 @@ def halal_places() -> list[dict]:
             address = text(location[3])
             places[text(cells[0]), address] = {
                 "name": text(cells[0]),
-                "lat": round(lat, 6),
-                "lon": round(lon, 6),
-                "kind": text(cells[3]),
-                "certificates": certificates,
-                "certifier": text(cells[4]),
+                "latitude": round(lat, 6),
+                "longitude": round(lon, 6),
+                "kind": text(cells[3]) or None,
+                "osm_id": None,
+                "halal": {"certificates": certificates, "certifier": text(cells[4])},
                 "address": address,
-                "phone": text(phone[1]) if phone else "",
+                "phone": text(phone[1]) if phone else None,
             }
         page += 1
-    return sorted(places.values(), key=lambda place: km_from_ncu(place["lat"], place["lon"]))
+    ordered = sorted(
+        places.values(), key=lambda p: km_from_ncu(p["latitude"], p["longitude"])
+    )
+    return [{"id": f"halal-{index + 1}", **p} for index, p in enumerate(ordered)]
 
 
-def nearby_places() -> list[dict]:
+def nearby_places(known_osm_ids: set[str]) -> list[dict]:
     body = urllib.parse.urlencode({"data": OVERPASS_QUERY}).encode()
     # The public servers are often at capacity, so each gets a few turns.
     for url in OVERPASS_URLS * 4:
         try:
             # Overpass refuses a browser's user agent; the tourism site refuses anything else.
-            elements = json.loads(fetch(url, body, agent="ncu-food-map-refresh/1.0"))["elements"]
+            elements = json.loads(fetch(url, body, agent="magic-pinecone-backend/0.1"))[
+                "elements"
+            ]
             break
         except (OSError, ValueError):
             time.sleep(10)
@@ -100,27 +123,44 @@ def nearby_places() -> list[dict]:
         raise SystemExit("No Overpass server answered; try again later.")
     places = []
     for element in elements:
+        osm_id = f"{element['type']}/{element['id']}"
+        if osm_id in known_osm_ids:
+            continue
         tags = element["tags"]
         position = element.get("center", element)
         places.append(
             {
+                "id": osm_id.replace("/", "-"),
                 "name": tags["name"],
-                "lat": round(position["lat"], 6),
-                "lon": round(position["lon"], 6),
-                "kind": tags.get("cuisine", tags["amenity"]).replace("_", " ").replace(";", ", "),
+                "latitude": round(position["lat"], 6),
+                "longitude": round(position["lon"], 6),
+                "kind": tags.get("cuisine", tags["amenity"])
+                .replace("_", " ")
+                .replace(";", ", "),
+                "osm_id": osm_id,
+                "halal": None,
+                "address": None,
+                "phone": None,
             }
         )
-    return sorted(places, key=lambda place: (place["name"], place["lat"]))
+    return sorted(places, key=lambda p: (p["name"], p["latitude"]))
 
 
 def main() -> None:
-    halal, nearby = halal_places(), nearby_places()
+    campus = json.loads(CAMPUS_PLACES.read_text(encoding="utf-8"))["places"]
+    known = {p["osm_id"] for p in campus if p.get("osm_id")}
+    halal, nearby = halal_places(), nearby_places(known)
     assert halal, "the halal list parsed to nothing; the page layout probably changed"
-    assert all(km_from_ncu(place["lat"], place["lon"]) <= HALAL_KM for place in halal)
     assert len(nearby) > 20, f"only {len(nearby)} places from OpenStreetMap"
-    data = {"fetched": datetime.date.today().isoformat(), "center": NCU, "halal": halal, "nearby": nearby}
-    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT.write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    data = {
+        "fetched": datetime.date.today().isoformat(),
+        "attribution": "© OpenStreetMap contributors, ODbL 1.0; "
+        "halal certificates: Tourism Administration, MOTC",
+        "places": halal + nearby,
+    }
+    OUTPUT.write_text(
+        json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
+    )
     print(f"{len(halal)} halal and {len(nearby)} nearby places -> {OUTPUT}")
 
 

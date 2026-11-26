@@ -1,0 +1,37 @@
+<resources>
+    <string name="campus_map_search">Tìm địa điểm</string>
+    <string name="campus_map_clear_search">Xóa tìm kiếm</string>
+    <string name="campus_map_all">Tất cả</string>
+    <string name="campus_map_no_results">Không có địa điểm nào khớp.</string>
+    <string name="campus_map_failed">Không tải được các địa điểm trong trường. Hãy kiểm tra kết nối rồi thử lại.</string>
+    <string name="campus_map_attribution">© Những người đóng góp OpenStreetMap · OpenFreeMap</string>
+    <string name="campus_map_category_academic">Giảng dạy</string>
+    <string name="campus_map_category_administration">Hành chính</string>
+    <string name="campus_map_category_library">Thư viện</string>
+    <string name="campus_map_category_dormitory">Ký túc xá</string>
+    <string name="campus_map_category_dining">Ăn uống</string>
+    <string name="campus_map_category_shop">Cửa hàng</string>
+    <string name="campus_map_category_sports">Thể thao</string>
+    <string name="campus_map_category_service">Dịch vụ</string>
+    <string name="campus_map_category_transit">Đi lại</string>
+    <string name="campus_map_category_landmark">Địa danh</string>
+    <string name="campus_map_tag_vegetarian">Món chay</string>
+    <string name="campus_map_tag_halal">Halal</string>
+    <string name="campus_map_tag_open_24h">Mở 24 giờ</string>
+    <string name="campus_map_tag_late_night">Mở khuya</string>
+    <string name="campus_map_tag_cash_only">Chỉ nhận tiền mặt</string>
+    <string name="campus_map_tag_card_accepted">Nhận thẻ</string>
+    <string name="campus_map_tag_english_menu">Có thực đơn tiếng Anh</string>
+    <string name="campus_map_food_nearby">Quán ăn gần đây</string>
+    <string name="campus_map_halal_only">Chỉ món halal</string>
+    <string name="campus_map_halal_not_checked">Chưa kiểm tra halal</string>
+    <string name="campus_map_inside">Trong tòa nhà này</string>
+    <string name="campus_map_units">Khoa và phòng ban</string>
+    <string name="campus_map_code">Mã tòa nhà %1$s</string>
+    <string name="campus_map_opening_hours">Giờ mở cửa</string>
+    <string name="campus_map_price">Giá mỗi người</string>
+    <string name="campus_map_price_range">NT$%1$d–%2$d</string>
+    <string name="campus_map_price_single">NT$%1$d</string>
+    <string name="campus_map_walk_google">Đi bộ bằng Google Maps</string>
+    <string name="campus_map_open_apple">Mở trong Apple Maps</string>
+</resources>

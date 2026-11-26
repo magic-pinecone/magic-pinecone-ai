@@ -43,7 +43,6 @@ import org.mpc.presentation.ClubsScreen
 import org.mpc.presentation.ClubsView
 import org.mpc.presentation.CreditsRoute
 import org.mpc.presentation.CreditsScreen
-import org.mpc.presentation.FoodMapScreen
 import org.mpc.presentation.GovGuidesRoute
 import org.mpc.presentation.GovGuidesScreen
 import org.mpc.presentation.GraduationLanguageActions
@@ -107,9 +106,6 @@ enum class ComposePreviewScenario {
 
     /** Reads the running backend through [org.mpc.presentation.viewModel.ClubViewModel]. */
     CLUBS_LIVE,
-
-    /** The bundled food map; the map itself loads from the network. */
-    FOOD_MAP,
 
     /** Shows [GraduationLanguagePreviewFixture], an excerpt of the backend's data. */
     GRADUATION_POPULATED,
@@ -263,8 +259,6 @@ internal fun ComposePreviewScenarioContent(
         )
 
         ComposePreviewScenario.CLUBS_LIVE -> ClubsScreen(modifier = Modifier.fillMaxSize())
-
-        ComposePreviewScenario.FOOD_MAP -> FoodMapScreen(modifier = Modifier.fillMaxSize())
 
         ComposePreviewScenario.SLOT_PICKER -> {
             var selected by remember { mutableStateOf(ComposePreviewFixtures.courses.first().classTimes.toSet()) }

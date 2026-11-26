@@ -397,8 +397,8 @@ def place_passage(place: campus_places.CampusPlace) -> dict[str, Any]:
         )
     if place.aliases:
         lines.append("Also called: " + ", ".join(place.aliases) + ".")
-    if place.note_en:
-        lines.append(place.note_en)
+    if place.description:
+        lines.append(place.description.en)
     return {
         "id": place.id,
         "title": f"{place.name_en} ({place.name_zh})",

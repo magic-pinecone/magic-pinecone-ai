@@ -240,16 +240,6 @@ def test_food_place_distance_is_rounded_by_scale():
     assert round(sources._metres((24.9682, 121.1955), (24.9682, 121.1955))) == 0
 
 
-def test_food_places_match_the_app_copy():
-    app_copy = (
-        sources.FOOD_PLACES.parents[3].parent
-        / "app/shared/src/commonMain/moko-resources/files/ncu_food_places.json"
-    )
-    if not app_copy.exists():
-        pytest.skip("app sources are not checked out next to the backend")
-    assert sources.FOOD_PLACES.read_bytes() == app_copy.read_bytes()
-
-
 def test_keyword_search_finds_halal_places():
     found = knowledge_index.search(
         "halal restaurant", source_types=["food_place"], limit=3, embedder=None

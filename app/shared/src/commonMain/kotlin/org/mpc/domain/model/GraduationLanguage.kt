@@ -26,7 +26,21 @@ data class GraduationLanguage(
 data class LocalizedText(
     val zh: String,
     val en: String,
-)
+    /** Absent for text nobody has translated into Vietnamese yet. */
+    val vi: String? = null,
+) {
+    /** The text for [languageTag] (a BCP 47 tag such as "vi" or "zh-TW"): Vietnamese falls back to English, then Chinese. */
+    fun resolve(languageTag: String): String {
+        val tag = languageTag.lowercase()
+        val ordered =
+            when {
+                tag.startsWith("zh") -> listOf(zh, en)
+                tag.startsWith("vi") -> listOf(vi, en, zh)
+                else -> listOf(en, zh)
+            }
+        return ordered.firstOrNull { !it.isNullOrBlank() }.orEmpty()
+    }
+}
 
 @Serializable
 enum class Degree {
