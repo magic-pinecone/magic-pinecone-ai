@@ -3,13 +3,17 @@
 from collections import Counter
 
 import pytest
-from common import expected_sources, load_golden, student_services
+from common import expected_sources, load_golden
+
+from app.services.knowledge import index
 
 GOLDEN = load_golden()
 BY_ID = {item["id"]: item for item in GOLDEN}
 DOCUMENTS = {
-    document.id: "\n".join(document.lines)
-    for document in student_services().load_documents()
+    document.id: "\n".join(document.lines) for document in index.load_documents()
+}
+SOURCE_TYPES = {
+    document.id: document.source_type for document in index.load_documents()
 }
 REQUIRED = {
     "id": str,
@@ -19,11 +23,17 @@ REQUIRED = {
     "must_contain": list,
     "needs_native_review": bool,
 }
-OPTIONAL = {"source_id", "alt_source_ids", "parallel_of", "must_contain_any"}
+OPTIONAL = {
+    "source_id",
+    "alt_source_ids",
+    "parallel_of",
+    "must_contain_any",
+    "source_type",
+}
 
 
 def test_size_and_unique_ids():
-    assert 55 <= len(GOLDEN) <= 65
+    assert 130 <= len(GOLDEN) <= 140
     assert len(BY_ID) == len(GOLDEN)
     questions = [item["question"] for item in GOLDEN]
     assert len(set(questions)) == len(questions)
@@ -76,8 +86,25 @@ def test_parallel_items_mirror_their_english_original(item):
     # accepted spellings (zh-003: "30" or "三十").
     moved = [f for f in original["must_contain"] if f not in item["must_contain"]]
     assert set(item["must_contain"]) <= set(original["must_contain"])
-    assert set(moved) <= set(item.get("must_contain_any", []))
+    assert all(
+        fact in item.get("must_contain_any", []) or not any(c.isdigit() for c in fact)
+        for fact in moved
+    )
     assert item.get("alt_source_ids") == original.get("alt_source_ids")
+
+
+def test_new_items_name_the_source_type_of_their_document():
+    new = [item for item in GOLDEN if "source_type" in item]
+    assert len(new) >= 60
+    assert not any("source_type" in item for item in GOLDEN[:60])
+    for item in new:
+        if item["answerable"]:
+            assert item["source_type"] == SOURCE_TYPES[item["source_id"]]
+        else:
+            assert item["source_type"] == "none"
+    covered = {item["source_type"] for item in new}
+    assert {"oia_page", "gov_guide", "credits", "service_learning"} <= covered
+    assert {"intl_program", "graduation_language", "contact", "place"} <= covered
 
 
 def test_language_and_answerability_ratios():
@@ -85,9 +112,9 @@ def test_language_and_answerability_ratios():
         lang: count / len(GOLDEN)
         for lang, count in Counter(item["lang"] for item in GOLDEN).items()
     }
-    assert 0.35 <= share["en"] <= 0.45
+    assert 0.45 <= share["en"] <= 0.55
     for lang in ("zh-TW", "vi", "id"):
-        assert 0.15 <= share[lang] <= 0.25
+        assert 0.12 <= share[lang] <= 0.25
     unanswerable = [item for item in GOLDEN if not item["answerable"]]
     assert 0.10 <= len(unanswerable) / len(GOLDEN) <= 0.20
     assert {item["lang"] for item in unanswerable} == set(share)

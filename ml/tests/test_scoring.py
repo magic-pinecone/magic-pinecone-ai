@@ -114,7 +114,7 @@ def test_retrieval_metrics():
 
     golden = [ITEM, {**ITEM, "id": "en-n", "question": "nothing"}, UNANSWERABLE]
     report = evaluate(golden, search)
-    s = report["summary"]["en"]
+    s = report["summary"]["all"]["en"]
     assert (s["answerable"], s["hit1"], s["hit3"], s["ans3"], s["no_result"]) == (
         2,
         0,
@@ -124,7 +124,7 @@ def test_retrieval_metrics():
     )
     assert (s["unanswerable"], s["unanswerable_with_passages"]) == (1, 1)
     alt = evaluate([{**ITEM, "alt_source_ids": ["oia-insurance"]}], search)
-    assert alt["summary"]["all"]["hit1"] == 1
+    assert alt["summary"]["all"]["all"]["hit1"] == 1
 
 
 def test_a_number_inside_a_file_name_is_not_the_answer_in_the_passages():

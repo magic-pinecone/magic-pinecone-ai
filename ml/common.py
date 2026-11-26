@@ -1,4 +1,4 @@
-"""Paths, access to the backend's retrieval service, golden set, chat client."""
+"""Paths, access to the backend's knowledge index, golden set, chat client."""
 
 import json
 import os
@@ -9,20 +9,62 @@ from pathlib import Path
 ML_DIR = Path(__file__).resolve().parent
 BACKEND_DIR = ML_DIR.parent / "backend"
 GOLDEN_PATH = ML_DIR / "golden" / "questions.jsonl"
+GENERATED_PATH = ML_DIR / "golden" / "generated.jsonl"
 RESULTS_DIR = ML_DIR / "results"
 
 
-def student_services():
-    """The backend's passage search module (`app.services.student_services`).
+class KnowledgeServices:
+    def __init__(self) -> None:
+        if str(BACKEND_DIR) not in sys.path:
+            sys.path.insert(0, str(BACKEND_DIR))
+        from app.services.knowledge import index
 
-    Works from any working directory as long as the interpreter has the
-    backend's dependencies, i.e. `cd backend && uv run --frozen python ...`.
-    """
-    if str(BACKEND_DIR) not in sys.path:
-        sys.path.insert(0, str(BACKEND_DIR))
-    from app.services import student_services as module
+        self._index = index
+        self.PASSAGE_LINES = index.PASSAGE_LINES
+        self.PASSAGE_STEP = index.PASSAGE_STEP
+        self._embedder = None
 
-    return module
+    def load_documents(self):
+        return self._index.load_documents()
+
+    def search(self, query: str, limit: int = 5, source_types=None) -> list[dict]:
+        return self._index.search(
+            query, source_types=source_types, limit=limit, embedder=self._embedder
+        )
+
+    def use_embeddings(self, database_url: str = "sqlite:///knowledge.db") -> dict:
+        from sqlmodel import Session, SQLModel, create_engine
+
+        import app.models  # noqa: F401
+        from app.services.knowledge.embedder import EmbeddingClient
+
+        base_url = os.environ.get("EMBEDDING_BASE_URL", "")
+        model = os.environ.get("EMBEDDING_MODEL", "")
+        if not base_url or not model:
+            raise RuntimeError("Set EMBEDDING_BASE_URL and EMBEDDING_MODEL.")
+        embedder = EmbeddingClient(
+            base_url,
+            model,
+            os.environ.get("EMBEDDING_API_KEY") or None,
+            timeout=120.0,
+        )
+        engine = create_engine(database_url)
+        SQLModel.metadata.create_all(engine)
+        with Session(engine) as session:
+            stats = self._index.refresh(session, embedder=embedder, embed_missing=True)
+        if stats["errors"]:
+            raise RuntimeError("; ".join(stats["errors"]))
+        self._embedder = embedder
+        return stats
+
+
+def knowledge_services(search: str = "keyword") -> KnowledgeServices:
+    services = KnowledgeServices()
+    if search == "hybrid":
+        services.use_embeddings(
+            os.environ.get("KNOWLEDGE_DATABASE_URL", "sqlite:///knowledge.db")
+        )
+    return services
 
 
 def read_jsonl(path: Path) -> list[dict]:
@@ -40,6 +82,15 @@ def append_jsonl(path: Path, row: dict) -> None:
 
 def load_golden(path: Path = GOLDEN_PATH) -> list[dict]:
     return read_jsonl(path)
+
+
+def held_out_questions(
+    golden_path: Path = GOLDEN_PATH, generated_path: Path = GENERATED_PATH
+) -> list[str]:
+    from checks import normalize_question
+
+    rows = read_jsonl(golden_path) + read_jsonl(generated_path)
+    return list(dict.fromkeys(normalize_question(row["question"]) for row in rows))
 
 
 def expected_sources(item: dict) -> set[str]:

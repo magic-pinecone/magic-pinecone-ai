@@ -31,8 +31,14 @@ def test_server_lists_its_tools():
         "find_place",
         "get_bus_arrivals",
         "find_destination",
+        "search_knowledge",
+        "search_courses",
+        "search_clubs",
+        "search_gov_guides",
+        "get_credit_requirements",
+        "get_service_learning_requirements",
     }
-    assert len(tools) == 10
+    assert len(tools) == 16
 
 
 def test_requirements_tool_returns_the_threshold_of_the_admission_year():
@@ -204,3 +210,40 @@ def test_destination_tool_finds_off_campus_places():
     ]
     (nothing,) = call("find_destination", query="工程五館")
     assert nothing["destinations"] == []
+
+
+def test_search_knowledge_finds_the_work_permit_page():
+    (answer,) = call("search_knowledge", query="work permit hours per week", limit=3)
+
+    assert answer["passages"][0]["id"] == "oia-work-permit"
+    assert answer["passages"][0]["url"].startswith("https://oia.ncu.edu.tw/")
+
+
+def test_search_knowledge_keeps_to_the_asked_source_types():
+    (answer,) = call(
+        "search_knowledge", query="128 credits", source_types=["credits"], limit=5
+    )
+
+    assert answer["passages"]
+    assert {p["source_type"] for p in answer["passages"]} == {"credits"}
+
+
+def test_knowledge_document_resource_returns_the_full_text():
+    contents = asyncio.run(
+        mcp_server.mcp.read_resource("ncu://documents/oia-work-permit")
+    )
+
+    text = contents[0].content if hasattr(contents[0], "content") else contents[0].text
+    assert "Source: https://oia.ncu.edu.tw/p/412-1026-2204.php?Lang=en" in text
+
+
+def test_course_search_fails_without_a_course_catalog():
+    with pytest.raises(ToolError, match="No course data"):
+        asyncio.run(mcp_server.mcp.call_tool("search_courses", {"query": "微積分"}))
+
+
+def test_credit_requirements_tool_filters_by_degree():
+    (answer,) = call("get_credit_requirements", degree="bachelor")
+
+    assert answer["requirements"]
+    assert all("bachelor" in r["degrees"] for r in answer["requirements"])

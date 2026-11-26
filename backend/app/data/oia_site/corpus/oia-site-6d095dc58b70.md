@@ -1,0 +1,58 @@
+---
+id: "oia-site-6d095dc58b70"
+title: "博士生赴國外研究計畫"
+url: "https://oia.ncu.edu.tw/p/404-1026-9535.php?Lang=zh-tw"
+org: "Office of International Affairs"
+lang: "zh-TW"
+topic: "oia_site"
+extract: "html"
+fetched_on: "2026-11-24"
+sha256: "d15c801bf62e4c74f8d398a748ef6ae4c859d0dc44c8229e81c589a772e536ae"
+---
+
+# 博士生赴國外研究計畫
+
+補助博士生赴國外研究
+可申請之項目
+博士生赴國外短期研究 (千里馬計畫)
+臺德(NSTC-DAAD)三明治計畫
+<https://oia.ncu.edu.tw/p/404-1026-9535.php?Lang=zh-tw>
+IVF研究進修計畫
+<https://oia.ncu.edu.tw/p/404-1026-9535.php?Lang=zh-tw>
+量子科技千里馬計畫
+<https://oia.ncu.edu.tw/p/404-1026-9535.php?Lang=zh-tw>
+申請資格 Eligibility
+具中華民國國籍，且設有戶籍者。
+已取得博士候選人資格且未休學者。
+赴國外研究期間，應保有國內學籍。
+未曾接受國科會此項補助者。
+★ 不含大陸、香港、澳門地區之機構
+補助項目 Funding
+補助金額：以一年補助新台幣 90 萬元 為計算標準 (按實際月份比例計算)。
+補助期間：7 個月至 1 年為限。
+補助起始日：以抵達國外機構之當日計算 (需有報到證明)。
+申請文件 Documents
+請至
+國科會系統
+<https://www.nstc.gov.tw/>
+線上申請，並上傳以下資料：
+外語能力證明 (合聽說讀寫)
+國外正式同意函 (須有國外指導教授或機構親筆簽名)
+申請人資格證明 (須有指導教授簽名)
+推薦函 (由中請人通知推薦人於系統線送)
+歷年成績單 (大學、碩士、博士)
+國外研究計畫書 (20頁內、5MB內)
+已發表之學術著作 (至少1篇，A4紙40頁內、10MB內)
+申請時程 Application Period
+通常於每年 6 月至 7 月底開放申請 (一年一次)。
+詳細日期請依當年度
+國科會公告
+<https://www.nstc.gov.tw/>
+為準。
+★ 逾期系統將自動關閉，請務必提早作業。
+申請與核銷流程 Procedure
+A
+計畫承辦人：Alice
+電話：03-422-7151 #57084
+Email：
+alice@ncu.edu.tw

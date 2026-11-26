@@ -7,10 +7,13 @@ OIA when the passages do not hold the answer. A large open-weight teacher
 students are LoRA fine-tuned on it. Languages: English, Traditional Chinese
 (zh-TW), Vietnamese (vi), Indonesian (id).
 
-Nothing here changes `backend/` or `app/`. The scripts import the backend's
-passage search (`backend/app/services/student_services.py`) and therefore run
-with the backend's environment. No model of PRC origin is used anywhere in this
-kit (teacher, students, and there are no embeddings); keep it that way.
+The scripts import the backend's knowledge index
+(`backend/app/services/knowledge/`) and therefore run with the backend's
+environment. The index covers the crawled OIA site, government guides, credits,
+service learning, graduation language, international programs, contacts,
+places and destinations (courses and clubs only with the production database).
+No model of PRC origin is used anywhere in this kit (teacher, students,
+embeddings: EmbeddingGemma); keep it that way.
 
 ## Files
 
@@ -20,8 +23,8 @@ kit (teacher, students, and there are no embeddings); keep it that way.
 | `checks.py` | Pure text checks: strip a reasoning channel, numbers not supported by the passages (both from `answer_text.py` too), `must_contain` matching, similarity to golden questions. |
 | `demo/` | A one-page demo of the backend's assistant chain; see "Demo page" below. |
 | `common.py` | Paths, import of the backend service, JSONL helpers, the OpenAI-compatible chat client (`httpx`). |
-| `golden/questions.jsonl` | 60 hand-written test questions (24 en, 12 each zh-TW / vi / id; 9 unanswerable). |
-| `eval_retrieval.py` | hit@1 / hit@3 / ans@3 of the backend's keyword search on the golden set. |
+| `golden/questions.jsonl` | 136 test questions: the first 60 hand-written against 8 documents (24 en, 12 each zh-TW / vi / id; 9 unanswerable), then 76 against the larger corpus (48 en, 12 zh-TW, 8 vi, 8 id; 10 unanswerable). |
+| `eval_retrieval.py` | hit@1 / hit@3 / ans@3 of the knowledge search on the golden set, `--search keyword\|hybrid`, and a sweep of `KNOWLEDGE_MIN_SIMILARITY`. |
 | `make_teacher_data.py` | Asks the teacher(s) for training examples and cleans them. |
 | `train_lora.py` | LoRA fine-tuning of a student (Unsloth, or PEFT + TRL). |
 | `eval_generation.py` | Runs the golden set through any OpenAI-compatible endpoint and scores it; keeps a comparison table across runs. |
@@ -35,10 +38,14 @@ git-ignored.
 ## Golden set
 
 Fields: `id`, `lang`, `question`, `answerable`, `source_id` (a document id of
-`student_services.load_documents()`, `null` when unanswerable), `must_contain`
+`knowledge.index.load_documents()`, `null` when unanswerable), `must_contain`
 (strings copied verbatim from that document that a correct answer must
 include), `needs_native_review`, and optionally:
 
+- `source_type` — only on the 76 newer questions (the first 60 lack it, which is
+  how the scripts tell "old" from "new"): the source type of the document, or
+  `none` when unanswerable. 44 of the 66 answerable newer questions are in
+  English, the rest are mostly translations of those (`parallel_of`).
 - `parallel_of` — id of the English question this one translates. 33 of the 36
   non-English questions are translations, so languages can be compared on the
   same facts. Three zh-TW questions are written directly against the Chinese
@@ -70,6 +77,67 @@ before any number computed on them is quoted.** They are marked
 `needs_native_review: true`. The zh-TW questions were also written by the
 model and deserve a read by a native speaker, although they are not flagged.
 
+### Generated exam set
+
+`golden/generated.jsonl` is a larger test set over the whole knowledge base,
+including the source types `course`, `food_place` and `academic_calendar`.
+Rows have the fields above plus `generated: true`, `source_type` and, for
+answerable rows, `passage_id` (`<document id>@<first line of the passage>`);
+ids are `gen-<en|zh|vi|id>-<number>`. It is written by
+`make_golden_questions.py` with the teacher model:
+
+- Answerable: for one passage of the planned source type the teacher writes a
+  question and 1 to 3 `must_contain` strings. It is kept if the strings are
+  found in the passage (`checks.holds_answer`), the question is in the right
+  language and not close to a golden or earlier generated question, and the
+  teacher, shown only that passage and the question, answers with all the
+  strings.
+- Unanswerable (`--unanswerable-rate`): the teacher writes a plausible
+  question the knowledge base does not answer; it is kept if the teacher says
+  `--verify-votes` times that the five passages the search returns for it do
+  not answer it.
+
+Rejected tasks go to `generated.jsonl.rejects.jsonl` with the reason; rerunning
+resumes. The set is teacher-written and has only been spot-checked, so its
+questions and `must_contain` strings can be wrong; the vi and id rows are
+flagged `needs_native_review` like the golden ones. `make_teacher_data.py`
+and `mix_data.py` drop every training question that matches a golden or
+generated question (`common.held_out_questions`). Score it with
+`--golden golden/generated.jsonl` on `eval_retrieval.py` and
+`eval_generation.py`; results go to files with the golden file's stem in their
+name or directory, not over the golden-set results.
+
+How the current file was made (Colab A100-SXM4-40GB; knowledge index rebuilt at
+commit `797de34` with the course and club scrapers writing into the SQLite
+knowledge DB: 2,809 documents, of which 2,169 course, 138 food_place, 129
+oia_page, 119 club, 106 intl_program, 48 graduation_language, 43 place, 19
+credits, 12 gov_guide, 12 academic_calendar, 5 service_learning, 5 destination
+and 4 contact; courses are semester 115-1; teacher gpt-oss-20b behind vLLM;
+embedder EmbeddingGemma 300M Q8_0 GGUF behind llama-server):
+
+- First run: `make_golden_questions.py -n 3000 --workers 24 --max-tokens 3072`
+  with the default type mix. 1050 tasks were kept and 1950 rejected (1389
+  `verification_answer_lacks_facts`, 281 `matches_golden_question`, 117
+  `visible_passages_answer`, 100 `bad_must_contain`, 29
+  `must_contain_not_in_passage`, 14 `wrong_language`, 13 `answer_in_question`,
+  3 `duplicate_generated_question`, 3 `not_json`, 1 `question_too_long`).
+- Only 12 `academic_calendar` questions survived, because the verification
+  answer rewrote dates (2027-01-18 as "January 18"). The verification prompt
+  asks the teacher to copy numbers, dates, times, codes and names as written. A
+  second run, `-n 3400 --type-mix academic_calendar=1 --unanswerable-rate 0`
+  (tasks 3000-3399, same seed), added 233 calendar questions. Only that batch
+  was written with the stricter verification prompt; the 1050 questions of the
+  first run used the older one.
+- An earlier attempt was discarded: a spot check of its first 400 questions
+  found questions without context ("who teaches this course?"). The prompt
+  requires a self-contained question and drops `must_contain` strings that the
+  question already contains.
+- Final file: 1283 questions, 972 answerable and 311 unanswerable; by language
+  en 476, zh-TW 319, id 251, vi 237. Answerable by source type:
+  academic_calendar 245, course 136, food_place 119, oia_page 72, club 63,
+  graduation_language 55, destination 53, gov_guide 50, intl_program 48, place
+  42, credits 32, service_learning 30, contact 27.
+
 ## Order of steps
 
 All commands that touch the backend service are run from `backend/`
@@ -81,7 +149,7 @@ All commands that touch the backend service are run from `backend/`
 cd backend && uv run --frozen pytest ../ml/tests -q
 ```
 
-### 2. Retrieval on the golden set (laptop, no network)
+### 2. Retrieval on the golden set (keyword: laptop, no network)
 
 ```bash
 cd backend && uv run --frozen python ../ml/eval_retrieval.py
@@ -150,6 +218,45 @@ How to read it:
   passage that overlaps a better-scoring one, and overlapping passages are not
   returned together.
 
+#### Keyword and hybrid search on the larger corpus
+
+```bash
+cd backend
+uv run --frozen python ../ml/eval_retrieval.py --search keyword
+EMBEDDING_BASE_URL=http://127.0.0.1:8002/v1 EMBEDDING_MODEL=embeddinggemma \
+    uv run --frozen python ../ml/eval_retrieval.py --search hybrid
+uv run --frozen python ../ml/eval_retrieval.py --search hybrid --sweep 0.3,0.4,0.5
+```
+
+`hybrid` embeds all passages through an OpenAI-compatible `/v1/embeddings`
+endpoint (run here: `ggml-org/embeddinggemma-300M-GGUF`, Q8_0, in
+llama-server `--embeddings`), keeps the vectors in a SQLite file and fuses the
+keyword and vector rankings. Top 3 and top 5, no source-type filter,
+`KNOWLEDGE_MIN_SIMILARITY` 0.40 (the default):
+
+| questions | answerable | keyword ans@3 | hybrid ans@3 | keyword ans@5 | hybrid ans@5 |
+|---|---|---|---|---|---|
+| old (first 60) | 51 | 44/51 (86%) | 46/51 (90%) | 47/51 (92%) | 47/51 (92%) |
+| new (76) | 66 | 45/66 (68%) | 54/66 (82%) | 48/66 (73%) | 56/66 (85%) |
+| all | 117 | 89/117 (76%) | 100/117 (85%) | 95/117 (81%) | 103/117 (88%) |
+
+Per language and per source type: `results/retrieval_keyword.md` and
+`results/retrieval_hybrid.md`. Hybrid helps most the questions in English about
+the Chinese government guides (`gov_guide` ans@3 5/16 keyword, 10/16 hybrid) and
+the vi and id questions (ans@3 20/32 keyword, 25/32 hybrid, all questions).
+The assistant passes five passages to the model (`TOP_K` 5), so ans@5 is the
+cap on `answer` for retrieved prompts.
+
+Sweep of `KNOWLEDGE_MIN_SIMILARITY` (`results/retrieval_hybrid_sweep.md`):
+ans@3 on all questions is 101/117 at 0.30 and 0.35, 100/117 at 0.40, 99/117 at
+0.45 and 98/117 at 0.50; ans@5 is 104, 104, 103, 102 and 99. The unanswerable
+questions that still get passages fall from 19 of 19 (0.30, 0.35) to 18 (0.40)
+and 17 (0.45, 0.50), and the number of unanswerable questions with a vector hit
+from 18 (0.30) to 12 (0.40) and 8 (0.50). They always keep their keyword
+passages, so the threshold does not make the search say "not found". 0.40 is
+the highest value that keeps ans@3 within one question of the best; the choice
+rests on 117 questions and one embedding model.
+
 ### 3. Teacher data (teacher on Colab, script on the laptop)
 
 Serve gpt-oss on Colab behind an OpenAI-compatible endpoint, then on the
@@ -168,7 +275,20 @@ uv run --frozen python ../ml/make_teacher_data.py -n 2000 --out ../ml/data/train
 The scripts read the endpoint only from these environment variables and never
 print the URL or the key.
 
-- Passages are cut with the backend's `PASSAGE_LINES` / `PASSAGE_STEP`.
+- Passages come from `knowledge.index` and are cut with `PASSAGE_LINES` /
+  `PASSAGE_STEP`. The answering passage is drawn by source type
+  (`--type-mix`, default OIA pages 40% and government guides 14%, so at least
+  half; the rest over the other types; a type absent from the corpus is
+  dropped and the weights renormalised).
+- About 70% of the answer examples (`--hard-rate`) have their distractors
+  replaced, after the question exists, by the top results of the search for
+  that question (`--search hybrid`, the default, or `keyword`), never a
+  passage sharing lines with the answering one; the rest keep random
+  distractors. Rows record `distractors: retrieved|random`.
+- About 10% (`--multi-rate`) are `multi` examples: two answering passages
+  (the nearest non-overlapping passage by search, else another window of the
+  page) and a question that needs both; both must be cited.
+- `--workers N` asks the teacher with N parallel requests.
 - An answer example shows the passage with the answer plus 1-2 distractor
   passages from other documents, in random order. (The brief says one
   distractor; a second is added at random because evaluation prompts hold up to
@@ -194,6 +314,24 @@ print the URL or the key.
   each row records `teacher`. To add a teacher to an existing file later, run
   it alone with a different `--seed` and the same `--out`.
 
+Run for the tuned student below (gpt-oss-20b behind vLLM, `-n 4200 --seed 5
+--refusal-rate 0.22 --workers 16 --max-tokens 3072`; five-passage prompts, 2 to
+4 distractors, `--hard-refusal-rate` 0.6): 3596 kept, 604 rejected (232
+`visible_passages_answer`, 210 `answer_not_in_language`, 77
+`number_not_in_passages`, 39 `not_json`, 22 `bullet_without_citation`, 5
+`matches_golden_question`, 5 `teacher_skipped`, 4
+`number_not_in_passages_after_swap`, 3 `wrong_language`, 2 `answer_is_refusal`,
+2 `question_too_long`, 2 `not_bulleted`, 1 `second_passage_not_cited`). By kind:
+2553 answer, 358 multi, 685 refusal (298 of them with passages retrieved for the
+question minus the answering document, 387 with random passages); by language:
+2014 en, 541 id, 527 zh-TW, 514 vi; by source type: 1537 oia_page, 530
+gov_guide, 327 credits, 275 intl_program, 239 graduation_language, 237 place,
+193 service_learning, 153 destination, 105 contact; 2102 rows with retrieved and
+1494 with random distractors. With the default of 1024 reply tokens a test of 40
+tasks lost 8 to empty or cut-off JSON (the model's reasoning used the budget);
+3072 brought `not_json` to 39 of 4200. Some vi and id answers carry English
+fragments copied from the passages.
+
 Read a sample of the output before training. The cleaning catches invented
 numbers and broken citations; it cannot tell whether an answer is otherwise
 faithful, whether a "refusal" question is really unanswerable from the shown
@@ -214,13 +352,18 @@ python ml/train_lora.py --data ml/data/train.jsonl \
 ```
 
 Defaults: 4-bit loading, batch size 1, gradient accumulation 8, sequence length
-2048, LoRA rank 16, 3 epochs, loss on the assistant turn only, vision layers
+3072, LoRA rank 16, 3 epochs, loss on the assistant turn only, vision layers
 not trained. `--backend peft` uses transformers + PEFT + TRL instead of Unsloth.
 `--merge` also writes merged 16-bit weights; `--gguf q4_k_m` exports a GGUF
 (Unsloth backend).
 
 `--model` also takes Unsloth's mirrors `unsloth/gemma-4-E2B-it`,
 `unsloth/gemma-3-1b-it` and `unsloth/gemma-3-270m-it`, which are not gated.
+
+`--full-finetune` (Unsloth backend) trains all weights instead of a LoRA
+adapter, loads the model in 16 bit, and saves it to `<output>/model`; the
+learning rate default drops from 2e-4 to 5e-5. It is meant for the 270m
+student, which is small enough to train in full.
 
 Notes from the runs on Colab. They were reported by the session that ran
 them and have not been repeated on another machine:
@@ -296,6 +439,10 @@ backend's environment.
    thinking on by default; the chat template then adds a thinking marker to
    the prompt, which is not the prompt the student was trained on. A first
    round of evaluation was thrown away for this reason.
+
+   To serve from a Kaggle GPU instead, `ml/serving/kaggle-llama-server.ipynb`
+   runs the chat model and EmbeddingGemma on two T4s behind one URL (Pangolin
+   or ngrok) and prints the backend settings.
 
 2. Point the backend at it (`backend/.env`, see `backend/.env.example`):
 
@@ -398,11 +545,390 @@ A refusal is a reply that contains the OIA e-mail address and no `[n]`.
 With `--passages retrieved`, `answer` is capped by retrieval (`ans@3` above);
 `answer (ctx)` and the oracle run show what the model itself can do.
 
+#### Run on the larger corpus (Gemma 4 E2B, Colab A100)
+
+`unsloth/gemma-4-E2B-it`, the 3596 rows above (3417 train, 179 held out), 3
+epochs, `--batch-size 8 --grad-accum 1 --max-seq-length 3072`, rank 16,
+`--merge --gguf q4_k_m`, 1284 steps in 21 minutes. Before the run
+`train_lora.py` decodes the label sequence of the first example (`--labels-only`):
+176 of 1116 tokens carry loss and they decode to the answer plus the
+end-of-turn token, no system, passage or question text. Mean training loss
+0.294 (0.16 to 0.23 in the last epoch); held-out loss 0.395 after the last
+epoch.
+
+Generation scores (Q4_K_M GGUF, llama-server `--jinja --reasoning off -c 4096`,
+temperature 0, hybrid search and five passages for the retrieved prompts; base
+is `unsloth/gemma-4-E2B-it-GGUF` Q4_K_M, v4 is the tuned model of the previous
+data round, v5 the model trained on the data above). Columns as in section 6,
+all languages; `refuse` is over the unanswerable questions, `num-err` over all
+replies:
+
+| questions | passages | model | answer | answer (ctx) | cite | refuse | refuse (no ctx) | over-refuse | num-err |
+|---|---|---|---|---|---|---|---|---|---|
+| old | retrieved | base | 42/51 | 42/47 | 43/51 | 6/9 | 0/4 | 0/47 | 0/60 |
+| old | retrieved | v4 | 43/51 | 43/47 | 43/51 | 9/9 | 0/4 | 0/47 | 0/60 |
+| old | retrieved | v5 | 35/51 | 35/47 | 33/51 | 9/9 | 1/4 | 6/47 | 0/60 |
+| old | oracle | base | 48/51 | 48/51 | 47/51 | 6/9 | n/a | 0/51 | 0/60 |
+| old | oracle | v4 | 44/51 | 44/51 | 44/51 | 9/9 | n/a | 0/51 | 1/60 |
+| old | oracle | v5 | 41/51 | 41/51 | 41/51 | 9/9 | n/a | 4/51 | 0/60 |
+| new | retrieved | base | 51/66 | 51/58 | 59/66 | 2/10 | 1/8 | 0/58 | 2/76 |
+| new | retrieved | v4 | 52/66 | 52/58 | 59/66 | 8/10 | 2/8 | 0/58 | 1/76 |
+| new | retrieved | v5 | 53/66 | 53/58 | 56/66 | 10/10 | 6/8 | 1/58 | 1/76 |
+| new | oracle | base | 61/66 | 61/66 | 66/66 | 2/10 | n/a | 0/66 | 2/76 |
+| new | oracle | v4 | 63/66 | 63/66 | 64/66 | 8/10 | n/a | 0/66 | 2/76 |
+| new | oracle | v5 | 58/66 | 58/66 | 63/66 | 10/10 | n/a | 2/66 | 3/76 |
+
+Split of the 117 answerable questions, retrieved prompts (old and new together):
+
+| outcome | base | v4 | v5 |
+|---|---|---|---|
+| correct | 93 | 95 | 88 |
+| passages lack the answer, model refused | 1 | 2 | 7 |
+| passages lack the answer, model answered | 11 | 10 | 5 |
+| passages have the answer, model refused | 0 | 0 | 7 |
+| passages have the answer, model answered wrongly | 12 | 10 | 10 |
+| of the last two rows, correct with oracle passages | 9 | 5 | 9 of 17 |
+
+Reading: v5 refuses every unanswerable question (19/19 against 17/19 for v4 and
+8/19 for the base) and refuses more often when the passages lack the answer (7
+of 12, against 2 and 1), which is what the new hard-refusal data was built
+for. It pays for it with over-refusal: 7 questions whose passages hold the
+answer were refused (v4 and the base: 0), and its `answer` on the old
+questions fell from 43/51 to 35/51 (retrieved) and from 44/51 to 41/51
+(oracle). On the new questions retrieved `answer` is 53/66 against 52/66 for
+v4, within noise. Of the 17 questions where v5 had the answer in its passages
+and failed, 2 are scoring artifacts (a paraphrase of "ARC" and "Certificate of
+Enrollment", and "128" written as "一百二十八"), 1 is borderline (the
+website is named, its URL is not given) and 14 are errors: 7 refusals, a wrong
+figure (15 days for 30), the wrong semester row, an off-topic answer, and
+three answers that point to the Immigration Bureau site instead of giving the
+OIA download link. This reading is of the replies against `must_contain`, not
+of the passages. Per-language rows: `results/generation_comparison.md`. One run per model, 51 and 66 answerable
+questions: differences of one to three questions mean nothing; the drop on the
+old set (8 questions) is larger than that.
+
+#### Mixed data run (v6)
+
+`mix_data.py` merges teacher-data files into one training file:
+
+```bash
+cd backend
+uv run --frozen python ../ml/mix_data.py --data /content/data/train.jsonl \
+    /content/data/train_v5.jsonl --out /content/data/train_v6.jsonl \
+    --recheck-votes 2 --workers 16
+```
+
+It puts the current system prompt on every row, drops duplicate ids and
+questions that look like a golden question, and asks the teacher again
+(`--recheck-votes`, with the stricter verify prompt) about every hard refusal,
+a refusal row whose distractors were retrieved: it stays only if every vote
+says the passages do not answer the question. Rejects, with the reason, go to
+`<out>.rejects.jsonl`; `--dry-run` uses the fake teacher.
+
+The input was the v4 data (3479 rows) and the v5 data (3596 rows). 7028 rows
+were kept and 47 rejected, all of them v5 hard refusals for which a vote said
+the passages do answer (298 hard refusals went in, 251 stayed: 3.6% of the
+rows; none of the v4 rows is a hard refusal). No duplicate id and no golden
+look-alike was found. Kept by kind: 5092 answer, 675 multi, 1261 refusal; by
+language: 3923 en, 1054 id, 1024 vi, 1027 zh-TW; by distractors: 3200 random,
+3828 retrieved.
+
+`unsloth/gemma-4-E2B-it` on these rows (6677 train, 351 held out), 2 epochs,
+`--batch-size 8 --grad-accum 1 --max-seq-length 3072`, rank 16, `--merge --gguf
+q4_k_m`, 1670 steps in 21 minutes. `--labels-only` on the first example: 127
+of 625 tokens carry loss and they decode to the answer plus the end-of-turn
+token. Mean training loss 0.298, held-out loss 0.308.
+
+Generation scores as in the table above, with v6 added (same server flags, one
+run per cell):
+
+| questions | passages | model | answer | answer (ctx) | cite | refuse | refuse (no ctx) | over-refuse | num-err |
+|---|---|---|---|---|---|---|---|---|---|
+| old | retrieved | base | 42/51 | 42/47 | 43/51 | 6/9 | 0/4 | 0/47 | 0/60 |
+| old | retrieved | v4 | 43/51 | 43/47 | 43/51 | 9/9 | 0/4 | 0/47 | 0/60 |
+| old | retrieved | v5 | 35/51 | 35/47 | 33/51 | 9/9 | 1/4 | 6/47 | 0/60 |
+| old | retrieved | v6 | 41/51 | 41/47 | 41/51 | 9/9 | 0/4 | 0/47 | 0/60 |
+| old | oracle | base | 48/51 | 48/51 | 47/51 | 6/9 | n/a | 0/51 | 0/60 |
+| old | oracle | v4 | 44/51 | 44/51 | 44/51 | 9/9 | n/a | 0/51 | 1/60 |
+| old | oracle | v5 | 41/51 | 41/51 | 41/51 | 9/9 | n/a | 4/51 | 0/60 |
+| old | oracle | v6 | 44/51 | 44/51 | 45/51 | 9/9 | n/a | 0/51 | 0/60 |
+| new | retrieved | base | 51/66 | 51/58 | 59/66 | 2/10 | 1/8 | 0/58 | 2/76 |
+| new | retrieved | v4 | 52/66 | 52/58 | 59/66 | 8/10 | 2/8 | 0/58 | 1/76 |
+| new | retrieved | v5 | 53/66 | 53/58 | 56/66 | 10/10 | 6/8 | 1/58 | 1/76 |
+| new | retrieved | v6 | 53/66 | 53/58 | 57/66 | 9/10 | 3/8 | 1/58 | 1/76 |
+| new | oracle | base | 61/66 | 61/66 | 66/66 | 2/10 | n/a | 0/66 | 2/76 |
+| new | oracle | v4 | 63/66 | 63/66 | 64/66 | 8/10 | n/a | 0/66 | 2/76 |
+| new | oracle | v5 | 58/66 | 58/66 | 63/66 | 10/10 | n/a | 2/66 | 3/76 |
+| new | oracle | v6 | 64/66 | 64/66 | 64/66 | 9/10 | n/a | 0/66 | 2/76 |
+
+Split of the 117 answerable questions, retrieved prompts:
+
+| outcome | base | v4 | v5 | v6 |
+|---|---|---|---|---|
+| correct | 93 | 95 | 88 | 94 |
+| passages lack the answer, model refused | 1 | 2 | 7 | 3 |
+| passages lack the answer, model answered | 11 | 10 | 5 | 9 |
+| passages have the answer, model refused | 0 | 0 | 7 | 1 |
+| passages have the answer, model answered wrongly | 12 | 10 | 10 | 10 |
+| of the last two rows, correct with oracle passages | 9 | 5 | 9 of 17 | 6 of 11 |
+
+Reading: v6 gets back most of the answer accuracy (old retrieved 41/51 against
+43/51 for v4 and 35/51 for v5; oracle 44/51 and 64/66, the same as or above
+v4) and over-refuses once (en-141, the Cathay Life insurance price, refused
+with the answer in the passages) against 7 for v5. It keeps part of the
+refusal gain: 18/19 unanswerable questions refused (v5 19/19, v4 17/19; the
+miss is a Vietnamese question in the new set, in both passage modes), and
+when the passages lack the answer it refuses 3 of 12 times (v5 7, v4 2).
+Against v4 the differences on answerable questions are one or two questions
+(94 against 95 correct), which one run per model cannot separate.
+
+Teacher data v7 (for the Gemma 3 1B student below): `make_teacher_data.py -n
+7000 --seed 7 --refusal-rate 0.28 --workers 32 --max-tokens 3072 --type-mix
+oia_page=0.30,gov_guide=0.20,course=0.12,food_place=0.10,academic_calendar=0.10,club=0.06,credits=0.03,graduation_language=0.02,intl_program=0.02,service_learning=0.01,contact=0.01,place=0.02,destination=0.01`,
+gpt-oss-20b behind vLLM, on the rebuilt index described under "Generated exam
+set". 5945 kept, 1055 rejected (402 `answer_not_in_language`, 293
+`visible_passages_answer`, 255 `number_not_in_passages`, 40 `not_json`, 26
+`bullet_without_citation`, 19 `number_not_in_passages_after_swap`, 10
+`wrong_language`, 4 `answer_is_refusal`, 4 `teacher_skipped`, 1
+`matches_golden_question`, 1 `not_bulleted`). By kind 3745 answer, 556 multi,
+1644 refusal; by language en 3274, zh-TW 965, id 855, vi 851; by source type
+oia_page 1818, gov_guide 1303, course 598, food_place 594, academic_calendar
+564, club 383, credits 180, place 123, intl_program 117, graduation_language
+104, contact 57, service_learning 57, destination 47. Mixed with
+`train_v6.jsonl` by `mix_data.py --recheck-votes 2 --workers 32`: 12973 rows
+read, 12503 kept (431 `matches_golden_question`, which now includes the exam
+set, and 39 `visible_passages_answer` rejected); by kind 8587 answer, 1226
+multi, 2690 refusal; 477 hard refusals (3.8%). The first mix attempt spent over
+an hour in `SequenceMatcher.ratio` against the larger held-out list;
+`checks.matches_golden` tries `real_quick_ratio` and `quick_ratio` first (same
+results, about 8 times faster).
+
+## Gemma 3 270m student
+
+A second, smaller student for the offline mode: `unsloth/gemma-3-270m-it`
+against the budget of 300 MB for the model file and phones with 4 GB of RAM.
+The comparison asked is full fine-tune against LoRA at this size.
+
+Where this was run, so the numbers are read correctly:
+
+- Base, v4, v5 and v6 of Gemma 4 E2B (tables above) ran on an A100. The 270m
+  runs below ran on a Colab T4 (15 GB).
+- All 270m numbers use the knowledge index at commit `bc3304d`, before the
+  `food_place` source, the academic calendar and the course translations were
+  added. They are comparable with each other, and with the E2B rows only for
+  the same 117 answerable and 19 unanswerable golden questions.
+- Each cell is one run at temperature 0.
+
+### Setup
+
+- Data: `train_v6.jsonl`, the 7,028 rows of the mixed data run (6,677 train,
+  351 held out).
+- Full fine-tune: `--full-finetune`, `--batch-size 8 --grad-accum 1
+  --epochs 2`, 1670 steps in 9672 s. Mean training loss 0.568, held-out loss
+  0.547. Exported with `--gguf q4_k_m`; a Q8_0 file of the same model
+  also exists.
+- float32: the T4 has no bf16, and Unsloth refuses float16 for Gemma 3 (its
+  log says so and switches to float32), so the whole fine-tune ran in float32.
+- LoRA: not run. The Colab runtime was replaced at step 525/1670, and no
+  checkpoint had been saved. The run (rank 16, `--no-load-in-4bit --merge
+  --gguf q4_k_m`) needed `UNSLOTH_DEFAULT_PACKING=0`, because Unsloth otherwise
+  packs rows and the label check fails; `train_lora.py` now defaults that
+  variable to 0.
+- Serving for the evals: `llama-server --jinja --reasoning off -c 4096` on the
+  GPU, the Q4_K_M file, hybrid search with EmbeddingGemma 300M.
+
+### Size against the budget
+
+| file | bytes | MB (10^6) |
+|---|---|---|
+| full fine-tune, Q4_K_M | 253,114,752 | 253.1 |
+| full fine-tune, Q8_0 | 291,545,312 | 291.5 |
+| LoRA, Q4_K_M | not run | not run |
+
+Both files are under 300 MB; Q8_0 only just. Speed on a phone, or on a CPU:
+not measured.
+
+### Results
+
+Counts over the 117 answerable and 19 unanswerable questions (old and new
+sets together), from `error_split.txt` and `ml/results/generation/`; the
+per-language rows are in `generation_comparison.md`.
+
+| model | passages | correct /117 | has the answer, refused | refused, passages lack it | unanswerable refused /19 | num-err /136 | language drift |
+|---|---|---|---|---|---|---|---|
+| 270m base | hybrid top 5 | 35 | 0 | 0/12 | 1 | 4 | 34 |
+| 270m base | oracle | 44 | 1 | n/a | 0 | 7 | 32 |
+| 270m full | hybrid top 5 | 74 (old 30/51, new 44/66) | 2 | 3/12 | 9 | 1 | 4 |
+| 270m full | hybrid top 3 | 80 | 2 | 4/15 | 11 | 3 | 5 |
+| 270m full | keyword top 3 | 68 | 1 | 10/27 | 14 | 0 | 2 |
+| 270m full | oracle | 84 | 2 | n/a | 9 | 2 | 6 |
+| 270m LoRA | all | not run | not run | not run | not run | not run | not run |
+| E2B v6 (A100) | hybrid top 5 | 94 | 1 | 3/12 | 18 | 1 | n/a |
+
+"Refused, passages lack it" counts only the answerable questions whose
+retrieved passages do not hold the answer; the denominator changes with the
+search because top 3 and keyword search retrieve different passages. The
+language drift column counts non-refusals written in another language than
+the question; it was not computed for the E2B runs. The E2B v6 row is copied
+from the v6 section above.
+
+### Reading
+
+- Fine-tuning does most of the work at this size: 74 correct against 35 for
+  the untuned model, and the base model answers in the wrong language in 34
+  responses against 4.
+- Full fine-tune against LoRA: not answered here, LoRA was not run.
+- Top 3 beats top 5 for this model: 80 against 74 correct, and 11 against 9
+  unanswerable questions refused. Retrieval puts the answer in the top 3 for
+  100 of 117 questions and in the top 5 for 103, so the three extra passages
+  cost little recall and appear to give a 270m model more to get lost in. It
+  is one run per cell and a difference of 6 questions, so treat it as a
+  direction, not a result.
+- Keyword-only search with top 3 loses 12 correct answers against hybrid top
+  3 (68 against 80), but refuses more: 14/19 unanswerable and 10 refusals
+  where the passages lack the answer. The model refuses when the passages
+  look unrelated, which is what weaker retrieval gives it.
+- The main weakness against E2B v6 is refusing unanswerable questions: 9/19
+  at top 5 (11/19 at top 3) against 18/19. Even with the right passages
+  (oracle) it gets 84/117 correct against 108/117 for E2B v6, and only 9/19
+  unanswerable refused.
+- Against the 300 MB budget the model fits (253 MB at Q4_K_M), but at about 63%
+  correct with retrieved passages it is a fallback for offline use, not a
+  replacement for E2B v6.
+- The budget for the model file was relaxed to about 1 GB; the Gemma 3 1B
+  student below replaces this model.
+
+## Gemma 3 1B student
+
+`unsloth/gemma-3-1b-it` against a budget of about 1 GB for the model file,
+trained on the v7 data (see "Mixed data run (v6)" for the mix). The comparison
+is again full fine-tune against LoRA.
+
+### Setup
+
+- Where: Colab A100-SXM4-40GB. The knowledge index was rebuilt at commit
+  `797de34` (2,809 documents, see "Generated exam set"), so these numbers are
+  not comparable with the 270m and E2B rows, which used older indexes; the
+  base 1B rows are the reference.
+- Data: `train_v7.jsonl`, 12503 rows, 5% held out. `--batch-size 8
+  --grad-accum 1 --epochs 2`, bf16 (`--no-load-in-4bit`), max sequence length
+  3072, 2970 steps, `UNSLOTH_DEFAULT_PACKING=0`.
+- LoRA: rank 32, alpha 32, learning rate 2e-4 (default), 972 s. Train loss
+  0.4115, held-out loss 0.392. `--merge`, then GGUF with llama.cpp
+  `convert_hf_to_gguf.py` (bf16) and `llama-quantize`.
+- Full fine-tune: `--full-finetune --learning-rate 2e-5`, 1218 s. Train loss
+  0.403, held-out loss 0.404.
+- Serving for the evals: `llama-server --jinja --reasoning off -ngl 99 -np 8
+  -c 32768`, the Q4_K_M files, temperature 0.
+- Each cell is one run. An earlier identical base run gave 70/117 and 74/117
+  for hybrid top 3 and top 5 and 80/117 for oracle (table below: 71, 79, 81);
+  parallel slots make runs not exactly repeatable.
+
+### Size against the budget
+
+| file | bytes | MB (10^6) |
+|---|---|---|
+| LoRA, Q4_K_M | 806,058,016 | 806.1 |
+| full fine-tune, Q4_K_M | 806,058,016 | 806.1 |
+| base, Q4_K_M (`unsloth/gemma-3-1b-it-GGUF`) | 806,058,272 | 806.1 |
+| Q8_0 | 1,069,306,144 | 1069.3 |
+
+The Q4_K_M files fit the budget of about 1 GB; Q8_0 is just over. Hybrid
+search on the phone also needs the EmbeddingGemma file (333.6 MB as Q8_0) on
+top of the model. Speed on a phone: not measured.
+
+### Results
+
+On `golden/questions.jsonl` (117 answerable, 19 unanswerable, 136 in all;
+`num-err` is the number of questions, out of 136, with an unsupported number):
+
+| model | passages | answer /117 | answer (ctx) | refuse /19 | over-refuse | num-err |
+|---|---|---|---|---|---|---|
+| base 1B | hybrid top 3 | 71 | 71/101 | 4 | 7/101 | 8 |
+| base 1B | hybrid top 5 | 79 | 79/105 | 2 | 1/105 | 11 |
+| base 1B | keyword top 3 | 61 | 61/90 | 1 | 6/90 | 8 |
+| base 1B | oracle | 81 | 81/117 | 4 | 5/117 | 12 |
+| LoRA | hybrid top 3 | 87 | 87/101 | 18 | 1/101 | 2 |
+| LoRA | hybrid top 5 | 83 | 83/105 | 17 | 3/105 | 0 |
+| LoRA | keyword top 3 | 76 | 75/90 | 18 | 2/90 | 3 |
+| LoRA | oracle | 94 | 94/117 | 17 | 2/117 | 1 |
+| full | hybrid top 3 | 82 | 81/101 | 17 | 2/101 | 1 |
+| full | hybrid top 5 | 77 | 77/105 | 17 | 4/105 | 0 |
+| full | keyword top 3 | 74 | 74/90 | 18 | 7/90 | 0 |
+| full | oracle | 88 | 88/117 | 17 | 5/117 | 1 |
+
+For reference, E2B v6 had 94/117 correct with retrieved passages and 18/19
+refused (see its section; it used the index before the course, club, food and
+calendar documents).
+
+On `golden/generated.jsonl` (972 answerable, 311 unanswerable, 1283 in all):
+
+| model | passages | answer /972 | answer (ctx) | refuse /311 | over-refuse | num-err |
+|---|---|---|---|---|---|---|
+| base 1B | hybrid top 3 | 454 | 453/728 | 73 | 61/728 | 60 |
+| base 1B | keyword top 3 | 286 | 281/453 | 60 | 35/453 | 139 |
+| base 1B | oracle | 485 | 485/972 | 42 | 36/972 | 57 |
+| LoRA | hybrid top 3 | 617 | 617/728 | 260 | 32/728 | 11 |
+| LoRA | keyword top 3 | 372 | 372/453 | 289 | 16/453 | 2 |
+| LoRA | oracle | 737 | 737/972 | 243 | 28/972 | 13 |
+| full | hybrid top 3 | 587 | 587/728 | 267 | 85/728 | 10 |
+| full | keyword top 3 | 385 | 385/453 | 287 | 19/453 | 4 |
+| full | oracle | 726 | 726/972 | 239 | 71/972 | 7 |
+
+Per source type for the LoRA, hybrid top 3: correct (passages holding the
+answer in brackets), and correct with oracle passages:
+
+| source type | hybrid top 3 correct (has answer) | oracle correct | answerable |
+|---|---|---|---|
+| academic_calendar | 75 (93) | 159 | 245 |
+| course | 110 (127) | 111 | 136 |
+| food_place | 97 (105) | 98 | 119 |
+| oia_page | 34 (50) | 43 | 72 |
+| club | 47 (58) | 48 | 63 |
+| graduation_language | 35 (43) | 33 | 55 |
+| destination | 49 (52) | 48 | 53 |
+| gov_guide | 38 (42) | 43 | 50 |
+| intl_program | 40 (47) | 41 | 48 |
+| place | 34 (38) | 38 | 42 |
+| credits | 23 (29) | 26 | 32 |
+| service_learning | 19 (27) | 25 | 30 |
+| contact | 16 (17) | 24 | 27 |
+
+Unanswerable questions refused by the LoRA: 260 of 311 (243 with oracle
+passages). The full fine-tune with hybrid top 3 answers 58 of 136 course
+questions correctly (LoRA 110).
+
+Files: `ml/golden/generated.jsonl`;
+`ml/results/generation/g3-1b-{base,lora,full}-{k3-retrieved,k5-retrieved,kw3-retrieved,oracle}.json`;
+`ml/results/generated/generation/g3-1b-{base,lora,full}-gen-{k3-retrieved,kw3-retrieved,oracle}.json`;
+`ml/results/generated/generation_comparison.md`. The models and data are in
+the Drive folder `MyDrive/magic-pinecone/gemma3-1b-v7/` (`lora/`, `full/`,
+`gguf/`, `teacher_data/`, `results/`, `knowledge.db`).
+
+### Reading
+
+- The LoRA beats the full fine-tune on every golden-set setting and on the
+  exam set. The full fine-tune also over-refuses more (85/728 against 32/728
+  with hybrid top 3) and drops on course questions. The LoRA Q4_K_M file is the
+  1B candidate.
+- Against the agreed rule (at least 80/117 correct with num-err 0 counts as
+  viable), LoRA hybrid top 5 (83, 0) passes. Hybrid top 3 has the most correct
+  (87) with 2 num-err.
+- On the exam set the main loss is retrieval: hybrid top 3 holds the answer
+  for 728 of 972 questions, and with the answer present the LoRA gets 85%
+  (617/728). Keyword-only top 3 holds it for 453.
+- Academic calendar is the weakest type: retrieval finds the answer for 93 of
+  245, and even with the right passage the LoRA answers 159 of 245. Month
+  documents and date formats are what to work on next.
+- The exam set is written by the same teacher family that wrote the training
+  data, from the same passages, so its numbers are optimistic; use it to
+  compare models, not as an absolute score.
+
 ## What has been tested
 
 Run on the development machine (no GPU, no network access to a model):
 
-- `pytest ml/tests`: 201 passed.
+- `pytest ml/tests`: 397 passed.
 - `eval_retrieval.py`: real run, numbers above.
 - `make_teacher_data.py --dry-run`, including resume and a larger `-n`.
 - `eval_generation.py --dry-run`, both `--passages` modes.
@@ -410,10 +936,10 @@ Run on the development machine (no GPU, no network access to a model):
 
 ## Not tested
 
-- **No real endpoint was ever called.** `ChatClient`, the teacher prompts and
-  the JSON reply format have not been tried against gpt-oss or any other model.
-  Expect to adjust `--max-tokens` (a reasoning model spends tokens on thinking
-  before the JSON) and possibly the teacher prompt.
+- **The teacher run** (section 3) used gpt-oss-20b through vLLM with
+  `--max-tokens 3000`; the reasoning is returned in a separate field, which
+  `ChatClient` does not read. Whether a cut-off or differently served model
+  needs a different `--max-tokens` is untested.
 - **`train_lora.py` was not executed where it was written**, in either
   backend; the runs on Colab (see "Training") came later and are known here
   only from that session's report. Points that were uncertain when it was
@@ -440,6 +966,13 @@ Run on the development machine (no GPU, no network access to a model):
     towers.
 - The golden set has not been reviewed by anyone but its author; vi and id
   need a native speaker.
+- The generated exam set (`golden/generated.jsonl`) is teacher-written and
+  only spot-checked; its vi and id items need native review, and its
+  `must_contain` strings can be wrong.
+- The 1B evals ran on `llama-server` with 8 parallel slots. The base model's
+  golden-set numbers moved by 1 to 5 questions between two identical runs
+  (hybrid top 3: 70 and 71; top 5: 74 and 79; oracle: 80 and 81), so
+  differences of up to 5 questions on the golden set can be noise. Each cell is one run.
 - The dry-run numbers of both scripts come from fake models and mean nothing.
 
 ## Documentation used for `train_lora.py` (read 2026-11-10)

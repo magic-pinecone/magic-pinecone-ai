@@ -2,7 +2,7 @@ import json
 
 import pytest
 from checks import normalize_question
-from common import BACKEND_DIR, load_golden, student_services
+from common import BACKEND_DIR, knowledge_services, load_golden
 from make_teacher_data import (
     FakeTeacher,
     Task,
@@ -63,7 +63,7 @@ def test_contact_matches_backend_data():
     assert OIA_PHONE in contacts
     handbook = next(
         d
-        for d in student_services().load_documents()
+        for d in knowledge_services().load_documents()
         if d.id == "oia-degree-student-handbook"
     )
     assert OIA_EMAIL in "\n".join(handbook.lines)
@@ -144,7 +144,7 @@ def test_refusal_example_uses_the_fixed_sentence():
 
 
 def test_plan_is_deterministic_and_well_formed():
-    services = student_services()
+    services = knowledge_services()
     passages = corpus_passages(services)
     assert passages[1]["start"] == services.PASSAGE_STEP
     assert len(passages[0]["passage"].split("\n")) <= services.PASSAGE_LINES
@@ -168,7 +168,7 @@ def test_plan_is_deterministic_and_well_formed():
 
 
 def test_fake_teacher_round_trip_never_leaks_golden_questions():
-    passages = corpus_passages(student_services())
+    passages = corpus_passages(knowledge_services())
     golden = [normalize_question(i["question"]) for i in load_golden()]
     teacher, kept = FakeTeacher(), 0
     for t in make_plan(passages, 60, 0, parse_lang_mix("en=1"), 0.2, teachers=1):

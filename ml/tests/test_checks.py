@@ -104,3 +104,12 @@ def test_matches_golden():
     assert matches_golden("全民健保每學期的費用是多少", golden)
     assert not matches_golden("Which documents do I need for a work permit?", golden)
     assert not matches_golden("宿舍每學期的費用是多少？", golden)
+
+
+def test_contains_fact_number_words_ranges_and_zero_decimals():
+    assert contains_fact("- 4 years [1]", "four years")
+    assert contains_fact("a full-year five-credit course", "5")
+    assert contains_fact("09:00 to 17:00", "09:00 - 17:00")
+    assert contains_fact("NTD 2,600.00", "2600")
+    assert not contains_fact("NTD 2,600.50", "2600")
+    assert not contains_fact("someone often", "1")

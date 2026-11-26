@@ -21,11 +21,20 @@ from typing import Any, Literal
 
 from mcp.server.mcpserver import MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
+from sqlalchemy.exc import SQLAlchemyError
 
-from app.services import campus_places, destinations, student_services, tdx
+from app.services import (
+    campus_places,
+    credits,
+    destinations,
+    service_learning,
+    student_services,
+    tdx,
+)
 from app.services import graduation_language as service
 from app.services.campus_places import PlaceCategory
 from app.services.destinations import DestinationCategory
+from app.services.knowledge import index as knowledge_index
 
 mcp = MCPServer(
     "ncu-international",
@@ -40,12 +49,30 @@ mcp = MCPServer(
         "answer in the student's language. When a tool returns nothing, say so "
         "and give the OIA contact; do not infer a rule. For overstayed visas, "
         "working without a permit, medical emergencies or personal crises, "
-        "refer the student to OIA or emergency services instead of advising."
+        "refer the student to OIA or emergency services instead of advising. "
+        "For anything else start with `search_knowledge`, which searches the "
+        "whole OIA website, government guides, credit and service-learning "
+        "rules, programs, courses, clubs, places and contacts at once; answer "
+        "only from the passages it returns and cite their URLs."
     ),
 )
 
 Degree = Literal["bachelor", "master", "phd"]
 TeachingLanguage = Literal["chinese", "english_sufficient", "english"]
+RuleDegree = Literal["bachelor", "graduate"]
+SourceType = Literal[
+    "oia_page",
+    "gov_guide",
+    "graduation_language",
+    "intl_program",
+    "credits",
+    "service_learning",
+    "contact",
+    "place",
+    "destination",
+    "course",
+    "club",
+]
 SNIPPET_RADIUS = 160
 FRONT_MATTER = re.compile(r"\A---\n.*?\n---\n", re.DOTALL)
 
@@ -362,5 +389,150 @@ def find_destination(
     }
 
 
-if __name__ == "__main__":
+@mcp.tool()
+def search_knowledge(
+    query: str, source_types: list[SourceType] | None = None, limit: int = 5
+) -> dict[str, Any]:
+    """Search everything this server knows about NCU in one call.
+
+    Covers every page and PDF of the Office of International Affairs website
+    (English and Chinese), central-government guides on work permits,
+    insurance and residence, graduation language rules, international degree
+    programs, university credit and service-learning rules, office contacts,
+    campus buildings, off-campus destinations, restaurants and halal-certified
+    places near campus, the academic calendar, and, when the server has its
+    database, this semester's courses and the student clubs.
+
+    Args:
+        query: the student's question or keywords, in any language. Keyword
+            and meaning-based search are combined, so a whole question works.
+        source_types: only search these kinds of sources: oia_page,
+            gov_guide, graduation_language, intl_program, credits,
+            service_learning, contact, place, destination, food_place,
+            academic_calendar, course, club.
+        limit: how many passages to return, 1 to 20.
+
+    Returns passages best first, each with its document id, title, official
+    URL, the date the source was read, and how it was found. Answer only from
+    the passages and cite the URL; read a whole document through the
+    `ncu://documents/{document_id}` resource. An empty list means nothing
+    matched: say so and give the OIA contact.
+    """
+    return {
+        "passages": knowledge_index.search(
+            query, source_types=source_types, limit=max(1, min(limit, 20))
+        )
+    }
+
+
+@mcp.resource("ncu://documents/{document_id}")
+def knowledge_document(document_id: str) -> str:
+    """The full text of one document of `search_knowledge`, with its URL."""
+    document = knowledge_index.get_document(document_id)
+    if document is None:
+        raise ValueError(f"unknown document: {document_id}")
+    head = (
+        f"# {document.title}\n\nSource: {document.url}\nRead on: {document.fetched_on}"
+    )
+    return head + "\n\n" + "\n".join(document.lines)
+
+
+def _search_loaded(query: str, source_type: str, limit: int) -> dict[str, Any]:
+    loaded = any(
+        document.source_type == source_type
+        for document in knowledge_index.load_documents()
+    )
+    if not loaded:
+        raise ToolError(f"No {source_type} data is loaded on this server.")
+    return {
+        "passages": knowledge_index.search(
+            query, source_types=[source_type], limit=max(1, min(limit, 20))
+        )
+    }
+
+
+@mcp.tool()
+def search_courses(query: str, limit: int = 5) -> dict[str, Any]:
+    """Search this semester's NCU courses.
+
+    Args:
+        query: a course name, teacher, department, course code or topic, in
+            Chinese or English, e.g. "機器學習", "calculus 微積分" or "Wed".
+        limit: how many courses to return, 1 to 20.
+
+    Each passage holds one course: serial number, course code, teachers,
+    weekdays and periods, credits, departments and, when cached, part of the
+    syllabus; the URL opens the official course page. Fails when the server
+    has no course catalog loaded.
+    """
+    return _search_loaded(query, "course", limit)
+
+
+@mcp.tool()
+def search_clubs(query: str, limit: int = 5) -> dict[str, Any]:
+    """Search NCU's student clubs.
+
+    Args:
+        query: a club name or activity, Chinese or English, e.g. "吉他" or
+            "badminton".
+        limit: how many clubs to return, 1 to 20.
+
+    Each passage holds a club's description, office and website. Fails when
+    the server has no club list loaded.
+    """
+    return _search_loaded(query, "club", limit)
+
+
+@mcp.tool()
+def search_gov_guides(query: str, limit: int = 5) -> dict[str, Any]:
+    """Search central-government guides for international students in Taiwan.
+
+    Args:
+        query: keywords or a question, e.g. "work permit documents" or
+            "居留證 延期".
+        limit: how many passages to return, 1 to 20.
+
+    Covers Ministry of Labor work-permit rules, National Health Insurance for
+    students and National Immigration Agency residence rules. Passages carry
+    the agency page URL and the date it was read.
+    """
+    return _search_loaded(query, "gov_guide", limit)
+
+
+@mcp.tool()
+def get_credit_requirements(degree: RuleDegree | None = None) -> dict[str, Any]:
+    """NCU's university-wide credit rules, each with its official source.
+
+    Args:
+        degree: bachelor or graduate; omit for both.
+
+    Each rule has a Chinese and English title and summary, the number of
+    credits when it names one, and quotes from the regulation it comes from.
+    Department-specific totals are not here; see
+    `search_international_programs` for program graduation credits.
+    """
+    return credits.for_degree(degree).model_dump(mode="json")
+
+
+@mcp.tool()
+def get_service_learning_requirements(
+    degree: RuleDegree | None = None,
+) -> dict[str, Any]:
+    """NCU's service-learning (服務學習) graduation rules, with sources.
+
+    Args:
+        degree: bachelor or graduate; omit for both.
+    """
+    return service_learning.for_degree(degree).model_dump(mode="json")
+
+
+def main() -> None:
+    try:
+        knowledge_index.refresh_from_database(embed_missing=False)
+    except SQLAlchemyError:
+        pass
     mcp.run()
+
+
+if __name__ == "__main__":
+    main()

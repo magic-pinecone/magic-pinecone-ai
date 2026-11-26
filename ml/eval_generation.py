@@ -26,7 +26,9 @@ Scores per language (definitions in `score_item` and `summarize`):
             question
 
 Each run is saved as `ml/results/generation/<run-name>.json` and
-`ml/results/generation_comparison.md` is rebuilt from all saved runs.
+`ml/results/generation_comparison.md` is rebuilt from all saved runs. With
+`--golden` set to another file the same two files go to
+`ml/results/<golden stem>/`, so the golden-set runs are left alone.
 """
 
 import argparse
@@ -36,14 +38,15 @@ from pathlib import Path
 
 from checks import facts_held, holds_answer, strip_reasoning, unsupported_numbers
 from common import (
+    GOLDEN_PATH,
     RESULTS_DIR,
     ChatClient,
     EndpointError,
     expected_sources,
+    knowledge_services,
     load_golden,
     markdown_table,
     rate,
-    student_services,
 )
 from prompt_format import (
     LANGS,
@@ -236,14 +239,31 @@ def main() -> None:
     parser.add_argument(
         "--passages", choices=("retrieved", "oracle"), default="retrieved"
     )
-    parser.add_argument("--top-k", type=int, default=3)
+    parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument("--search", choices=("keyword", "hybrid"), default="keyword")
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--max-tokens", type=int, default=512)
+    parser.add_argument(
+        "--questions",
+        choices=("all", "old", "new"),
+        default="all",
+        help="old: the first 60 questions; new: those with a source_type",
+    )
     parser.add_argument("--limit", type=int, help="only the first N questions")
-    parser.add_argument("--out-dir", type=Path, help="default: ml/results")
+    parser.add_argument(
+        "--golden", type=Path, default=GOLDEN_PATH, help="questions JSONL to score"
+    )
+    parser.add_argument(
+        "--out-dir",
+        type=Path,
+        help="default: ml/results, or ml/results/<golden stem> for another --golden",
+    )
     parser.add_argument("--dry-run", action="store_true", help="use the fake model")
     args = parser.parse_args()
 
+    default_out_dir = (
+        RESULTS_DIR if args.golden == GOLDEN_PATH else RESULTS_DIR / args.golden.stem
+    )
     if args.dry_run:
         model = FakeModel()
         run_name = args.run_name or "dry-run"
@@ -255,10 +275,15 @@ def main() -> None:
             model = ChatClient(args.endpoint)
         except EndpointError as error:
             parser.error(str(error))
-        run_name, out_dir = args.run_name, args.out_dir or RESULTS_DIR
+        run_name, out_dir = args.run_name, args.out_dir or default_out_dir
 
-    services = student_services()
-    golden = load_golden()[: args.limit]
+    services = knowledge_services("keyword" if args.dry_run else args.search)
+    golden = [
+        item
+        for item in load_golden(args.golden)
+        if args.questions == "all"
+        or ("source_type" in item) == (args.questions == "new")
+    ][: args.limit]
     records = []
     for number, item in enumerate(golden, start=1):
         passages = select_passages(services, item, args.passages, args.top_k)
@@ -290,6 +315,9 @@ def main() -> None:
         "passages": args.passages,
         "top_k": args.top_k,
         "questions": len(records),
+        "question_set": args.questions,
+        "golden": args.golden.name,
+        "search": "keyword" if args.dry_run else args.search,
         "summary": summarize(records),
         "items": records,
     }

@@ -30,7 +30,7 @@ from typing import Any, Literal
 import httpx
 
 from app.core.config import settings
-from app.services import campus_places, destinations, student_services, tdx
+from app.services import campus_places, destinations, tdx
 from app.services.answer_text import (
     OIA_CONTACT_STRINGS,
     build_messages,
@@ -39,13 +39,14 @@ from app.services.answer_text import (
     strip_reasoning,
     unsupported_numbers,
 )
+from app.services.knowledge import index as knowledge_index
 
 logger = logging.getLogger(__name__)
 
 Kind = Literal["documents", "place", "bus"]
 BusProblem = Literal["not_configured", "rate_limited", "unreachable"]
 
-TOP_K = 3
+TOP_K = 5
 MAX_QUESTION_CHARS = 500
 MAX_PLACES = 3
 MAX_BUS_ROUTES = 2
@@ -522,7 +523,7 @@ def look_up(question: str, query: str, result: dict[str, Any]) -> None:
 
     result["passages"] = [
         {key: row[key] for key in ("id", "title", "url", "fetched_on", "passage")}
-        for row in student_services.search(" ".join(reversed(texts)), limit=TOP_K)
+        for row in knowledge_index.search(" ".join(reversed(texts)), limit=TOP_K)
     ]
 
 

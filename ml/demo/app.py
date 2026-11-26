@@ -22,7 +22,7 @@ from pathlib import Path
 DEMO_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(DEMO_DIR.parent))
 
-from common import load_golden, student_services  # noqa: E402
+from common import knowledge_services, load_golden  # noqa: E402
 
 # Bus, building and one unanswerable question, to show next to the golden set.
 EXTRA_EXAMPLES = (
@@ -49,7 +49,7 @@ def examples() -> list[dict]:
 
 def model_from_environment():
     """The DEMO_* endpoint as the backend's model client, or None."""
-    student_services()  # puts the backend on the import path
+    knowledge_services()  # puts the backend on the import path
     from app.services.assistant import ChatModel
 
     base_url, model = os.environ.get("DEMO_BASE_URL"), os.environ.get("DEMO_MODEL")
@@ -68,7 +68,7 @@ def create_app(model=None):
     from fastapi import FastAPI
     from fastapi.responses import HTMLResponse
 
-    services = student_services()
+    services = knowledge_services()
     from app.api.routes.assistant import AskResponse, Question
     from app.services import assistant
 
