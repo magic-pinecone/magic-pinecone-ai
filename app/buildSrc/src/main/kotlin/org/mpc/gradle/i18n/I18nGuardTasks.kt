@@ -36,7 +36,8 @@ abstract class CheckI18nKeys : DefaultTask() {
             throw GradleException("Missing moko resource root: ${root.path}")
         }
         val localeNames = root.listFiles()
-            ?.filter { it.isDirectory }
+            // moko keeps bundled files beside the locales; that folder holds no translations.
+            ?.filter { it.isDirectory && it.name != "files" }
             ?.map { it.name }
             ?.sorted()
             .orEmpty()

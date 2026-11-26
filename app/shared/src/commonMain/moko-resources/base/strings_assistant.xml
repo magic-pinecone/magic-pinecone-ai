@@ -1,0 +1,29 @@
+<resources>
+    <string name="intl_section_ask">Ask</string>
+    <string name="assistant_intro">Ask about campus buildings, buses to and from NCU, or the international office\'s rules. Answers come only from this app\'s own data, shown below each answer.</string>
+    <string name="assistant_question_hint">Type a question in any language</string>
+    <string name="assistant_ask">Ask</string>
+    <string name="assistant_asking">Looking it up…</string>
+    <string name="assistant_failed">Could not reach the assistant. Try again in a moment.</string>
+    <string name="assistant_answer">Answer</string>
+    <string name="assistant_no_model">This server has no model to write an answer. Here is what it found.</string>
+    <string name="assistant_model_failed">The model could not answer this time. Here is what was found.</string>
+    <string name="assistant_nothing_found">Nothing was found to answer from.</string>
+    <string name="assistant_unsupported_numbers">Check these numbers against the sources: %1$s</string>
+    <string name="assistant_based_on">What this is based on</string>
+    <string name="assistant_open_source">Open the source</string>
+    <string name="assistant_open_walking">Walking directions</string>
+    <string name="assistant_open_transit">Directions from NCU</string>
+    <string name="assistant_place_code">Building code %1$s</string>
+    <string name="assistant_bus_route">Bus %1$s at the campus stops</string>
+    <string name="assistant_bus_in_minutes">in about %1$d min</string>
+    <string name="assistant_bus_next_at">next leaves %1$s</string>
+    <string name="assistant_bus_none_today">no more today</string>
+    <string name="assistant_bus_no_estimate">no estimate</string>
+    <string name="assistant_bus_not_configured">Live bus arrivals are not set up on this server.</string>
+    <string name="assistant_bus_rate_limited">Live bus arrivals are busy right now. Try again in a minute.</string>
+    <string name="assistant_bus_unreachable">Live bus arrivals cannot be reached right now.</string>
+    <string name="assistant_example_place">Where is E6-A203?</string>
+    <string name="assistant_example_bus">When is the next 132 bus?</string>
+    <string name="assistant_example_insurance">How much does Cathay insurance pay per clinic visit?</string>
+</resources>

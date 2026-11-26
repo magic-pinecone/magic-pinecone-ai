@@ -1,0 +1,1165 @@
+{
+  "sources": [
+    {
+      "id": "oia-site-b89a48920554",
+      "title": "博士生赴國外研究計畫",
+      "url": "https://oia.ncu.edu.tw/p/16-1026-9535.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-95986ee0707b",
+      "title": "【早鳥+姐妹校優惠+國際處加碼補助】冬天在諾曼第學商管賞文化！法國諾曼第高等商學院寒假課程｜11/21 (五) 截止",
+      "url": "https://oia.ncu.edu.tw/p/404-1026-12067.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-dc6909d5d72e",
+      "title": "【台聯大海外實習】暑期至海外知名大學實習！2026台聯大暑期實習甄選｜2026/01/05 (一) 中午12:00 截止",
+      "url": "https://oia.ncu.edu.tw/p/404-1026-12068.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-a4acc64ccef3",
+      "title": "【全額獎學金！】啟動科技創意的印尼旅程！印尼泗水理工學院寒假課程｜12/03 (三)、12/18 (四)截止",
+      "url": "https://oia.ncu.edu.tw/p/404-1026-12070.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-2cf4499acef0",
+      "title": "【免費5名】韓語新手村的密集訓練！韓國東國大學線上課程｜2026/01/02 (五) 截止",
+      "url": "https://oia.ncu.edu.tw/p/404-1026-12072.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-b31a1c910a76",
+      "title": "【暑期課程】日語課程、文化講座以及宮島觀光！日本廣島大學｜05/20截止",
+      "url": "https://oia.ncu.edu.tw/p/404-1026-12152.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-f7afefe078ea",
+      "title": "「僑生獎學金」申請公告內容",
+      "url": "https://oia.ncu.edu.tw/p/404-1026-13334.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-e8db710272e4",
+      "title": "「教育部及僑委會清寒僑生助學金」申請公告內容",
+      "url": "https://oia.ncu.edu.tw/p/404-1026-13335.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-998e4652d55e",
+      "title": "「優秀僑生獎學金(研究所)」申請公告內容",
+      "url": "https://oia.ncu.edu.tw/p/404-1026-13338.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-6d095dc58b70",
+      "title": "博士生赴國外研究計畫",
+      "url": "https://oia.ncu.edu.tw/p/404-1026-9535.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-599baf4d1a78",
+      "title": "國際交流活動",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1001.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-fc5ed81ba4a7",
+      "title": "外賓來訪",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1006.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-af29a12e561f",
+      "title": "姐妹校",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1850.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-4a15f9fbe189",
+      "title": "大陸人士來臺入出境證申請",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1852.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-d9d169eb35a7",
+      "title": "下載專區",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1853.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-af1071afabd4",
+      "title": "雙聯學制學生申請",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1857.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-8949d52535f2",
+      "title": "外籍交換生申請",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1858.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-779ce58808f8",
+      "title": "新型專班",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1859.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-b7240ec8ee02",
+      "title": "僑生港澳生單獨招生",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1860.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-70cd67c0b995",
+      "title": "申請重要時程",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1862.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-46073190d3f0",
+      "title": "錄取後辦理事項",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1863.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-2fb21ad9a6f8",
+      "title": "註冊報到",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1864.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-4c53227fd84f",
+      "title": "申請注意事項",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1866.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-f96d53a5ef1f",
+      "title": "申請重要時程",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1867.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-4aad17030720",
+      "title": "IIPP 計劃",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1869.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-b66673a04532",
+      "title": "TEEP 計劃",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1870.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-c3cc396d5581",
+      "title": "交換生計劃",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-f62d3fd2eca5",
+      "title": "雙聯學位計劃",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1873.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-1dad5639afd0",
+      "title": "海外寒暑假課程/實習",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1874.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-3e7b41ee79d7",
+      "title": "國科會補助計劃",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1875.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-4cfbab1bf4ff",
+      "title": "其他出國交流機會",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1876.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-b01213643d21",
+      "title": "出國補助",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1877.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-6c6b73e7dd98",
+      "title": "校園生活資訊",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1879.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-eed5cff6c472",
+      "title": "僑生新生資訊",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1883.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-c94d68071546",
+      "title": "僑生保險",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1884.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-231a8d7f7b43",
+      "title": "居留證申請與延期/出入境",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1885.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-1477439a0f58",
+      "title": "獎助學金",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1886.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-19735f1a7559",
+      "title": "工作證",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1887.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-4e86fddc23a8",
+      "title": "郵件包裹領取",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1888.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-958f3a2e4d6d",
+      "title": "僑生畢業離校流程",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1889.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-691e7aa9f8a4",
+      "title": "新生專區",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1890.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-945f7b0cb7ac",
+      "title": "入出境許可證及親屬探親申請",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1891.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-fb35618b82b1",
+      "title": "在校保險及全民保險需知",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1892.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-657db3ed38bc",
+      "title": "獎學金申請",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1893.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-29f1529d3285",
+      "title": "在學期間注意事項",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1894.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-a019e722d44b",
+      "title": "畢業離校",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1895.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-8ed358574edb",
+      "title": "相關連結",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1896.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-54b554688658",
+      "title": "新生專區",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1897.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-eb3b76d2b213",
+      "title": "離校手續",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1898.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-2e490f18db08",
+      "title": "相關連結",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1899.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-18688ee8f33c",
+      "title": "電子報",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-1900.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-f6777077282d",
+      "title": "Introduction",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2184.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-421d52e49480",
+      "title": "Vice President",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2185.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-8a96a4cecacf",
+      "title": "Associate Vice President",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2186.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-62546755ea36",
+      "title": "Staff",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2187.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-9c0fe3789de4",
+      "title": "Ambassador",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2188.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-8963dc3b5b2b",
+      "title": "Contract Signing",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2196.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-f9e4033145a4",
+      "title": "Our Partnerships",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2197.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-d56b81c70626",
+      "title": "Medical Insurance Information",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2201.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-6862e2055b08",
+      "title": "Immigration",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2202.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-3b95429ad1f0",
+      "title": "Information for Incoming Students",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2203.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-a20d7a7e9a62",
+      "title": "Work Permit",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2204.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-12b5e67f79af",
+      "title": "Scholarship",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2205.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-c6b425723117",
+      "title": "Information for Incoming Exchange Students",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2207.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-cf1bde247b94",
+      "title": "International Guest Visits",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2224.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-1c2a970950e2",
+      "title": "International Culture Exploration",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2225.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-a756a2aad46d",
+      "title": "Incoming Exchange Programs",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2226.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-c244199dc51c",
+      "title": "Incoming Dual Degree Programs",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2227.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-14f77ce7b79e",
+      "title": "IIPP Program",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2228.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-e90988d012ed",
+      "title": "TEEP Program",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2229.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-9eaf94496478",
+      "title": "NCU INTENSE Program",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2230.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-c1a247fe9849",
+      "title": "Funding for International Conference",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2231.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-8547fb7c3c41",
+      "title": "NCU Global Journey Passport 🌏",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2232.php?Lang=en",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-c8bc01c3274e",
+      "title": "短期課程",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-2460.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-d7fc22eb7093",
+      "title": "國際處簡介",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-956.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-abdb05295ca4",
+      "title": "現任國際長",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-959.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-6591656c6343",
+      "title": "現任副國際長",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-963.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-a23a0cdec676",
+      "title": "成員及職掌",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-966.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-33cd38182ea8",
+      "title": "國立中央大學親善大使",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-970.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-740e2fa43177",
+      "title": "簽約流程",
+      "url": "https://oia.ncu.edu.tw/p/412-1026-996.php?Lang=zh-tw",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "html"
+    },
+    {
+      "id": "oia-site-9d9e36d4716b",
+      "title": "英檢與 CEFR 對照表\n 各項英語檢定分數與 CEFR 架構的換算參考。",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/272/2018language.pdf",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-3ee998a994df",
+      "title": "歷年數據統計\n 各學年度申請人數概況及各院學生赴外情況。",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/272/GoingtoUniversityEachCollege2024.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-e4ff4722d0b4",
+      "title": "交換生常見 QA\n 申請前必讀！解答您對交換計畫的各種疑問。",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/272/QA-20241202.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-179eb5b594c8",
+      "title": "表單下載\n 學生個人資料同意書、家長同意書等文件。",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/272/forms-2022.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-700157cc7754",
+      "title": "交流生實施要點",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/276/exchangestudentimplementregulations.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-d5369e6eba3c",
+      "title": "NEW\n 116學年度第 1 梯次 (AY2027-2028) 出國交換計畫甄選簡章",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-b78426a6d85a",
+      "title": "NEW\n 116 學年度第 1 梯次學生出國交換姐妹校列表",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangeschoollist-1117.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-0f39b48bb609",
+      "title": "國立中央大學雙聯學制實施辦法",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/277/19-1.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-b90d3d1af2e2",
+      "title": "雙聯學位姐妹校列表\n 2026/11/02 更新",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/277/2027DDschoollist-1102.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-1f09e01886cd",
+      "title": "116 學年度雙聯學位計畫簡章\n 點擊下載 PDF",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/277/552030260.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-2a713b67a782",
+      "title": "825054663",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/277/825054663.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-a615ad1c581b",
+      "title": "QA-DD2022",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/277/QA-DD2022.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-87aa43aede77",
+      "title": "exchange-intro",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/277/exchange-intro.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-447ffca6bae5",
+      "title": "國立中央大學外籍生獎助學金處理要點_v20261022",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/279/211322303.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-415328be8528",
+      "title": "身分及學歷資格切結書",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/279/247454571.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-8aa59806f3b0",
+      "title": "國立中央大學招收僑生及港澳生來臺就學單獨招生規定",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/279/316084142.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-3b3281920845",
+      "title": "116學年度僑生及港澳生學士班單獨招生簡章",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/279/358817793.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-edd256831a5d",
+      "title": "放棄錄取資格聲明書",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/279/426253192.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-cad6410d0bbd",
+      "title": "華裔身分認定初審檢核表",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/279/679092020.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-138072c6e706",
+      "title": "香港或澳門居民報名資格確認書",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/279/744478116.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-0c9c4ad0fa88",
+      "title": "僑生保險特約醫療機構",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/279/OverseasChineseStudentInsurancePartnerHospitalList.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-613f2e754e32",
+      "title": "國泰理賠申請書",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/279/cathayInsurance.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-4a82cc1fbc88",
+      "title": "ARC Application Form (Multiple Purpose Application Form).pdf",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/389/ARCApplicationFormMultiplePurposeApplicationForm.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-084a1a606d7e",
+      "title": "VISA and ARC.pdf",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/389/VISAandARC.pdf",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-28271c6518e4",
+      "title": "Visa Application Form.pdf",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/389/VisaApplicationForm.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-70f730617d67",
+      "title": "Student Application for Account.pdf",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/389/std20230311_010101.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-24f84f9fef69",
+      "title": "Student Account / Password Login.pdf",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/389/std20230311_020101.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-896b2a6ff66f",
+      "title": "Students Forget Their Password and Unlock the Account.pdf",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/389/std20230311_030101.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-312dc510adbc",
+      "title": "System Function Introduction.pdf",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/389/std20230311_040101.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-1ad657e04753",
+      "title": "Documentation Process / Add New Application.pdf",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/389/std20230311_050101.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-400fc9c50429",
+      "title": "Introduction to Payment Methods and Case Submission.pdf",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/389/std20230311_060101.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-7645056b800a",
+      "title": "E-documents Collection and In-person Pick Up Declaration.pdf",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/389/std20230311_070101.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-71c3d2fd39bb",
+      "title": "Introduction for Return.pdf",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/389/std20230311_080101.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-fe9ac9f9ef0d",
+      "title": "NCU Registration Form (Registry Office)",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/01NCURegistrationForm(Registryoffice)_115-1.pdf",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-8af182dee533",
+      "title": "2026 Fall Degree Student Handbook",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/115-1StudentHandbook.pdf",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-07dc81053ea7",
+      "title": "International Student Information Form",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/410684081.pdf",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-cce5808c4bae",
+      "title": "Authorization for Emergency Treatment",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/570579317.pdf",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-c9fdd88183bc",
+      "title": "Attachment: Approval document signed by the supervising professor (dated within the past three months)",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/612354209.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-3a91bf233b7a",
+      "title": "Personal Data Collection Agreement",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/765455150.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-44fffda52501",
+      "title": "Career Center",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/CareerCenter.pdf",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-498703495648",
+      "title": "Course Selection Calendar",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/CourseSelectionCalendar.pdf",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-694ddc8efa60",
+      "title": "Registration Calendar",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/EnrollmentCalendar.pdf",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-b2ccac2d6617",
+      "title": "2026-2027 Academic Calendar",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/NCUAcademicCalendar.pdf",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-89183d783c39",
+      "title": "⭐ NCU Chinese Courses for Fall 2026 ⭐",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/NCUChineseCoursesforFall2026.pdf",
+      "org": "Office of International Affairs",
+      "lang": "en",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-799d5f1249c2",
+      "title": "this document",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/396/ScholarshipInformation_INTENSEProgram_Spring2027.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-442d0d39ad51",
+      "title": "僑生工讀金及學習扶助金要點",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/431/618794357.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-3624c9707751",
+      "title": "清寒僑生助學金要點",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/431/663379738.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-8e360e3e2406",
+      "title": "僑生獎學金辦法",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/431/802639274.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    },
+    {
+      "id": "oia-site-36d2aacf190a",
+      "title": "優秀僑生獎學金作業要點",
+      "url": "https://oia.ncu.edu.tw/static/file/26/1026/img/431/926349288.pdf",
+      "org": "Office of International Affairs",
+      "lang": "zh-TW",
+      "topic": "oia_site",
+      "extract": "pdf"
+    }
+  ]
+}

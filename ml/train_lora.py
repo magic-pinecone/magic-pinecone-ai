@@ -24,7 +24,7 @@ JSONL written by make_teacher_data.py (`messages`: system, user, assistant);
 its prompt format is defined once in prompt_format.py.
 
 Defaults are sized for an 8 GB RTX 4070: 4-bit loading, batch size 1 with
-gradient accumulation 8, sequence length 2048.
+gradient accumulation 8, sequence length 3072.
 
 After training: the adapter is in <output>/adapter. `--merge` also writes
 merged 16-bit weights to <output>/merged, `--gguf q4_k_m` (unsloth backend)
@@ -33,6 +33,7 @@ exports a GGUF. See ml/README.md for the manual llama.cpp route.
 
 import argparse
 import json
+import os
 import random
 from pathlib import Path
 
@@ -40,19 +41,46 @@ MODELS = {  # name: family
     "aisingapore/Gemma-SEA-LION-v4.5-E2B-IT": "gemma4",
     "google/gemma-4-E2B-it": "gemma4",
     "google/gemma-3-1b-it": "gemma3",
+    # Unsloth's mirrors of the Google models: not gated, so no HF_TOKEN.
+    "unsloth/gemma-4-E2B-it": "gemma4",
+    "unsloth/gemma-3-1b-it": "gemma3",
+    "unsloth/gemma-3-270m-it": "gemma3",
 }
 FAMILIES = {  # Unsloth chat template name and the turn markers of the template
     "gemma4": {
         "chat_template": "gemma-4",  # the non-thinking template
         "instruction_part": "<|turn>user\n",
         "response_part": "<|turn>model\n",
+        # The Gemma 4 processor does not add <bos> when it tokenises the training text, so the one
+        # from the chat template has to stay (checked on Colab, 2026-11-10: exactly one <bos>).
+        "strip_bos": False,
     },
     "gemma3": {
         "chat_template": "gemma-3",
         "instruction_part": "<start_of_turn>user\n",
         "response_part": "<start_of_turn>model\n",
+        # The Gemma 3 tokenizer adds <bos> itself, according to the Unsloth Gemma 3 notebook. Not
+        # checked here: decode one training example before a real run and expect exactly one <bos>.
+        "strip_bos": True,
     },
 }
+
+
+def training_text(rendered: str, strip_bos: bool) -> str:
+    """The chat-template output as it goes into training, with exactly one <bos> after tokenising."""
+    return rendered.removeprefix("<bos>") if strip_bos else rendered
+
+
+LORA_LEARNING_RATE = 2e-4
+FULL_LEARNING_RATE = 5e-5
+
+
+def learning_rate(given: float | None, full_finetune: bool) -> float:
+    if given is not None:
+        return given
+    return FULL_LEARNING_RATE if full_finetune else LORA_LEARNING_RATE
+
+
 LORA_TARGETS = [
     "q_proj",
     "k_proj",
@@ -104,7 +132,27 @@ def describe(rows: list[dict]) -> str:
     )
 
 
+def check_labels(trainer, tokenizer, train_rows: list[dict]) -> None:
+    sample = trainer.train_dataset[0]
+    labels = list(sample["labels"])
+    kept = [token for token in labels if token != -100]
+    decoded = tokenizer.decode(kept)
+    answer = train_rows[0]["messages"][-1]["content"]
+    print(f"label sequence: {len(kept)} of {len(labels)} tokens carry loss")
+    print("decoded labels:", repr(decoded))
+    if answer.strip() not in decoded:
+        raise SystemExit("the answer is missing from the labels")
+    leaked = [
+        marker
+        for marker in ("Passages:", "Question:", "You help international students")
+        if marker in decoded
+    ]
+    if leaked:
+        raise SystemExit(f"prompt text carries loss: {leaked}")
+
+
 def train_unsloth(args, family: dict, train_rows: list[dict], eval_rows: list[dict]):
+    os.environ.setdefault("UNSLOTH_DEFAULT_PACKING", "0")
     # Unsloth must be imported before transformers.
     from unsloth import FastModel  # isort: skip
     from datasets import Dataset
@@ -115,28 +163,32 @@ def train_unsloth(args, family: dict, train_rows: list[dict], eval_rows: list[di
         model_name=args.model,
         max_seq_length=args.max_seq_length,
         dtype=None,
-        load_in_4bit=args.load_in_4bit,
-        full_finetuning=False,
+        load_in_4bit=args.load_in_4bit and not args.full_finetune,
+        full_finetuning=args.full_finetune,
     )
-    model = FastModel.get_peft_model(
-        model,
-        finetune_vision_layers=False,  # text only
-        finetune_language_layers=True,
-        finetune_attention_modules=True,
-        finetune_mlp_modules=True,
-        r=args.rank,
-        lora_alpha=args.alpha,
-        lora_dropout=args.dropout,
-        bias="none",
-        random_state=args.seed,
-    )
+    if not args.full_finetune:
+        model = FastModel.get_peft_model(
+            model,
+            finetune_vision_layers=False,  # text only
+            finetune_language_layers=True,
+            finetune_attention_modules=True,
+            finetune_mlp_modules=True,
+            r=args.rank,
+            lora_alpha=args.alpha,
+            lora_dropout=args.dropout,
+            bias="none",
+            random_state=args.seed,
+        )
     tokenizer = get_chat_template(tokenizer, chat_template=family["chat_template"])
 
     def to_text(rows: list[dict]):
         texts = [
-            tokenizer.apply_chat_template(
-                row["messages"], tokenize=False, add_generation_prompt=False
-            ).removeprefix("<bos>")  # the tokenizer adds <bos> again when training
+            training_text(
+                tokenizer.apply_chat_template(
+                    row["messages"], tokenize=False, add_generation_prompt=False
+                ),
+                family["strip_bos"],
+            )
             for row in rows
         ]
         return Dataset.from_dict({"text": texts})
@@ -154,7 +206,7 @@ def train_unsloth(args, family: dict, train_rows: list[dict], eval_rows: list[di
             num_train_epochs=args.epochs,
             max_steps=args.max_steps,
             warmup_steps=args.warmup_steps,
-            learning_rate=args.learning_rate,
+            learning_rate=learning_rate(args.learning_rate, args.full_finetune),
             lr_scheduler_type="linear",
             weight_decay=0.001,
             optim="adamw_8bit",
@@ -170,15 +222,24 @@ def train_unsloth(args, family: dict, train_rows: list[dict], eval_rows: list[di
         instruction_part=family["instruction_part"],
         response_part=family["response_part"],
     )
+    check_labels(trainer, tokenizer, train_rows)
+    if args.labels_only:
+        return
     trainer.train()
     if eval_rows:
         print("eval:", trainer.evaluate())
 
-    adapter = args.output / "adapter"
-    model.save_pretrained(str(adapter))
-    tokenizer.save_pretrained(str(adapter))
-    print(f"adapter saved to {adapter}")
-    if args.merge:
+    if args.full_finetune:
+        full = args.output / "model"
+        model.save_pretrained(str(full))
+        tokenizer.save_pretrained(str(full))
+        print(f"fine-tuned model saved to {full}")
+    else:
+        adapter = args.output / "adapter"
+        model.save_pretrained(str(adapter))
+        tokenizer.save_pretrained(str(adapter))
+        print(f"adapter saved to {adapter}")
+    if args.merge and not args.full_finetune:
         merged = args.output / "merged"
         model.save_pretrained_merged(str(merged), tokenizer, save_method="merged_16bit")
         print(f"merged 16-bit model saved to {merged}")
@@ -258,7 +319,7 @@ def train_peft(args, family_name: str, train_rows: list[dict], eval_rows: list[d
             num_train_epochs=args.epochs,
             max_steps=args.max_steps,
             warmup_steps=args.warmup_steps,
-            learning_rate=args.learning_rate,
+            learning_rate=learning_rate(args.learning_rate, False),
             lr_scheduler_type="linear",
             optim="adamw_torch_fused",
             bf16=bf16,
@@ -304,7 +365,7 @@ def main() -> None:
     parser.add_argument("--model", choices=sorted(MODELS), default=next(iter(MODELS)))
     parser.add_argument("--backend", choices=("unsloth", "peft"), default="unsloth")
     parser.add_argument("--output", type=Path, default=Path("ml/runs/student"))
-    parser.add_argument("--max-seq-length", type=int, default=2048)
+    parser.add_argument("--max-seq-length", type=int, default=3072)
     parser.add_argument(
         "--load-in-4bit",
         action=argparse.BooleanOptionalAction,
@@ -319,11 +380,27 @@ def main() -> None:
     parser.add_argument("--epochs", type=float, default=3.0)
     parser.add_argument("--max-steps", type=int, default=-1, help="overrides --epochs")
     parser.add_argument("--warmup-steps", type=int, default=10)
-    parser.add_argument("--learning-rate", type=float, default=2e-4)
+    parser.add_argument(
+        "--learning-rate",
+        type=float,
+        help=f"default {LORA_LEARNING_RATE} with LoRA, {FULL_LEARNING_RATE} with "
+        "--full-finetune",
+    )
+    parser.add_argument(
+        "--full-finetune",
+        action="store_true",
+        help="train all weights instead of a LoRA adapter (unsloth backend, 16-bit "
+        "loading); saves <output>/model, --gguf exports from it",
+    )
     parser.add_argument("--eval-fraction", type=float, default=0.05)
     parser.add_argument("--seed", type=int, default=3407)
     parser.add_argument("--merge", action="store_true", help="also save merged weights")
     parser.add_argument("--gguf", metavar="QUANT", help="e.g. q4_k_m (unsloth backend)")
+    parser.add_argument(
+        "--labels-only",
+        action="store_true",
+        help="build the trainer, check which tokens carry loss, then exit",
+    )
     parser.add_argument(
         "--check-data",
         action="store_true",
@@ -338,6 +415,8 @@ def main() -> None:
     if args.check_data:
         return
 
+    if args.full_finetune and args.backend != "unsloth":
+        parser.error("--full-finetune needs the unsloth backend")
     family_name = MODELS[args.model]
     args.output.mkdir(parents=True, exist_ok=True)
     if args.backend == "unsloth":

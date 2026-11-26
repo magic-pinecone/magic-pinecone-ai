@@ -4,6 +4,7 @@
 - unsupported_numbers: numbers and month names in an answer that the passages
   do not contain
 - contains_fact: is a golden `must_contain` string present in an answer
+- facts_held, holds_answer: how much of a golden item's answer a text has
 - matches_golden: is a generated question (nearly) a golden question
 """
 
@@ -11,161 +12,81 @@ import re
 import unicodedata
 from difflib import SequenceMatcher
 
-from prompt_format import CITATION_RE
+from prompt_format import answer_text
 
 GOLDEN_SIMILARITY = 0.85
 
-_NUMBER = re.compile(r"\d+(?:[.,]\d+)*")
-_THOUSANDS_DOT = re.compile(r"\d{1,3}(?:\.\d{3})+")
-_ENUMERATOR = re.compile(r"^\s*\d+[.)]\s+", re.M)
+# Shared with the assistant endpoint: backend/app/services/answer_text.py.
+strip_reasoning = answer_text.strip_reasoning
+normalize_number = answer_text.normalize_number
+numbers = answer_text.numbers
+months = answer_text.months
+allowed_numbers = answer_text.allowed_numbers
+unsupported_numbers = answer_text.unsupported_numbers
+_NUMBER = answer_text._NUMBER
+_nfkc = answer_text._nfkc
+
 _DASHES = str.maketrans({"–": "-", "—": "-", "‐": "-", "‑": "-", "−": "-"})
 
-_MONTHS = (
-    ("january", "jan"),
-    ("february", "feb"),
-    ("march", "mar"),
-    ("april", "apr"),
-    ("may",),
-    ("june", "jun"),
-    ("july", "jul"),
-    ("august", "aug"),
-    ("september", "sept", "sep"),
-    ("october", "oct"),
-    ("november", "nov"),
-    ("december", "dec"),
-)
-_MONTH_INDEX = {
-    name: index for index, names in enumerate(_MONTHS, start=1) for name in names
-}
-_MONTH_WORD = re.compile(
-    r"(?<![a-z])("
-    + "|".join(sorted(_MONTH_INDEX, key=len, reverse=True))
-    + r")(?![a-z])"
-)
-_NUMBER_WORDS = {
-    word: str(value)
-    for value, word in enumerate(
-        "zero one two three four five six seven eight nine ten eleven twelve".split()
+
+_NUMBER_WORDS = dict(
+    zip(
+        "one two three four five six seven eight nine ten eleven twelve".split(),
+        map(str, range(1, 13)),
+        strict=True,
     )
-}
-_NUMBER_WORD = re.compile(r"(?<![a-z])(" + "|".join(_NUMBER_WORDS) + r")(?![a-z])")
-_CJK_DIGITS = {
-    "一": "1", "二": "2", "兩": "2", "三": "3", "四": "4", "五": "5",
-    "六": "6", "七": "7", "八": "8", "九": "9", "十": "10",
-}  # fmt: skip
-
-# Reasoning channels: <think> style tags, Gemma 4's thought channel and the
-# harmony format of gpt-oss.
-_THINK_BLOCKS = (
-    re.compile(r"<(think|thinking|reasoning|thought)>.*?</\1>", re.S | re.I),
-    re.compile(r"<\|channel>thought.*?<channel\|>", re.S),
 )
-_THINK_OPEN = re.compile(
-    r"<(think|thinking|reasoning|thought)>|<\|channel>thought", re.I
-)
-_THINK_CLOSE = re.compile(r"</(think|thinking|reasoning|thought)>|<channel\|>", re.I)
-_HARMONY_FINAL = "<|channel|>final<|message|>"
-_HARMONY_ANALYSIS = re.compile(r"<\|channel\|>(analysis|commentary)")
-_SPECIAL_TOKEN = re.compile(r"<\|[a-z_]+\|>|<turn\|>|<end_of_turn>|<eos>")
+_NUMBER_WORD = re.compile(r"\b(" + "|".join(_NUMBER_WORDS) + r")\b")
+_RANGE = re.compile(r"(?<=\d)\s*(?:-|~|to|至|到)\s*(?=\d)")
 
 
-def strip_reasoning(text: str | None) -> str:
-    """The final answer without any thinking channel; '' if only thinking is left.
-
-    An opened but never closed thinking block means the output was cut off
-    inside the reasoning, so nothing of it is kept.
-    """
-    if not text:
-        return ""
-    if _HARMONY_FINAL in text:
-        text = text.rsplit(_HARMONY_FINAL, 1)[1]
-    elif _HARMONY_ANALYSIS.search(text):
-        return ""
-    for pattern in _THINK_BLOCKS:
-        text = pattern.sub("", text)
-    closes = list(_THINK_CLOSE.finditer(text))
-    if closes:  # the server removed the opening tag but left the closing one
-        text = text[closes[-1].end() :]
-    if _THINK_OPEN.search(text):
-        return ""
-    return _SPECIAL_TOKEN.sub("", text).strip()
-
-
-def _nfkc(text: str) -> str:
-    return unicodedata.normalize("NFKC", text)
-
-
-def normalize_number(token: str) -> str:
-    """'1,000' and '1.000' and '1000' are the same number; '4.5' stays '4.5'."""
-    token = token.replace(",", "")
-    if _THOUSANDS_DOT.fullmatch(token):
-        token = token.replace(".", "")
-    if token.isdigit():
-        token = token.lstrip("0") or "0"
-    return token
-
-
-def numbers(text: str) -> list[str]:
-    """Normalized numbers in `text`, citation markers such as [2] left out."""
-    text = CITATION_RE.sub(" ", _nfkc(text))
-    return [normalize_number(token) for token in _NUMBER.findall(text)]
-
-
-def months(text: str) -> set[int]:
-    return {_MONTH_INDEX[name] for name in _MONTH_WORD.findall(_nfkc(text).casefold())}
-
-
-def allowed_numbers(source_text: str) -> set[str]:
-    """Numbers an answer may use: those written in the passages, in any form.
-
-    Besides the digits themselves this allows the number of a month named in
-    the passages ("Mar." allows 3, for answers in other languages) and the
-    digit of a spelled-out small number ("six months" allows 6).
-    """
-    folded = _nfkc(source_text).casefold()
-    allowed = set(numbers(source_text))
-    allowed |= {str(month) for month in months(source_text)}
-    allowed |= {_NUMBER_WORDS[word] for word in _NUMBER_WORD.findall(folded)}
-    allowed |= {digit for char, digit in _CJK_DIGITS.items() if char in folded}
-    return allowed
-
-
-def unsupported_numbers(
-    answer: str, source_text: str, ignore: tuple[str, ...] = ()
-) -> list[str]:
-    """Numbers and English month names in `answer` that `source_text` lacks.
-
-    `ignore` holds strings removed from the answer first (the OIA contact of a
-    refusal). List enumerators at the start of a line are not counted.
-    """
-    for item in ignore:
-        answer = answer.replace(item, " ")
-    answer = _ENUMERATOR.sub("", answer)
-    allowed = allowed_numbers(source_text)
-    missing = [number for number in numbers(answer) if number not in allowed]
-    source_months = months(source_text)
-    for name in _MONTH_WORD.findall(_nfkc(answer).casefold()):
-        # "may" is far more often the verb than the month.
-        if name != "may" and _MONTH_INDEX[name] not in source_months:
-            missing.append(name)
-    return list(dict.fromkeys(missing))
+def spell_digits(text: str) -> str:
+    """English number words one to twelve written as digits ("four" -> "4")."""
+    return _NUMBER_WORD.sub(lambda m: _NUMBER_WORDS[m.group(1)], text)
 
 
 def squash(text: str) -> str:
-    """Case, width, dash style and whitespace removed, for substring tests."""
-    return re.sub(r"\s+", "", _nfkc(text).casefold().translate(_DASHES))
+    """Case, width, dash style, range words ("9 to 5" = "9-5"), English number
+    words and whitespace removed or unified, for substring tests."""
+    text = spell_digits(_nfkc(text).casefold().translate(_DASHES))
+    return re.sub(r"\s+", "", _RANGE.sub("-", text))
 
 
 def contains_fact(answer: str, fact: str) -> bool:
     """Is the golden `must_contain` string `fact` in `answer`?
 
     A fact that is a bare number has to appear as a whole number ("20" is not
-    found in "2026", "1,000" is found in "1000"); anything else is a substring
-    test that ignores case, whitespace and dash style.
+    found in "2026", "1,000" is found in "1000" and "five" counts as "5");
+    anything else is a substring test that ignores case, whitespace, dash
+    style, range words and English number words (see `squash`).
     """
     if _NUMBER.fullmatch(fact.strip()):
-        return normalize_number(fact.strip()) in numbers(answer)
+        return normalize_number(fact.strip()) in numbers(
+            spell_digits(_nfkc(answer).casefold())
+        )
     return squash(fact) in squash(answer)
+
+
+def facts_held(text: str, item: dict) -> int:
+    """How many of the item's requirements `text` meets.
+
+    Each `must_contain` string counts for one, and so does `must_contain_any`
+    as a whole when at least one of its spellings is found.
+    """
+    held = sum(contains_fact(text, fact) for fact in item["must_contain"])
+    spellings = item.get("must_contain_any", [])
+    return held + any(contains_fact(text, fact) for fact in spellings)
+
+
+def holds_answer(text: str, item: dict) -> bool:
+    """Has `text` every `must_contain` string and, when the item lists
+    `must_contain_any`, at least one of those spellings?
+
+    The one test for answers, prompt passages and retrieved passages.
+    """
+    return facts_held(text, item) == len(item["must_contain"]) + bool(
+        item.get("must_contain_any")
+    )
 
 
 def normalize_question(text: str) -> str:
@@ -184,9 +105,15 @@ def matches_golden(
     `golden_normalized` are golden questions passed through normalize_question.
     """
     candidate = normalize_question(question)
+    matcher = SequenceMatcher(None, candidate)
     for golden in golden_normalized:
         if candidate == golden:
             return True
-        if SequenceMatcher(None, candidate, golden).ratio() >= threshold:
+        matcher.set_seq2(golden)
+        if (
+            matcher.real_quick_ratio() >= threshold
+            and matcher.quick_ratio() >= threshold
+            and matcher.ratio() >= threshold
+        ):
             return True
     return False

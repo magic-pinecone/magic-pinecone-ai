@@ -9,13 +9,15 @@ page of NCU's Office of International Affairs (OIA):
 - the date a new student can enrol in National Health Insurance, computed from
   the rule and worked examples on the OIA insurance page.
 
-Nothing is generated. A question the pages do not answer comes back empty, and
-the date calculation states the assumptions it had to make.
+Nothing is generated. A question that shares no telling word with the pages
+comes back empty, and the date calculation states the assumptions it had to
+make.
 """
 
 import calendar
 import json
 import re
+import unicodedata
 from dataclasses import dataclass
 from datetime import date, timedelta
 from functools import lru_cache
@@ -23,6 +25,7 @@ from pathlib import Path
 from typing import Any
 
 from app.services import graduation_language
+from app.services.knowledge import lexical
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data/student_services"
 FRONT_MATTER = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
@@ -31,11 +34,7 @@ OIA_ORG_ZH = "國際事務處"
 # Lines of a page kept together as one passage, and how far passages overlap.
 PASSAGE_LINES = 8
 PASSAGE_STEP = 5
-# Words too common to tell one passage from another.
-STOPWORDS = frozenset(
-    "a an and are as at be can do does for how i in is it my of on or the to "
-    "what when where which who will with you your".split()
-)
+GLOSSARY_LANGS = ("zh-TW", "vi", "id")
 
 NHI_WAIT_MONTHS = 6
 NHI_LONG_TRIP_DAYS = 30
@@ -101,52 +100,83 @@ def topics() -> list[str]:
     return sorted({document.topic for document in load_documents()})
 
 
-def _words(text: str) -> list[str]:
-    found = re.findall(r"[0-9a-z]+|[^\W\d_a-zA-Z]+", text.casefold())
-    return [word for word in dict.fromkeys(found) if word not in STOPWORDS]
+_CHINESE = lexical.CHINESE
+_tokens = lexical.tokens
+_stem = lexical.stem
+_words = lexical.words
+Passage = lexical.Chunk
+
+
+@lru_cache
+def _index() -> lexical.LexicalIndex:
+    chunks = []
+    for document in load_documents():
+        for start, text in lexical.windows(document.lines, PASSAGE_LINES, PASSAGE_STEP):
+            chunks.append(lexical.make_chunk(document, start, text))
+    return lexical.LexicalIndex(chunks)
+
+
+def _passages() -> tuple[Passage, ...]:
+    return _index().chunks
+
+
+@lru_cache
+def load_glossary() -> tuple[tuple[re.Pattern[str], str], ...]:
+    """(how a term is found in a question, the English words to add) pairs."""
+    data = json.loads((DATA_DIR / "glossary.json").read_text(encoding="utf-8"))
+    pairs = []
+    for entry in data["terms"]:
+        for lang in GLOSSARY_LANGS:
+            for term in entry.get(lang, []):
+                term = unicodedata.normalize("NFC", term).casefold()
+                # Chinese anywhere in the text, other scripts as whole words.
+                pattern = (
+                    re.escape(term)
+                    if _CHINESE.search(term)
+                    else rf"(?<!\w){re.escape(term)}(?!\w)"
+                )
+                pairs.append((re.compile(pattern), entry["en"]))
+    return tuple(pairs)
+
+
+def english_terms(text: str) -> list[str]:
+    """The pages' English words for the glossary terms found in `text`."""
+    folded = unicodedata.normalize("NFC", text).casefold()
+    found = [english for pattern, english in load_glossary() if pattern.search(folded)]
+    return list(dict.fromkeys(found))
 
 
 def search(query: str, topic: str | None = None, limit: int = 5) -> list[dict]:
-    """The passages that share the most words with `query`, best first.
+    """The passages that share the most telling words with `query`, best first.
 
-    A passage matches when it has at least one of the words; passages covering
-    more distinct words rank higher, then those repeating them more. Only the
-    best passage of each document is returned.
+    Chinese, Vietnamese and Indonesian terms of `glossary.json` are searched
+    by the English words the pages use. A passage scores the summed weight of
+    the distinct query words found in it or in its document's title; a word
+    found in few passages weighs more. A passage that has neither every word
+    of the query nor a score of `LexicalIndex.min_score` is left out, so a question the
+    pages say nothing about comes back empty. Several passages of one document
+    can be returned, but never two that overlap.
     """
-    words = _words(query)
-    if not words:
-        return []
-    best: dict[str, tuple[tuple[int, int], dict]] = {}
-    for document in load_documents():
-        if topic and document.topic != topic:
-            continue
-        title = document.title.casefold()
-        for start in range(0, max(1, len(document.lines)), PASSAGE_STEP):
-            passage = "\n".join(document.lines[start : start + PASSAGE_LINES])
-            folded = passage.casefold()
-            counts = [folded.count(word) for word in words]
-            covered = sum(1 for count in counts if count)
-            if not covered:
-                continue
-            score = (covered + sum(word in title for word in words), sum(counts))
-            if document.id in best and best[document.id][0] >= score:
-                continue
-            best[document.id] = (
-                score,
-                {
-                    "id": document.id,
-                    "title": document.title,
-                    "topic": document.topic,
-                    "url": document.url,
-                    "fetched_on": document.fetched_on,
-                    "matched_words": [
-                        w for w, c in zip(words, counts, strict=True) if c
-                    ],
-                    "passage": passage,
-                },
-            )
-    ranked = sorted(best.values(), key=lambda item: item[0], reverse=True)
-    return [passage for _, passage in ranked[: max(1, limit)]]
+    words = _words(" ".join([query, *english_terms(query)]))
+    index = _index()
+    keep = (lambda chunk: chunk.document.topic == topic) if topic else None
+    scored = index.score(words, keep)
+    matched = {id(chunk): found for _, chunk, found in scored}
+    chosen = lexical.without_overlap(
+        (chunk for _, chunk, _ in scored), limit, PASSAGE_LINES
+    )
+    return [
+        {
+            "id": chunk.document.id,
+            "title": chunk.document.title,
+            "topic": chunk.document.topic,
+            "url": chunk.document.url,
+            "fetched_on": chunk.document.fetched_on,
+            "matched_words": matched[id(chunk)],
+            "passage": chunk.text,
+        }
+        for chunk in chosen
+    ]
 
 
 def find_contacts(topic: str | None = None) -> list[dict[str, Any]]:

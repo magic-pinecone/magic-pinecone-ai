@@ -188,7 +188,9 @@ class ServiceSearchResponse(BaseModel):
 
 @router.get("/services/search", response_model=ServiceSearchResponse)
 def search_services(
-    q: str = Query(min_length=1, description="English keywords, e.g. work permit"),
+    q: str = Query(
+        min_length=1, description="Keywords or a question, e.g. work permit hours"
+    ),
     topic: str | None = Query(default=None, description="One of `topics`"),
     limit: int = Query(default=4, ge=1, le=10),
 ) -> Any:

@@ -143,10 +143,20 @@ class CampusPlace(BaseModel):
         building that only houses something called 工程."""
         own = _rank(
             query,
-            [self.name_zh, self.name_en, self.name_vi or "", self.code or "", *self.aliases],
+            [
+                self.name_zh,
+                self.name_en,
+                self.name_vi or "",
+                self.code or "",
+                *self.aliases,
+            ],
         )
         units = _rank(query, [name for unit in self.units for name in unit.names()])
-        ranks = [rank for rank in (own, None if units is None else units + 1) if rank is not None]
+        ranks = [
+            rank
+            for rank in (own, None if units is None else units + 1)
+            if rank is not None
+        ]
         return min(ranks, default=None)
 
     def matches(self, query: str) -> bool:

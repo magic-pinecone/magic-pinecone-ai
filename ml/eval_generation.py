@@ -14,6 +14,7 @@ is put into the prompt, which measures the model apart from the retriever.
 
 Scores per language (definitions in `score_item` and `summarize`):
   answer    answerable questions whose answer has every `must_contain` string
+            and, where the item has `must_contain_any`, one of its spellings
   answer (ctx)  the same, only over questions whose passages hold those strings
   cite      answerable questions answered with valid citations, at least one
             to a passage of the expected document
@@ -25,7 +26,9 @@ Scores per language (definitions in `score_item` and `summarize`):
             question
 
 Each run is saved as `ml/results/generation/<run-name>.json` and
-`ml/results/generation_comparison.md` is rebuilt from all saved runs.
+`ml/results/generation_comparison.md` is rebuilt from all saved runs. With
+`--golden` set to another file the same two files go to
+`ml/results/<golden stem>/`, so the golden-set runs are left alone.
 """
 
 import argparse
@@ -33,16 +36,17 @@ import json
 import tempfile
 from pathlib import Path
 
-from checks import contains_fact, strip_reasoning, unsupported_numbers
+from checks import facts_held, holds_answer, strip_reasoning, unsupported_numbers
 from common import (
+    GOLDEN_PATH,
     RESULTS_DIR,
     ChatClient,
     EndpointError,
     expected_sources,
+    knowledge_services,
     load_golden,
     markdown_table,
     rate,
-    student_services,
 )
 from prompt_format import (
     LANGS,
@@ -66,15 +70,40 @@ METRICS = (
 
 
 def oracle_passage(services, item: dict) -> dict:
-    """The passage of the expected document holding most `must_contain` strings."""
+    """The passage of the expected document that holds the answer.
+
+    Windows are compared by how many `must_contain` strings they hold (plus
+    one for any spelling of `must_contain_any`), tested with `contains_fact`
+    as answers are: "20" is not found in "std20230311".
+    A number such as "30" is still in many windows of a long page, so equal
+    windows are ordered by the backend's search for the question: the window
+    that is, or overlaps, the best ranked passage of this document wins (the
+    exact one before a neighbour). Windows the search does not reach keep the
+    order of the page.
+    """
     document = next(d for d in services.load_documents() if d.id == item["source_id"])
-    best, best_score = "", -1
+    windows = {}
     for start in range(0, max(1, len(document.lines)), services.PASSAGE_STEP):
-        text = "\n".join(document.lines[start : start + services.PASSAGE_LINES])
-        score = sum(fact in text for fact in item["must_contain"])
-        if score > best_score:
-            best, best_score = text, score
-    return {"id": document.id, "title": document.title, "passage": best}
+        windows[start] = "\n".join(
+            document.lines[start : start + services.PASSAGE_LINES]
+        )
+    held = {start: facts_held(text, item) for start, text in windows.items()}
+    start_of = {text: start for start, text in reversed(windows.items())}
+    ranked = [
+        start_of[r["passage"]]
+        for r in services.search(item["question"], limit=len(windows) * 1000)
+        if r["id"] == document.id
+    ]
+
+    def order(start: int) -> tuple[int, int, int]:
+        for rank, found in enumerate(ranked):
+            if abs(start - found) < services.PASSAGE_LINES:
+                return (rank, abs(start - found), start)
+        return (len(ranked), 0, start)
+
+    most = max(held.values())
+    best = min((start for start in windows if held[start] == most), key=order)
+    return {"id": document.id, "title": document.title, "passage": windows[best]}
 
 
 def select_passages(services, item: dict, mode: str, top_k: int) -> list[dict]:
@@ -98,14 +127,8 @@ def score_item(item: dict, passages: list[dict], response: str) -> dict:
     cited = cited_numbers(response)
     valid = bool(cited) and all(1 <= n <= len(passages) for n in cited)
     expected = expected_sources(item)
-    ctx_has_answer = item["answerable"] and all(
-        fact in context for fact in item["must_contain"]
-    )
-    answer_ok = (
-        item["answerable"]
-        and not refused
-        and all(contains_fact(response, fact) for fact in item["must_contain"])
-    )
+    ctx_has_answer = item["answerable"] and holds_answer(context, item)
+    answer_ok = item["answerable"] and not refused and holds_answer(response, item)
     wrong_numbers = unsupported_numbers(
         response, context + "\n" + item["question"], ignore=OIA_CONTACT_STRINGS
     )
@@ -216,14 +239,31 @@ def main() -> None:
     parser.add_argument(
         "--passages", choices=("retrieved", "oracle"), default="retrieved"
     )
-    parser.add_argument("--top-k", type=int, default=3)
+    parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument("--search", choices=("keyword", "hybrid"), default="keyword")
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--max-tokens", type=int, default=512)
+    parser.add_argument(
+        "--questions",
+        choices=("all", "old", "new"),
+        default="all",
+        help="old: the first 60 questions; new: those with a source_type",
+    )
     parser.add_argument("--limit", type=int, help="only the first N questions")
-    parser.add_argument("--out-dir", type=Path, help="default: ml/results")
+    parser.add_argument(
+        "--golden", type=Path, default=GOLDEN_PATH, help="questions JSONL to score"
+    )
+    parser.add_argument(
+        "--out-dir",
+        type=Path,
+        help="default: ml/results, or ml/results/<golden stem> for another --golden",
+    )
     parser.add_argument("--dry-run", action="store_true", help="use the fake model")
     args = parser.parse_args()
 
+    default_out_dir = (
+        RESULTS_DIR if args.golden == GOLDEN_PATH else RESULTS_DIR / args.golden.stem
+    )
     if args.dry_run:
         model = FakeModel()
         run_name = args.run_name or "dry-run"
@@ -235,10 +275,15 @@ def main() -> None:
             model = ChatClient(args.endpoint)
         except EndpointError as error:
             parser.error(str(error))
-        run_name, out_dir = args.run_name, args.out_dir or RESULTS_DIR
+        run_name, out_dir = args.run_name, args.out_dir or default_out_dir
 
-    services = student_services()
-    golden = load_golden()[: args.limit]
+    services = knowledge_services("keyword" if args.dry_run else args.search)
+    golden = [
+        item
+        for item in load_golden(args.golden)
+        if args.questions == "all"
+        or ("source_type" in item) == (args.questions == "new")
+    ][: args.limit]
     records = []
     for number, item in enumerate(golden, start=1):
         passages = select_passages(services, item, args.passages, args.top_k)
@@ -270,6 +315,9 @@ def main() -> None:
         "passages": args.passages,
         "top_k": args.top_k,
         "questions": len(records),
+        "question_set": args.questions,
+        "golden": args.golden.name,
+        "search": "keyword" if args.dry_run else args.search,
         "summary": summarize(records),
         "items": records,
     }

@@ -18,10 +18,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 # Copy dependencies declaration
-COPY pyproject.toml uv.lock* /app/
+COPY pyproject.toml uv.lock /app/
 
 # Install python dependencies system-wide inside image
-RUN uv pip install --system -r pyproject.toml
+RUN uv export --frozen --no-dev --no-emit-project -o /tmp/requirements.txt \
+    && uv pip install --system -r /tmp/requirements.txt \
+    && rm /tmp/requirements.txt
 
 # Copy project source code
 COPY . /app

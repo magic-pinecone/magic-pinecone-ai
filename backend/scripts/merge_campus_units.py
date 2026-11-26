@@ -12,8 +12,19 @@ import json
 import sys
 from pathlib import Path
 
-DATA_FILE = Path(__file__).resolve().parent.parent / "app" / "data" / "campus_places.json"
-FIELDS = ("name_zh", "name_en", "name_vi", "kind", "aliases", "floor", "website", "sources")
+DATA_FILE = (
+    Path(__file__).resolve().parent.parent / "app" / "data" / "campus_places.json"
+)
+FIELDS = (
+    "name_zh",
+    "name_en",
+    "name_vi",
+    "kind",
+    "aliases",
+    "floor",
+    "website",
+    "sources",
+)
 
 
 def main(units_file: str) -> None:

@@ -1,0 +1,2358 @@
+{
+  "run_name": "g3-1b-base-k3-retrieved",
+  "model": "g3-1b-base",
+  "passages": "retrieved",
+  "top_k": 3,
+  "questions": 136,
+  "question_set": "all",
+  "golden": "questions.jsonl",
+  "search": "hybrid",
+  "summary": {
+    "en": {
+      "total": 72,
+      "answerable": 65,
+      "unanswerable": 7,
+      "ctx_has_answer": 57,
+      "ctx_lacks_answer": 8,
+      "answer_ok": 40,
+      "answer_ok_ctx": 40,
+      "citation_ok": 12,
+      "refused_unanswerable": 2,
+      "refused_no_ctx": 0,
+      "over_refused": 4,
+      "number_error": 5
+    },
+    "zh-TW": {
+      "total": 24,
+      "answerable": 20,
+      "unanswerable": 4,
+      "ctx_has_answer": 18,
+      "ctx_lacks_answer": 2,
+      "answer_ok": 16,
+      "answer_ok_ctx": 16,
+      "citation_ok": 0,
+      "refused_unanswerable": 0,
+      "refused_no_ctx": 0,
+      "over_refused": 0,
+      "number_error": 0
+    },
+    "vi": {
+      "total": 20,
+      "answerable": 16,
+      "unanswerable": 4,
+      "ctx_has_answer": 12,
+      "ctx_lacks_answer": 4,
+      "answer_ok": 5,
+      "answer_ok_ctx": 5,
+      "citation_ok": 0,
+      "refused_unanswerable": 1,
+      "refused_no_ctx": 0,
+      "over_refused": 3,
+      "number_error": 2
+    },
+    "id": {
+      "total": 20,
+      "answerable": 16,
+      "unanswerable": 4,
+      "ctx_has_answer": 14,
+      "ctx_lacks_answer": 2,
+      "answer_ok": 10,
+      "answer_ok_ctx": 10,
+      "citation_ok": 1,
+      "refused_unanswerable": 1,
+      "refused_no_ctx": 0,
+      "over_refused": 0,
+      "number_error": 1
+    },
+    "all": {
+      "total": 136,
+      "answerable": 117,
+      "unanswerable": 19,
+      "ctx_has_answer": 101,
+      "ctx_lacks_answer": 16,
+      "answer_ok": 71,
+      "answer_ok_ctx": 71,
+      "citation_ok": 13,
+      "refused_unanswerable": 4,
+      "refused_no_ctx": 0,
+      "over_refused": 7,
+      "number_error": 8
+    }
+  },
+  "items": [
+    {
+      "id": "en-001",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "response": "- Question: What is the maximum reimbursement per clinic visit under Cathay Insurance?\n    - Passage: Clinic Visits\n    - Maximum reimbursement of\n    NT$1,000\nper day/visit.\n\n- Question: What is the maximum reimbursement per hospitalization under Cathay Insurance?\n    - Passage: Hospitalization (Daily)\n    - Maximum reimbursement of\n    NTD1,000/day",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-002",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "response": "The total reimbursement of benefits shall not exceed NT$120,000. [3]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-003",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "response": "The maximum number of days your one trip abroad can last at most is 30 days. [3]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-004",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-site-c94d68071546"
+      ],
+      "response": "Here are the documents you need to claim reimbursement from Cathay Insurance, according to the passages:\n\n- Medical certificate (obtained from the hospital/clinic)\n- Post office account book, passport, and ARC (only for first-time applicants)\n- Application form (available at OIA)\n- OIA will submit the documents to Cathay Insurance for processing the medical subsidy.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-005",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "response": "Here’s the answer to your question:\n\n- The insurance covers injuries due to unexpected accidents, illness, and disablement.\n- [1] Medical insurance for international degree students\n- ncuoia@ncu.edu.tw, +886-3-425-4945",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-006",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "wda-summer-hours",
+        "nia-student-online-guidelines"
+      ],
+      "response": "1. 20\n2. 20\n3. 20\n4. 20\n5. 20\n6. 20\n7. 20",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-007",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "oia-site-c9fdd88183bc",
+        "oia-site-19735f1a7559"
+      ],
+      "response": "- 1 week\n- 1-2 weeks\n- 6 months",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-008",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "ocac-work-permit",
+        "oia-site-1ad657e04753"
+      ],
+      "response": "- Required Documents for Application: Alien Resident Certificate (ARC), Passport, Certificate of Enrollment, Attachment: Approval document signed by the supervising professor.\n- Work permit (apply a work permit for the new semester)\n- Reissuance of a work permit (apply for the reissuance of the original permit if it is lost.)",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-009",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "oia-scholarship-page",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "- Your work permit will become invalid after applying for graduation, suspension, or withdrawal.\n- It will not be extended beyond September 30 of the next year if you applied during the first semester.\n- If you completed the procedure before the 15th of the month, the scholarship for that month and any following months will not be issued.\n- You should log in to Portal to download your payment slip.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-010",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "taipei-times-graduate-stay",
+        "oia-site-9d9e36d4716b"
+      ],
+      "response": "- 1 year\n- 2 years\n- 1 year",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-011",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-exchange-incoming",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n- Information for Incoming Exchange Students: https://drive.google.com/file/d/1tCqWv20slRtL58a543gv7tbQom00qRkO/view\n- Handbook to International Exchange Students: ncuoia@ncu.edu.tw, +886-3-425-4945",
+      "refused": true,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-012",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-immigration",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-4a82cc1fbc88"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n- The ARC application form can be downloaded from the immigration website.\n- You can access the application form at http://www.immigration.gov.tw/\n- The application form is available for download directly from the Immigration Office website.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-013",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "response": "Here’s the answer to your question:\n\n- 2\n- NTD$15,000\n- 2\n- 3\n- 2",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "id": "en-014",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-site-a756a2aad46d"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n-   Cumulative GPA ≥ 60\n1",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-015",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "response": "Here’s the answer to your question:\n\n- 8 semesters\n- PhD\n- Maximum Duration\n- 8 semesters (including suspension period)",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-016",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "response": "Here’s the answer to your question:\n*   The application period for the NCU Scholarship for Fall 2026 semester starts from July 6th to July 20th, 12:00 PM, 2026.\n2\n*   All Students will be announced before June 5th every year.\n3\n*   Graduate Students pursuing Doctoral Degrees must apply for the scholarship for the second semester of their first academic year Before February 1st.\n4\n*   Fall Semester Entrants will be announced before June 5th every year.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": [
+        "3",
+        "4"
+      ]
+    },
+    {
+      "id": "en-017",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n*   Where can I apply for a transcript, and which type should I apply for?\n    *   Office of Registrar, 3rd floor of the Teaching & Research Building.\n    *   OIA contact: ncuoia@ncu.edu.tw, +886-3-425-4945",
+      "refused": true,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-018",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-084a1a606d7e",
+        "nia-student-online-guidelines",
+        "oia-degree-student-handbook"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n1.  Within 30 days after arrival.\n2.  Within 30 days after arrival.\n3.  Within 30 days after arrival.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-019",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-site-498703495648",
+        "oia-degree-student-handbook"
+      ],
+      "response": "The late processing fee is NTD $100 per course.\n1",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-020",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook",
+        "nia-student-online-guidelines"
+      ],
+      "response": "Here’s the answer to your question:\n\n- NTD 600/semester",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-021",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "Here’s the answer to your question:\n\n- The National Health Insurance fee per semester is NT$1,000.\n- [1]\n- [2]\n- [3]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-022",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "oia-work-permit",
+        "oia-site-14f77ce7b79e",
+        "oia-degree-student-handbook"
+      ],
+      "response": "I cannot find information on how to apply for a Taiwanese driver’s license as an international student in the OIA pages. Please contact ncuoia@ncu.edu.tw +886-3-425-4945.",
+      "refused": true,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-023",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "taipei-times-graduate-stay",
+        "club-1020",
+        "oia-site-9eaf94496478"
+      ],
+      "response": "- The amendments to the Act for the Recruitment and Employment of Foreign Professionals (外國專業人才延攬及僱用法) state that foreign students who earn an associate degree or higher in Taiwan can apply to extend their stay in the country for up to two years.\n- The entrance to the National Development Council in Taipei is pictured in an undated photograph.\n- They can work without obtaining a separate work permit during the extended stay, while their family members can also apply to remain in Taiwan, the council said.\n- During the extended stay, graduates are not subject to restrictions on the types of professional or technical jobs they can take, employer qualifications or minimum salary thresholds.\n- They can work in any field as long as they comply with labor laws, and after the extended stay ends, can transition to other residency programs based on a points system or regulations governing foreign professionals, the council said.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-024",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "nia-residence-tips",
+        "nia-residence-tips",
+        "nia-residence-tips"
+      ],
+      "response": "- You can authorize your spouse or other people to apply for you with these documents mentioned above and the power of attorney.\n- If you are not in Taiwan while applying for extension of residence, you also can entrust other people in Taiwan to apply for that for you with your original passport, current ARC, other documents in need and the power of attorney\nauthenticated by Taiwanese embassies abroad.\n- You can apply for a dependent visa at Taiwanese embassies abroad.\n- You can apply for a dependent visa through NIA service centers.\n- You need to apply for a dependent visa at Taiwanese embassies abroad.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-001",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "response": "Here's the answer to your question:\n\n- Each visit at the clinic costs NT$1,000.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-002",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "response": "Here's the answer to your question:\n\n- NT$1,000",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-003",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "response": "Here's the answer to your question:\n\n- 5 days",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-004",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "wda-summer-hours",
+        "nia-student-online-guidelines"
+      ],
+      "response": "1. 1-2 weeks\n2. 20 hours\n3. 20 hours\n4. 20 hours\n5. 20 hours\n6. 20 hours\n7. 20 hours\n8. 20 hours",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-005",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "oia-site-19735f1a7559",
+        "nia-student-online-guidelines"
+      ],
+      "response": "Here's the answer to your question, based on the provided passages:\n\n- 1 week\n- 5 working days",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-006",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-immigration",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-084a1a606d7e"
+      ],
+      "response": "I cannot find the ARC application form on the OIA pages.\nThe OIA contact is ncuoia@ncu.edu.tw, +886-3-425-4945.",
+      "refused": true,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-007",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n- The maximum monthly stipend for the NCU International Student Scholarship for PhD students is NTD$40,000.\n- The maximum duration of the scholarship is 8 semesters (including suspension period) for PhD students.\n- The maximum duration of the scholarship for Master’s students is 4 semesters (including suspension period).\n- The application process for the NCU International Student Scholarship is as follows:\n    01\n    Confirm Application Time\n- The application process requires confirming the application time.\n- NCU OIA: ncuoia@ncu.edu.tw, +886-3-425-4945",
+      "refused": true,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-008",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "nia-student-online-guidelines",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-084a1a606d7e"
+      ],
+      "response": "1.  5 working days.\n2.  15 working days.\n3.  3 months.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-009",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "course-13011",
+        "oia-site-498703495648"
+      ],
+      "response": "Here's the answer to your question, based on the provided passages:\n\n- The late processing fee for each course is NTD $100.\n- 100",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-010",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "response": "Phí bảo hiểm y tế toàn dân (NHI) mỗi học kỳ là NTD 18.\n\n- Phí bảo hiểm y tế toàn dân (NHI) mỗi học kỳ là NTD 18.\n- Phí bảo hiểm y tế toàn dân (NHI) mỗi học kỳ là NTD 18.\n- Phí bảo hiểm y tế toàn dân (NHI) mỗi học kỳ là NTD 18.\n- Phí bảo hiểm y tế toàn dân (NHI) mỗi học kỳ là NTD 18.\n- Phí bảo hiểm y tế toàn dân (NHI) mỗi học kỳ là NTD 18.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-011",
+      "lang": "vi",
+      "answerable": false,
+      "passage_ids": [
+        "oia-insurance",
+        "course-15002",
+        "oia-work-permit"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\nTo obtain a work permit for international degree students, you must establish a continuous residence in Taiwan for more than six months. [1]\n\n- You are permitted to travel abroad during this six-month period.\n- The work permit process is outlined in the Work Permit section, including the EZ Work Permit Website & User Manual, Student Application for Account.pdf, and Student Account / Password Login.pdf.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-012",
+      "lang": "vi",
+      "answerable": false,
+      "passage_ids": [
+        "oia-work-permit",
+        "nia-student-online-guidelines",
+        "course-44006"
+      ],
+      "response": "I cannot find the answer to your question in the OIA pages you provided.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-001",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "response": "Here's the answer to your question:\n\n- Clinic Visits: NT$1,000\n- Hospitalization (Daily): NT$1,000",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-002",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-insurance",
+        "oia-degree-student-handbook"
+      ],
+      "response": "Here's the answer to your question:\n\n- Clinic Visits: Maximum reimbursement of NT$1,000\n- Hospitalization (Daily): Maximum reimbursement of NT$1,000",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-003",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "response": "Selama enam bulan masa tunggu Asuransi Kesehatan Nasional (NHI), Anda dapat melakukan perjalanan luar negeri paling lama 30 hari. [2]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-004",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "wda-summer-hours",
+        "nia-student-online-guidelines"
+      ],
+      "response": "1. 1-2 weeks\n2. 20 hours\n3. 20 hours",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-005",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-19735f1a7559",
+        "oia-work-permit",
+        "ocac-work-permit"
+      ],
+      "response": "1. 1-2 minggu\n2. 1-2 minggu\n3. 7-10个工作天\n4. 1-2 minggu\n5. 1-2 minggu\n6. 1-2 minggu\n7. 1-2 minggu",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-006",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-immigration",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-4a82cc1fbc88"
+      ],
+      "response": "- Saya dapat mengunduh formulir aplikasi ARC di https://oia.ncu.edu.tw/static/file/26/1026/img/389/ARCApplicationFormMultiplePurposeApplicationForm.pdf\n- Saya dapat mengunduh formulir aplikasi ARC di https://oia.ncu.edu.tw/static/file/26/1026/img/389/VisaApplicationForm.pdf\n- Saya dapat mengunduh formulir aplikasi ARC di https://oia.ncu.edu.tw/static/file/26/1026/img/389/VisaandARC.doc",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-007",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "response": "Here are the answers to your questions, based on the provided passages:\n\n- How much is the maximum monthly stipend for the International Student Scholarship at NCU?\nNTD$40,000\n\n- How long can the International Student Scholarship last for PhD students?\n8 semesters (including suspension period)\n\n- Can I use my master’s course as a Chinese proficiency requirement for the PhD scholarship?\nNo! As master’s and PhD programs are separate levels, NCU scholarship requirements must be fulfilled independently for each program.\n\n- What is the FAQ regarding disbursement?\nQ\nCan I use the Chinese course I took during my master’s degree as the Chinese Proficiency Requirement while applying for the scholarship for PhD degree?\nA\nNo! As master’s and PhD programs are separate levels, NCU scholarship requirements must be fulfilled independently for each program. PhD students are still required to take a Chinese course during their current program.\n\n- What is the time for the application process?\n01\nConfirm Application Time",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-008",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "nia-student-online-guidelines",
+        "oia-site-084a1a606d7e",
+        "oia-site-084a1a606d7e"
+      ],
+      "response": "1. 5\n2. 3\n3. 5",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-009",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-site-498703495648",
+        "oia-degree-student-handbook"
+      ],
+      "response": "Here’s the answer to your question:\n\n- The late processing fee for each course is NTD $100.\n- 1\n- The late processing fee for each course is NTD $100/course.\n- 1\n- The late processing fee for each course is NTD $100/course.\n- 1",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": [
+        "1"
+      ]
+    },
+    {
+      "id": "id-010",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "response": "Here's the answer to your question:\n\n- The cost of National Health Insurance (NHI) per semester is NT$1,000 per day/visit.\n- The cost of hospitalization (daily) is NT$1,000.\n- The cost of clinic visits is NT$1,000 per day/visit.\n- The cost of dormitory internet is NTD 800/semester.\n- The cost of dormitory air conditioner is NTD 100/card.\n- The cost of EasyCard is NTD 3,500/7 months.\n- The cost of bedding is NT$1,500.\n- The cost of food is NT$50-150/meal.\n- The cost of bus travel is NTD 18.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-011",
+      "lang": "id",
+      "answerable": false,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "oia-degree-student-handbook"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\nTo apply for a SIM card in Taiwan, you need to obtain a phone-prepaid card at the airport. The required format of ID photo is as follows: [1]",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-012",
+      "lang": "id",
+      "answerable": false,
+      "passage_ids": [
+        "oia-work-permit",
+        "nia-student-online-guidelines",
+        "nia-residence-tips"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n- The passages do not provide information about the tax calculation for part-time income.\n- Please do not work illegally to avoid violating the law.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-001",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-fb35618b82b1",
+        "oia-site-613f2e754e32",
+        "oia-site-613f2e754e32"
+      ],
+      "response": "1,000元",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-002",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-613f2e754e32",
+        "oia-site-613f2e754e32",
+        "oia-site-fb35618b82b1"
+      ],
+      "response": "- 國泰理賠申請書 1\n- 國泰理賠申請書 2\n- 國泰理賠申請書 3\n- 根據國泰理賠申請書 3，陸生全民保險須知",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-003",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "nhi-students",
+        "oia-insurance",
+        "nhi-students"
+      ],
+      "response": "- 2\n- 3\n- 4",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-004",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "wda-summer-hours",
+        "oia-site-19735f1a7559",
+        "oia-work-permit"
+      ],
+      "response": "- 20",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-005",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-guidelines",
+        "oia-scholarship-guidelines",
+        "oia-scholarship-guidelines"
+      ],
+      "response": "(二) 碩士班每人每月不超過新台幣 15,000 元為原則、博士班每人每月不超過新台幣 51,000 元為原則, 碩士班每人每月不超過新台幣 15,000 元為原則, 博士班每人每月不超過新台幣 51,000 元為原則, 此項補助年限(含休學期間)，自受獎起始學期算起, 博士班至多 8 學期及碩士班至多 4 學期為原則。",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-006",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-4a82cc1fbc88",
+        "oia-site-4a82cc1fbc88",
+        "nisa-faq-arc"
+      ],
+      "response": "1. 15 日內\n2. 境外學生申請居留證的期限、流程、辦理地點、所需文件、時程與費用為何?\n3. 居留證效期該如何判定?",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-007",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-fb35618b82b1",
+        "oia-site-c94d68071546",
+        "nhi-students"
+      ],
+      "response": "Here’s the answer to your question:\n\n*   Monthly insurance fee: 1,377 New Taiwan Dollars (NTD)\n*   Annual insurance fee: 4494 New Taiwan Dollars (NTD)",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-008",
+      "lang": "zh-TW",
+      "answerable": false,
+      "passage_ids": [
+        "nia-stay-after-graduation",
+        "mol-work-permit-simplified",
+        "oia-site-e4ff4722d0b4"
+      ],
+      "response": "- [1] 留臺築夢，防詐同行（畢業後延期居留）\n- [2] Simpler work permit documents for overseas Chinese and foreign students\n- [3] 交換生常見 QA",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-009",
+      "lang": "zh-TW",
+      "answerable": false,
+      "passage_ids": [
+        "oia-site-442d0d39ad51",
+        "mol-student-labor-insurance",
+        "wda-summer-hours"
+      ],
+      "response": "- 勞保局說明，事業單位於暑假期間僱用工讀生，應於到職當日為其辦理參加勞（就）保及提繳勞工退休金，並覈實申報投保薪資及勞退月提繳工資，以保障工讀生權益。\n- 勞保局再提醒，事業單位於暑假期間僱用工讀生，應於到職當日為其辦理參加保險，僱用員工未滿5人者（含暑期工讀生），雖非勞保強制投保單位，惟仍須依規定為其辦理參加就業保險。\n- 勞保局另外強調，同時從事2份以上工作的勞工（包括工讀生、臨時工、部分工時人員），如服務單位屬於勞保的強制投保單位（例如僱用員工5人以上的公司、行號），各雇主均應為其辦理參加勞保，不得選擇僅由其中一個單位加保。\n- 僑外生工讀依就業服務法第50條規定，得不受同法第46條第1項規定的工作類別限制；其工作時間除寒暑假外，每星期最長為20小時，且依雇主聘僱外國人許可及管理辦法第34條規定，工作許可有效期間最長為6個月。",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-010",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-guidelines",
+        "oia-scholarship-guidelines",
+        "oia-site-8e360e3e2406"
+      ],
+      "response": "1.  每年 6 月 5 日前公告於國際事務處網站。\n2.  二月 1 日前公告於國際事務處網站。",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-011",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-8e360e3e2406",
+        "oia-scholarship-guidelines",
+        "oia-site-998e4652d55e"
+      ],
+      "response": "- 7. 獎助學金取消或酌減金額：\n   (一) 受獎生若於每月 15 日(含)前，因保留學籍、畢業、休學、退學、轉學、離校、非法在校外工\n- 6. 寒暑假期間，若受獎生離開學校超過 15 日，該月份之獎助學金經指導教授或系主任同意，始得發放。\n- 3. 獎助學金註銷或酌減金額：\n   (一) 受獎生若於每月 15 日(含)前，因畢業、休學、退學、轉學、離校、非法在校外工作\n- 5. 獎學金發放與金額：\n   (一) 獎學金額度由審查委員依成績表現分級核給。獎助學金總額度大學部每人每月不超過新台幣 9,000 元為原則，碩士班每人每月不超過新台幣 15,000 元為原則、博士班每人每月不超過新台幣 51,000 元為原則。",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-012",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-guidelines",
+        "oia-site-f7afefe078ea",
+        "oia-site-998e4652d55e"
+      ],
+      "response": "- 9,000 元\n- 15,000 元\n- 51,000 元\n- 獎助學金總額度大學部每人每月不超過新台幣 9,000 元為原則，碩士班每人每月不超過新台幣 15,000 元為原則、博士班每人每月不超過新台幣 51,000 元為原則。",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-101",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "oia-site-24f84f9fef69",
+        "ocac-work-permit"
+      ],
+      "response": "You can use the “外國專業人員工作許可申辦網” website to apply online for a student work permit.\n\n- 外國專業人員工作許可申辦網操作手冊\nUser Manual for Website of EZ Work Permit\n[1] 外國專業人員工作許可申辦網操作手冊\nUser Manual for Website of EZ Work Permit",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-102",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "oia-work-permit",
+        "oia-site-19735f1a7559"
+      ],
+      "response": "The maximum fine for a student who works without a work permit is three thousand dollars and fifteen thousand dollars, according to the passage.\n\n- 3000\n- 15000",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": [
+        "3000",
+        "15000"
+      ]
+    },
+    {
+      "id": "en-103",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-312dc510adbc",
+        "oia-site-312dc510adbc",
+        "oia-site-896b2a6ff66f"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n- You can show your employer a download of the Electronic Service of student Work Permit on your phone.\n- The Electronic Service of student Work Permit can be found in Chapter 7 Receive the Electronic Document.\n- The operation screen is accessed through “案件管理 >”\n- The website is accessible through the “第二章學生帳號/密碼登入”",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-104",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-400fc9c50429",
+        "oia-site-1ad657e04753",
+        "oia-site-400fc9c50429"
+      ],
+      "response": "You can use the write-off number, which is provided by the system.\n1.  ATM\n2.  Online post office\n3.  System",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-105",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "taipei-times-graduate-stay",
+        "nia-student-online-guidelines",
+        "taipei-times-graduate-stay"
+      ],
+      "response": "- 2 years\n- 6 months\n- 9 months\n- 18 months\n- 24 months",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": [
+        "9",
+        "18",
+        "24"
+      ]
+    },
+    {
+      "id": "en-106",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "nia-hotline",
+        "nia-hotline",
+        "nia-hotline"
+      ],
+      "response": "1. 業務諮詢一覽表（1990 外來人士在臺生活諮詢服務熱線）",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-107",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "nia-stay-after-graduation",
+        "credits-general-education",
+        "oia-degree-student-handbook"
+      ],
+      "response": "1.  1.  The passage provides information about scams and how to avoid them, including specific advice on recognizing and responding to them.\n2.  2.  The passage recommends calling the “反詐騙諮詢專線” (Anti-scam consultation hotline) to get help with scams.\n3.  3.  The passage recommends contacting the “165反詐騙諮詢專線” (165 Anti-scam consultation hotline) to report suspicious messages.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-108",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "destination-nhi-northern-division",
+        "nhi-students",
+        "oia-insurance"
+      ],
+      "response": "The toll-free helpline number is 03-433-9111, according to passage [1].",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-109",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "mol-student-labor-insurance",
+        "taipei-times-graduate-stay",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "1.  The passage states that “Those who apply for suspension of schooling between Oct. 19 and Nov. 27 will receive a partial refund of one-third of tuition and incidental fees. The group insurance premium is non-refundable at any time.”\n2.  The passage states that “Any kind of” group insurance premium is non-refundable at any time.\n3.  The passage states that “Those who apply for suspension of schooling between Oct. 19 and Nov. 27 will receive a partial refund of one-third of tuition and incidental fees.”",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-110",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-minimum-credits",
+        "credits-semester-credit-load",
+        "credits-common-required-total"
+      ],
+      "response": "- 4 years\n- 128 credits\n[1] Bachelor's degree: at least 128 credits\n- 16 credits a semester\n[2] At least 16 credits a semester in years one to three and at least 9 in year four.\n[3] Every undergraduate takes 25 credits of common required courses: 5 in Chinese, 6 in a foreign language, and 14 in general education.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-111",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-equivalent-qualification-extra-credits",
+        "credits-physical-education",
+        "credits-master-minimum-credits"
+      ],
+      "response": "- 12 畢業學分 (Military training and PE do not count)\n- Five semesters of physical education (no credits)\n- One credit PE course (does not count towards graduation)\n- At least 24 credits for a master's degree (not including thesis)",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-112",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-semester-credit-load",
+        "oia-site-799d5f1249c2",
+        "credits-minimum-credits"
+      ],
+      "response": "- 16 credits a semester (9 in the fourth year)\n- 128 credits in total",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-113",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-chinese",
+        "credits-mandarin-substitution",
+        "credits-common-required-total"
+      ],
+      "response": "- International students take the “僑生國文” (Overse Chinese Students) course for 5 credits. [1]\n- The “僑生國文” course is a 5-credit course. [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-114",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-mandarin-substitution",
+        "credits-chinese-department-foreign-students",
+        "credits-foreign-language"
+      ],
+      "response": "- You must take 6 credits of Mandarin courses at the Language Center.\n- This differs from Article 3 of the common-course regulations (5 credits of Chinese for Overseas Chinese Students); see the open questions.\n- Contact: Division of Curriculum, Office of Academic Affairs 教務處課務組 https://pdc.adm.ncu.edu.tw/p/412-1019-1763.php?Lang=zh-tw",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-115",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-physical-education",
+        "credits-general-education",
+        "oia-site-44fffda52501"
+      ],
+      "response": "5 [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-116",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-master-minimum-credits",
+        "credits-doctoral-minimum-credits",
+        "credits-direct-doctoral-minimum-credits"
+      ],
+      "response": "- 24 for master’s degree\n- 18 for doctoral degree\n- 34 for direct-entry PhD",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-117",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-direct-doctoral-minimum-credits",
+        "credits-doctoral-minimum-credits",
+        "credits-master-minimum-credits"
+      ],
+      "response": "- 34 for students admitted directly into a doctoral program\n- At least 18 are doctoral-level, not counting dissertation credits.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-118",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-freshman-english-exemption",
+        "credits-foreign-language",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n*   Before the add/drop deadline of your first semester.\n*   6 學分",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-119",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "service_learning-passport-100-hours",
+        "oia-site-a756a2aad46d",
+        "nia-student-online-guidelines"
+      ],
+      "response": "1]. Check the hours on the Service Learning Website or in the Graduation System.\n2]. Contact: Center for Service Learning, Office of Student Affairs 学務處服務學習發展中心 https://service-learning.ncu.edu.tw/",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-120",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "service_learning-graduate-not-listed",
+        "service_learning-graduation-condition",
+        "credits-service-learning"
+      ],
+      "response": "- Service learning is not among the graduation conditions for master’s and doctoral students. [1]\n- The graduation conditions for master’s and doctoral students are courses and credits, the degree examination, and conduct grades. Service learning is not listed.\n- OIA contact: ncuoia@ncu.edu.tw, +886-3-425-4945",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-121",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "service_learning-course",
+        "credits-service-learning",
+        "service_learning-extended-study"
+      ],
+      "response": "- The service-learning course is required for two semesters.\n- The two course numbers must differ.\n- The two courses must be taken in different semesters.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n- The two semesters must be different.\n-",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-122",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "graduation-language-bachelor-eecs",
+        "graduation-language-bachelor-eecs",
+        "graduation-language-phd-network-learning"
+      ],
+      "response": "- TOEFL ITP score 543 (admitted 115 or later)\n- TOEFL ITP score 785 (admitted 115 or later)\n- TOEFL ITP score 79–80 (admitted 112 or later)",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-123",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "graduation-language-master-engineering",
+        "graduation-language-master-igpai",
+        "graduation-language-bachelor-engineering"
+      ],
+      "response": "- TOEIC LR: 720\n- TOEFL ITP: 500\n- Toefl IBT: 65 (old system)\n- Gept Hi First: 143\n- Bestep LR: 200",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-124",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "intl-program-0",
+        "intl-program-90",
+        "intl-program-22"
+      ],
+      "response": "- The requirement for English proficiency is CEFR B1 (Threshold) or above.\n- Applicants from an English-speaking country are exempted from providing an English proficiency certificate.\n- Please refer to the regulations on the NCU website: https://www.csrsr.ncu.edu.tw/",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-125",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "intl-program-70",
+        "intl-program-65",
+        "intl-program-42"
+      ],
+      "response": "The regulations of the Ph.D. in Institute of Network Learning Technology are published on the website of the College of Electrical Engineering and Computer Science, NCU, Taiwan.\n- Regulations: https://www.lst.ncu.edu.tw/NLT_new/page.php?slug=method&lang=en\n- Contact: ncuoia@ncu.edu.tw, +886-3-425-4945",
+      "refused": true,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-126",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "contact-oia-exchange-students",
+        "contact-oia-degree-students",
+        "oia-site-f6777077282d"
+      ],
+      "response": "The extension to call at OIA for advising on exchange students is +886-3-425-4945 ext. 57081.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-127",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "contact-oia-degree-students",
+        "contact-oia-exchange-students",
+        "contact-oia-visiting-programs"
+      ],
+      "response": "The International Student Services office hours are:\n- Mon-Fri 9:00-17:00 (Taipei time, UTC+8)",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-128",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "contact-oia-admissions",
+        "oia-site-f6777077282d",
+        "oia-site-62546755ea36"
+      ],
+      "response": "The phone number of OIA Global Collaboration and Admissions is +886-3-425-4959 ext. 57078.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-129",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "contact-oia-visiting-programs",
+        "oia-site-e90988d012ed",
+        "oia-site-14f77ce7b79e"
+      ],
+      "response": "The extension that handles the visiting student programs IIPP and TEEP is 57080.\n- Visiting student programs (IIPP, TEEP)\n57080",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-130",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "destination-zhongli-train-station",
+        "oia-degree-student-handbook",
+        "destination-thsr-taoyuan-station"
+      ],
+      "response": "- Bus routes: 132, 133\n- Directions from NCU: https://www.google.com/maps/dir/?api=1&origin=24.9684%2C121.1916&destination=24.9533168%2C121.2261602&travelmode=transit",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-131",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "destination-nhi-northern-division",
+        "oia-site-3a91bf233b7a",
+        "nhi-students"
+      ],
+      "response": "03-433-9111",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-132",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "place-engineering-building-1",
+        "place-engineering-building-2",
+        "place-mechanical-engineering-building"
+      ],
+      "response": "Here are the walking directions link for Engineering Building 1, based on the passages:\n\n- I cannot find the walking directions in the OIA pages.\n    NCUoia@ncu.edu.tw, +886-3-425-4945",
+      "refused": true,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-133",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-9eaf94496478",
+        "oia-scholarship-page",
+        "oia-site-14f77ce7b79e"
+      ],
+      "response": "Here’s the answer to your question, based on the passages:\n\n- The monthly stipend for students of the INTENSE Program is NTD$15,000.\n- The passage states: “Students are required to provide their own proof of insurance.”\n- The passage states: “Students will receive a monthly internship allowance of NT$30,000, provided via check.”",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-134",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-9eaf94496478",
+        "intl-program-30",
+        "oia-site-9eaf94496478"
+      ],
+      "response": "- Vietnam, Indonesia, Philippines, Thailand",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-135",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-9eaf94496478",
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617"
+      ],
+      "response": "Here are the answers to your question:\n\n- The application period for the INTENSE Program for the Spring 2027 semester opened on October 1, 2026. [1]\n- The application period is open from October 1 to October 22, 2026. [2]\n- The application period closes on October 22, 2026, at 5:00 PM (GMT+8). [3]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-136",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-4e86fddc23a8",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "response": "You must bring your student ID or passport/residence permit to pick up a package at the OIA counter.\n1",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-137",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-4e86fddc23a8",
+        "contact-oia-exchange-students",
+        "nia-student-online-guidelines"
+      ],
+      "response": "Here are the answers to your questions, based on the provided passages:\n\n- Opening hours: 09:00 - 17:00\n- The opening hours are specified in [1].\n- The opening hours are: Mon-Fri 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: Weekdays 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening hours are: 09:00 - 17:00\n- The opening",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-138",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n- Aug. 1-Aug. 27 Graduate Students Apply for Credits Assessment for Student Loans\n- Aug. 1-Sep. 9 Apply for Student Loans\n- Jan. 18- Feb. 17 Apply for Student Loans\n- 17日  就學貸款申請截止\n- 17 Deadline for Application for Student Loans",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-139",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617"
+      ],
+      "response": "Here’s the answer to your question:\n\n*   Aug. 31- Sep. 4",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-140",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "nia-student-online-guidelines",
+        "nia-student-online-guidelines",
+        "oia-site-231a8d7f7b43"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n- The fee for the Taiwan Area Residence Certificate for a Hong Kong or Macau student applying for the first time is NTD 600.\n- The fee for the entry-exit permit is NTD 1,000.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-141",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-694ddc8efa60",
+        "oia-insurance",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "Here’s the answer to your question:\n\nThe Cathay Life medical insurance cost per semester for overseas Chinese students is TWD 4,956. [3]\n\n- The cost is TWD 4,956 for those who are not eligible for National Health Insurance.\n- Contact: ncuoia@ncu.edu.tw, +886-3-425-4945",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-142",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-694ddc8efa60",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "response": "Here’s the answer to your question:\n\n- Medical insurance for international degree students is TWD 3,000 for six months.\n- The amount is as follows:\n    - Clinic Visits: TWD 3,000\n    - Reimbursement: TWD 3,000\n- The total amount is TWD 6,000.\n- Medical Insurance Information\n    Cathay Medical Insurance (First 6 Months)\n    [https://www.cathaymedicalinsurance.com.tw/](https://www.cathaymedicalinsurance.com.tw/)\n    +886-3-425-4945",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": [
+        "6000"
+      ]
+    },
+    {
+      "id": "en-143",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-694ddc8efa60",
+        "oia-site-694ddc8efa60",
+        "oia-insurance"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n- The monthly National Health Insurance premium for Mainland Chinese students is TWD 4,956.\n- Mainland Chinese students who are eligible for National Health Insurance should pay TWD 3,000 to extend coverage provided by Cathay Life Insurance.\n- Those who are not eligible for National Health Insurance should pay TWD 3,000 to extend coverage provided by Cathay Life Insurance.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-144",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-scholarship-page"
+      ],
+      "response": "Here’s the answer to your question:\n\n*   The application date for NCU Scholarship for Fall 2026 Semester starts from July 6th to July 20th, 12:00 PM, 2026.\n1",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-145",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "place-indoor-swimming-pool"
+      ],
+      "response": "- The indoor swimming pool is categorized as sports. [1]\n- It is also called:游泳池\n- Walking directions: https://www.google.com/maps/dir/?api=1&destination=24.970076%2C121.189555&travelmode=walking",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-146",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "oia-site-44fffda52501",
+        "club-1053",
+        "oia-degree-student-handbook"
+      ],
+      "response": "I cannot find information about parking permits on campus. However, you can contact the 社辦: 據德樓\n[1] Career Center\nSessions include Spring and Autumn Campus Talent Recruitment.\n[2] Confidence House\nA group of love, with the love of Jesus among us.\n[3] 2026 Fall Degree Student Handbook\nSystem used in Taiwan: GSM System\n[4] Taiwan Taoyuan International Airport\nWhere to get pre-paid card: Taiwan Taoyuan International Airport",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-147",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "nia-residence-tips",
+        "nia-residence-tips",
+        "oia-site-4a82cc1fbc88"
+      ],
+      "response": "- I cannot find this information in the OIA pages you have. Please contact ncuoia@ncu.edu.tw +886-3-425-4945.",
+      "refused": true,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-148",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "club-1098",
+        "oia-site-694ddc8efa60",
+        "oia-scholarship-page"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n- The First Bank is the bank that gives student credit cards to international students.\n- The passage states: “Students who hold Dependent Visa, ARPC or Taiwan Employment Gold Card must submit the NCU Work Commitment Declaration for Scholarship Recipients.”",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-101",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "mol-work-permit-simplified",
+        "ocac-work-permit",
+        "wda-summer-hours"
+      ],
+      "response": "The work permit for overseas Chinese and foreign students application website is: https://ezwp.wda.gov.tw",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-102",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "nia-stay-after-graduation",
+        "nisa-faq-graduation-extension",
+        "oia-site-231a8d7f7b43"
+      ],
+      "response": "1. 2年\n2. 30天\n3. 2年",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-103",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "nia-hotline",
+        "nia-hotline",
+        "nia-hotline"
+      ],
+      "response": "1. 1990 外來人士在臺生活諮詢服務熱線的電話是 1990.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-104",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "credits-master-minimum-credits",
+        "credits-minimum-credits",
+        "credits-doctoral-minimum-credits"
+      ],
+      "response": "Here's the answer to your question:\n\n128",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-105",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "service_learning-passport-100-hours",
+        "oia-site-958f3a2e4d6d",
+        "oia-site-0f39b48bb609"
+      ],
+      "response": "- 100 基本時數\n- 24個月\n- 32個月\n- 8個月\n- 16個月",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-106",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "graduation-language-bachelor-eecs",
+        "graduation-language-bachelor-eecs",
+        "graduation-language-phd-economics"
+      ],
+      "response": "- IELTS: 5.5\n- Toefl_ibt: 4\n- Toefl_itp: 483\n- Toefl_itp: 543\n- Toeic_lr: 600\n- Toeic_lr: 785\n- Gept_hi_first: 143",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-107",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-c94d68071546",
+        "oia-site-c94d68071546",
+        "oia-site-c94d68071546"
+      ],
+      "response": "- 僑生保險期滿，尚未符合參加全民健保資格者，應自費參加國泰人壽醫療保險，一學期(六個月)新台幣3,000元，就醫及理賠申請規定同僑保，至符合參加全民健保資格。\n- 僑生傷病醫療保險（僅限1次）：\n  - 一、依據：僑務委員會「僑生傷病醫療保險作業要點」、年度承保僑保公司函辦理。\n  - 二、年度承保僑保公司：109-110年度國泰人壽保險公司\n  - 三、對象：海外直接分發或單招入學，在臺未住滿6個月之僑生\n  - 四、保費：依僑委會每年函知(109-110年自行負擔560元)\n  - 五、就醫醫院：以健保就診醫院\n  - 六、保險期限：效期6個月",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-108",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-fb35618b82b1",
+        "oia-site-c94d68071546",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "- 陸生全民保險每月最高保費為新臺幣1,000元。\n- 學生須負擔每月1,377元保險費，陸生自付6成（826元），政府負擔4成（551元）。",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-109",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "destination-zhongli-train-station",
+        "destination-nia-taoyuan-service-center",
+        "place-bus-stop-ncu"
+      ],
+      "response": "Here's the answer to your question, based on the provided passages:\n\n- From the bus stop at National Central University, you can take routes 132 and 133.\n- The route 132 ends at Zhongli Bus Station, a short walk from the train station.\n- The route 133 goes to Zhongli Bus Station.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-110",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-799d5f1249c2",
+        "oia-site-779ce58808f8",
+        "oia-site-9eaf94496478"
+      ],
+      "response": "- The monthly stipend is NT$10,000.\n- This is provided by the industry partners.\n- The details are as follows:\n- The details are as follows:\n- The details are as follows:\n- The details are as follows:\n- The details are as follows:",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-111",
+      "lang": "zh-TW",
+      "answerable": false,
+      "passage_ids": [
+        "place-indoor-swimming-pool",
+        "course-1170",
+        "oia-site-4e86fddc23a8"
+      ],
+      "response": "Here’s the answer to your question:\n\n- 09:00 - 17:00\n- 09:00 - 17:00\n- 09:00 - 17:00\n- 09:00 - 17:00\n- 09:00 - 17:00",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-112",
+      "lang": "zh-TW",
+      "answerable": false,
+      "passage_ids": [
+        "ocac-work-permit",
+        "mol-work-permit-simplified",
+        "nia-stay-after-graduation"
+      ],
+      "response": "- 根據 [1] 說明外籍生在學校申請汽車停車證的資訊。\n- 根據 [2] 說明在畢業後延期居留的相關規定。\n- 根據 [3] 說明畢業後延期居留的相關規定。",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-101",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "oia-site-4a82cc1fbc88",
+        "ocac-work-permit"
+      ],
+      "response": "I cannot find the answer in the OIA pages you have. Please contact ncuoia@ncu.edu.tw +886-3-425-4945.",
+      "refused": true,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-102",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "nia-hotline",
+        "course-11050",
+        "nia-hotline"
+      ],
+      "response": "- 1990 外來人士在臺生活諮詢服務熱線\n- 業務諮詢一覽表（1990 外來人士在臺生活諮詢服務熱線）\n- 24小時\n- 北、中、南區事務大隊",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-103",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "credits-semester-credit-load",
+        "course-31007",
+        "credits-doctoral-minimum-credits"
+      ],
+      "response": "Here's the answer to your question, based on the provided passages:\n\n- 16",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-104",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "service_learning-passport-100-hours",
+        "oia-site-a756a2aad46d",
+        "course-31007"
+      ],
+      "response": "- 100 basic hours on the NCU passport\n- Check the hours on the Service Learning Website or in the Graduation System.\n- Please visit the 【Service Learning Network】 or 【Graduation Review System】 to check the hours.\n- If you have any questions, please contact the 学务处服务学习发展中心.\n- Contact: Center for Service Learning, Office of Student Affairs 学务处服务学习发展中心 https://service-learning.ncu.edu.tw/",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-105",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "course-19006",
+        "course-9044",
+        "course-40013"
+      ],
+      "response": "I cannot find the answer to your question in the OIA pages you provided.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-106",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-9eaf94496478",
+        "oia-scholarship-page",
+        "oia-site-799d5f1249c2"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n- PhD: NTD$40,000\n- Master’s: NTD$15,000\n- Undergraduate: NTD$9,000",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-107",
+      "lang": "vi",
+      "answerable": false,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-incoming-students"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n*   1. 08:00-23:00\n*   2. 09:00-16:00\n*   3. 1F, G14 Dorm\n*   4. 08:30-17:00\n*   5. ncuoia@ncu.edu.tw, +886-3-425-4945",
+      "refused": true,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": [
+        "2",
+        "4"
+      ]
+    },
+    {
+      "id": "vi-108",
+      "lang": "vi",
+      "answerable": false,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "course-7003",
+        "nia-residence-tips"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n- To change your driver’s license from another country to a Taiwanese driver’s license, you can apply at local NIA service centers close to where you have moved in.\n- You need to apply for modification of your resident address within 15 days.\n- Failure to do so could result in a fine.\n- Local NIA service centers: 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": [
+        "101",
+        "102",
+        "103",
+        "104",
+        "105",
+        "106",
+        "107",
+        "108",
+        "109",
+        "110",
+        "111",
+        "112",
+        "113",
+        "114",
+        "116",
+        "117",
+        "118",
+        "119",
+        "120",
+        "121",
+        "122",
+        "123",
+        "124",
+        "125",
+        "126",
+        "127",
+        "128",
+        "129",
+        "131",
+        "132",
+        "133",
+        "134",
+        "135",
+        "136",
+        "137",
+        "138",
+        "139",
+        "140",
+        "141",
+        "142",
+        "143",
+        "144",
+        "145",
+        "146",
+        "147",
+        "148",
+        "149",
+        "150",
+        "151",
+        "152",
+        "153",
+        "154",
+        "155",
+        "156",
+        "157",
+        "158",
+        "159",
+        "160",
+        "161",
+        "162",
+        "163",
+        "164",
+        "165",
+        "166",
+        "167",
+        "168",
+        "169",
+        "170",
+        "171",
+        "172",
+        "173",
+        "174",
+        "175",
+        "176",
+        "177",
+        "178",
+        "179",
+        "180",
+        "181",
+        "182",
+        "183",
+        "184",
+        "185"
+      ]
+    },
+    {
+      "id": "id-101",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "ocac-work-permit",
+        "oia-work-permit",
+        "oia-site-4a82cc1fbc88"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n*   The website for applying for a work permit is: https://ezwp.wda.gov.tw/wcfonline/wSite/Control?function=IndexPage\n*   The website for ARC application is: http://www.immigration.gov.tw\n*   The website for student account is: https://oia.ncu.edu.tw/static/file/26/1026/img/389/std20230311_010101.pdf",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-102",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "nia-hotline",
+        "nia-hotline",
+        "nia-hotline"
+      ],
+      "response": "The 1990 hotline for foreigners in Taiwan is:\n1990",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-103",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-b2ccac2d6617",
+        "credits-minimum-credits",
+        "oia-site-b2ccac2d6617"
+      ],
+      "response": "Here’s the answer to your question:\n\n- 128",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-104",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "service_learning-passport-100-hours",
+        "oia-site-a756a2aad46d",
+        "oia-degree-student-handbook"
+      ],
+      "response": "Here’s the answer to your question:\n\n- 100 basic hours on the NCU passport\n- Check the hours on the Service Learning Website or in the Graduation System.\n- Please visit the 【Service Learning Network】 or 【Graduation Review System】 to check the hours.\n- If you have any questions, please contact the Service Learning Development Center at https://service-learning.ncu.edu.tw/",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-105",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "destination-zhongli-train-station",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "response": "- Bus nomor 132 bisa Anda naiki dari kampus ke stasiun kereta Zhongli.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-106",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-9eaf94496478",
+        "oia-site-9eaf94496478",
+        "oia-site-799d5f1249c2"
+      ],
+      "response": "Here’s the answer to your question, based on the provided text:\n\n- One-way airfare\n- Administrative fee coverage\n- Tuition scholarships for up to two years\n- Monthly stipends",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-107",
+      "lang": "id",
+      "answerable": false,
+      "passage_ids": [
+        "oia-site-62546755ea36",
+        "oia-site-cf1bde247b94"
+      ],
+      "response": "Here’s the answer to your question, based on the provided passages:\n\n- NCU offers student insurance and work permit applications for international degree students [1].\n- NCU provides international student summer camps [1].\n- NCU offers reception of international visitors [1].\n- NCU provides Ext. 57079 for inquiries [1].\n- NCU’s contact is ncuoia@ncu.edu.tw, +886-3-425-4945 [1].",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-108",
+      "lang": "id",
+      "answerable": false,
+      "passage_ids": [
+        "club-1098"
+      ],
+      "response": "I cannot find information about credit cards for international students in the OIA pages. Please contact ncuoia@ncu.edu.tw at +886-3-425-4945.",
+      "refused": true,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    }
+  ]
+}

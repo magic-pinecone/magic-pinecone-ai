@@ -63,6 +63,32 @@ class Settings(BaseSettings):
     TDX_ARRIVAL_CACHE_SECONDS: int = 30
     TDX_STOP_CACHE_HOURS: int = 24
 
+    # The model behind POST /assistant/ask: an OpenAI-compatible endpoint, the
+    # URL including its /v1 part. Without the first two the endpoint still
+    # answers, with what it looked up and no written answer.
+    ASSISTANT_BASE_URL: str | None = None
+    ASSISTANT_MODEL: str | None = None
+    ASSISTANT_API_KEY: str | None = None
+    # Passed on as `reasoning_effort`; "none" switches a model's thinking off.
+    ASSISTANT_REASONING_EFFORT: str | None = None
+    # Sends `chat_template_kwargs: {"enable_thinking": false}`, llama-server's
+    # way to say the same. A tuned student needs it: with thinking on, the
+    # prompt is not the one it was trained on.
+    ASSISTANT_DISABLE_THINKING: bool = False
+    # How long one request to the model may take before the endpoint gives up
+    # and returns what it looked up.
+    ASSISTANT_TIMEOUT_SECONDS: float = 60.0
+
+    EMBEDDING_BASE_URL: str | None = None
+    EMBEDDING_MODEL: str | None = None
+    EMBEDDING_API_KEY: str | None = None
+    EMBEDDING_TIMEOUT_SECONDS: float = 30.0
+    EMBEDDING_BATCH_SIZE: int = 64
+    KNOWLEDGE_MIN_SIMILARITY: float = 0.40
+    KNOWLEDGE_REFRESH_MINUTES: int = 60
+    MCP_HTTP_ENABLED: bool = False
+    MCP_ALLOWED_HOSTS: list[str] = []
+
     @property
     def celery_broker_url(self) -> str:
         if self.REDIS_PASSWORD:

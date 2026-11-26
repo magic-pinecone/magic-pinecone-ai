@@ -1,0 +1,1402 @@
+{
+  "run_name": "g3-270m-base-oracle-new",
+  "model": "g3-270m-base",
+  "passages": "oracle",
+  "top_k": 5,
+  "questions": 76,
+  "question_set": "new",
+  "search": "hybrid",
+  "summary": {
+    "en": {
+      "total": 48,
+      "answerable": 44,
+      "unanswerable": 4,
+      "ctx_has_answer": 44,
+      "ctx_lacks_answer": 0,
+      "answer_ok": 15,
+      "answer_ok_ctx": 15,
+      "citation_ok": 6,
+      "refused_unanswerable": 0,
+      "refused_no_ctx": 0,
+      "over_refused": 0,
+      "number_error": 3
+    },
+    "zh-TW": {
+      "total": 12,
+      "answerable": 10,
+      "unanswerable": 2,
+      "ctx_has_answer": 10,
+      "ctx_lacks_answer": 0,
+      "answer_ok": 6,
+      "answer_ok_ctx": 6,
+      "citation_ok": 6,
+      "refused_unanswerable": 0,
+      "refused_no_ctx": 0,
+      "over_refused": 0,
+      "number_error": 1
+    },
+    "vi": {
+      "total": 8,
+      "answerable": 6,
+      "unanswerable": 2,
+      "ctx_has_answer": 6,
+      "ctx_lacks_answer": 0,
+      "answer_ok": 1,
+      "answer_ok_ctx": 1,
+      "citation_ok": 1,
+      "refused_unanswerable": 0,
+      "refused_no_ctx": 0,
+      "over_refused": 0,
+      "number_error": 0
+    },
+    "id": {
+      "total": 8,
+      "answerable": 6,
+      "unanswerable": 2,
+      "ctx_has_answer": 6,
+      "ctx_lacks_answer": 0,
+      "answer_ok": 0,
+      "answer_ok_ctx": 0,
+      "citation_ok": 1,
+      "refused_unanswerable": 0,
+      "refused_no_ctx": 0,
+      "over_refused": 0,
+      "number_error": 0
+    },
+    "all": {
+      "total": 76,
+      "answerable": 66,
+      "unanswerable": 10,
+      "ctx_has_answer": 66,
+      "ctx_lacks_answer": 0,
+      "answer_ok": 22,
+      "answer_ok_ctx": 22,
+      "citation_ok": 14,
+      "refused_unanswerable": 0,
+      "refused_no_ctx": 0,
+      "over_refused": 0,
+      "number_error": 4
+    }
+  },
+  "items": [
+    {
+      "id": "en-101",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "oia-site-24f84f9fef69",
+        "mol-work-permit-simplified",
+        "ocac-work-permit",
+        "oia-site-24f84f9fef69"
+      ],
+      "response": "The website will guide you to the homepage for general users to login.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-102",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-work-permit",
+        "oia-work-permit",
+        "oia-site-19735f1a7559",
+        "wda-summer-hours",
+        "taipei-times-graduate-stay"
+      ],
+      "response": "The maximum fine for a student who works without a work permit is 150,000.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": [
+        "150000"
+      ]
+    },
+    {
+      "id": "en-103",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-312dc510adbc",
+        "oia-site-312dc510adbc",
+        "oia-site-312dc510adbc",
+        "oia-site-7645056b800a",
+        "wda-summer-hours"
+      ],
+      "response": "I am unable to provide a specific answer to the question \"What can I show my employer on my phone to prove my electronic work permit?\".",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-104",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "ocac-work-permit",
+        "oia-site-400fc9c50429",
+        "oia-site-1ad657e04753",
+        "oia-site-1ad657e04753",
+        "oia-site-400fc9c50429"
+      ],
+      "response": "[1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-105",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "taipei-times-graduate-stay",
+        "nisa-faq-graduation-extension",
+        "nia-student-online-guidelines",
+        "taipei-times-graduate-stay",
+        "nia-residence-tips"
+      ],
+      "response": "The foreign graduate should prepare their passport, ARC, flight ticket, and the fine for being permitted to leave Taiwan within 10 days.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-106",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "nia-hotline"
+      ],
+      "response": "The number you call for the 1990 hotline for foreigners living in Taiwan is 1990.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-107",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-896b2a6ff66f",
+        "credits-general-education",
+        "oia-degree-student-handbook",
+        "nia-stay-after-graduation",
+        "oia-degree-student-handbook"
+      ],
+      "response": "[1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-108",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "destination-nhi-northern-division",
+        "oia-site-3a91bf233b7a",
+        "oia-insurance",
+        "oia-insurance",
+        "nhi-students"
+      ],
+      "response": "The National Health Insurance Administration's toll-free helpline number is 0800-030-598.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-109",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "mol-student-labor-insurance",
+        "oia-site-694ddc8efa60",
+        "oia-site-799d5f1249c2",
+        "oia-site-799d5f1249c2",
+        "taipei-times-graduate-stay"
+      ],
+      "response": "The unpaid insurance premium is the fine when an employer does not enrol a student worker in labor insurance.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-110",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-semester-credit-load",
+        "credits-common-required-total",
+        "credits-minimum-credits",
+        "credits-chinese",
+        "intl-program-84"
+      ],
+      "response": "A bachelor's degree takes four years and at least 128 credits in total.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-111",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-physical-education",
+        "credits-doctoral-minimum-credits",
+        "credits-master-minimum-credits",
+        "credits-equivalent-qualification-extra-credits",
+        "credits-general-education-other-department-courses"
+      ],
+      "response": "The student must take 12 extra graduation credits to be admitted on an equivalent qualification.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-112",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-799d5f1249c2",
+        "credits-minimum-credits",
+        "credits-foreign-language",
+        "service_learning-course",
+        "credits-semester-credit-load"
+      ],
+      "response": "You must take at least 16 credits each semester in your first and fourth years.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-113",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-chinese",
+        "credits-common-required-total",
+        "credits-mandarin-substitution",
+        "credits-chinese-department-foreign-students",
+        "oia-scholarship-page"
+      ],
+      "response": "[1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-114",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-chinese-department-foreign-students",
+        "credits-mandarin-substitution",
+        "credits-foreign-language",
+        "intl-program-49",
+        "intl-program-54"
+      ],
+      "response": "The question asks for the number of credits of Mandarin required at the Language Center.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-115",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-service-learning",
+        "credits-common-required-total",
+        "credits-physical-education",
+        "service_learning-extended-study",
+        "credits-general-education"
+      ],
+      "response": "The physical education course is required for five semesters.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-116",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-doctoral-minimum-credits",
+        "credits-direct-doctoral-minimum-credits",
+        "intl-program-10",
+        "credits-master-minimum-credits",
+        "intl-program-38"
+      ],
+      "response": "The minimum number of credits for a master's degree, not counting thesis credits, is 24.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-117",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-doctoral-minimum-credits",
+        "credits-master-minimum-credits",
+        "intl-program-26",
+        "credits-equivalent-qualification-extra-credits",
+        "credits-direct-doctoral-minimum-credits"
+      ],
+      "response": "A student admitted directly into a doctoral program needs at least 34 credits, of which at least 18 are doctoral-level.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-118",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-freshman-english-exemption",
+        "oia-site-694ddc8efa60",
+        "credits-foreign-language",
+        "graduation-language-bachelor-university-program",
+        "graduation-language-bachelor-eecs"
+      ],
+      "response": "The answer is:",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-119",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-a756a2aad46d",
+        "service_learning-passport-100-hours",
+        "nia-student-online-guidelines",
+        "oia-degree-student-handbook",
+        "credits-equivalent-qualification-extra-credits"
+      ],
+      "response": "The number of service hours on the NCU passport needed for undergraduate students to receive the degree certificate is 12.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-120",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "service_learning-graduation-condition",
+        "credits-service-learning",
+        "credits-master-minimum-credits",
+        "service_learning-graduate-not-listed",
+        "service_learning-extended-study"
+      ],
+      "response": "Yes, service learning is one of the graduation conditions for master's and doctoral students.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-121",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "credits-service-learning",
+        "service_learning-extended-study",
+        "service_learning-graduate-not-listed",
+        "credits-common-required-total",
+        "service_learning-course"
+      ],
+      "response": "The number of different semesters in which you must take the zero-credit service-learning course is 2 semesters.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-122",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "graduation-language-phd-network-learning",
+        "graduation-language-bachelor-eecs",
+        "graduation-language-master-igpai",
+        "graduation-language-master-engineering"
+      ],
+      "response": "The TOEFL ITP score satisfies the English graduation requirement for a bachelor's student of the College of Electrical Engineering and Computer Science admitted in 115 or later.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-123",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "graduation-language-bachelor-engineering",
+        "graduation-language-master-engineering",
+        "graduation-language-master-igpai",
+        "graduation-language-bachelor-science",
+        "graduation-language-bachelor-eecs"
+      ],
+      "response": "The bestEP score that meets the English graduation requirement for master's students of the College of Engineering is 113.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-124",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "intl-program-90",
+        "intl-program-75",
+        "intl-program-0",
+        "intl-program-22",
+        "intl-program-76"
+      ],
+      "response": "The Master of Science Program in Remote Sensing Science and Technology requires an English proficiency certificate at CEFR B1 (Threshold) or above.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-125",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "intl-program-65",
+        "intl-program-42",
+        "intl-program-45",
+        "intl-program-70",
+        "intl-program-13"
+      ],
+      "response": "The regulations of the Ph.D. in Institute of Network Learning Technology are located on the website of the Institute of Network Learning Technology.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-126",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "contact-oia-degree-students",
+        "oia-site-62546755ea36",
+        "oia-site-f6777077282d",
+        "oia-site-62546755ea36",
+        "contact-oia-exchange-students"
+      ],
+      "response": "[1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-127",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "contact-oia-degree-students",
+        "contact-oia-exchange-students",
+        "oia-site-f6777077282d",
+        "contact-oia-visiting-programs",
+        "oia-incoming-students"
+      ],
+      "response": "The office hours of OIA's International Student Services are from 9:00 AM to 5:00 PM (Taipei Time, UTC+8).",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-128",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-f6777077282d",
+        "contact-oia-admissions",
+        "oia-site-62546755ea36",
+        "oia-scholarship-page",
+        "oia-incoming-students"
+      ],
+      "response": "[6]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-129",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-e90988d012ed",
+        "oia-site-14f77ce7b79e",
+        "contact-oia-visiting-programs",
+        "oia-site-62546755ea36",
+        "oia-site-14f77ce7b79e"
+      ],
+      "response": "[6]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-130",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "destination-thsr-taoyuan-station",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook",
+        "destination-zhongli-train-station"
+      ],
+      "response": "[1] 2026 Fall Degree Student Handbook\nTransportation\nCampus Mobility",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-131",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "destination-nhi-northern-division",
+        "oia-site-3a91bf233b7a",
+        "nhi-students",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "response": "[1]\nThe phone number of the National Health Insurance Administration Northern Division is 03-433-9111.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-132",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "place-engineering-building-2",
+        "place-engineering-building-1",
+        "place-mechanical-engineering-building",
+        "place-engineering-building-5",
+        "place-environmental-chemical-engineering-building"
+      ],
+      "response": "[1] https://www.google.com/maps/dir/?api=1&destination=24.967519%2C121.192353&travelmode=walking",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-133",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-site-14f77ce7b79e",
+        "oia-site-799d5f1249c2",
+        "oia-site-9eaf94496478"
+      ],
+      "response": "The monthly stipend for students of the INTENSE Program is NT$10,000.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-134",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-9eaf94496478",
+        "intl-program-30",
+        "intl-program-35",
+        "intl-program-32"
+      ],
+      "response": "The nationalities eligible for the INTENSE Advanced Mechanical Engineering Program are Vietnam, Indonesia, Philippines, and Thailand.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-135",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617",
+        "oia-scholarship-page",
+        "oia-site-9eaf94496478"
+      ],
+      "response": "[1] 2026-2027 Academic Calendar\n[2] 2026-2027 Academic Calendar\n[3] 2026-2027 Academic Calendar\n[4] NCU International Student Scholarship\n[5] NCU INTENSE Program",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-136",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-4e86fddc23a8",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "response": "[1] 郵件包裹領取",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-137",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "contact-oia-degree-students",
+        "oia-site-4e86fddc23a8",
+        "contact-oia-exchange-students",
+        "contact-oia-visiting-programs",
+        "contact-oia-admissions"
+      ],
+      "response": "[1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-138",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-b2ccac2d6617"
+      ],
+      "response": "- 2026-2027 Academic Calendar\n- Aug. 1-Aug. 27 Graduate Students Apply for Credits Assessment for Student Loans\n- 1日～9月9日 受理就學貸款申請\n- Aug. 1-Sep. 9 Apply for Student Loans\n- 2 345678\n- 3日～9日 受理115學年碩博士新生宿舍線上申請\n- 3-9 New Graduate Students Apply Online for a Dormitory\n- 3日～9月18日 輔系、雙主修、學分學程、學分抵免(依各系所公告受理時間為準)、學士班提高編級、課程抵修免修申請及輔系、雙主修、第二\n專長取得資格審核申請",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-139",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-site-b2ccac2d6617"
+      ],
+      "response": "- The orientation week for new international students in 2026 is from September 31 to April 4.\n- The orientation week for new international students in 2026 is from August 31 to September 4.\n- The orientation week for new international students in 2026 is from 12345 to 1日起 碩博生新生入住.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": [
+        "april"
+      ]
+    },
+    {
+      "id": "en-140",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "nia-student-online-guidelines",
+        "oia-site-231a8d7f7b43",
+        "nia-student-online-guidelines",
+        "oia-site-4a82cc1fbc88"
+      ],
+      "response": "The fee for the Taiwan Area Residence Certificate for a Hong Kong or Macau student applying for the first time is NT$1,000.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-141",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-694ddc8efa60",
+        "oia-site-c94d68071546",
+        "oia-site-694ddc8efa60",
+        "oia-insurance",
+        "oia-insurance"
+      ],
+      "response": "The medical insurance cost per semester for overseas Chinese students is 2,478.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-142",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-694ddc8efa60",
+        "oia-insurance",
+        "oia-site-c94d68071546",
+        "oia-insurance",
+        "nhi-students"
+      ],
+      "response": "National Health Insurance for overseas Chinese students for six months, before any subsidy, is TWD 4,956.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-143",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-694ddc8efa60",
+        "oia-site-694ddc8efa60",
+        "oia-insurance",
+        "oia-site-fb35618b82b1",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "The monthly National Health Insurance premium for Mainland Chinese students is TWD 4,956.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-144",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page"
+      ],
+      "response": "- The application period of the NCU Scholarship for the Fall 2026 semester is from July 6th to July 20th, 2026.\n- The application period for the NCU Scholarship for the Fall 2026 semester is from July 6th to July 20th, 2026.\n- The application period for the NCU Scholarship for the Fall 2026 semester is from July 6th to July 20th, 2026.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-145",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "place-indoor-swimming-pool"
+      ],
+      "response": "- The indoor swimming pool is open from 7:00 AM to 10:00 PM on weekdays and weekends.\n- The pool is located in the basement of the university.\n- The pool is open for swimming from 11:00 AM to 6:00 PM.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": [
+        "7",
+        "0",
+        "10",
+        "11",
+        "6"
+      ]
+    },
+    {
+      "id": "en-146",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "oia-site-44fffda52501",
+        "oia-degree-student-handbook"
+      ],
+      "response": "- The parking permit is available at the campus parking lot.\n- You can find the parking permit information on the university's website.\n- The parking permit is usually available for check-in.\n- You can find the parking permit information on the university's website.\n- The parking permit is usually available for check-in.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-147",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "nia-residence-tips",
+        "nia-residence-tips",
+        "nia-residence-tips",
+        "taipei-times-graduate-stay",
+        "credits-foreign-language"
+      ],
+      "response": "The answer is to go to the local service centers of National Immigration Agency (NIA) in the area where you have resided.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-148",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "oia-site-694ddc8efa60",
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook"
+      ],
+      "response": "[1]",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-101",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "ocac-work-permit",
+        "wda-summer-hours",
+        "mol-work-permit-simplified",
+        "oia-site-1ad657e04753",
+        "oia-site-1ad657e04753"
+      ],
+      "response": "The URL for the provided information is: [https://ezwp.wda.gov.tw/](https://ezwp.wda.gov.tw/)",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-102",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "nia-stay-after-graduation",
+        "oia-site-231a8d7f7b43",
+        "nhi-students",
+        "nisa-faq-graduation-extension",
+        "oia-site-779ce58808f8"
+      ],
+      "response": "[1] Staying in Taiwan after graduation and avoiding scams / 留臺築夢，防詐同行（畢業後延期居留）\n為增進國際學生對畢業後留臺發展相關法規的瞭解，移民署北區事務大隊新北市服務站近期應邀至國立臺北大學，舉辦「國際生畢業留臺暨就業講座」。講座中詳細說明了外籍生及僑生在畢業後，若欲在臺尋職，可申請以「其他」事由延期居留1年，有必要者得再申請1次，總延期居留效期最長可達2年；或是可以在獲得工作許可後儘速變更為工作居留。新北市服務站並提醒，學校會在學生畢業時通報，若未及時變更居留原因，原居留證將遭廢止，恐面臨逾期罰鍰或限期出境等風險。\n此外，針對日益猖獗的詐騙手段，新北市服務站特別利用本次講座機會加強反詐騙宣導，提醒學生「反詐4不」：不當人頭、不當車手、不非法買賣及不提供帳戶與SIM卡。由於詐騙集團常利用高薪、網紅非法工作或高薪博弈等話術誘騙外籍生，宣導中強調學生切勿因一時賺錢心切而落入陷阱，誤觸法網，而喪失就學及留臺機會；或甚至失去人身自由。新北市服務站呼籲，遇到疑似詐騙訊息應謹記「3C原則」：保持冷靜（Calm Down）、小心查證（Check it out）及撥打(Call)165反詐騙諮詢專線。\n除了法規與防詐知識外，本次講座現場也推廣「1990外來人士在臺生活諮詢服務熱線」，提供中、英、日、越、印、泰、柬等多國語言服務，協助國際生解決在臺生活的各項諮詢需求。新北市服務站鄭曜銓主任表示，臺灣非常歡迎國際優秀人才畢業後留臺發揮長才，透過深入校園宣導，希望能讓學生在步入職場前掌握最新的居留法令與權益，避免因疏忽而影響在臺身分",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-103",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "nia-hotline"
+      ],
+      "response": "[1] 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990 | 1990",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-104",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "credits-minimum-credits",
+        "credits-master-minimum-credits",
+        "credits-doctoral-minimum-credits",
+        "oia-site-d5369e6eba3c",
+        "oia-site-1f09e01886cd"
+      ],
+      "response": "[1] Bachelor's degree: at least 128 credits",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-105",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-958f3a2e4d6d",
+        "service_learning-passport-100-hours",
+        "oia-site-0f39b48bb609",
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617"
+      ],
+      "response": "[1] 僑生畢業離校流程\n<https://oia.ncu.edu.tw/p/phocadownload/overseas-chinese/guo%20li%20zhong%20yang%20da%20xue%20qiao%20sheng%20li%20xiao%20zi%20liao%20biao-OIA2022701.pdf>\n)後，e-mail回傳國際處徐心荷小姐(\nlotus@ncu.edu.tw\n)，國際處收到檔案後會再協助學生線上檢核離校。\n4. 請依照註冊組規定領取畢業證書時間，前往註冊組領取畢業證書。\n注意事項：若是住在中大宿舍的同學，依照住宿服務組的規定，領取畢業證書當天則同時需搬離中大宿舍。\n5. 請完成離校流程(領取畢業證書)的同學留意以下事項：\n(1) 如果是要返國的同學，請於移民署規定10天內須離台，畢業生的居留證則無法再出入境使用。港澳生需在出境前前往移民署辧理單次出境證。\n\n[2] 100 basic hours on the NCU passport 中大護照 100 基本時數\nDegrees: bachelor\nUndergraduates need at least 100 service hours on the NCU passport before they can receive the degree certificate. Check the hours on the Service Learning Website or in the Graduation System.\n學士班須完成中大護照 100 基本時數，否則無法領取學位證書。時數可在【服務學習網】或【畢業審核系統】查詢。\n教務處公告：114 學年度第 2 學期頒發學位證書相關注意事項（115 年 2 月 12 日）: 學士班中大護照 100 基本時數：請至【服務學習網】或【畢業審核系統】查詢。如有疑問，請洽學務處服務學習發展中心。請務必確認完成中大護照 100 基本時數，以免影響畢業證書之領取。\nAnnouncement No",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-106",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "graduation-language-master-management-110",
+        "graduation-language-phd-economics",
+        "graduation-language-bachelor-eecs",
+        "graduation-language-master-management-115"
+      ],
+      "response": "[1] 資電學院學士班 115 學年度入學的學生，托福 ITP 要考到幾分才符合畢業英語門檻。",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-107",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-694ddc8efa60",
+        "oia-site-c94d68071546"
+      ],
+      "response": "[1] 僑生保險期滿後自費參加國泰人壽醫療保險，一學期要 3,000 元。",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-108",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-c94d68071546",
+        "oia-site-694ddc8efa60",
+        "oia-site-c94d68071546",
+        "nhi-students",
+        "oia-site-fb35618b82b1"
+      ],
+      "response": "陸生參加全民健保，每月保費為 1,377 元，學生自己要付 4,551 元。",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": [
+        "4551"
+      ]
+    },
+    {
+      "id": "zh-109",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "destination-zhongli-train-station",
+        "destination-nia-taoyuan-service-center",
+        "oia-site-4c53227fd84f",
+        "place-bus-stop-ncu",
+        "destination-thsr-taoyuan-station"
+      ],
+      "response": "[1] 中壢火車站 Zhongli Train Station (TRA)",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-110",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-799d5f1249c2",
+        "oia-site-779ce58808f8",
+        "oia-site-9eaf94496478",
+        "oia-site-799d5f1249c2",
+        "oia-site-4aad17030720"
+      ],
+      "response": "The provided text does not contain the answer to the question \"INTENSE program Scholarship\".",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-111",
+      "lang": "zh-TW",
+      "answerable": false,
+      "passage_ids": [
+        "place-indoor-swimming-pool",
+        "oia-site-4e86fddc23a8",
+        "oia-site-b78426a6d85a",
+        "oia-site-b90d3d1af2e2",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "[1] 室內游泳池\n[2] 郵件包裹領取\n[3] NEW\n[4] 雙聯學位姐妹校列表\n[5] Registration Calendar",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-112",
+      "lang": "zh-TW",
+      "answerable": false,
+      "passage_ids": [
+        "mol-work-permit-simplified",
+        "nia-stay-after-graduation",
+        "ocac-work-permit",
+        "wda-summer-hours",
+        "credits-freshman-english-exemption"
+      ],
+      "response": "Yes, foreign students can apply for a car parking certificate in the school.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-101",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "ocac-work-permit",
+        "oia-work-permit",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-1ad657e04753",
+        "mol-work-permit-simplified"
+      ],
+      "response": "",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-102",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "nia-hotline"
+      ],
+      "response": "[1] 1990 hotline for foreigners in Taiwan / 業務諮詢一覽表（1990 外來人士在臺生活諮詢服務熱線）",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-103",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "credits-minimum-credits",
+        "credits-semester-credit-load",
+        "credits-doctoral-minimum-credits",
+        "credits-master-minimum-credits"
+      ],
+      "response": "The correct answer is 24.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-104",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-a756a2aad46d",
+        "oia-degree-student-handbook",
+        "service_learning-passport-100-hours",
+        "credits-equivalent-qualification-extra-credits",
+        "credits-service-learning"
+      ],
+      "response": "The answer is 15.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-105",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "destination-zhongli-train-station"
+      ],
+      "response": "- From the train station to the Zhongli train station.\n- From the train station to the Zhongli bus station.\n- From the train station to the Zhongli bus station.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-106",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-page",
+        "oia-site-799d5f1249c2",
+        "oia-site-779ce58808f8",
+        "oia-site-9eaf94496478"
+      ],
+      "response": "[1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-107",
+      "lang": "vi",
+      "answerable": false,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-incoming-students"
+      ],
+      "response": "- Check-in & Check-out Procedure\n- Career Center\n- Office Hours\n- Mon. - Fri. 9:00 AM - 5:00 PM (Taipei Time, UTC+8)",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-108",
+      "lang": "vi",
+      "answerable": false,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "nia-residence-tips",
+        "nia-residence-tips",
+        "nia-residence-tips",
+        "oia-site-4a15f9fbe189"
+      ],
+      "response": "[6]",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-101",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "ocac-work-permit",
+        "mol-work-permit-simplified",
+        "oia-work-permit",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-19735f1a7559"
+      ],
+      "response": "Yes, you can submit an online application for work permits for international degree students.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-102",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "nia-hotline"
+      ],
+      "response": "1.  [1]\n2.  [1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-103",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-b2ccac2d6617",
+        "oia-site-b2ccac2d6617",
+        "credits-doctoral-minimum-credits",
+        "credits-minimum-credits",
+        "credits-master-minimum-credits"
+      ],
+      "response": "The minimum number of SKS (Bachelor's degree) required for a program in a specific field is 24.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-104",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-a756a2aad46d",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook",
+        "service_learning-passport-100-hours"
+      ],
+      "response": "The jam service di paspor NCU must be completed before receiving the ijazah.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-105",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "destination-zhongli-train-station",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook",
+        "place-bus-stop-ncu",
+        "destination-nia-taoyuan-service-center"
+      ],
+      "response": "The bus number is 132.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-106",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-799d5f1249c2",
+        "oia-scholarship-page",
+        "oia-site-9eaf94496478"
+      ],
+      "response": "",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-107",
+      "lang": "id",
+      "answerable": false,
+      "passage_ids": [
+        "oia-site-62546755ea36",
+        "oia-site-cf1bde247b94"
+      ],
+      "response": "[1]",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-108",
+      "lang": "id",
+      "answerable": false,
+      "passage_ids": [],
+      "response": "Here's the answer to your question:\n- Bank mana menawarkan kartu kredit mahasiswa untuk mahasiswa internasional?\n- Bank Nasional Indonesia (BNI) menawarkan berbagai macam kartu kredit mahasiswa.\n- Bank Nasional Indonesia (BNI) memiliki berbagai macam kartu kredit mahasiswa.\n- Bank Nasional Indonesia (BNI) menawarkan berbagai macam kartu kredit mahasiswa.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    }
+  ]
+}

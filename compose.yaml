@@ -17,6 +17,19 @@ x-backend: &backend
     # Optional: live bus arrivals. /transit/bus/* answers 503 while empty.
     TDX_CLIENT_ID: ${TDX_CLIENT_ID:-}
     TDX_CLIENT_SECRET: ${TDX_CLIENT_SECRET:-}
+    # Optional: the model that writes answers for /assistant/ask.
+    ASSISTANT_BASE_URL: ${ASSISTANT_BASE_URL:-}
+    ASSISTANT_MODEL: ${ASSISTANT_MODEL:-}
+    ASSISTANT_API_KEY: ${ASSISTANT_API_KEY:-}
+    ASSISTANT_REASONING_EFFORT: ${ASSISTANT_REASONING_EFFORT:-}
+    ASSISTANT_DISABLE_THINKING: ${ASSISTANT_DISABLE_THINKING:-false}
+    EMBEDDING_BASE_URL: ${EMBEDDING_BASE_URL:-}
+    EMBEDDING_MODEL: ${EMBEDDING_MODEL:-}
+    EMBEDDING_API_KEY: ${EMBEDDING_API_KEY:-}
+    KNOWLEDGE_MIN_SIMILARITY: ${KNOWLEDGE_MIN_SIMILARITY:-0.40}
+    KNOWLEDGE_REFRESH_MINUTES: ${KNOWLEDGE_REFRESH_MINUTES:-60}
+    MCP_HTTP_ENABLED: ${MCP_HTTP_ENABLED:-false}
+    MCP_ALLOWED_HOSTS: ${MCP_ALLOWED_HOSTS:-[]}
   depends_on:
     db:
       condition: service_healthy
@@ -112,7 +125,31 @@ services:
       - api
     restart: unless-stopped
 
+  embedder:
+    image: ghcr.io/ggml-org/llama.cpp:server
+    profiles: ["rag"]
+    command:
+      - -hf
+      - ggml-org/embeddinggemma-300M-GGUF
+      - --embeddings
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8081"
+      - -c
+      - "2048"
+      - -ub
+      - "2048"
+    environment:
+      HF_TOKEN: ${HF_TOKEN:-}
+    volumes:
+      - llama_cache:/root/.cache/llama.cpp
+    expose:
+      - "8081"
+    restart: unless-stopped
+
 volumes:
+  llama_cache:
   postgres_data:
   redis_data:
 

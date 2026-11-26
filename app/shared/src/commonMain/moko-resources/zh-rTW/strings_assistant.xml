@@ -1,0 +1,29 @@
+<resources>
+    <string name="intl_section_ask">問答</string>
+    <string name="assistant_intro">可以問校園館舍在哪裡、往返中大的公車，或國際處的規定。回答只依據這個 App 自己的資料，資料會列在回答下方。</string>
+    <string name="assistant_question_hint">用任何語言輸入問題</string>
+    <string name="assistant_ask">送出</string>
+    <string name="assistant_asking">查詢中…</string>
+    <string name="assistant_failed">無法連上問答服務，請稍後再試。</string>
+    <string name="assistant_answer">回答</string>
+    <string name="assistant_no_model">這台伺服器沒有可以撰寫回答的模型，以下是查到的資料。</string>
+    <string name="assistant_model_failed">模型這次沒能回答，以下是查到的資料。</string>
+    <string name="assistant_nothing_found">沒有查到可以依據的資料。</string>
+    <string name="assistant_unsupported_numbers">這些數字在來源裡找不到，請再確認：%1$s</string>
+    <string name="assistant_based_on">依據的資料</string>
+    <string name="assistant_open_source">開啟來源</string>
+    <string name="assistant_open_walking">步行路線</string>
+    <string name="assistant_open_transit">從中大出發的路線</string>
+    <string name="assistant_place_code">館舍代碼 %1$s</string>
+    <string name="assistant_bus_route">公車 %1$s 校內站牌</string>
+    <string name="assistant_bus_in_minutes">約 %1$d 分鐘後</string>
+    <string name="assistant_bus_next_at">下一班 %1$s 發車</string>
+    <string name="assistant_bus_none_today">今天沒有車了</string>
+    <string name="assistant_bus_no_estimate">沒有預估</string>
+    <string name="assistant_bus_not_configured">這台伺服器沒有設定公車即時到站。</string>
+    <string name="assistant_bus_rate_limited">公車即時到站目前流量受限，請一分鐘後再試。</string>
+    <string name="assistant_bus_unreachable">目前連不上公車即時到站資料。</string>
+    <string name="assistant_example_place">E6-A203 在哪裡？</string>
+    <string name="assistant_example_bus">下一班 132 公車幾點？</string>
+    <string name="assistant_example_insurance">國泰保險每次門診最高理賠多少？</string>
+</resources>

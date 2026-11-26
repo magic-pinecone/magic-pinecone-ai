@@ -37,6 +37,8 @@ import org.mpc.domain.model.SourcedRules
 import org.mpc.domain.model.TimetableColorMode
 import org.mpc.domain.model.collegesFor
 import org.mpc.domain.model.rulesFor
+import org.mpc.presentation.AssistantRoute
+import org.mpc.presentation.AssistantScreen
 import org.mpc.presentation.ClubsScreen
 import org.mpc.presentation.ClubsView
 import org.mpc.presentation.CreditsRoute
@@ -49,6 +51,7 @@ import org.mpc.presentation.PortalScreen
 import org.mpc.presentation.ServiceLearningRoute
 import org.mpc.presentation.ServiceLearningScreen
 import org.mpc.presentation.SettingsScreen
+import org.mpc.presentation.state.AssistantUiState
 import org.mpc.presentation.state.ClubUiState
 import org.mpc.presentation.state.CoursePlanUiState
 import org.mpc.presentation.state.CourseSearchError
@@ -112,6 +115,17 @@ enum class ComposePreviewScenario {
 
     /** Reads the running backend through [GraduationLanguageViewModel]. */
     GRADUATION_LIVE,
+
+    /** Shows [AssistantPreviewFixture]: a building question answered by a model. */
+    ASSISTANT_POPULATED,
+
+    /** A bus question on a backend that has no model: what was looked up, without a written answer. */
+    ASSISTANT_NOMODEL,
+    ASSISTANT_FAILURE,
+    ASSISTANT_NEEDSBACKEND,
+
+    /** Asks the running backend through [org.mpc.presentation.viewModel.AssistantViewModel]. */
+    ASSISTANT_LIVE,
 }
 
 // One branch per scenario; splitting the dispatch would only scatter it.
@@ -262,6 +276,23 @@ internal fun ComposePreviewScenarioContent(
         -> GraduationLanguagePreview(scenario)
 
         ComposePreviewScenario.GRADUATION_LIVE -> GraduationLanguageLive()
+
+        ComposePreviewScenario.ASSISTANT_POPULATED,
+        ComposePreviewScenario.ASSISTANT_NOMODEL,
+        ComposePreviewScenario.ASSISTANT_FAILURE,
+        ComposePreviewScenario.ASSISTANT_NEEDSBACKEND,
+        -> AssistantScreen(
+            state = when (scenario) {
+                ComposePreviewScenario.ASSISTANT_FAILURE -> AssistantUiState.Failed
+                ComposePreviewScenario.ASSISTANT_NEEDSBACKEND -> AssistantUiState.NeedsBackend
+                ComposePreviewScenario.ASSISTANT_NOMODEL -> AssistantUiState.Answered(AssistantPreviewFixture.busWithoutModel)
+                else -> AssistantUiState.Answered(AssistantPreviewFixture.place)
+            },
+            onAsk = {},
+            modifier = Modifier.fillMaxSize(),
+        )
+
+        ComposePreviewScenario.ASSISTANT_LIVE -> AssistantRoute(modifier = Modifier.fillMaxSize())
     }
 }
 

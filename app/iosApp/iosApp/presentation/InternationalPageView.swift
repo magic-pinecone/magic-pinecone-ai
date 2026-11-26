@@ -32,6 +32,7 @@ extension InternationalPage {
         case .govGuides: "building.2"
         case .serviceLearning: "hands.sparkles"
         case .credits: "graduationcap"
+        case .ask: "questionmark.bubble"
         }
     }
 }

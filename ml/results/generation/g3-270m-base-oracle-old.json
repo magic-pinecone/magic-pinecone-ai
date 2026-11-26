@@ -1,0 +1,1146 @@
+{
+  "run_name": "g3-270m-base-oracle-old",
+  "model": "g3-270m-base",
+  "passages": "oracle",
+  "top_k": 5,
+  "questions": 60,
+  "question_set": "old",
+  "search": "hybrid",
+  "summary": {
+    "en": {
+      "total": 24,
+      "answerable": 21,
+      "unanswerable": 3,
+      "ctx_has_answer": 21,
+      "ctx_lacks_answer": 0,
+      "answer_ok": 11,
+      "answer_ok_ctx": 11,
+      "citation_ok": 4,
+      "refused_unanswerable": 0,
+      "refused_no_ctx": 0,
+      "over_refused": 0,
+      "number_error": 0
+    },
+    "zh-TW": {
+      "total": 12,
+      "answerable": 10,
+      "unanswerable": 2,
+      "ctx_has_answer": 10,
+      "ctx_lacks_answer": 0,
+      "answer_ok": 3,
+      "answer_ok_ctx": 3,
+      "citation_ok": 5,
+      "refused_unanswerable": 0,
+      "refused_no_ctx": 0,
+      "over_refused": 0,
+      "number_error": 1
+    },
+    "vi": {
+      "total": 12,
+      "answerable": 10,
+      "unanswerable": 2,
+      "ctx_has_answer": 10,
+      "ctx_lacks_answer": 0,
+      "answer_ok": 2,
+      "answer_ok_ctx": 2,
+      "citation_ok": 5,
+      "refused_unanswerable": 0,
+      "refused_no_ctx": 0,
+      "over_refused": 1,
+      "number_error": 1
+    },
+    "id": {
+      "total": 12,
+      "answerable": 10,
+      "unanswerable": 2,
+      "ctx_has_answer": 10,
+      "ctx_lacks_answer": 0,
+      "answer_ok": 6,
+      "answer_ok_ctx": 6,
+      "citation_ok": 2,
+      "refused_unanswerable": 0,
+      "refused_no_ctx": 0,
+      "over_refused": 0,
+      "number_error": 1
+    },
+    "all": {
+      "total": 60,
+      "answerable": 51,
+      "unanswerable": 9,
+      "ctx_has_answer": 51,
+      "ctx_lacks_answer": 0,
+      "answer_ok": 22,
+      "answer_ok_ctx": 22,
+      "citation_ok": 16,
+      "refused_unanswerable": 0,
+      "refused_no_ctx": 0,
+      "over_refused": 1,
+      "number_error": 3
+    }
+  },
+  "items": [
+    {
+      "id": "en-001",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-site-694ddc8efa60",
+        "oia-insurance"
+      ],
+      "response": "[1] 2026 Fall Degree Student Handbook",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-002",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook"
+      ],
+      "response": "[1] Hospitalization (Daily)\n[2] Hospitalization (Total Cap)",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-003",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "nia-student-online-guidelines"
+      ],
+      "response": "The application procedure for the National Health Insurance (NHI) is as follows:\n1. Applicants under Subparagraphs 1 and 2 of the preceding point: Resident visa or visitor visa for the purpose of study, admission permit or proof of enrollment (including student ID), proof of residence address in the ROC.\n2. Applicants under Subparagraph 3 of the preceding point: Resident visa, visitor visa or Alien Resident Certificate (ARC) of sixty (60) days or more without any restrictions endorsed, admission permit or proof of enrollment (including student ID), proof of residence address in the ROC.\n3. Applicants under Subparagraphs 4 or 6 of the preceding point: Alien Resident Certificate (ARC), admission permit or proof of enrollment (including student ID).\n4. Applicants under Subparagraph 5 of the preceding point: resident visa or visitor visa for the purpose of studying Mandarin, proof of enrollment and registration (proof of enrollment must indicate completion of at least four (4) months of study and continuous registration for at least three (3) months, with attendance records showing a minimum of fifteen (15) hours of classes per week from Monday to Friday, with absences, including leave hours, not exceeding one-fourth of the total class hours).\n5. Applicants holding a visitor visa must also provide a health examination certificate issued within the last three (3) months.\n6. Applicants holding a Resident visa must also provide a health examination certificate issued within the last three (3) months.\n7. Applicants under Subparagraphs 4 or 6 of the preceding point: Alien Resident Certificate (ARC), admission permit or proof of enrollment (including student ID).\n8. Applicants applying for the purpose of studying Mandarin shall additionally provide proof of attendance for the most recent semester (with absences, including leave hours, not exceeding one-fourth of the total class hours).\n9. The duration of the residence permit shall be issued based on the validity period of the proof of enrollment (not exceeding six (6) months at maximum), with a general principle of a total residence extension period not exceeding two (2) years.\n10. Applicants holding a visitor visa must also provide a health examination certificate issued within the last three (3) months.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-004",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-site-c94d68071546",
+        "oia-site-613f2e754e32"
+      ],
+      "response": "[1] Medical insurance for international degree students\nHospitalization (Total Cap)\nTotal payment of benefits shall not exceed\nNT$120,000\nper hospitalization.\nRequired Documents for Reimbursement:\n1. Original Medical Receipt\n2. Medical Certificate\n3. Post Office Passbook Copy\n\n[2] 2026 Fall Degree Student Handbook\n  will reimburse the following expenses\n  Hospitalized  NTD 1,000/day  The benefit payment will not exceed NTD120,000/hospitalization\n  Reimbursement for outpatient/emergency treatment will not exceed NTD1,000/visit.\n  To apply for reimbursement, please submit the following documents to OIA:\n  Receipt  Medical certificate (obtained from the hospital/clinic)\n  Post office account book, passport, and ARC (only for first-time applicants)\n  Application form (available at OIA)\n  OIA will submit the documents to Cathay Insurance for processing the medical subsidy\n\n[3]僑生保險\n(二) 醫療費用收據正本\n(三) 居留證影本\n(四) 護照影本\n(五) 郵局存摺影本\n(六)\n國泰理賠申請書\n<https://oia.ncu.edu.tw/static/file/26/1026/img/279/cathayInsurance.pdf>\n國泰人壽保險",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-005",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook",
+        "oia-site-694ddc8efa60",
+        "oia-degree-student-handbook"
+      ],
+      "response": "[1] Medical insurance for international degree students",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-006",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "wda-summer-hours",
+        "oia-work-permit",
+        "oia-site-1ad657e04753",
+        "nia-student-online-guidelines",
+        "oia-site-19735f1a7559"
+      ],
+      "response": "The question asks for the number of hours per week that can be worked during the semester.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-007",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-19735f1a7559",
+        "taipei-times-graduate-stay",
+        "oia-work-permit",
+        "ocac-work-permit",
+        "oia-site-9d9e36d4716b"
+      ],
+      "response": "The answer is 1-2 weeks.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-008",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-1ad657e04753",
+        "nia-residence-tips",
+        "ocac-work-permit",
+        "oia-work-permit",
+        "oia-site-4a82cc1fbc88"
+      ],
+      "response": "[1] Documentation Process / Add New Application.pdf",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-009",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-site-694ddc8efa60",
+        "oia-site-19735f1a7559",
+        "ocac-work-permit",
+        "oia-work-permit"
+      ],
+      "response": "",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-010",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "taipei-times-graduate-stay",
+        "oia-work-permit",
+        "oia-site-9d9e36d4716b",
+        "oia-site-19735f1a7559",
+        "ocac-work-permit"
+      ],
+      "response": "The work permit is valid for at most 6 months.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-011",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook",
+        "oia-exchange-incoming",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "[1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-012",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-4a82cc1fbc88",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-4a82cc1fbc88",
+        "oia-immigration",
+        "oia-site-4a82cc1fbc88"
+      ],
+      "response": "The ARC application form is available on the Immigration: visa and ARC forms at the Immigration website.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-013",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-site-9eaf94496478"
+      ],
+      "response": "- The maximum monthly stipend of the NCU International Student Scholarship for a master's student is NTD$15,000.\n- The maximum monthly stipend of the NCU International Student Scholarship for a master's student is NTD$10,000.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-014",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-a756a2aad46d",
+        "oia-scholarship-page"
+      ],
+      "response": "- The cumulative GPA of an undergraduate student must be at least 60.\n- The NCU International Student Scholarship is for international students.\n- The application deadline is [1].\n- The application process involves submitting transcripts, letters of recommendation, and a passport.\n- The application process is conducted by the NCU International Student Scholarship Office.\n- The application deadline is [2].\n- The application process involves submitting transcripts, letters of recommendation, and a passport.\n- The application process is conducted by the NCU International Student Scholarship Office.\n- The application deadline is [3].\n- The application process involves submitting transcripts, letters of recommendation, and a passport.\n- The application process is conducted by the NCU International Student Scholarship Office.\n- The application deadline is [4].\n- The application process involves submitting transcripts, letters of recommendation, and a passport.\n- The application process is conducted by the NCU International Student Scholarship Office.\n- The application deadline is [5].\n- The application process involves submitting transcripts, letters of recommendation, and a passport.\n- The application process is conducted by the NCU International Student Scholarship Office.\n- The application deadline is [6].\n- The application process involves submitting transcripts, letters of recommendation, and a passport.\n- The application process is conducted by the NCU International Student Scholarship Office.\n- The application deadline is [7].\n- The application process involves submitting transcripts, letters of recommendation, and a passport.\n- The application process is conducted by the NCU International Student Scholarship Office.\n- The application deadline is [8].\n- The application process involves submitting transcripts, letters of recommendation, and a passport.\n- The application process is conducted by the NCU International Student Scholarship Office.\n- The application deadline is [9].\n- The application process involves submitting transcripts, letters of recommendation, and a passport.\n- The application process is conducted by the NCU International Student Scholarship Office.\n- The application deadline is [10].\n- The application process involves submitting transcripts, letters of recommendation, and a passport.\n- The application process is conducted by the NCU International Student Scholarship Office.\n- The application deadline is [11].\n- The application process involves submitting transcripts, letters of recommendation, and a passport.\n- The application process is conducted by the NCU International Student Scholarship Office.\n- The application deadline is [12].\n- The application process involves submitting transcripts,",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-015",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page"
+      ],
+      "response": "- The NCU International Student Scholarship is available for PhD students for 8 semesters, including suspension periods.\n- The scholarship is awarded based on the applicant's academic qualifications and the specific requirements of the PhD program.\n- The scholarship is available for PhD students, with a maximum duration of 8 semesters.\n- The scholarship is awarded to PhD students who meet the minimum academic requirements.\n- The scholarship is available for PhD students, with a maximum duration of 8 semesters.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-016",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page"
+      ],
+      "response": "- The application period for the NCU Scholarship for the Fall 2026 semester is from July 6th to July 20th, 2026.\n- The application deadline for the NCU Scholarship for the Fall 2026 semester is July 6th to July 20th, 2026.\n- The application deadline for the NCU Scholarship for the Fall 2026 semester is July 6th to July 20th, 2026.\n- The application deadline for the NCU Scholarship for the Fall 2026 semester is July 6th to July 20th, 2026.\n- The application deadline for the NCU Scholarship for the Fall 2026 semester is July 6th to July 20th, 2026.\n- The application deadline for the NCU Scholarship for the Fall 2026 semester is July 6th to July 20th, 2026.\n- The application deadline for the NCU Scholarship for the Fall 2026 semester is July 6th to July 20th, 2026.\n- The application deadline for the NCU Scholarship for the Fall 2026 semester is July 6th to July 20th, 2026.\n- The application deadline for the NCU Scholarship for the Fall 2026 semester is July 6th to July 20th, 2026.\n- The application deadline for the NCU Scholarship for the Fall 2026 semester is July 6th to July 20th, 2026.\n- The application deadline for the NCU Scholarship for the Fall 2026 semester is July 6th to July 20th, 2026.\n- The application deadline for the NCU Scholarship for the Fall 2026 semester is July 6th to July 20th, 2026.\n- The application deadline for the NCU Scholarship for the Fall 2026 semester is July 6th to July 20th, 2026.\n- The application deadline for the NCU Scholarship for the Fall 2026 semester is July 6th to July 20th,",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-017",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-degree-student-handbook"
+      ],
+      "response": "- You can apply for your transcript at 2 locations:\n(1) Self-service Machine near to Zhi-Dao Lecture Hall.\n(2) Office of Registrar, 3rd floor of the Teaching & Research Building.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-018",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-084a1a606d7e",
+        "nia-student-online-guidelines",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-4a82cc1fbc88",
+        "oia-degree-student-handbook"
+      ],
+      "response": "The resident visa holder must apply for the ARC within 30 days after arrival.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-019",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-498703495648",
+        "nia-student-online-guidelines",
+        "oia-degree-student-handbook",
+        "oia-site-498703495648"
+      ],
+      "response": "The late processing fee for manual course selection is NTD $100 per course.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-020",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-799d5f1249c2",
+        "nia-student-online-guidelines",
+        "oia-degree-student-handbook",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "The health examination fee for the first semester is NTD 780.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-021",
+      "lang": "en",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-site-694ddc8efa60",
+        "oia-site-694ddc8efa60",
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "response": "The National Health Insurance fee per semester is NTD 4,956.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-022",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "oia-work-permit",
+        "oia-site-14f77ce7b79e",
+        "oia-degree-student-handbook",
+        "nia-residence-tips",
+        "oia-insurance"
+      ],
+      "response": "- The application process for a Taiwanese driver's license is typically online, with a specific application form required.\n- The application form requires the applicant to provide their original and photocopy.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form requires the applicant to provide their original and photocopy.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National Health Insurance (NHI) website.\n- The application form is available on the National",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-023",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "taipei-times-graduate-stay",
+        "oia-site-c9fdd88183bc",
+        "oia-site-44fffda52501",
+        "oia-site-9eaf94496478",
+        "oia-site-9d9e36d4716b"
+      ],
+      "response": "[1]",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "en-024",
+      "lang": "en",
+      "answerable": false,
+      "passage_ids": [
+        "nia-residence-tips",
+        "nia-residence-tips",
+        "nia-residence-tips",
+        "oia-site-28271c6518e4",
+        "nia-residence-tips"
+      ],
+      "response": "[6]",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-001",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "[1] 2026 Fall Degree Student Handbook\n[2] Medical insurance for international degree students\n[3] 2026 Fall Degree Student Handbook\n[4] Registration Calendar",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-002",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook",
+        "oia-insurance",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "[1] 2026 Fall Degree Student Handbook",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-003",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "response": "- The answer is 12.\n- The OIA contact is ncuoia@ncu.edu.tw, +886-3-425-4945.",
+      "refused": true,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": [
+        "12"
+      ]
+    },
+    {
+      "id": "vi-004",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "wda-summer-hours",
+        "oia-work-permit",
+        "nia-student-online-guidelines",
+        "oia-site-19735f1a7559",
+        "oia-site-e90988d012ed"
+      ],
+      "response": "- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for work permit application is 20 hours.\n- The number of hours per week for",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-005",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-19735f1a7559",
+        "nia-student-online-guidelines",
+        "oia-work-permit",
+        "ocac-work-permit",
+        "nia-student-online-guidelines"
+      ],
+      "response": "[1] 工作证\n點選『\n專業外國人工作許可案件申辦進度查詢\n<https://wcfext.wda.gov.tw/wcfonline/people_search/index.jsp>\n』\n『雇主編號』請輸入您的ARC號碼\n『收文起迄日期』請輸入您寄出申請件的日期及從該日算起一週後的日期\n三、其他相關規定 (許可期限、罰則、工作許可之終止)\n外國留學生、僑生及港澳生其申請工作許可，許可期間最長為6個月，其工作時間除寒暑假外，每星期最長為20小時。\n\n[2] Guidelines for online residence applications by foreign and overseas compatriot students\n(II) For the reissuance of the ARC due to damage, destruction, loss, or for updating personal information such as changes in name (in both Chinese and English), date of birth, gender, photograph, etc., a fee of NTD 500 per item is charged (new document issuance is required).\nVI. Processing Time: Five (5) working days. Applicants with incomplete or insufficient documents must rectify the issue within fifteen (15) days from the day of notification. For those who need to apply from overseas, the rectification period is extended to three (3) months. Failure to rectify or incomplete rectification by the deadline will result in the rejection of the application. After rectification, the processing time will be recalculated with a duration of five (5) working days.\nVII. Notes:\n(I) The required documents must be uploaded to the online system as color images with a file size of no more than 512KB, formatted as JPG, JPEG, PNG, BMP, or PDF. The content must be clear and legible, and the file names should correspond to the type of document. The applicant's photo uploaded must be a color image with excess blank space cropped out to form a file. The face should occupy approximately two-thirds of the image area, and it must be recognizable as the same person as shown in the passport.\n(II) Documents produced overseas must be accompanied by a Chinese translation and verified by the overseas mission. If the overseas mission only verifies the document and not the Chinese translation, then the Chinese translation must be notarized by courts (or notary public) in the ROC.\n(III) Any ROC national residing",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-006",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-4a82cc1fbc88",
+        "oia-site-084a1a606d7e",
+        "oia-site-4a82cc1fbc88",
+        "oia-immigration",
+        "oia-site-4a82cc1fbc88"
+      ],
+      "response": "[1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-007",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-c1a247fe9849",
+        "oia-scholarship-page"
+      ],
+      "response": "- Mức trợ cấp hằng tháng tối đa của Học bổng Sinh viên Quốc tế NCU dành cho học viên thạc sĩ là 15,000 NTD.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-008",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "nia-student-online-guidelines",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-084a1a606d7e"
+      ],
+      "response": "[1] 2026 Fall Degree Student Handbook",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-009",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-b2ccac2d6617",
+        "oia-degree-student-handbook",
+        "oia-site-498703495648",
+        "oia-site-b2ccac2d6617",
+        "oia-scholarship-page"
+      ],
+      "response": "[1] 2026-2027 Academic Calendar\n[2] 2026 Fall Degree Student Handbook\n[3] Course Selection Calendar\n[4] 2026-2027 Academic Calendar\n[5] NCU International Student Scholarship",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-010",
+      "lang": "vi",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-insurance",
+        "oia-site-694ddc8efa60",
+        "oia-degree-student-handbook",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "[1] Medical insurance for international degree students\n[2] Medical insurance for international degree students\n[3] Registration calendar\n[4] 2026 Fall Degree Student Handbook\n[5] Registration calendar",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-011",
+      "lang": "vi",
+      "answerable": false,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-site-b2ccac2d6617",
+        "oia-work-permit",
+        "oia-site-b2ccac2d6617",
+        "oia-degree-student-handbook"
+      ],
+      "response": "The Sinh viên quốc tế làm thế nào để xin giấy phép lái xe của Đài Loan?",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "vi-012",
+      "lang": "vi",
+      "answerable": false,
+      "passage_ids": [
+        "oia-work-permit",
+        "nia-student-online-guidelines",
+        "nia-residence-tips",
+        "taipei-times-graduate-stay",
+        "oia-site-498703495648"
+      ],
+      "response": "",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-001",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-site-694ddc8efa60",
+        "oia-site-694ddc8efa60",
+        "oia-insurance"
+      ],
+      "response": "[1] 2026 Fall Degree Student Handbook\n  With this insurance, you can visit clinics or hospitals and pay the full fee\n  upfront. The reimbursement coverage is as follows:\n  Item  Insured Value\n  (Maximum)  Remark\n  Clinic  NTD 1,000/day or visit  If the insured is hospitalized due to illness or injury, the company\n  will reimburse the following expenses\n  Hospitalized  NTD 1,000/day  The benefit payment will not exceed NTD120,000/hospitalization\n  Reimbursement for outpatient/emergency treatment will not exceed NTD1,000/visit.\n\n[2] Registration Calendar\ncoverage provided by Cathay Life\nInsurance.\n符合健保資格者加保保費4,956元，若未\n符合健保資格則需加保國泰人壽保險\n3,000元。\nMedical Insurance\nfor Overseas\nChinese Students\n\n[3] Registration Calendar\nwho are not eligible for National Health Insurance\nshould pay TWD 3,000 to extend\ncoverage provided by Cathay Life\nInsurance.\n僑生新生若有申請清寒補助者，學生只\n需負擔2,478元，未得補助者4,956元。未\n符合健保資格者加保國泰人壽保險3,000\n元。\n\n[4] Medical insurance for international degree students\nto apply for National Health Insurance (NHI) immediately. You are required to join Cathay Insurance for your first six months in Taiwan.\nWith Cathay Insurance, you must pay the full medical fee by yourself at the clinic or hospital first, and then apply for reimbursement. The coverage and reimbursement limits are as follows:\nClinic Visits\nMaximum reimbursement of\nNT$1,000\nper day/visit.\nHospitalization (Daily)\nMaximum reimbursement of",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-002",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-degree-student-handbook",
+        "oia-site-694ddc8efa60",
+        "oia-site-694ddc8efa60"
+      ],
+      "response": "The total benefits asuransi Cathay for one instance of a rawat inap will be NT$3,000.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-003",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-insurance"
+      ],
+      "response": "- The most recent year for NHI enrollment is 2026.\n- The most recent year for NHI enrollment is 2027.\n- The most recent year for NHI enrollment is 2028.\n- The most recent year for NHI enrollment is 2029.\n- The most recent year for NHI enrollment is 2030.\n- The most recent year for NHI enrollment is 2031.\n- The most recent year for NHI enrollment is 2032.\n- The most recent year for NHI enrollment is 2033.\n- The most recent year for NHI enrollment is 2034.\n- The most recent year for NHI enrollment is 2035.\n- The most recent year for NHI enrollment is 2036.\n- The most recent year for NHI enrollment is 2037.\n- The most recent year for NHI enrollment is 2038.\n- The most recent year for NHI enrollment is 2039.\n- The most recent year for NHI enrollment is 2040.\n- The most recent year for NHI enrollment is 2041.\n- The most recent year for NHI enrollment is 2042.\n- The most recent year for NHI enrollment is 2043.\n- The most recent year for NHI enrollment is 2044.\n- The most recent year for NHI enrollment is 2045.\n- The most recent year for NHI enrollment is 2046.\n- The most recent year for NHI enrollment is 2047.\n- The most recent year for NHI enrollment is 2048.\n- The most recent year for NHI enrollment is 2049.\n- The most recent year for NHI enrollment is 2050.\n- The most recent year for NHI enrollment is 2051.\n- The most recent year for NHI enrollment is 2052.\n- The most recent year for NHI enrollment is 2053.\n- The most recent year for NHI enrollment is 2054.\n- The most recent year for NHI enrollment is 2055.\n- The",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": [
+        "2027",
+        "2028",
+        "2029",
+        "2030",
+        "2031",
+        "2032",
+        "2033",
+        "2034",
+        "2035",
+        "2036",
+        "2037",
+        "2038",
+        "2039",
+        "2040",
+        "2041",
+        "2042",
+        "2043",
+        "2044",
+        "2045",
+        "2046",
+        "2047",
+        "2048",
+        "2049",
+        "2050",
+        "2051",
+        "2052",
+        "2053",
+        "2054",
+        "2055"
+      ]
+    },
+    {
+      "id": "id-004",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "wda-summer-hours",
+        "nia-student-online-guidelines",
+        "oia-site-19735f1a7559",
+        "oia-work-permit",
+        "oia-site-e90988d012ed"
+      ],
+      "response": "The answer is 20 hours.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-005",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-19735f1a7559",
+        "ocac-work-permit",
+        "oia-site-19735f1a7559",
+        "oia-site-19735f1a7559",
+        "oia-work-permit"
+      ],
+      "response": "The answer is:\n*   **1-2 weeks**\n*   **1-2 weeks**\n*   **1-2 weeks**",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-006",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-immigration",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-4a82cc1fbc88"
+      ],
+      "response": "[1] Immigration: visa and ARC forms\n<https://oia.ncu.edu.tw/static/file/26/1026/img/389/VISAandARC.pdf>\n[2] ARC Application Form (Multiple Purpose Application Form).pdf\n<https://oia.ncu.edu.tw/static/file/26/1026/img/389/ARCApplicationFormMultiplePurposeApplicationForm.pdf>\n[3] ARC Application Form (Multiple Purpose Application Form).pdf\n<https://oia.ncu.edu.tw/static/file/26/1026/img/389/ARCApplicationForm.pdf>\n[4] ARC Application Form (Multiple Purpose Application Form).pdf\n<https://oia.ncu.edu.tw/static/file/26/1026/img/389/ARCApplicationForm.pdf>",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-007",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-9eaf94496478",
+        "oia-scholarship-page"
+      ],
+      "response": "- The maximum monthly stipend for Beasiswa Mahasiswa Internasional NCU for students is NTD$40,000.\n- The maximum monthly stipend for Beasiswa Mahasiswa Internasional NCU for students is NTD$15,000.\n- The maximum monthly stipend for Beasiswa Mahasiswa Internasional NCU for students is NTD$9,000.\n- The maximum monthly stipend for Beasiswa Mahasiswa Internasional NCU for students is NTD$10,000.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-008",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "nia-student-online-guidelines",
+        "oia-site-084a1a606d7e",
+        "oia-degree-student-handbook",
+        "oia-site-4a82cc1fbc88",
+        "oia-site-084a1a606d7e"
+      ],
+      "response": "[6]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-009",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-498703495648",
+        "oia-degree-student-handbook"
+      ],
+      "response": "- The cost of a manual selection calendar for a course is NTD $100 per course.\n- The cost of a manual selection system is NTD $100 per course.\n- The cost of a manual selection system is NTD $100 per course.\n- The cost of a manual selection system is NTD $100 per course.\n- The cost of a manual selection system is NTD $100 per course.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-010",
+      "lang": "id",
+      "answerable": true,
+      "passage_ids": [
+        "oia-insurance",
+        "oia-insurance",
+        "oia-site-694ddc8efa60",
+        "oia-degree-student-handbook"
+      ],
+      "response": "[1]",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-011",
+      "lang": "id",
+      "answerable": false,
+      "passage_ids": [
+        "oia-degree-student-handbook",
+        "oia-degree-student-handbook",
+        "oia-site-e90988d012ed",
+        "oia-insurance",
+        "oia-scholarship-page"
+      ],
+      "response": "- The process for submitting a SIM in Taiwan involves submitting a form, a copy of the ID photo, and a passport.\n- The application process is typically done through the National Health Insurance (NHI) website.\n- Students must apply for SIMs through the National Health Insurance (NHI) website.\n- The application process is typically done through the TEEP Program.\n- The application process is typically done through the Ministry of Education.\n- The application process is typically done through the National Health Insurance (NHI) website.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "id-012",
+      "lang": "id",
+      "answerable": false,
+      "passage_ids": [
+        "oia-work-permit",
+        "nia-student-online-guidelines",
+        "nia-residence-tips",
+        "taipei-times-graduate-stay"
+      ],
+      "response": "The correct answer is 10.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-001",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-fb35618b82b1",
+        "oia-insurance",
+        "oia-site-613f2e754e32",
+        "oia-site-613f2e754e32",
+        "oia-site-fb35618b82b1"
+      ],
+      "response": "[1] 在校保險及全民保險需知\n▻郵局存簿影本\n四、理賠項目：\n[2] 申請死亡保險金且受益人有數人時，限選擇同一領取方式；受益人逾 2 人時，請另填附件(一)\n\n[3] 國泰理賠申請書\n項\n1. 【個人資料保護法應告知事項】依據個人資料保護法及保險法第 177 條之 1 暨其相關規定，本公司為辦理人身保險業務之客戶服務、招攬、核保、理\n賠、契約保全、再保險、海外急難救助、追償、申訴及爭議處理、公司內部控制及稽核業務及符合相關法令規範之需要，而蒐集您的個人資料(包括病歷、醫療及健康檢查等特種個資)。所蒐集之資料除了再保險業務或委外業務執行的需要，會在我國境外被處理及利用外，僅會於前開蒐集目的存續期\n間及依法令規定規定期間內，以合於法令規定之利用方式，於我國境內供本公司及因以上目的作業需要之第三方處理及利用。您可以至本公司各服務中心或利用本公司免費客戶服務專線(0800-036-599)查詢、請求閱覽、製給複製本、更正、補充、停止蒐集、處理、利用或刪除您的個人資料，惟本公司依法令規定或因執行業務所必須，得不依您的請求處理。若您未能提供相關個人資料時，本公司將可能無法辦理您的理賠申請。\n2. 申請死亡保險金且受益人有數人時，限選擇同一領取方式；受益人逾 2 人時，請另填附件(一)\n\n[4] 國泰理賠申請書\n8. 【個人資料保護法應告知事項】依據個人資料保護法及保險法第 177 條之 1 暨其相關規定，本公司為辦理人身保險業務之客戶服務、招攬、核保、理\n賠、契約保全、再保險、海外急難救助",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-002",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-613f2e754e32",
+        "oia-site-613f2e754e32",
+        "oia-insurance",
+        "oia-site-fb35618b82b1",
+        "oia-degree-student-handbook"
+      ],
+      "response": "[1] 國泰理賠申請書\n或利用本公司免費客戶服務專線(0800-036-599)查詢、請求閱覽、製給複製本、更正、補充、停止蒐集、處理、利用或刪除您的個人資料，惟本公司\n依法令規定或因執行業務所必須，得不依您的請求處理。若您未能提供相關個人資料時，本公司將可能無法辦理您的理賠申請。\n2. 申請死亡保險金且受益人有數人時，限選擇同一領取方式；受益人逾 2 人時，請另填附件(一)。\n3. 因匯款帳戶錯誤、變更、撤銷等原因致無法完成轉帳者，本公司得改以禁止背書轉讓支票給付。\n4. 依保險契約條款約定，受益人申請各項保險金時，本公司得請求被保險人或受益人提供被保險人病歷調查同意書，其費用由本公司負擔。\n5. 各項理賠給付所需申請文件請詳見後頁，惟給付項目仍以保險契約條款之約定為準。\n6. 依「全民健康保險扣取及繳納補充保險費辦法」，單張保單給付理賠延滯息達新臺幣兩萬元者，應按規定之補充保險費率扣取補充保險費，但屬下列兩種\n種身分者，於理賠申請時檢附下列文件可免扣取補充保險費：(1)低收入戶者：檢附社政機關核定有效期限內之中低收入戶證明文件；(2)未具投保資格\n\n[2] 國泰理賠申請書\n8. 【個人資料保護法應告知事項】依據個人資料保護法及保險法第 177 條之 1 暨其相關規定，本公司為辦理人身保險業務之客戶服務、招攬、核保、理賠、契約保全、再保險、海外急難救助、追償、申訴及爭議處理、公司內部控制及稽核業務及符合相關法令規範之需要，而蒐集您的個人資料(包",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-003",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "nhi-students",
+        "nhi-students",
+        "oia-site-c94d68071546",
+        "oia-insurance",
+        "oia-site-fb35618b82b1"
+      ],
+      "response": "[1] National Health Insurance for overseas Chinese and foreign students in Taiwan / 在臺僑生、外籍生參加全民健康保險注意事項\n許可工作期間\n投保資格 自在臺居留滿 6 個月之日投保 自受僱當日投保（無等待期）\n投保身分  第 6 類第 2 目被保險人  第 1 類被保險人（受僱者）\n投保方式  以就讀學校為投保單位  以工作單位為投保單位\n辦理投保  辦理投保\n（如從事短期性工作未逾 3 個月者，\n僑外生可選擇以原投保資格繼續投保）＊在臺居留滿 6 個月指進入臺灣地區連續居住達 6 個月，或曾出境 1 次且未逾 30 日，其實際\n\n[2] National Health Insurance for overseas Chinese and foreign students in Taiwan / 在臺僑生、外籍生參加全民健康保險須知\n投保；倘於 114/1/1 至 114/1/5 日曾出境 1 次共 4 日，則應計算扣除出境日後，實際居住滿\n6 個月之日 114/3/5 投保。）\n＊每個工作日皆到工或每週工時達 12 小時者視同專任員工，應由雇主為其投保。\n◎僑生、外籍生（以下稱僑外生）在臺參加健保注意事項\n1. 僑外生在臺就學並符合投保資格期間，應以就讀學校為投保單位辦理投保。\n2. 僑外生經許可在臺工作並經事業單位僱用，投保單位（雇主）應於被保險人\n合於投保資格之日起 3 日內，向健保署辦理投保。\n3. 僑外生於受僱單位投保時，應於學校辦理轉出，避免重複投保。\n\n[3] 僑生保險\n一、依據：全民健康保險法。\n二、加保資格：在學僑生拿到居留證後在臺居留滿6個月，且期間",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-004",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "wda-summer-hours",
+        "oia-site-19735f1a7559",
+        "ocac-work-permit",
+        "mol-work-permit-simplified",
+        "oia-work-permit"
+      ],
+      "response": "The question asks about the maximum working hours for work permits granted by international degree students.",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-005",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-page",
+        "oia-scholarship-guidelines",
+        "oia-scholarship-guidelines",
+        "oia-scholarship-guidelines",
+        "oia-scholarship-guidelines"
+      ],
+      "response": "[1] NCU International Student Scholarship\n[2] 國立中央大學外籍生獎助學金處理要點\n[3] 國立中央大學外籍生獎助學金處理要點\n[4] 國立中央大學外籍生獎助學金處理要點\n[5] 國立中央大學外籍生獎助學金處理要點\n[6] 國立中央大學外籍生獎助學金處理要點\n[7] 國立中央大學外籍生獎助學金處理要點",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-006",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-4a82cc1fbc88",
+        "oia-degree-student-handbook",
+        "oia-site-4a82cc1fbc88",
+        "nisa-faq-graduation-extension",
+        "nisa-faq-arc"
+      ],
+      "response": "[1] ARC Application Form (Multiple Purpose Application Form).pdf\n[2] 2026 Fall Degree Student Handbook\n[3] ARC Application Form (Multiple Purpose Application Form).pdf\n[4] Resident Certificate (ARC) for international students who apply)\n[5] Resident Certificate (ARC) for international students who apply",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-007",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-fb35618b82b1",
+        "oia-site-c94d68071546",
+        "oia-degree-student-handbook",
+        "nhi-students",
+        "oia-site-c94d68071546"
+      ],
+      "response": "[6] 國民健康保險，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保**，**全民健保",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-008",
+      "lang": "zh-TW",
+      "answerable": false,
+      "passage_ids": [
+        "nia-stay-after-graduation",
+        "mol-work-permit-simplified",
+        "oia-site-e4ff4722d0b4",
+        "nisa-faq-arc",
+        "oia-site-8949d52535f2"
+      ],
+      "response": "",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-009",
+      "lang": "zh-TW",
+      "answerable": false,
+      "passage_ids": [
+        "oia-site-442d0d39ad51",
+        "mol-student-labor-insurance",
+        "wda-summer-hours",
+        "oia-site-e4ff4722d0b4",
+        "oia-work-permit"
+      ],
+      "response": "[6] Work permit for international degree students\nAttachment: Approval document signed by the supervising professor (dated within the past three months)\n<https://oia.ncu.edu.tw/static/file/26/1026/img/396/612354209.pdf>\nRemarks\nIt takes about 1-2 weeks working days to review and issue the permit.\nWork Permit is valid for at most 1 year:\nInternational students applying for a work permit from October 1 of the first semester to September 30 of the following year cannot have their permit extend beyond September 30 of the next year. However, those who provide a certificate of enrollment are not subject to this restriction.\nExcept during summer and winter vacations, the maximum working hours are 20 hours per week.\nIf you obtained a work permit through the school during your studies, it will automatically become invalid after applying for graduation, suspension, or withdrawal. Please do not work illegally to avoid violating the law.",
+      "refused": false,
+      "ctx_has_answer": false,
+      "answer_ok": false,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-010",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-scholarship-guidelines",
+        "oia-site-8e360e3e2406",
+        "oia-site-8949d52535f2",
+        "oia-site-998e4652d55e"
+      ],
+      "response": "[1] 國立中央大學外籍生獎助學金處理要點",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": false,
+      "citation_ok": true,
+      "unsupported_numbers": []
+    },
+    {
+      "id": "zh-011",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-8e360e3e2406",
+        "oia-site-998e4652d55e",
+        "oia-scholarship-guidelines",
+        "oia-site-f7afefe078ea",
+        "oia-site-e8db710272e4"
+      ],
+      "response": "[1] 僑生獎學金辦法\n第五條 獎學金發放與金額\n一、 獎學金額度由審查委員依成績表現分級核給。獎助學金總額度大學部每人每月不超過新台幣 9,000 元為原則，碩士班每人每月不超過新台幣 15,000 元為原則、博士班每人每月不超過新台幣 51,000 元為原則。受獎生得核給全部或部份學雜費及學分費同額之獎勵金。寒暑假期間，若學生離開學校超過 15 日，該月份之獎助學金經指導教授或系主任同意，始得發放。\n二、 本獎學金每次核給期間以一學期為原則。\n第六條 獎學金取消或酌減金額\n一、 受獎生若於每月 15 日(含)前，因保留學籍、畢業、休學、退學、轉學、離校、非法在校外工\n  或無故曠課逾兩週以上，該月份之獎助學金經指導教授或系主任同意，始得發放。\n復學後，經系所院同意後，繼續發放其獎助學金。\n二、 寒暑假期間，若受獎生離開學校超過 15 日，該月份之獎助學金經指導教授或系主任\n  同意，始得發放。\n三、 受獎生於受獎期間，因成績不佳、出席不良、生活情形不檢或其他特殊狀況，\n  經查明屬實後，由國際處或系所於檢附相關文件，送次學期之獎助學金審查會議討。\n[2] 「優秀僑生獎學金(研究所)」申請公告內容\n(四) 其他有利審查資料。\n(五) 學生證影本(含在學證明)、護照影本、居留證影本、及郵局存摺影本。\n五、 獎學金發放與金額\n(一) 獎學金額度由審查委員依成績表現分級核給。獎助學金總額度大學部每人每月不超過新台幣 9,",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": true,
+      "unsupported_numbers": [
+        "9"
+      ]
+    },
+    {
+      "id": "zh-012",
+      "lang": "zh-TW",
+      "answerable": true,
+      "passage_ids": [
+        "oia-site-f7afefe078ea",
+        "oia-site-998e4652d55e",
+        "oia-scholarship-guidelines",
+        "oia-site-8e360e3e2406"
+      ],
+      "response": "[5] 獎學金發放與金額\n(一) 獎學金額度由審查委員依成績表現分級核給。獎助學金總額度大學部每人每月不超過新台幣 9,000 元為原則，碩士班每人每月不超過新台幣 15,000 元為原則、博士班每人每月不超過新台幣 51,000 元為原則。受獎生得核給全部或部份學雜費及學分費同額之獎勵金。寒暑假期間，若學生離開學校超過 15 日，該月份之獎助學金經指導教授或系主任同意，始得發放。\n(二) 本獎學金每次核給期間以一學期為原則。",
+      "refused": false,
+      "ctx_has_answer": true,
+      "answer_ok": true,
+      "citation_ok": false,
+      "unsupported_numbers": []
+    }
+  ]
+}

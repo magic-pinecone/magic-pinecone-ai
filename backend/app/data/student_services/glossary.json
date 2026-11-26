@@ -1,0 +1,1259 @@
+{
+  "about": "Terms a student may use in Traditional Chinese, Vietnamese or Indonesian for what the OIA pages say in English. A question containing a term is searched with the English words of `en` added. Entries follow the topics of the pages in corpus/ and of the OIA documents of the graduation corpus; they are not taken from any test question. The vi and id terms were drafted by a language model and have not been reviewed by a native speaker.",
+  "terms": [
+    {
+      "en": "insurance",
+      "zh-TW": [
+        "保險"
+      ],
+      "vi": [
+        "bảo hiểm"
+      ],
+      "id": [
+        "asuransi"
+      ]
+    },
+    {
+      "en": "NHI National Health Insurance",
+      "zh-TW": [
+        "健保",
+        "全民健康保險"
+      ],
+      "vi": [
+        "bảo hiểm y tế toàn dân",
+        "bảo hiểm y tế quốc gia",
+        "bảo hiểm sức khỏe quốc gia",
+        "bảo hiểm y tế"
+      ],
+      "id": [
+        "asuransi kesehatan nasional",
+        "asuransi kesehatan"
+      ]
+    },
+    {
+      "en": "Cathay",
+      "zh-TW": [
+        "國泰"
+      ],
+      "vi": [],
+      "id": []
+    },
+    {
+      "en": "Student Group Insurance",
+      "zh-TW": [
+        "學生團體保險",
+        "團體保險",
+        "團保",
+        "學生平安保險"
+      ],
+      "vi": [
+        "bảo hiểm nhóm sinh viên",
+        "bảo hiểm sinh viên"
+      ],
+      "id": [
+        "asuransi kelompok mahasiswa",
+        "asuransi mahasiswa"
+      ]
+    },
+    {
+      "en": "clinic visit outpatient",
+      "zh-TW": [
+        "診所",
+        "門診",
+        "看病",
+        "看醫生"
+      ],
+      "vi": [
+        "phòng khám",
+        "khám bệnh",
+        "ngoại trú"
+      ],
+      "id": [
+        "klinik",
+        "rawat jalan",
+        "berobat"
+      ]
+    },
+    {
+      "en": "hospital hospitalization",
+      "zh-TW": [
+        "住院",
+        "醫院"
+      ],
+      "vi": [
+        "nhập viện",
+        "nằm viện",
+        "bệnh viện"
+      ],
+      "id": [
+        "rawat inap",
+        "rumah sakit"
+      ]
+    },
+    {
+      "en": "reimbursement",
+      "zh-TW": [
+        "理賠",
+        "給付",
+        "報銷",
+        "核銷"
+      ],
+      "vi": [
+        "hoàn tiền",
+        "hoàn trả",
+        "bồi hoàn",
+        "bồi thường"
+      ],
+      "id": [
+        "penggantian biaya",
+        "penggantian",
+        "reimburse",
+        "klaim"
+      ]
+    },
+    {
+      "en": "medical receipt",
+      "zh-TW": [
+        "收據"
+      ],
+      "vi": [
+        "biên lai",
+        "hóa đơn"
+      ],
+      "id": [
+        "kuitansi",
+        "kwitansi",
+        "tanda terima"
+      ]
+    },
+    {
+      "en": "medical certificate",
+      "zh-TW": [
+        "診斷證明",
+        "診斷書"
+      ],
+      "vi": [
+        "giấy chứng nhận y tế",
+        "giấy chẩn đoán"
+      ],
+      "id": [
+        "surat keterangan dokter",
+        "surat keterangan medis",
+        "sertifikat medis"
+      ]
+    },
+    {
+      "en": "post office passbook",
+      "zh-TW": [
+        "存摺"
+      ],
+      "vi": [
+        "sổ tiết kiệm",
+        "sổ ngân hàng",
+        "sổ bưu điện"
+      ],
+      "id": [
+        "buku tabungan"
+      ]
+    },
+    {
+      "en": "post office",
+      "zh-TW": [
+        "郵局"
+      ],
+      "vi": [
+        "bưu điện"
+      ],
+      "id": [
+        "kantor pos"
+      ]
+    },
+    {
+      "en": "travel abroad trip",
+      "zh-TW": [
+        "出國",
+        "出境",
+        "離境"
+      ],
+      "vi": [
+        "ra nước ngoài",
+        "xuất cảnh",
+        "đi nước ngoài"
+      ],
+      "id": [
+        "ke luar negeri",
+        "bepergian ke luar negeri"
+      ]
+    },
+    {
+      "en": "re-entry",
+      "zh-TW": [
+        "再入境",
+        "入境"
+      ],
+      "vi": [
+        "nhập cảnh"
+      ],
+      "id": [
+        "masuk kembali"
+      ]
+    },
+    {
+      "en": "six months 6",
+      "zh-TW": [
+        "六個月",
+        "6個月",
+        "6 個月",
+        "半年"
+      ],
+      "vi": [
+        "sáu tháng",
+        "6 tháng"
+      ],
+      "id": [
+        "enam bulan",
+        "6 bulan"
+      ]
+    },
+    {
+      "en": "continuous residence",
+      "zh-TW": [
+        "連續居留",
+        "居住滿"
+      ],
+      "vi": [
+        "cư trú liên tục"
+      ],
+      "id": [
+        "tinggal terus-menerus",
+        "tinggal berturut-turut"
+      ]
+    },
+    {
+      "en": "enroll enrollment",
+      "zh-TW": [
+        "加保",
+        "投保",
+        "納保"
+      ],
+      "vi": [
+        "tham gia bảo hiểm"
+      ],
+      "id": [
+        "mendaftar asuransi",
+        "ikut asuransi"
+      ]
+    },
+    {
+      "en": "accident injury illness",
+      "zh-TW": [
+        "意外",
+        "受傷",
+        "生病"
+      ],
+      "vi": [
+        "tai nạn",
+        "chấn thương",
+        "ốm",
+        "bệnh tật"
+      ],
+      "id": [
+        "kecelakaan",
+        "cedera",
+        "sakit"
+      ]
+    },
+    {
+      "en": "ARC",
+      "zh-TW": [
+        "居留證"
+      ],
+      "vi": [
+        "thẻ cư trú",
+        "thẻ tạm trú",
+        "thẻ lưu trú"
+      ],
+      "id": [
+        "kartu izin tinggal",
+        "izin tinggal"
+      ]
+    },
+    {
+      "en": "visa",
+      "zh-TW": [
+        "簽證"
+      ],
+      "vi": [
+        "thị thực"
+      ],
+      "id": []
+    },
+    {
+      "en": "extension",
+      "zh-TW": [
+        "延期",
+        "展延",
+        "延長"
+      ],
+      "vi": [
+        "gia hạn"
+      ],
+      "id": [
+        "perpanjangan",
+        "memperpanjang",
+        "perpanjang"
+      ]
+    },
+    {
+      "en": "application form",
+      "zh-TW": [
+        "申請表",
+        "申請書",
+        "表格"
+      ],
+      "vi": [
+        "đơn đăng ký",
+        "mẫu đơn",
+        "biểu mẫu"
+      ],
+      "id": [
+        "formulir"
+      ]
+    },
+    {
+      "en": "passport",
+      "zh-TW": [
+        "護照"
+      ],
+      "vi": [
+        "hộ chiếu"
+      ],
+      "id": [
+        "paspor"
+      ]
+    },
+    {
+      "en": "photo format",
+      "zh-TW": [
+        "照片",
+        "相片"
+      ],
+      "vi": [
+        "ảnh thẻ",
+        "hình thẻ"
+      ],
+      "id": [
+        "pas foto",
+        "foto"
+      ]
+    },
+    {
+      "en": "National Immigration Agency",
+      "zh-TW": [
+        "移民署"
+      ],
+      "vi": [
+        "sở di trú",
+        "cục di trú"
+      ],
+      "id": [
+        "kantor imigrasi",
+        "imigrasi"
+      ]
+    },
+    {
+      "en": "work permit",
+      "zh-TW": [
+        "工作證",
+        "工作許可"
+      ],
+      "vi": [
+        "giấy phép lao động",
+        "giấy phép làm việc"
+      ],
+      "id": [
+        "izin kerja"
+      ]
+    },
+    {
+      "en": "working hours work",
+      "zh-TW": [
+        "工時",
+        "工作時數",
+        "打工",
+        "工讀"
+      ],
+      "vi": [
+        "giờ làm việc",
+        "làm thêm",
+        "số giờ làm"
+      ],
+      "id": [
+        "jam kerja",
+        "kerja paruh waktu",
+        "kerja sambilan"
+      ]
+    },
+    {
+      "en": "per week",
+      "zh-TW": [
+        "每週",
+        "每周",
+        "一週",
+        "一周"
+      ],
+      "vi": [
+        "mỗi tuần",
+        "một tuần"
+      ],
+      "id": [
+        "per minggu",
+        "seminggu",
+        "setiap minggu"
+      ]
+    },
+    {
+      "en": "summer winter vacations",
+      "zh-TW": [
+        "寒暑假",
+        "暑假",
+        "寒假"
+      ],
+      "vi": [
+        "kỳ nghỉ hè",
+        "kỳ nghỉ đông",
+        "nghỉ hè",
+        "nghỉ đông"
+      ],
+      "id": [
+        "liburan musim panas",
+        "liburan musim dingin",
+        "libur musim panas",
+        "libur musim dingin"
+      ]
+    },
+    {
+      "en": "Certificate of Enrollment",
+      "zh-TW": [
+        "在學證明"
+      ],
+      "vi": [
+        "giấy xác nhận sinh viên",
+        "giấy chứng nhận nhập học"
+      ],
+      "id": [
+        "surat keterangan mahasiswa",
+        "surat keterangan kuliah"
+      ]
+    },
+    {
+      "en": "supervising professor approval",
+      "zh-TW": [
+        "指導教授"
+      ],
+      "vi": [
+        "giáo sư hướng dẫn",
+        "giảng viên hướng dẫn"
+      ],
+      "id": [
+        "dosen pembimbing"
+      ]
+    },
+    {
+      "en": "valid",
+      "zh-TW": [
+        "有效期",
+        "效期",
+        "有效"
+      ],
+      "vi": [
+        "hiệu lực",
+        "có giá trị"
+      ],
+      "id": [
+        "masa berlaku",
+        "berlaku"
+      ]
+    },
+    {
+      "en": "graduation",
+      "zh-TW": [
+        "畢業"
+      ],
+      "vi": [
+        "tốt nghiệp"
+      ],
+      "id": [
+        "lulus",
+        "kelulusan",
+        "wisuda"
+      ]
+    },
+    {
+      "en": "suspension",
+      "zh-TW": [
+        "休學"
+      ],
+      "vi": [
+        "bảo lưu",
+        "tạm nghỉ học"
+      ],
+      "id": [
+        "cuti kuliah",
+        "cuti akademik"
+      ]
+    },
+    {
+      "en": "withdrawal",
+      "zh-TW": [
+        "退學"
+      ],
+      "vi": [
+        "thôi học",
+        "bỏ học"
+      ],
+      "id": [
+        "berhenti kuliah",
+        "mengundurkan diri"
+      ]
+    },
+    {
+      "en": "work illegally",
+      "zh-TW": [
+        "非法工作",
+        "非法打工"
+      ],
+      "vi": [
+        "làm việc bất hợp pháp",
+        "bất hợp pháp"
+      ],
+      "id": [
+        "bekerja ilegal",
+        "ilegal"
+      ]
+    },
+    {
+      "en": "review issue working days",
+      "zh-TW": [
+        "審核",
+        "核發",
+        "工作天"
+      ],
+      "vi": [
+        "xét duyệt",
+        "ngày làm việc"
+      ],
+      "id": [
+        "hari kerja",
+        "diproses"
+      ]
+    },
+    {
+      "en": "exchange student",
+      "zh-TW": [
+        "交換生",
+        "交換學生"
+      ],
+      "vi": [
+        "sinh viên trao đổi"
+      ],
+      "id": [
+        "mahasiswa pertukaran",
+        "pertukaran pelajar"
+      ]
+    },
+    {
+      "en": "academic calendar",
+      "zh-TW": [
+        "行事曆"
+      ],
+      "vi": [
+        "lịch học",
+        "lịch năm học"
+      ],
+      "id": [
+        "kalender akademik"
+      ]
+    },
+    {
+      "en": "course selection",
+      "zh-TW": [
+        "選課"
+      ],
+      "vi": [
+        "đăng ký môn học",
+        "chọn môn"
+      ],
+      "id": [
+        "pemilihan mata kuliah",
+        "memilih mata kuliah"
+      ]
+    },
+    {
+      "en": "school leaving form",
+      "zh-TW": [
+        "離校"
+      ],
+      "vi": [
+        "rời trường"
+      ],
+      "id": [
+        "meninggalkan kampus"
+      ]
+    },
+    {
+      "en": "scholarship",
+      "zh-TW": [
+        "獎學金",
+        "獎助學金"
+      ],
+      "vi": [
+        "học bổng"
+      ],
+      "id": [
+        "beasiswa"
+      ]
+    },
+    {
+      "en": "monthly stipend",
+      "zh-TW": [
+        "每月",
+        "月領",
+        "生活津貼"
+      ],
+      "vi": [
+        "trợ cấp hàng tháng",
+        "hàng tháng",
+        "mỗi tháng"
+      ],
+      "id": [
+        "tunjangan bulanan",
+        "per bulan",
+        "setiap bulan",
+        "bulanan"
+      ]
+    },
+    {
+      "en": "tuition",
+      "zh-TW": [
+        "學費",
+        "學雜費"
+      ],
+      "vi": [
+        "học phí"
+      ],
+      "id": [
+        "biaya kuliah",
+        "uang kuliah"
+      ]
+    },
+    {
+      "en": "credit fee",
+      "zh-TW": [
+        "學分費"
+      ],
+      "vi": [
+        "phí tín chỉ"
+      ],
+      "id": [
+        "biaya kredit",
+        "biaya sks"
+      ]
+    },
+    {
+      "en": "waiver",
+      "zh-TW": [
+        "減免"
+      ],
+      "vi": [
+        "miễn giảm",
+        "miễn học phí"
+      ],
+      "id": [
+        "pembebasan"
+      ]
+    },
+    {
+      "en": "deadline",
+      "zh-TW": [
+        "截止",
+        "期限"
+      ],
+      "vi": [
+        "hạn chót",
+        "hạn nộp",
+        "thời hạn"
+      ],
+      "id": [
+        "tenggat",
+        "batas waktu"
+      ]
+    },
+    {
+      "en": "transcript",
+      "zh-TW": [
+        "成績單"
+      ],
+      "vi": [
+        "bảng điểm"
+      ],
+      "id": [
+        "transkrip"
+      ]
+    },
+    {
+      "en": "cumulative GPA",
+      "zh-TW": [
+        "平均成績",
+        "學業成績"
+      ],
+      "vi": [
+        "điểm trung bình"
+      ],
+      "id": [
+        "ipk",
+        "nilai rata-rata"
+      ]
+    },
+    {
+      "en": "Chinese course proficiency",
+      "zh-TW": [
+        "華語",
+        "中文課"
+      ],
+      "vi": [
+        "tiếng trung",
+        "tiếng hoa"
+      ],
+      "id": [
+        "bahasa mandarin",
+        "bahasa tionghoa"
+      ]
+    },
+    {
+      "en": "PhD doctoral",
+      "zh-TW": [
+        "博士"
+      ],
+      "vi": [
+        "tiến sĩ"
+      ],
+      "id": [
+        "doktor",
+        "doktoral",
+        "s3"
+      ]
+    },
+    {
+      "en": "Master's",
+      "zh-TW": [
+        "碩士"
+      ],
+      "vi": [
+        "thạc sĩ"
+      ],
+      "id": [
+        "magister",
+        "s2"
+      ]
+    },
+    {
+      "en": "undergraduate",
+      "zh-TW": [
+        "大學部",
+        "學士"
+      ],
+      "vi": [
+        "đại học",
+        "cử nhân"
+      ],
+      "id": [
+        "sarjana",
+        "s1"
+      ]
+    },
+    {
+      "en": "graduate",
+      "zh-TW": [
+        "研究所",
+        "研究生"
+      ],
+      "vi": [
+        "sau đại học",
+        "cao học"
+      ],
+      "id": [
+        "pascasarjana"
+      ]
+    },
+    {
+      "en": "semester",
+      "zh-TW": [
+        "學期"
+      ],
+      "vi": [
+        "học kỳ"
+      ],
+      "id": []
+    },
+    {
+      "en": "duration",
+      "zh-TW": [
+        "年限",
+        "多久"
+      ],
+      "vi": [
+        "bao lâu"
+      ],
+      "id": [
+        "berapa lama"
+      ]
+    },
+    {
+      "en": "Dependent Visa",
+      "zh-TW": [
+        "依親"
+      ],
+      "vi": [
+        "phụ thuộc"
+      ],
+      "id": [
+        "tanggungan"
+      ]
+    },
+    {
+      "en": "Taiwan Employment Gold Card",
+      "zh-TW": [
+        "就業金卡"
+      ],
+      "vi": [
+        "thẻ vàng"
+      ],
+      "id": [
+        "kartu emas"
+      ]
+    },
+    {
+      "en": "delayed",
+      "zh-TW": [
+        "延遲",
+        "延後",
+        "晚發"
+      ],
+      "vi": [
+        "bị chậm",
+        "chậm trễ",
+        "trễ"
+      ],
+      "id": [
+        "tertunda",
+        "terlambat"
+      ]
+    },
+    {
+      "en": "Lunar New Year",
+      "zh-TW": [
+        "農曆新年",
+        "春節",
+        "過年"
+      ],
+      "vi": [
+        "tết"
+      ],
+      "id": [
+        "imlek"
+      ]
+    },
+    {
+      "en": "new students",
+      "zh-TW": [
+        "新生"
+      ],
+      "vi": [
+        "tân sinh viên",
+        "sinh viên mới"
+      ],
+      "id": [
+        "mahasiswa baru"
+      ]
+    },
+    {
+      "en": "miscellaneous fees",
+      "zh-TW": [
+        "雜費"
+      ],
+      "vi": [
+        "phí khác",
+        "tạp phí"
+      ],
+      "id": [
+        "biaya lain-lain"
+      ]
+    },
+    {
+      "en": "dorm dormitory",
+      "zh-TW": [
+        "宿舍"
+      ],
+      "vi": [
+        "ký túc xá"
+      ],
+      "id": [
+        "asrama"
+      ]
+    },
+    {
+      "en": "registration",
+      "zh-TW": [
+        "註冊",
+        "報到"
+      ],
+      "vi": [
+        "nhập học",
+        "làm thủ tục"
+      ],
+      "id": [
+        "registrasi",
+        "pendaftaran ulang"
+      ]
+    },
+    {
+      "en": "orientation",
+      "zh-TW": [
+        "新生訓練",
+        "新生說明會"
+      ],
+      "vi": [
+        "định hướng"
+      ],
+      "id": [
+        "orientasi"
+      ]
+    },
+    {
+      "en": "health examination",
+      "zh-TW": [
+        "體檢",
+        "健康檢查"
+      ],
+      "vi": [
+        "khám sức khỏe"
+      ],
+      "id": [
+        "pemeriksaan kesehatan",
+        "tes kesehatan"
+      ]
+    },
+    {
+      "en": "arrival",
+      "zh-TW": [
+        "抵達",
+        "抵台",
+        "來台"
+      ],
+      "vi": [
+        "đến đài loan"
+      ],
+      "id": [
+        "tiba di taiwan",
+        "kedatangan"
+      ]
+    },
+    {
+      "en": "airport",
+      "zh-TW": [
+        "機場"
+      ],
+      "vi": [
+        "sân bay"
+      ],
+      "id": [
+        "bandara"
+      ]
+    },
+    {
+      "en": "taxi",
+      "zh-TW": [
+        "計程車"
+      ],
+      "vi": [],
+      "id": [
+        "taksi"
+      ]
+    },
+    {
+      "en": "fare",
+      "zh-TW": [
+        "車資",
+        "票價"
+      ],
+      "vi": [
+        "giá vé"
+      ],
+      "id": [
+        "tarif",
+        "ongkos"
+      ]
+    },
+    {
+      "en": "EasyCard",
+      "zh-TW": [
+        "悠遊卡"
+      ],
+      "vi": [],
+      "id": []
+    },
+    {
+      "en": "money exchange",
+      "zh-TW": [
+        "換錢",
+        "換匯",
+        "換台幣"
+      ],
+      "vi": [
+        "đổi tiền"
+      ],
+      "id": [
+        "tukar uang",
+        "penukaran uang"
+      ]
+    },
+    {
+      "en": "library",
+      "zh-TW": [
+        "圖書館"
+      ],
+      "vi": [
+        "thư viện"
+      ],
+      "id": [
+        "perpustakaan"
+      ]
+    },
+    {
+      "en": "student ID card",
+      "zh-TW": [
+        "學生證"
+      ],
+      "vi": [
+        "thẻ sinh viên"
+      ],
+      "id": [
+        "kartu mahasiswa"
+      ]
+    },
+    {
+      "en": "grade",
+      "zh-TW": [
+        "及格"
+      ],
+      "vi": [
+        "điểm đậu",
+        "điểm qua môn"
+      ],
+      "id": [
+        "nilai lulus"
+      ]
+    },
+    {
+      "en": "emergency",
+      "zh-TW": [
+        "緊急"
+      ],
+      "vi": [
+        "khẩn cấp"
+      ],
+      "id": [
+        "darurat"
+      ]
+    },
+    {
+      "en": "living expenses",
+      "zh-TW": [
+        "生活費"
+      ],
+      "vi": [
+        "chi phí sinh hoạt",
+        "sinh hoạt phí"
+      ],
+      "id": [
+        "biaya hidup"
+      ]
+    },
+    {
+      "en": "buddy",
+      "zh-TW": [
+        "學伴"
+      ],
+      "vi": [
+        "bạn đồng hành"
+      ],
+      "id": []
+    },
+    {
+      "en": "payment slip",
+      "zh-TW": [
+        "繳費單"
+      ],
+      "vi": [
+        "phiếu thanh toán",
+        "giấy báo học phí"
+      ],
+      "id": [
+        "slip pembayaran",
+        "tagihan"
+      ]
+    },
+    {
+      "en": "course withdrawal",
+      "zh-TW": [
+        "退選",
+        "停修"
+      ],
+      "vi": [
+        "rút môn",
+        "hủy môn"
+      ],
+      "id": [
+        "membatalkan mata kuliah"
+      ]
+    },
+    {
+      "en": "class begin",
+      "zh-TW": [
+        "開學"
+      ],
+      "vi": [
+        "khai giảng",
+        "bắt đầu học"
+      ],
+      "id": [
+        "kuliah dimulai",
+        "mulai kuliah"
+      ]
+    },
+    {
+      "en": "OIA",
+      "zh-TW": [
+        "國際處",
+        "國際事務處"
+      ],
+      "vi": [
+        "văn phòng quốc tế",
+        "phòng quốc tế"
+      ],
+      "id": [
+        "kantor urusan internasional",
+        "kantor internasional"
+      ]
+    },
+    {
+      "en": "office hours",
+      "zh-TW": [
+        "辦公時間",
+        "上班時間"
+      ],
+      "vi": [
+        "giờ hành chính"
+      ],
+      "id": [
+        "jam kantor"
+      ]
+    },
+    {
+      "en": "maximum",
+      "zh-TW": [
+        "上限",
+        "最高",
+        "最多"
+      ],
+      "vi": [
+        "tối đa",
+        "cao nhất"
+      ],
+      "id": [
+        "maksimal",
+        "maksimum",
+        "paling banyak"
+      ]
+    },
+    {
+      "en": "required documents",
+      "zh-TW": [
+        "文件",
+        "資料"
+      ],
+      "vi": [
+        "giấy tờ",
+        "hồ sơ",
+        "tài liệu"
+      ],
+      "id": [
+        "dokumen",
+        "berkas"
+      ]
+    },
+    {
+      "en": "eligibility requirement",
+      "zh-TW": [
+        "資格",
+        "條件"
+      ],
+      "vi": [
+        "điều kiện",
+        "đủ điều kiện"
+      ],
+      "id": [
+        "syarat",
+        "persyaratan",
+        "memenuhi syarat"
+      ]
+    },
+    {
+      "en": "apply application",
+      "zh-TW": [
+        "申請"
+      ],
+      "vi": [
+        "nộp đơn",
+        "đăng ký",
+        "xin"
+      ],
+      "id": [
+        "mengajukan",
+        "permohonan",
+        "mendaftar",
+        "melamar"
+      ]
+    },
+    {
+      "en": "fee",
+      "zh-TW": [
+        "費用"
+      ],
+      "vi": [
+        "lệ phí",
+        "chi phí"
+      ],
+      "id": [
+        "biaya"
+      ]
+    },
+    {
+      "en": "international student",
+      "zh-TW": [
+        "外籍生",
+        "國際生",
+        "境外生"
+      ],
+      "vi": [
+        "sinh viên quốc tế",
+        "du học sinh"
+      ],
+      "id": [
+        "mahasiswa internasional",
+        "mahasiswa asing"
+      ]
+    }
+  ]
+}
